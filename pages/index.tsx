@@ -4,27 +4,13 @@ import Head from "next/head";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/Home.module.css";
-import ClimbingStairs from "../components/problems/ClimbingStairs";
-const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
-  ssr: false,
-});
-
+import ProblemVisualizer from "../components/ProblemVisualizer";
+import { climbStairsProblem } from "../problems/climbingStairs";
 const Home: NextPage = () => {
-  const [code, setCode] = useState("// Type your TypeScript code here");
-  const [output, setOutput] = useState("");
 
-  const handleEditorChange = (value: string | undefined) => {
-    setCode(value ?? "");
-  };
-
-  const runCode = () => {
-    // This should send the code to an API or use a TypeScript interpreter in the browser
-    // Placeholder functionality
-    setOutput("Running the code...\n" + code);
-  };
-
+  const randomProblem = climbStairsProblem;
   return (
-    <div className={styles.container}>
+    <div className="">
       <Head>
         <title>TypeScript Code Visualizer</title>
         <meta
@@ -34,10 +20,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>TypeScript Code Visualizer</h1>
+      <main className="w-full min-h-screen flex flex-col bg-blue-200 items-center justify-center">
+       
 
-        <ClimbingStairs />
+        <ProblemVisualizer problem={randomProblem} />
       </main>
     </div>
   );

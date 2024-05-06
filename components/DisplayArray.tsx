@@ -2,18 +2,21 @@ import React from "react";
 
 const DisplayArray = ({ array, title }) => {
   return (
-    <div className="p-2 bg-gray-100 rounded">
-      <p className="font-bold">{title}:</p>
-      <div className="flex overflow-auto py-1">
+    <div>
+      
+      <p className="pl-1 font-display text-xl">{title}</p>
+    <div className="join">
+      <div className="pt-2 flex overflow-auto py-1 justify-center items-center join">
         {array.map((item, index) => (
-          <span
+          <p
             key={index}
-            className="font-mono text-xs mr-2 bg-white p-2 rounded shadow border border-gray-300"
+            className="border join-item w-7 h-7 bg-gray-50 text-sm text-center rounded py-0.5"
           >
             {JSON.stringify(item)}
-          </span>
+          </p>
         ))}
       </div>
+    </div>
     </div>
   );
 };

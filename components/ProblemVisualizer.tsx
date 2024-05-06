@@ -1,58 +1,52 @@
 import React, { useState } from "react";
 
 import DisplayState from "./DisplayState";
-interface ProblemVisualizerProps {
-  solveFunction: (render: (p: any) => void, input: any) => Promise<any>;
-  input: any;
-  codeSnippet: string;
-  title: string;
+import { Problem } from "../problems/Problem";
+import CodePreview from "./CodePreview";
+
+export interface ProblemVisualizerProps<Input, State> {
+  problem: Problem<Input, State>;
 }
 
-const ProblemVisualizer: React.FC<ProblemVisualizerProps> = ({
-  solveFunction,
-  input,
-  codeSnippet,
-  title,
+const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
+  problem,
 }) => {
-  const [currentInput, setCurrentInput] = useState(input);
-  const [result, setResult] = useState<any>(null);
-  const [running, setRunning] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [state, setState] = useState<any>({});
+  const { title, code, getInput, func } = problem;
+  const [currentInput, setCurrentInput] = useState(getInput());
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleRun = async () => {
-    setRunning(true);
-    setError(null);
-    try {
-      const result = await solveFunction(setState, currentInput);
-      setResult(result);
-    } catch (err: any) {
-      setError(err.message);
-    }
-    setRunning(false);
+  const states = func(currentInput);
+  const state = states[currentIndex];
+
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentIndex(parseInt(event.target.value, 10));
   };
 
   return (
-    <div className="flex p-4 bg-gray-50 shadow rounded-lg">
-      <div className="flex-initial w-1/2 p-2">
-        <h2 className="text-xl font-bold mb-2">{title}</h2>
-        {running ? (
-          <p className="text-blue-500">Running...</p>
-        ) : (
-          <button
-            onClick={handleRun}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            Run
-          </button>
-        )}
-        <pre className="bg-gray-200 p-3 rounded text-xs">{codeSnippet}</pre>
-      </div>
-      <div className="flex-auto w-1/2 p-2 space-y-4">
-        <DisplayState
-          state={{ input: currentInput, output: result, currentState: state }}
-        />
-        {error && <p className="text-red-500">{error}</p>}
+    <div className="card bg-white w-2/3 mx-auto p my-8 min-h-full shadow">
+      <div className="card-body">
+        <h2 className="font-display text-3xl pl-2">{title}</h2>
+        <div className="flex flex-row">
+          <div className="flex-1 p-2  w-1/2">
+            <CodePreview
+              code={code}
+              highlightLineIndex={states[currentIndex].line}
+            />
+            
+            <p className="text-sm pt-6 italic">use slider to see how the code works</p>
+            <input
+              type="range"
+              min="0"
+              max={states.length - 1}
+              value={currentIndex}
+              onChange={handleSliderChange}
+              className="range range-primary mt-4"
+            />
+          </div>
+          <div className="flex-1 w-1/2  p-2 space-y-4">
+            <DisplayState state={state} />
+          </div>
+        </div>
       </div>
     </div>
   );
