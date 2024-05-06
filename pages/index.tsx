@@ -5,10 +5,10 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import styles from "../styles/Home.module.css";
 import ProblemVisualizer from "../components/ProblemVisualizer";
-import { climbStairsProblem } from "../problems/climbingStairs";
+import { getRandomProblem } from "../problems/_list";
 const Home: NextPage = () => {
 
-  const randomProblem = climbStairsProblem;
+  const randomProblem = getRandomProblem();
   return (
     <div className="">
       <Head>
