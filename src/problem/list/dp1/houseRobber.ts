@@ -1,4 +1,4 @@
-import { Problem } from "./Problem";
+import { Problem } from "../../Problem";
 
 function rob(houses: HouseRobberInput): any[] {
   const steps = [];

@@ -1,14 +1,16 @@
 // pages/index.tsx
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
-import dynamic from "next/dynamic";
-import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 import ProblemVisualizer from "../components/ProblemVisualizer";
-import { getRandomProblem } from "../problems/_list";
-const Home: NextPage = () => {
+import { getRandomProblem } from "../src/problem/service";
 
-  const randomProblem = getRandomProblem();
+const Home: NextPage = () => {
+  const [randomProblem, setRandomProblem] = useState(null);
+
+  useEffect(() => {
+    setRandomProblem(getRandomProblem());
+  }, []);
   return (
     <div className="">
       <Head>
@@ -20,10 +22,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="w-full min-h-screen flex flex-col bg-blue-200 items-center justify-center">
+      <main className="w-full min-h-screen flex flex-col bg-primary items-center justify-center">
        
-
-        <ProblemVisualizer problem={randomProblem} />
+{randomProblem ? <ProblemVisualizer problem={randomProblem} /> : null}
       </main>
     </div>
   );

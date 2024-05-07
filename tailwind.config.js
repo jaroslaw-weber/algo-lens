@@ -4,15 +4,17 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: { fontFamily: {
-      'display': ['"Concert One"', 'sans-serif']
+      'display': ['"Sacramento"', 'sans-serif']
     }},
   }, plugins: [
     require('daisyui'),
   ], 
   daisyui: {
-    themes: true
+    themes: ["pastel"],
+    theme:"pastel"
   }
 };

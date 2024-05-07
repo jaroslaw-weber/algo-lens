@@ -1,4 +1,4 @@
-import { Problem } from "./Problem";
+import { Problem } from "../../Problem";
 
 function climbStairs(p: ClimbingStairsInput): any[] {
   const steps = [];

@@ -6,7 +6,7 @@ const CodePreview = ({ code, highlightLineIndex }) => {
       {code.split('\n').map((line, index) => (
         <div 
           key={index} 
-          className={`px-4 py-2 ${index === highlightLineIndex ? 'bg-blue-100' : ''}`}
+          className={`px-4 py-2 ${index === highlightLineIndex ? 'bg-primary' : ''}`}
         >
           {line}
         </div>

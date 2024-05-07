@@ -1,39 +1,39 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplayNumber from "./DisplayNumber";
+import { ArrayVariable, NumberVariable, Variable } from "../src/problem/Problem";
 
 const DisplayState = ({ state }) => {
+  const variables = state.variables as Variable[];
+
   const numbers = [];
   const arrays = [];
   const others = [];
 
-  // Classify entries by type
-  Object.entries(state).forEach(([key, value]) => {
-    if (key === "line") {
-      //skip
-      return;
+  for (const variable of variables) {
+    switch (variable.type) {
+      case "number": {
+        const data = variable as NumberVariable
+        numbers.push(<DisplayNumber data={data} />);
+        break;
+      }
+      case "array": {
+        const data = variable as ArrayVariable
+        arrays.push(<DisplayArray data={data}  />);
+        break;
+      }
     }
-
-    if (typeof value === "number") {
-      numbers.push(<DisplayNumber key={key} number={value} title={key} />);
-    } else if (Array.isArray(value)) {
-      arrays.push(<DisplayArray key={key} array={value} title={key} />);
-    } else if (typeof value === "object" && value !== null) {
-      others.push(<DisplayState key={key} state={value} />);
-    } else {
-      others.push(
-        <p key={key} className="font-mono text-sm">{`${key}: ${value}`}</p>
-      );
-    }
-  });
+  }
 
   return (
     <div className="flex flex-col  h-full items-center justify-center">
       {/* Render numbers in a grid layout */}
-      <div className="grid grid-cols-2 gap-4 mb-4 justify-center">{numbers}</div>
+      <div className="grid grid-cols-2 gap-4 mb-4 justify-center">
+        {numbers}
+      </div>
 
       {/* Render arrays */}
-      <div className="mb-4 pt-8">{arrays}</div>
+      <div className="mb-4 pt-8 flex flex-col gap-4">{arrays}</div>
 
       {/* Render other types */}
       {others}

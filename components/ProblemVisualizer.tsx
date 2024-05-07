@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import DisplayState from "./DisplayState";
-import { Problem } from "../problems/Problem";
+import { Problem } from "../src/problem/Problem";
 import CodePreview from "./CodePreview";
 
 export interface ProblemVisualizerProps<Input, State> {
@@ -15,8 +15,26 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   const [currentInput, setCurrentInput] = useState(getInput());
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const breakpointToLineMap = new Map<number, number>();
+  const lines = code.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const loc = lines[i];
+    if (loc.trimStart().startsWith("//#")) {
+      //get number from this line with regex
+      const no = new RegExp(/\d+/).exec(loc);
+      if (no[0]) {
+        breakpointToLineMap.set(parseInt(no[0]), i);
+      }
+    }
+  }
+
   const states = func(currentInput);
   const state = states[currentIndex];
+  const breakpoint = state.breakpoint;
+  const line = breakpointToLineMap.get(breakpoint);
+  console.log("breakpoint", breakpoint);
+  console.log("line", line);
+  console.log("breakpointToLineMap", breakpointToLineMap);
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentIndex(parseInt(event.target.value, 10));
@@ -28,12 +46,11 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
         <h2 className="font-display text-3xl pl-2">{title}</h2>
         <div className="flex flex-row">
           <div className="flex-1 p-2  w-1/2">
-            <CodePreview
-              code={code}
-              highlightLineIndex={states[currentIndex].line}
-            />
-            
-            <p className="text-sm pt-6 italic">use slider to see how the code works</p>
+            <CodePreview code={code} highlightLineIndex={line} />
+
+            <p className="text-sm pt-6 italic">
+              use slider to see how the code works
+            </p>
             <input
               type="range"
               min="0"
