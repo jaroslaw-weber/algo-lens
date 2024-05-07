@@ -48,7 +48,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
           <div className="flex-1 p-2  w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
 
-            <p className="text-sm pt-6 italic">
+            <p className="text-xs pt-6 italic">
               use slider to see how the code works
             </p>
             <input

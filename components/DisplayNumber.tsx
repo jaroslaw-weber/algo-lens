@@ -1,7 +1,7 @@
 import React from "react";
-import { ArrayVariable } from "../src/problem/Problem";
+import { ArrayVariable, NumberVariable } from "../src/problem/Problem";
 
-const DisplayNumber =  ({ data }: { data: ArrayVariable }) => {
+const DisplayNumber =  ({ data }: { data: NumberVariable }) => {
   return (<div className="stats">
     <div className="stat">
       <div className="stat-title text-sm">{data.label}</div>

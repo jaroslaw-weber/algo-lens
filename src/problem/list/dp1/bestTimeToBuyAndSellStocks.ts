@@ -17,16 +17,34 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     breakpoint: 1,
   });
   for (let i = 1; i < prices.length; i++) {
-    dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
-    minPrice = Math.min(minPrice, prices[i]);
+    const currentPrice = prices[i];
+    const diff = prices[i] - minPrice;//
+    s.push({
+      variables: [
+        asArr("prices", prices, i),
+        asArr("dp", dp, i, i - 1),
+        ...asNum({ minPrice, diff,i }),
+      ],
+      breakpoint:2,
+    });
+    dp[i] = Math.max(dp[i - 1], diff);//
+    s.push({
+      variables: [
+        asArr("prices", prices, i),
+        asArr("dp", dp, i, i - 1),
+        ...asNum({ minPrice, diff,i }),
+      ],
+      breakpoint:3,
+    });
+    minPrice = Math.min(minPrice, currentPrice);
     //
     s.push({
       variables: [
         asArr("prices", prices, i),
         asArr("dp", dp, i, i - 1),
-        ...asNum({ minPrice }),
+        ...asNum({ minPrice, diff,i }),
       ],
-      breakpoint:2,
+      breakpoint:4,
     });
   }
 
@@ -35,7 +53,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     asArr("prices", prices),
     asArr("dp", dp, prices.length - 1),
     ...asNum({ minPrice,result }),
-  ], breakpoint: 3 });
+  ], breakpoint: 5 });
 
   return s;
 }
@@ -49,13 +67,16 @@ const code = `function maxProfit(prices) {
     let minPrice = prices[0];
     //#1
     for (let i = 1; i < prices.length; i++) {
-        dp[i] = Math.max(dp[i - 1], prices[i] - minPrice);
+        const diff = prices[i] - minPrice;
         //#2
+        dp[i] = Math.max(dp[i - 1], diff);
+        //#3
         minPrice = Math.min(minPrice, prices[i]);
+        //#4
     }
     
     const result = dp[prices.length - 1];
-    //#3
+    //#5
     return result;
 }`;
 
