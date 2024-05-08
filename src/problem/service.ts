@@ -12,14 +12,15 @@ import { uniquePathsProblem } from "./list/dp2/uniquePaths";
 import { ArrayVariable, NumberVariable } from "./Problem";
 
 export const problems = [
-  maxProfitProblem
-  /*
-  houseRobberProblem,
-  climbStairsProblem,
   maxProfitProblem,
-  wordBreakProblem,
-  editDistanceProblem,
+  
+  climbStairsProblem,
   coinChangeProblem,
+
+  houseRobberProblem,
+  wordBreakProblem,
+  /*
+  editDistanceProblem,
   longestIncreasingSubsequenceProblem,
   minPathSumProblem,
   knapsackProblem,
@@ -29,7 +30,7 @@ export const problems = [
 
 export const getRandomProblem = () => sample(problems);
 
-export function asNum(o: any): NumberVariable[] {
+export function asNumber(o: any): NumberVariable[] {
   return Object.keys(o).map(
     (k) => ({ label: k, value: o[k], type: "number" } as NumberVariable)
   );

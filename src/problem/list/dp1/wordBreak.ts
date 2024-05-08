@@ -1,31 +1,47 @@
-import { Problem } from "../../Problem";
+import { Problem, ProblemState, Variable } from "../../Problem";
+import { asArr,  asNumber } from "../../service";
 
-function canBreak(p:{s: string, wordDict: string[]}): any[] {
-	const { s, wordDict } = p;
-  const steps = [];
-  const n = s.length;
+function canBreak(p: WordBreakInput): ProblemState[] {
+  const s: ProblemState[] = [];
+  const { s: str, wordDict } = p;
+  const n = str.length;
   const dp: boolean[] = new Array(n + 1).fill(false);
   dp[0] = true;  // Empty string can always be segmented.
-  steps.push({ s, dp: dp.slice(), line: 1 });
+  s.push({
+    variables: [
+      ...asNumber({ str}),
+      asArr("dp", dp),
+    ],
+    breakpoint: 1,
+  }); //#1
 
   for (let i = 1; i <= n; i++) {
     for (let j = 0; j < i; j++) {
-      if (dp[j] && wordDict.includes(s.substring(j, i))) {
+      if (dp[j] && wordDict.includes(str.substring(j, i))) {
         dp[i] = true;
-        steps.push({ i, j, s, dp: dp.slice(), line: 7 });
+        s.push({
+          variables: [
+           ... asNumber({ str,i, j, substring: str.substring(j, i) }),
+            asArr("dp", dp, i, j),
+          ],
+          breakpoint: 2,
+        }); //#2
         break;
       }
     }
   }
 
   const result = dp[n];
-  steps.push({ s, dp, result, line: 12 });
-  return steps;
-}
-
-interface WordBreakState {
-  s: string;
-  dp: boolean[];
+  s.push({
+    variables: [
+      ...asNumber({
+        str, result,
+      }),
+      asArr("dp", dp, n),
+    ],
+    breakpoint: 3,
+  }); //#3
+  return s;
 }
 
 interface WordBreakInput {
@@ -33,31 +49,29 @@ interface WordBreakInput {
   wordDict: string[];
 }
 
-const code = `function canBreak(s: string, wordDict: string[]): boolean {
+const code = `function canBreak(s, wordDict) {
   const n = s.length;
-  const dp: boolean[] = new Array(n + 1).fill(false);
-  dp[0] = true;
-  
+  const dp = new Array(n + 1).fill(false);
+  dp[0] = true; 
+  //#1
   for (let i = 1; i <= n; i++) {
     for (let j = 0; j < i; j++) {
       if (dp[j] && wordDict.includes(s.substring(j, i))) {
-        dp[i] = true;
+        dp[i] = true; 
+        //#2
         break;
       }
     }
   }
-  
-  return dp[n];
+  const result = dp[n]; 
+  //#3
+  return result;
 }`;
 
 const title = "Word Break";
-
 const getInput = () => ({ s: "leetcode", wordDict: ["leet", "code"] });
 
-export const wordBreakProblem: Problem<
-  WordBreakInput,
-  WordBreakState
-> = {
+export const wordBreakProblem: Problem<WordBreakInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

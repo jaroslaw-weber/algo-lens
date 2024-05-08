@@ -20,6 +20,7 @@ const Home: NextPage = () => {
           content="Visualize TypeScript code execution"
         />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@animxyz/core"/>
       </Head>
 
       <main className="w-full min-h-screen flex flex-col bg-primary items-center justify-center">

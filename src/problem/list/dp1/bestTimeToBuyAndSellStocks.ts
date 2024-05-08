@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArr, asNum } from "../../service";
+import { asArr, asNumber } from "../../service";
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
   //save state
@@ -12,7 +12,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     variables: [
       asArr("prices", prices),
       asArr("dp", dp),
-      ...asNum({ minPrice }),
+      ...asNumber({ minPrice }),
     ],
     breakpoint: 1,
   });
@@ -23,7 +23,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArr("prices", prices, i),
         asArr("dp", dp, i, i - 1),
-        ...asNum({ minPrice, diff,i }),
+        ...asNumber({ minPrice, diff,i }),
       ],
       breakpoint:2,
     });
@@ -32,7 +32,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArr("prices", prices, i),
         asArr("dp", dp, i, i - 1),
-        ...asNum({ minPrice, diff,i }),
+        ...asNumber({ minPrice, diff,i }),
       ],
       breakpoint:3,
     });
@@ -42,7 +42,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArr("prices", prices, i),
         asArr("dp", dp, i, i - 1),
-        ...asNum({ minPrice, diff,i }),
+        ...asNumber({ minPrice, diff,i }),
       ],
       breakpoint:4,
     });
@@ -52,7 +52,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   s.push({ variables:  [
     asArr("prices", prices),
     asArr("dp", dp, prices.length - 1),
-    ...asNum({ minPrice,result }),
+    ...asNumber({ minPrice,result }),
   ], breakpoint: 5 });
 
   return s;

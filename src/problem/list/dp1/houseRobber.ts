@@ -1,55 +1,76 @@
-import { Problem } from "../../Problem";
+import { Problem, ProblemState, Variable } from "../../Problem";
+import { asArr, asNumber } from "../../service";
 
-function rob(houses: HouseRobberInput): any[] {
-  const steps = [];
+function rob(houses: HouseRobberInput): ProblemState[] {
+  const s: ProblemState[] = [];
   const { nums } = houses;
   const n = nums.length;
   const dp: number[] = new Array(n + 1).fill(0);
-  steps.push({ nums, dp: dp.slice(), line: 1 });
-  dp[0] = 0; // Ensure dp[0] is set for clarity, even though it's technically not needed.
-  steps.push({ nums, dp: dp.slice(), line: 2 });
+  dp[0] = 0;
+  s.push({
+    variables: [
+      asArr("nums", nums),
+      asArr("dp", dp),
+    ],
+    breakpoint: 1,
+  }); //#1
+
   dp[1] = nums[0];
-  steps.push({ nums, dp: dp.slice(), line: 3 });
+  s.push({
+    variables: [
+      asArr("nums", nums),
+      asArr("dp", dp),
+    ],
+    breakpoint: 2,
+  }); //#2
+
   for (let i = 2; i <= n; i++) {
     dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
-    steps.push({ i, nums, dp: dp.slice(), line: 7 });
+    s.push({
+      variables: [
+        asArr("dp", dp, i, i - 1, i - 2),
+        ...asNumber({ i }),
+      ],
+      breakpoint: 3,
+    }); //#3
   }
-  const result = dp[n];
-  steps.push({ nums, dp, result, line: 12 });
-  return steps;
-}
 
-interface HouseRobberState {
-  label?: string;
-  nums: number[];
-  dp: number[];
+  const result = dp[n];
+  s.push({
+    variables: [
+      asArr("nums", nums),
+      asArr("dp", dp, n),
+      ...asNumber({ result }),
+    ],
+    breakpoint: 4,
+  }); //#4
+  return s;
 }
 
 interface HouseRobberInput {
   nums: number[];
 }
 
-const code = `function rob(nums: number[]): number {
+const code = `function rob(nums) {
   const n = nums.length;
-  const dp: number[] = new Array(n + 1).fill(0);
-  dp[0] = 0;
-  dp[1] = nums[0];
-  
+  const dp = new Array(n + 1).fill(0);
+  dp[0] = 0; 
+  //#1
+  dp[1] = nums[0]; 
+  //#2
   for (let i = 2; i <= n; i++) {
-    dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
+    dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]); 
+    //#3
   }
-  
-  return dp[n];
+  const result = dp[n]; 
+  //#4
+  return result;
 }`;
 
 const title = "House Robber";
-
 const getInput = () => ({ nums: [2, 7, 9, 3, 1] });
 
-export const houseRobberProblem: Problem<
-  HouseRobberInput,
-  HouseRobberState
-> = {
+export const houseRobberProblem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,
