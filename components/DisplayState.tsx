@@ -14,7 +14,7 @@ const DisplayState = ({ state }) => {
     switch (variable.type) {
       case "number": {
         const data = variable as NumberVariable
-        numbers.push(<DisplayNumber data={data} />);
+        numbers.push(<DisplayNumber data={data}  />);
         break;
       }
       case "array": {
@@ -26,9 +26,9 @@ const DisplayState = ({ state }) => {
   }
 
   return (
-    <div className="flex flex-col  h-full items-center justify-center">
+    <div className="flex flex-col  h-full items-center justify-center ">
       {/* Render numbers in a grid layout */}
-      <div className="grid grid-cols-2 gap-4 mb-4 justify-center">
+      <div className="grid grid-cols-2 gap-4 mb-4 justify-center grid-animate">
         {numbers}
       </div>
 

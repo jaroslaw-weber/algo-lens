@@ -7,14 +7,31 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: { fontFamily: {
-      'display': ['"Sacramento"', 'sans-serif']
-    }},
+    extend: {
+      translate: {
+        'full': '100%',
+        '-full': '-100%',
+      },
+      keyframes: {
+        falling: {
+          '0%': { transform: 'translateY(-100px) scale(0.5)', opacity: '0' },
+          '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+        }
+      },
+      animation: {
+        'falling': 'falling 0.5s ease-out forwards',
+      },
+      fontFamily: {
+        'sans': ["Open Sans", 'sans-serif'],
+        'display': ["Bungee", 'sans-serif'],
+        'code': ["Fira Code", 'monospace']
+      }
+    },
   }, plugins: [
     require('daisyui'),
-  ], 
+  ],
   daisyui: {
     themes: ["pastel"],
-    theme:"pastel"
+    theme: "pastel"
   }
 };

@@ -44,7 +44,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
     <div className="card bg-white w-2/3 mx-auto p my-8 min-h-full shadow">
       <div className="card-body">
         <h2 className="font-display text-3xl pl-2">{title}</h2>
-        <div className="flex flex-row">
+        <div className="flex flex-row ">
           <div className="flex-1 p-2  w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
 

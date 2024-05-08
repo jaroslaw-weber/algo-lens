@@ -2,11 +2,11 @@ import React from 'react';
 
 const CodePreview = ({ code, highlightLineIndex }) => {
   return (
-    <pre className="code bg-base-200 shadow border rounded-lg py-3 font-sm leading-3 overflow-auto">
+    <pre className="code bg-base-200 shadow border rounded-lg py-3 font-sm font-code leading-3 overflow-auto">
       {code.split('\n').map((line, index) => (
         <div 
           key={index} 
-          className={`px-4 py-2 ${index === highlightLineIndex ? 'bg-primary' : ''}`}
+          className={`px-4 py-2 transition-transform transition-colors duration-100 ${index === highlightLineIndex ? 'bg-primary scale-110' : ''}`}
         >
           {line}
         </div>
