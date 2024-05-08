@@ -40,7 +40,8 @@ export function asArr(
   label: string,
   arr: any[],
   column1?: number,
-  column2?: number
+  column2?: number,
+  column3?:number
 ): ArrayVariable {
   const result: ArrayVariable = {
     label,
@@ -55,6 +56,10 @@ export function asArr(
         value: column2,
         dimension: "column",
       },
+      {
+        value: column3,
+        dimension: "column",
+      }
     ],
   };
   return result;
