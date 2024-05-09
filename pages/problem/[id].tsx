@@ -18,12 +18,12 @@ const ProblemPage = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="w-full ">
       <Head>
         <title>{problem?.title}</title>
       </Head>
 
-      <main className="min-h-screen flex items-center justify-center">
+      <main className="min-h-screen flex   lg:mx-12 items-center justify-center">
         {problem ? <ProblemVisualizer problem={problem} /> : <p>Loading...</p>}
       </main>
     </div>

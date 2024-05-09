@@ -67,11 +67,13 @@ const code = `function maxProfit(prices) {
     let minPrice = prices[0];
     //#1
     for (let i = 1; i < prices.length; i++) {
-        const diff = prices[i] - minPrice;
+        const price = prices[i]
+        const diff = price - minPrice;
+        const prev = dp[i - 1];
         //#2
-        dp[i] = Math.max(dp[i - 1], diff);
+        dp[i] = Math.max(prev, diff);
         //#3
-        minPrice = Math.min(minPrice, prices[i]);
+        minPrice = Math.min(minPrice, price);
         //#4
     }
     
@@ -82,13 +84,12 @@ const code = `function maxProfit(prices) {
 
 const title = "Best Time to Buy and Sell Stock";
 const getInput = () => ({ prices: [7, 1, 5, 3, 6, 4] });
-const url = "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/";
 
 export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,
   func: maxProfit,
-  url,
+  tested:true,
   id:"best-time-to-buy-and-sell-stock",
 };

@@ -49,21 +49,27 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
           <h2 className="font-display text-3xl pl-2">{title}</h2>
           <a
             href={`https://leetcode.com/problems/${id}/description/`}
-            className="text-blue-600 hover:text-blue-800 transition-colors"
+            className="link  tooltip tooltip-right"
+            data-tip="Go to Leetcode"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="fas fa-external-link-alt" aria-hidden="true"></i>
-            <span className="sr-only">Go to Leetcode</span>
+            <i
+              className="fas fa-external-link-alt transition-transform duration-300 hover:scale-110"
+              aria-hidden="true"
+            ></i>
           </a>
         </div>
         <div className="flex flex-row ">
           <div className="flex-1 p-2  w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
+            <div
+              className="tooltip  tooltip-right"
+              data-tip="Use slider to see how the code works"
+            >
+              <i className="fas fa-circle-info pt-6 hover:scale-110 transition-transform duration-300"></i>
+            </div>
 
-            <p className="text-xs pt-6 italic">
-              use slider to see how the code works
-            </p>
             <input
               type="range"
               min="0"

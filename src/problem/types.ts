@@ -18,6 +18,9 @@ export interface Problem<Input, State> {
   url?: string;
 
   hide?:boolean
+
+  /* did i test this code? does it work well? */
+  tested?:boolean
 }
 
 /** Represents a variable used within a ProblemState, can be a simple number or an array. */
