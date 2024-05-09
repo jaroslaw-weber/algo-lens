@@ -1,17 +1,14 @@
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray,  asSimpleValue } from "../../utils";
+import { asArray, asSimpleValue } from "../../utils";
 
-function canBreak(p: WordBreakInput): ProblemState[] {
+function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
   const { s: str, wordDict } = p;
   const n = str.length;
   const dp: boolean[] = new Array(n + 1).fill(false);
-  dp[0] = true;  // Empty string can always be segmented.
+  dp[0] = true; // Empty string can always be segmented.
   s.push({
-    variables: [
-      ...asSimpleValue({ str}),
-      asArray("dp", dp),
-    ],
+    variables: [...asSimpleValue({ str }), asArray("dp", dp)],
     breakpoint: 1,
   }); //#1
 
@@ -21,7 +18,7 @@ function canBreak(p: WordBreakInput): ProblemState[] {
         dp[i] = true;
         s.push({
           variables: [
-           ... asSimpleValue({ str,i, j, substring: str.substring(j, i) }),
+            ...asSimpleValue({ str, i, j, substring: str.substring(j, i) }),
             asArray("dp", dp, i, j),
           ],
           breakpoint: 2,
@@ -35,7 +32,8 @@ function canBreak(p: WordBreakInput): ProblemState[] {
   s.push({
     variables: [
       ...asSimpleValue({
-        str, result,
+        str,
+        result,
       }),
       asArray("dp", dp, n),
     ],
@@ -49,7 +47,7 @@ interface WordBreakInput {
   wordDict: string[];
 }
 
-const code = `function canBreak(s, wordDict) {
+const code = `function wordBreak(s, wordDict) {
   const n = s.length;
   const dp = new Array(n + 1).fill(false);
   dp[0] = true; 
@@ -69,12 +67,16 @@ const code = `function canBreak(s, wordDict) {
 }`;
 
 const title = "Word Break";
-const getInput = () => ({ s: "leetcode", wordDict: ["leet", "code"] });
+const getInput = () => ({
+  s: "catsandog",
+  wordDict: ["cats", "dog", "sand", "and", "cat"],
+});
 
 export const wordBreakProblem: Problem<WordBreakInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,
-  func: canBreak,
+  func: wordBreak,
   id: "word-break",
+  tested:true
 };
