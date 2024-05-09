@@ -63,7 +63,10 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
         <div className="flex flex-row ">
           <div className="flex-1 p-2  w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
-            <div
+           
+          </div>
+          <div className="pl-6 flex-1 w-1/2  p-2 space-y-4">
+            <div className="flex items-center gap-6"> <div
               className="tooltip  tooltip-right"
               data-tip="Use slider to see how the code works"
             >
@@ -77,9 +80,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
               value={currentIndex}
               onChange={handleSliderChange}
               className="range range-primary mt-4"
-            />
-          </div>
-          <div className="flex-1 w-1/2  p-2 space-y-4">
+            /></div>
             <DisplayState state={state} />
           </div>
         </div>

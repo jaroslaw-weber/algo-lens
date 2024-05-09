@@ -11,7 +11,7 @@ function minPathSum(p: MinPathSumInput): ProblemState[] {
 
   // Initial step
   steps.push({
-    variables: [as2dArray("grid", grid, []), as2dArray("dp", dp, [])],
+    variables: [as2dArray("grid", grid, [{r:0,c:0}]), as2dArray("dp", dp, [{r:0,c:0}])],
     breakpoint: 1,
   });
 
@@ -20,8 +20,11 @@ function minPathSum(p: MinPathSumInput): ProblemState[] {
     dp[0][j] = dp[0][j - 1] + grid[0][j];
     steps.push({
       variables: [
-        as2dArray("grid", grid, []),
-        as2dArray("dp", dp, [{ r: 0, c: j }]),
+        as2dArray("grid", grid, [{ r: 0, c: j }]),
+        as2dArray("dp", dp, [
+          { r: 0, c: j },
+          { r: 0, c: j - 1 },
+        ]),
       ],
       breakpoint: 2,
     });
@@ -33,7 +36,10 @@ function minPathSum(p: MinPathSumInput): ProblemState[] {
     steps.push({
       variables: [
         as2dArray("grid", grid, [{ r: i, c: 0 }]),
-        as2dArray("dp", dp, [{ r: i, c: 0 }]),
+        as2dArray("dp", dp, [
+          { r: i, c: 0 },
+          { r: i - 1, c: 0 },
+        ]),
       ],
       breakpoint: 3,
     });
@@ -44,7 +50,10 @@ function minPathSum(p: MinPathSumInput): ProblemState[] {
     for (let j = 1; j < n; j++) {
       dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
       steps.push({
-        variables: [asArray("grid", grid), asArray("dp", dp, i, j)],
+        variables: [
+          as2dArray("grid", grid, [{ r: i, c: j }]),
+          as2dArray("dp", dp, [{ r: i, c: j },{ r: i-1, c: j },{ r: i, c: j-1 }]),
+        ],
         breakpoint: 4,
       });
     }

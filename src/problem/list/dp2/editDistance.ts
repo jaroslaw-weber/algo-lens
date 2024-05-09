@@ -16,7 +16,7 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
     steps.push({
       variables: [
         ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
-        asArray("dp", dp),
+        as2dArray("dp", dp, [{r:i,c:0}]),
         ...asSimpleValue({ i }),
       ],
       breakpoint: 1,
@@ -27,7 +27,7 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
     steps.push({
       variables: [
         ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
-        asArray("dp", dp),
+        as2dArray("dp", dp, [{r:0,c:j}]),
         ...asSimpleValue({ j }),
       ],
       breakpoint: 2,
@@ -50,9 +50,9 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
             i,
             j,
           }),
+          as2dArray("dp", dp, [{ r: i, c: j }]),
           asStringArray("s1", s1, i - 1),
           asStringArray("s2", s2, j - 1),
-          as2dArray("dp", dp, [{ r: i, c: j }]),
           ...asSimpleValue({ op, i, j }),
         ],
         breakpoint: 3,
@@ -63,8 +63,10 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
   const result = dp[m][n];
   steps.push({
     variables: [
-      ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
       as2dArray("dp", dp, [{ r: m, c: n }]),
+      asStringArray("s1", s1),
+      asStringArray("s2", s2),
+      ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
       ...asSimpleValue({ result }),
     ],
     breakpoint: 4,
@@ -84,9 +86,11 @@ const code = `function editDistance(s1: string, s2: string): number {
 
   for (let i = 0; i <= m; i++) {
     dp[i][0] = i;
+    //#1
   }
   for (let j = 0; j <= n; j++) {
     dp[0][j] = j;
+    //#2
   }
 
   for (let i = 1; i <= m; i++) {
@@ -96,9 +100,11 @@ const code = `function editDistance(s1: string, s2: string): number {
       } else {
         dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
       }
+      //#3
     }
   }
 
+  //#4
   return dp[m][n];
 }`;
 
