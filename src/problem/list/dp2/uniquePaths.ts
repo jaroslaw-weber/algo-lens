@@ -89,5 +89,5 @@ export const uniquePathsProblem: Problem<
   code: code,
   getInput: getInput,
   func: uniquePaths,
-  id: "uniquePaths",
+  id: "unique-paths",
 };

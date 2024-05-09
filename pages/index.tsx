@@ -20,10 +20,8 @@ const Home: NextPage = () => {
           content="Visualize TypeScript code execution"
         />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@animxyz/core"
-        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
       </Head>
 
       <main className="w-full min-h-screen font-sans flex flex-col bg-primary items-center justify-center">

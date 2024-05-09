@@ -7,24 +7,30 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Define a color scheme for pointers
   const colors = ["bg-primary", "bg-secondary", "bg-info"];
 
+  // Determine if the array is 2D (computed directly)
+  const is2D = useMemo(() => array.some(item => Array.isArray(item)), [array]);
+
   // Memoize style calculation for cells
   const getCellStyle = useMemo(() => {
     return (rowIndex, colIndex) => {
       if (!pointers) return "";
 
-      const rowPointer = pointers.find(pointer => pointer.dimension === "row" && rowIndex === pointer.value);
-      const colPointer = pointers.find(pointer => pointer.dimension === "column" && colIndex === pointer.value);
+      let rowPointer = null, colPointer = null;
+      if (is2D) {
+        rowPointer = pointers.find(pointer => pointer.dimension === "row" && rowIndex === pointer.value);
+        colPointer = pointers.find(pointer => pointer.dimension === "column" && colIndex === pointer.value);
+      } else {
+        colPointer = pointers.find(pointer => pointer.dimension === "column" && colIndex === pointer.value);
+      }
 
-      // Check if both row and column pointers match the current cell indices
-      if (rowPointer && colPointer) {
+      if (is2D && rowPointer && colPointer) {
         return `${colors[pointers.indexOf(rowPointer) % colors.length]} text-white`;
+      } else if (!is2D && colPointer) {
+        return `${colors[pointers.indexOf(colPointer) % colors.length]} text-white`;
       }
       return "";
     };
-  }, [pointers, colors]);
-
-  // Function to determine if the array is 2D
-  const is2D = useMemo(() => array.some(item => Array.isArray(item)), [array]);
+  }, [pointers, colors, is2D]);
 
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (

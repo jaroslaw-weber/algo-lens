@@ -11,7 +11,7 @@ export interface ProblemVisualizerProps<Input, State> {
 const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   problem,
 }) => {
-  const { title, code, getInput, func } = problem;
+  const { title, code, getInput, func, id } = problem;
   const [currentInput, setCurrentInput] = useState(getInput());
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,7 +43,20 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   return (
     <div className="card bg-white w-2/3 mx-auto p my-8 min-h-full shadow">
       <div className="card-body">
-        <h2 className="font-display text-3xl pl-2">{title}</h2>
+        <div className="flex items-center gap-6">
+          {" "}
+          {/* Adjust the gap as needed */}
+          <h2 className="font-display text-3xl pl-2">{title}</h2>
+          <a
+            href={`https://leetcode.com/problems/${id}/description/`}
+            className="text-blue-600 hover:text-blue-800 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fas fa-external-link-alt" aria-hidden="true"></i>
+            <span className="sr-only">Go to Leetcode</span>
+          </a>
+        </div>
         <div className="flex flex-row ">
           <div className="flex-1 p-2  w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />

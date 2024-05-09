@@ -16,6 +16,8 @@ export interface Problem<Input, State> {
   
   /** Optional URL for reference or problem description. */
   url?: string;
+
+  hide?:boolean
 }
 
 /** Represents a variable used within a ProblemState, can be a simple number or an array. */

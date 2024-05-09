@@ -10,15 +10,14 @@ import { knapsackProblem } from "./list/dp2/knapsackProblem";
 import { uniquePathsProblem } from "./list/dp2/uniquePaths";
 
 export const problems = [
-	maxProfitProblem,
-	climbStairsProblem,
-	coinChangeProblem,
-	houseRobberProblem,
-	wordBreakProblem,
-	editDistanceProblem,
-	longestIncreasingSubsequenceProblem,
-	minPathSumProblem,
-	knapsackProblem,
-	uniquePathsProblem,
-  ];
-  
+  maxProfitProblem,
+  climbStairsProblem,
+  coinChangeProblem,
+  houseRobberProblem,
+  wordBreakProblem,
+  editDistanceProblem,
+  longestIncreasingSubsequenceProblem,
+  minPathSumProblem,
+  knapsackProblem,
+  uniquePathsProblem,
+].filter((x) => !x.hide);

@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from "../../types";
-import { asArray, as2dArray, asSimpleValue } from "../../utils";
+import { asArray, as2dArray, asSimpleValue, asStringArray } from "../../utils";
 
 function editDistance(p: EditDistanceInput): ProblemState[] {
   const { s1, s2 } = p;
@@ -47,10 +47,12 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
       steps.push({
         variables: [
           ...asSimpleValue({
-            s1Char: s1.charCodeAt(i - 1),
-            s2Char: s2.charCodeAt(j - 1),
+            i,
+            j,
           }),
-          as2dArray("dp", dp, [{r:i, c:j}]),
+          asStringArray("s1", s1, i - 1),
+          asStringArray("s2", s2, j - 1),
+          as2dArray("dp", dp, [{ r: i, c: j }]),
           ...asSimpleValue({ op, i, j }),
         ],
         breakpoint: 3,
@@ -103,10 +105,7 @@ const code = `function editDistance(s1: string, s2: string): number {
 const title = "Edit Distance";
 const getInput = () => ({ s1: "kitten", s2: "sitting" });
 
-export const editDistanceProblem: Problem<
-  EditDistanceInput,
-  ProblemState
-> = {
+export const editDistanceProblem: Problem<EditDistanceInput, ProblemState> = {
   title,
   code,
   getInput,

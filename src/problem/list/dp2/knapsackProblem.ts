@@ -78,5 +78,6 @@ export const knapsackProblem: Problem<KnapsackInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: knapsack,
-  id: "knapsack",
+  id: "target-sum",
+  hide:true//not correct
 };
