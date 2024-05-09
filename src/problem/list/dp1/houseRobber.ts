@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArr, asNumber } from "../../service";
+import { asArray, asSingleValue } from "../../service";
 
 function rob(houses: HouseRobberInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -9,8 +9,8 @@ function rob(houses: HouseRobberInput): ProblemState[] {
   dp[0] = 0;
   s.push({
     variables: [
-      asArr("nums", nums),
-      asArr("dp", dp),
+      asArray("nums", nums),
+      asArray("dp", dp),
     ],
     breakpoint: 1,
   }); //#1
@@ -18,8 +18,8 @@ function rob(houses: HouseRobberInput): ProblemState[] {
   dp[1] = nums[0];
   s.push({
     variables: [
-      asArr("nums", nums),
-      asArr("dp", dp),
+      asArray("nums", nums),
+      asArray("dp", dp),
     ],
     breakpoint: 2,
   }); //#2
@@ -28,8 +28,8 @@ function rob(houses: HouseRobberInput): ProblemState[] {
     dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
     s.push({
       variables: [
-        asArr("dp", dp, i, i - 1, i - 2),
-        ...asNumber({ i }),
+        asArray("dp", dp, i, i - 1, i - 2),
+        ...asSingleValue({ i }),
       ],
       breakpoint: 3,
     }); //#3
@@ -38,9 +38,9 @@ function rob(houses: HouseRobberInput): ProblemState[] {
   const result = dp[n];
   s.push({
     variables: [
-      asArr("nums", nums),
-      asArr("dp", dp, n),
-      ...asNumber({ result }),
+      asArray("nums", nums),
+      asArray("dp", dp, n),
+      ...asSingleValue({ result }),
     ],
     breakpoint: 4,
   }); //#4

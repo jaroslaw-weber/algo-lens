@@ -1,47 +1,74 @@
-import { Problem } from "../../Problem";
-import {cloneDeep} from 'lodash'
-function editDistance(p: { s1: string, s2: string }): any[] {
+import { Problem, ProblemState } from "../../Problem";
+import { asArray, as2dArray, asSingleValue } from "../../service";
+
+function editDistance(p: EditDistanceInput): ProblemState[] {
   const { s1, s2 } = p;
-  const steps = [];
+  const steps: ProblemState[] = [];
   const m = s1.length;
   const n = s2.length;
-  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  const dp: number[][] = Array.from({ length: m + 1 }, () =>
+    Array(n + 1).fill(0)
+  );
 
   // Initialize the DP table
   for (let i = 0; i <= m; i++) {
-    dp[i][0] = i;  // Cost of deleting all characters from s1
-    steps.push({dp: cloneDeep(dp),line: 1 });
+    dp[i][0] = i;
+    steps.push({
+      variables: [
+        ...asSingleValue({ s1Length: s1.length, s2Length: s2.length }),
+        asArray("dp", dp),
+        ...asSingleValue({ i }),
+      ],
+      breakpoint: 1,
+    });
   }
   for (let j = 0; j <= n; j++) {
-    dp[0][j] = j;  // Cost of inserting all characters into s1
-    steps.push({ dp: cloneDeep(dp), line: 6 });
+    dp[0][j] = j;
+    steps.push({
+      variables: [
+        ...asSingleValue({ s1Length: s1.length, s2Length: s2.length }),
+        asArray("dp", dp),
+        ...asSingleValue({ j }),
+      ],
+      breakpoint: 2,
+    });
   }
 
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
+      let op = 0; // Operation cost
       if (s1[i - 1] === s2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1];  // No operation needed if characters match
+        op = dp[i - 1][j - 1]; // No operation needed if characters match
       } else {
-        dp[i][j] = 1 + Math.min(
-          dp[i - 1][j],    // Deletion
-          dp[i][j - 1],    // Insertion
-          dp[i - 1][j - 1] // Substitution
-        );
+        op = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+        dp[i][j] = op;
       }
-      steps.push({ i, j, dp: cloneDeep(dp),line: 17 });
+      steps.push({
+        variables: [
+          ...asSingleValue({
+            s1Char: s1.charCodeAt(i - 1),
+            s2Char: s2.charCodeAt(j - 1),
+          }),
+          asArray("dp", dp, i, j),
+          ...asSingleValue({ op, i, j }),
+        ],
+        breakpoint: 3,
+      });
     }
   }
 
   const result = dp[m][n];
-  steps.push({ s1, s2, dp: cloneDeep(dp), result, line: 23 });
-  return steps;
-}
+  steps.push({
+    variables: [
+      ...asSingleValue({ s1Length: s1.length, s2Length: s2.length }),
+      as2dArray("dp", dp, [{ r: m, c: n }]),
+      ...asSingleValue({ result }),
+    ],
+    breakpoint: 4,
+  });
 
-interface EditDistanceState {
-  s1: string;
-  s2: string;
-  dp: number[][];
+  return steps;
 }
 
 interface EditDistanceInput {
@@ -74,18 +101,14 @@ const code = `function editDistance(s1: string, s2: string): number {
 }`;
 
 const title = "Edit Distance";
-
-const getInput = () => ({
-	s1: "kitten", // Changed from "horse"
-	s2: "sitting" // Changed from "ros"
-  });
+const getInput = () => ({ s1: "kitten", s2: "sitting" });
 
 export const editDistanceProblem: Problem<
   EditDistanceInput,
-  EditDistanceState
+  ProblemState
 > = {
-  title: title,
-  code: code,
-  getInput: getInput,
+  title,
+  code,
+  getInput,
   func: editDistance,
 };

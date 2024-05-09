@@ -1,42 +1,71 @@
-import { Problem } from "../../Problem";
+import { Problem, ProblemState } from "../../Problem";
+import { as2dArray, asArray, asSingleValue } from "../../service";
 
-function minPathSum(p: { grid: number[][] }): any[] {
+function minPathSum(p: MinPathSumInput): ProblemState[] {
   const { grid } = p;
-  const steps = [];
+  const steps: ProblemState[] = [];
   const m = grid.length;
   const n = grid[0].length;
   const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
   dp[0][0] = grid[0][0];
-  steps.push({ grid, dp: dp.map(row => row.slice()), line: 1 });
+
+  // Initial step
+  steps.push({
+    variables: [as2dArray("grid", grid, []), as2dArray("dp", dp, [])],
+    breakpoint: 1,
+  });
 
   // Initialize the first row
   for (let j = 1; j < n; j++) {
     dp[0][j] = dp[0][j - 1] + grid[0][j];
-    steps.push({ grid, dp: dp.map(row => row.slice()), line: 6 });
+    steps.push({
+      variables: [
+        as2dArray("grid", grid, []),
+        as2dArray("dp", dp, [{ r: 0, c: j }]),
+      ],
+      breakpoint: 2,
+    });
   }
 
   // Initialize the first column
   for (let i = 1; i < m; i++) {
     dp[i][0] = dp[i - 1][0] + grid[i][0];
-    steps.push({ grid, dp: dp.map(row => row.slice()), line: 11 });
+    steps.push({
+      variables: [
+        as2dArray("grid", grid, [{ r: i, c: 0 }]),
+        as2dArray("dp", dp, [{ r: i, c: 0 }]),
+      ],
+      breakpoint: 3,
+    });
   }
 
   // Fill the rest of the dp array
   for (let i = 1; i < m; i++) {
     for (let j = 1; j < n; j++) {
       dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
-      steps.push({ i, j, grid, dp: dp.map(row => row.slice()), line: 17 });
+      steps.push({
+        variables: [asArray("grid", grid), asArray("dp", dp, i, j)],
+        breakpoint: 4,
+      });
     }
   }
 
   const result = dp[m - 1][n - 1];
-  steps.push({ grid, dp, result, line: 23 });
+  steps.push({
+    variables: [
+      asArray("grid", grid),
+      asArray("dp", dp),
+      ...asSingleValue({ result: result }),
+    ],
+    breakpoint: 5,
+  });
+
   return steps;
 }
 
-interface MinPathSumState {
-  grid: number[][];
-  dp: number[][];
+interface MinPathSumState extends ProblemState {
+  variables: any[];
+  breakpoint: number;
 }
 
 interface MinPathSumInput {
@@ -48,32 +77,41 @@ const code = `function minPathSum(grid: number[][]): number {
   const n = grid[0].length;
   const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
   dp[0][0] = grid[0][0];
+  //#1
   
   for (let j = 1; j < n; j++) {
     dp[0][j] = dp[0][j - 1] + grid[0][j];
+    
+    //#2
   }
   
   for (let i = 1; i < m; i++) {
     dp[i][0] = dp[i - 1][0] + grid[i][0];
+    //#3
   }
   
   for (let i = 1; i < m; i++) {
     for (let j = 1; j < n; j++) {
       dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+      //#4
     }
   }
   
-  return dp[m - 1][n - 1];
+  const result = dp[m - 1][n - 1];
+  //#5
+  return result;
 }`;
 
 const title = "Minimum Path Sum";
+const getInput = () => ({
+  grid: [
+    [1, 3, 1],
+    [1, 5, 1],
+    [4, 2, 1],
+  ],
+});
 
-const getInput = () => ({ grid: [[1,3,1], [1,5,1], [4,2,1]] });
-
-export const minPathSumProblem: Problem<
-  MinPathSumInput,
-  MinPathSumState
-> = {
+export const minPathSumProblem: Problem<MinPathSumInput, MinPathSumState> = {
   title: title,
   code: code,
   getInput: getInput,

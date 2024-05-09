@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArr, asNumber } from "../../service";
+import { asArray, asSingleValue } from "../../service";
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
   //save state
@@ -10,9 +10,9 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   //
   s.push({
     variables: [
-      asArr("prices", prices),
-      asArr("dp", dp),
-      ...asNumber({ minPrice }),
+      asArray("prices", prices),
+      asArray("dp", dp),
+      ...asSingleValue({ minPrice }),
     ],
     breakpoint: 1,
   });
@@ -21,18 +21,18 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     const diff = prices[i] - minPrice;//
     s.push({
       variables: [
-        asArr("prices", prices, i),
-        asArr("dp", dp, i, i - 1),
-        ...asNumber({ minPrice, diff,i }),
+        asArray("prices", prices, i),
+        asArray("dp", dp, i, i - 1),
+        ...asSingleValue({ minPrice, diff,i }),
       ],
       breakpoint:2,
     });
     dp[i] = Math.max(dp[i - 1], diff);//
     s.push({
       variables: [
-        asArr("prices", prices, i),
-        asArr("dp", dp, i, i - 1),
-        ...asNumber({ minPrice, diff,i }),
+        asArray("prices", prices, i),
+        asArray("dp", dp, i, i - 1),
+        ...asSingleValue({ minPrice, diff,i }),
       ],
       breakpoint:3,
     });
@@ -40,9 +40,9 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     //
     s.push({
       variables: [
-        asArr("prices", prices, i),
-        asArr("dp", dp, i, i - 1),
-        ...asNumber({ minPrice, diff,i }),
+        asArray("prices", prices, i),
+        asArray("dp", dp, i, i - 1),
+        ...asSingleValue({ minPrice, diff,i }),
       ],
       breakpoint:4,
     });
@@ -50,9 +50,9 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
 
   const result = dp[prices.length - 1];
   s.push({ variables:  [
-    asArr("prices", prices),
-    asArr("dp", dp, prices.length - 1),
-    ...asNumber({ minPrice,result }),
+    asArray("prices", prices),
+    asArray("dp", dp, prices.length - 1),
+    ...asSingleValue({ minPrice,result }),
   ], breakpoint: 5 });
 
   return s;

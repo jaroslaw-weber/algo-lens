@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArr,  asNumber } from "../../service";
+import { asArray,  asSingleValue } from "../../service";
 
 function canBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -9,8 +9,8 @@ function canBreak(p: WordBreakInput): ProblemState[] {
   dp[0] = true;  // Empty string can always be segmented.
   s.push({
     variables: [
-      ...asNumber({ str}),
-      asArr("dp", dp),
+      ...asSingleValue({ str}),
+      asArray("dp", dp),
     ],
     breakpoint: 1,
   }); //#1
@@ -21,8 +21,8 @@ function canBreak(p: WordBreakInput): ProblemState[] {
         dp[i] = true;
         s.push({
           variables: [
-           ... asNumber({ str,i, j, substring: str.substring(j, i) }),
-            asArr("dp", dp, i, j),
+           ... asSingleValue({ str,i, j, substring: str.substring(j, i) }),
+            asArray("dp", dp, i, j),
           ],
           breakpoint: 2,
         }); //#2
@@ -34,10 +34,10 @@ function canBreak(p: WordBreakInput): ProblemState[] {
   const result = dp[n];
   s.push({
     variables: [
-      ...asNumber({
+      ...asSingleValue({
         str, result,
       }),
-      asArr("dp", dp, n),
+      asArray("dp", dp, n),
     ],
     breakpoint: 3,
   }); //#3

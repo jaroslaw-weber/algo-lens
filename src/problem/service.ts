@@ -30,13 +30,13 @@ export const problems = [
 
 export const getRandomProblem = () => sample(problems);
 
-export function asNumber(o: any): NumberVariable[] {
+export function asSingleValue(o: any): NumberVariable[] {
   return Object.keys(o).map(
     (k) => ({ label: k, value: o[k], type: "number" } as NumberVariable)
   );
 }
 
-export function asArr(
+export function asArray(
   label: string,
   arr: any[],
   column1?: number,
@@ -65,26 +65,31 @@ export function asArr(
   return result;
 }
 
-export function asArr2(
+export interface Pointer2D{
+r:number;
+c:number
+}
+
+export function as2dArray(
   label: string,
   arr: any[][],
-  row: number,
-  column?: number
+  pointers: Pointer2D[],
 ): ArrayVariable {
   const result: ArrayVariable = {
     label,
     type: "array",
     value: cloneDeep(arr),
-    pointers: [
-      {
-        value: row,
-        dimension: "row",
-      },
-      {
-        value: column,
-        dimension: "column",
-      },
-    ],
+    pointers: [],
   };
+  for(const p of pointers){
+    result.pointers.push({
+      value: p.r,
+      dimension: "row",
+    })
+    result.pointers.push({
+      value: p.c,
+      dimension: "column",
+    })
+  }
   return result;
 }

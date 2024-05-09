@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArr, asNumber } from "../../service";
+import { asArray, asSingleValue } from "../../service";
 
 function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
     const s: ProblemState[] = [];
@@ -7,8 +7,8 @@ function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
     const dp: number[] = new Array(nums.length).fill(1);
     s.push({
         variables: [
-            asArr("nums", nums),
-            asArr("dp", dp),
+            asArray("nums", nums),
+            asArray("dp", dp),
         ],
         breakpoint: 1,
     }); //#1
@@ -19,9 +19,9 @@ function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
                 dp[i] = Math.max(dp[i], dp[j] + 1);
                 s.push({
                     variables: [
-                        asArr("dp", dp, i),
-                        asArr("nums", nums, i, j),
-                        ...asNumber({ i, j }),
+                        asArray("dp", dp, i),
+                        asArray("nums", nums, i, j),
+                        ...asSingleValue({ i, j }),
                     ],
                     breakpoint: 2,
                 }); //#2
@@ -32,9 +32,9 @@ function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
     const result = Math.max(...dp);
     s.push({
         variables: [
-            asArr("nums", nums),
-            asArr("dp", dp),
-            ...asNumber({ result }),
+            asArray("nums", nums),
+            asArray("dp", dp),
+            ...asSingleValue({ result }),
         ],
         breakpoint: 3,
     }); //#3
