@@ -1,43 +1,54 @@
 import { Problem, ProblemState, Variable } from "../../types";
 import { asArray, asSimpleValue } from "../../utils";
 
-function minCoins(p: CoinChangeInput): ProblemState[] {
+function coinChange(p: CoinChangeInput): ProblemState[] {
   const s: ProblemState[] = [];
-  const { coins, amount } = p;
-  const coinsVariable = asArray("coins", coins)
-  const dp: number[] = new Array(amount + 1).fill(Infinity);
-  dp[0] = 0;
+  const { coins, target } = p;
+  const coinsVariable = asArray("coins", coins);
+  const dp: number[] = new Array(target + 1).fill(Infinity);
+  dp[0] = 0; // Base case: no coins needed for amount 0
+
   s.push({
     variables: [
-        coinsVariable,
-      asArray("dp", dp),
-      ...asSimpleValue({ amount }),
+      coinsVariable,
+      asArray("minCoins", dp),
+      ...asSimpleValue({ target }),
     ],
     breakpoint: 1,
   }); //#1
 
   for (let coin of coins) {
-    for (let i = coin; i <= amount; i++) {
-      if (dp[i - coin] + 1 < dp[i]) {
-        dp[i] = dp[i - coin] + 1;
+    for (let amount = coin; amount <= target; amount++) {
+      const dpIndex = amount - coin;
+      const coinsWithCurrent = dp[dpIndex] + 1;
+      s.push({
+        variables: [
+          coinsVariable,
+          asArray("minCoins", dp, amount, amount - coin),
+          ...asSimpleValue({ coin,amount, target, coinsWithCurrent,dpIndex }),
+        ],
+        breakpoint: 2,
+      }); //#
+      if (coinsWithCurrent < dp[amount]) {
+        dp[amount] = coinsWithCurrent;
         s.push({
           variables: [
             coinsVariable,
-            asArray("dp", dp, i, i - coin),
-            ...asSimpleValue({ coin, i, amount }),
+            asArray("minCoins", dp, amount, amount - coin),
+            ...asSimpleValue({ coin, amount, target, coinsWithCurrent,dpIndex }),
           ],
-          breakpoint: 2,
+          breakpoint: 3,
         }); //#2
       }
     }
   }
 
-  const result = dp[amount] === Infinity ? -1 : dp[amount];
+  const result = dp[target] === Infinity ? -1 : dp[target];
   s.push({
     variables: [
-        coinsVariable,
-      asArray("dp", dp, amount),
-      ...asSimpleValue({ result,amount }),
+      coinsVariable,
+      asArray("minCoins", dp, target),
+      ...asSimpleValue({ result, target }),
     ],
     breakpoint: 3,
   }); //#3
@@ -46,32 +57,44 @@ function minCoins(p: CoinChangeInput): ProblemState[] {
 
 interface CoinChangeInput {
   coins: number[];
-  amount: number;
+  target: number;
 }
+const code = `function coinChange(coins, target) {
+  // Create an array to store the minimum number of coins required for each amount up to the target
+  const minCoins = new Array(target + 1).fill(Infinity);
+  minCoins[0] = 0; // Base case: no coins needed for amount 0
 
-const code = `function minCoins(coins, amount) {
-  const dp = new Array(amount + 1).fill(Infinity);
-  dp[0] = 0; 
-  //#1
+  //#1 Iterate through each coin denomination available
   for (let coin of coins) {
-    for (let i = coin; i <= amount; i++) {
-      if (dp[i - coin] + 1 < dp[i]) {
-        dp[i] = dp[i - coin] + 1; 
-        //#2
+    // Evaluate every possible amount from this coin's value up to the target amount
+    for (let amount = coin; amount <= target; amount++) {
+      // Calculate the minimum number of coins needed if this coin is included
+      const coinsWithCurrent = minCoins[amount - coin] + 1;
+      //#2
+
+      // Update the stored value if the calculated number is fewer than the current minimum
+      if (coinsWithCurrent < minCoins[amount]) {
+        minCoins[amount] = coinsWithCurrent;
+
+        //#3 Proceed to the next amount to evaluate with this coin
       }
     }
   }
-  const result = dp[amount] === Infinity ? -1 : dp[amount]; 
-  //#3
+
+  // Check the minimum coins needed for the target amount; return -1 if it remains Infinity
+  const result = minCoins[target] === Infinity ? -1 : minCoins[target];
+
+  //#4 Return the final calculated result
   return result;
 }`;
 
 const title = "Coin Change";
-const getInput = () => ({ coins: [1, 2, 5], amount: 11 });
+const getInput = () => ({ coins: [1, 2, 5], target: 11 });
 export const coinChangeProblem: Problem<CoinChangeInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,
-  func: minCoins,
-  id:"coin-change",
+  func: coinChange,
+  id: "coin-change",
+  tested: true,
 };

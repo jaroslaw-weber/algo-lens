@@ -10,50 +10,54 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   //
   s.push({
     variables: [
-      asArray("prices", prices),
+      asArray("prices", prices, 0),
       asArray("dp", dp),
       ...asSimpleValue({ minPrice }),
     ],
     breakpoint: 1,
   });
   for (let i = 1; i < prices.length; i++) {
-    const currentPrice = prices[i];
-    const diff = prices[i] - minPrice;//
+    const price = prices[i];
+    const diff = price - minPrice; //
+    const prev = dp[i - 1];
     s.push({
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        ...asSimpleValue({ minPrice, diff,i }),
+        ...asSimpleValue({ i, price, minPrice, diff, prev }),
       ],
-      breakpoint:2,
+      breakpoint: 2,
     });
-    dp[i] = Math.max(dp[i - 1], diff);//
+    dp[i] = Math.max(prev, diff); //
     s.push({
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        ...asSimpleValue({ minPrice, diff,i }),
+        ...asSimpleValue({ i, price, minPrice, diff, prev }),
       ],
-      breakpoint:3,
+      breakpoint: 3,
     });
-    minPrice = Math.min(minPrice, currentPrice);
+    minPrice = Math.min(minPrice, price);
     //
     s.push({
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        ...asSimpleValue({ minPrice, diff,i }),
+        ...asSimpleValue({ i, price, minPrice, diff, prev }),
       ],
-      breakpoint:4,
+      breakpoint: 4,
     });
   }
 
   const result = dp[prices.length - 1];
-  s.push({ variables:  [
-    asArray("prices", prices),
-    asArray("dp", dp, prices.length - 1),
-    ...asSimpleValue({ minPrice,result }),
-  ], breakpoint: 5 });
+  s.push({
+    variables: [
+      asArray("prices", prices),
+      asArray("dp", dp, prices.length - 1),
+      ...asSimpleValue({ minPrice, result }),
+    ],
+    breakpoint: 5,
+  });
 
   return s;
 }
@@ -61,26 +65,34 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
 interface MaxProfitInput {
   prices: number[];
 }
-
 const code = `function maxProfit(prices) {
-    const dp: number[] = new Array(prices.length).fill(0);
-    let minPrice = prices[0];
-    //#1
-    for (let i = 1; i < prices.length; i++) {
-        const price = prices[i]
-        const diff = price - minPrice;
-        const prev = dp[i - 1];
-        //#2
-        dp[i] = Math.max(prev, diff);
-        //#3
-        minPrice = Math.min(minPrice, price);
-        //#4
-    }
-    
-    const result = dp[prices.length - 1];
-    //#5
-    return result;
+  // Initialize a dynamic programming array to store maximum profit at each step
+  const dp: number[] = new Array(prices.length).fill(0);
+  // Store the first price as the minimum price to compare with subsequent prices
+  let minPrice = prices[0];
+
+  //#1 Loop through each price starting from the second element
+  for (let i = 1; i < prices.length; i++) {
+      const price = prices[i]; // Current price in the loop
+      const diff = price - minPrice; // Calculate potential profit from the minimum price so far
+      const prev = dp[i - 1]; // Maximum profit calculated from previous step
+
+      //#2 Compare and store the maximum of keeping previous max profit or updating it with the current potential profit
+      dp[i] = Math.max(prev, diff);
+
+      //#3 Update the minimum price found so far if current price is lower
+      minPrice = Math.min(minPrice, price);
+
+      //#4 Continue to the next price in the loop
+  }
+
+  // After the loop, store the last calculated maximum profit
+  const result = dp[prices.length - 1];
+
+  //#5 Return the highest profit found
+  return result;
 }`;
+
 
 const title = "Best Time to Buy and Sell Stock";
 const getInput = () => ({ prices: [7, 1, 5, 3, 6, 4] });
@@ -90,6 +102,6 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: maxProfit,
-  tested:true,
-  id:"best-time-to-buy-and-sell-stock",
+  tested: true,
+  id: "best-time-to-buy-and-sell-stock",
 };

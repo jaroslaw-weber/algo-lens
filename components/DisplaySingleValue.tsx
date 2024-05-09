@@ -11,13 +11,9 @@ const DisplaySingleValue = ({ data }: { data: SimpleVariable }) => {
   const animationClass = toggle ? "text-gray-400" : "text-gray-800";
 
   return (
-    <div className="stats flex-1 ">
-      <div className="stat">
-        <div className="stat-title text-sm">{data.label}</div>
-        <div className={`stat-value text-2xl `}>
-          <p className={`transition-colors ${animationClass} duration-75 `}>{data.value}</p>
-        </div>
-      </div>
+    <div className="flex w-1/3 mx-auto justify-end text-right">
+      <p className="flex-1 text-sm text-gray-400">{data.label}</p>
+      <p className="flex-1 text-3xl font-bold">{data.value}</p>
     </div>
   );
 };
