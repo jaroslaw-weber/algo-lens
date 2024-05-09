@@ -1,5 +1,5 @@
-import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArray, asSingleValue } from "../../service";
+import { Problem, ProblemState, Variable } from "../../types";
+import { asArray, asSimpleValue } from "../../utils";
 
 function rob(houses: HouseRobberInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -29,7 +29,7 @@ function rob(houses: HouseRobberInput): ProblemState[] {
     s.push({
       variables: [
         asArray("dp", dp, i, i - 1, i - 2),
-        ...asSingleValue({ i }),
+        ...asSimpleValue({ i }),
       ],
       breakpoint: 3,
     }); //#3
@@ -40,7 +40,7 @@ function rob(houses: HouseRobberInput): ProblemState[] {
     variables: [
       asArray("nums", nums),
       asArray("dp", dp, n),
-      ...asSingleValue({ result }),
+      ...asSimpleValue({ result }),
     ],
     breakpoint: 4,
   }); //#4

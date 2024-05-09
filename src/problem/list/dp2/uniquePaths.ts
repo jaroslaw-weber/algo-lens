@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../../Problem";
-import { asArray, asSingleValue } from "../../service";
+import { Problem, ProblemState } from "../../types";
+import { asArray, asSimpleValue } from "../../utils";
 
 function uniquePaths(p: UniquePathsInput): ProblemState[] {
   const { m, n } = p;
@@ -33,7 +33,7 @@ function uniquePaths(p: UniquePathsInput): ProblemState[] {
       steps.push({
         variables: [
           asArray("dp", dp, i, j),
-          ...asSingleValue({ "i": i, "j": j, "value": dp[i][j] })
+          ...asSimpleValue({ "i": i, "j": j, "value": dp[i][j] })
         ],
         breakpoint: 3,
       });
@@ -44,7 +44,7 @@ function uniquePaths(p: UniquePathsInput): ProblemState[] {
   steps.push({
     variables: [
       asArray("dp", dp),
-      ...asSingleValue({ "result": result })
+      ...asSimpleValue({ "result": result })
     ],
     breakpoint: 4,
   });

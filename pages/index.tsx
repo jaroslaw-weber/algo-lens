@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import ProblemVisualizer from "../components/ProblemVisualizer";
-import { getRandomProblem } from "../src/problem/service";
+import { getRandomProblem } from "../src/problem/utils";
 
 const Home: NextPage = () => {
   const [randomProblem, setRandomProblem] = useState(null);

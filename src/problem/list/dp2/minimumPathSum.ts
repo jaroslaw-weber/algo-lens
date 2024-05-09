@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../../Problem";
-import { as2dArray, asArray, asSingleValue } from "../../service";
+import { Problem, ProblemState } from "../../types";
+import { as2dArray, asArray, asSimpleValue } from "../../utils";
 
 function minPathSum(p: MinPathSumInput): ProblemState[] {
   const { grid } = p;
@@ -55,7 +55,7 @@ function minPathSum(p: MinPathSumInput): ProblemState[] {
     variables: [
       asArray("grid", grid),
       asArray("dp", dp),
-      ...asSingleValue({ result: result }),
+      ...asSimpleValue({ result: result }),
     ],
     breakpoint: 5,
   });

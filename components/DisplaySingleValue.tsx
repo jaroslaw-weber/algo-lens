@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { NumberVariable } from "../src/problem/Problem";
+import { SimpleVariable } from "../src/problem/types";
 
-const DisplayNumber = ({ data }: { data: NumberVariable }) => {
+const DisplaySingleValue = ({ data }: { data: SimpleVariable }) => {
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const DisplayNumber = ({ data }: { data: NumberVariable }) => {
   );
 };
 
-export default DisplayNumber;
+export default DisplaySingleValue;

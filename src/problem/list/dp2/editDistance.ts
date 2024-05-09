@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../../Problem";
-import { asArray, as2dArray, asSingleValue } from "../../service";
+import { Problem, ProblemState } from "../../types";
+import { asArray, as2dArray, asSimpleValue } from "../../utils";
 
 function editDistance(p: EditDistanceInput): ProblemState[] {
   const { s1, s2 } = p;
@@ -15,9 +15,9 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
     dp[i][0] = i;
     steps.push({
       variables: [
-        ...asSingleValue({ s1Length: s1.length, s2Length: s2.length }),
+        ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
         asArray("dp", dp),
-        ...asSingleValue({ i }),
+        ...asSimpleValue({ i }),
       ],
       breakpoint: 1,
     });
@@ -26,9 +26,9 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
     dp[0][j] = j;
     steps.push({
       variables: [
-        ...asSingleValue({ s1Length: s1.length, s2Length: s2.length }),
+        ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
         asArray("dp", dp),
-        ...asSingleValue({ j }),
+        ...asSimpleValue({ j }),
       ],
       breakpoint: 2,
     });
@@ -46,12 +46,12 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
       }
       steps.push({
         variables: [
-          ...asSingleValue({
+          ...asSimpleValue({
             s1Char: s1.charCodeAt(i - 1),
             s2Char: s2.charCodeAt(j - 1),
           }),
           asArray("dp", dp, i, j),
-          ...asSingleValue({ op, i, j }),
+          ...asSimpleValue({ op, i, j }),
         ],
         breakpoint: 3,
       });
@@ -61,9 +61,9 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
   const result = dp[m][n];
   steps.push({
     variables: [
-      ...asSingleValue({ s1Length: s1.length, s2Length: s2.length }),
+      ...asSimpleValue({ s1Length: s1.length, s2Length: s2.length }),
       as2dArray("dp", dp, [{ r: m, c: n }]),
-      ...asSingleValue({ result }),
+      ...asSimpleValue({ result }),
     ],
     breakpoint: 4,
   });

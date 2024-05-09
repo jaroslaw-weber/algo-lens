@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import DisplayState from "./DisplayState";
-import { Problem } from "../src/problem/Problem";
+import { Problem } from "../src/problem/types";
 import CodePreview from "./CodePreview";
 
 export interface ProblemVisualizerProps<Input, State> {

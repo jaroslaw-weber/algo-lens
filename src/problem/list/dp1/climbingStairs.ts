@@ -1,5 +1,5 @@
-import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArray, asSingleValue } from "../../service";
+import { Problem, ProblemState, Variable } from "../../types";
+import { asArray, asSimpleValue } from "../../utils";
 
 function climbStairs(p: ClimbingStairsInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -12,7 +12,7 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
   s.push({
     variables: [
       asArray("dp", dp),
-      ...asSingleValue({ n }),
+      ...asSimpleValue({ n }),
     ],
     breakpoint: 1,
   });
@@ -22,7 +22,7 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
     s.push({
       variables: [
         asArray("dp", dp, i, i - 1, i - 2),
-        ...asSingleValue({ i }),
+        ...asSimpleValue({ i }),
       ],
       breakpoint: 2,
     });
@@ -32,7 +32,7 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
   s.push({
     variables: [
       asArray("dp", dp, n),
-      ...asSingleValue({ result }),
+      ...asSimpleValue({ result }),
     ],
     breakpoint: 3,
   });

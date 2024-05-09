@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../../Problem";
-import { as2dArray, asArray, asSingleValue } from "../../service";
+import { Problem, ProblemState } from "../../types";
+import { as2dArray, asArray, asSimpleValue } from "../../utils";
 
 function knapsack(p: KnapsackInput): ProblemState[] {
   const { values, weights, capacity } = p;
@@ -23,7 +23,7 @@ function knapsack(p: KnapsackInput): ProblemState[] {
       steps.push({
         variables: [
           as2dArray("dp", dp, [{ r: i, c: w }]),
-          ...asSingleValue({ i: i, w: w, currentMax: dp[i][w] }),
+          ...asSimpleValue({ i: i, w: w, currentMax: dp[i][w] }),
         ],
         breakpoint: i,
       });
@@ -34,7 +34,7 @@ function knapsack(p: KnapsackInput): ProblemState[] {
   steps.push({
     variables: [
       as2dArray("dp", dp, [{ r: n, c: capacity }]),
-      ...asSingleValue({ result: result }),
+      ...asSimpleValue({ result: result }),
     ],
     breakpoint: n + 1,
   });

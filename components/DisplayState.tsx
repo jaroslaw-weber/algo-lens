@@ -1,7 +1,7 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
-import DisplayNumber from "./DisplayNumber";
-import { ArrayVariable, NumberVariable, Variable } from "../src/problem/Problem";
+import DisplaySingleValue from "./DisplaySingleValue";
+import { ArrayVariable, SimpleVariable, Variable } from "../src/problem/types";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -13,8 +13,8 @@ const DisplayState = ({ state }) => {
   for (const variable of variables) {
     switch (variable.type) {
       case "number": {
-        const data = variable as NumberVariable
-        numbers.push(<DisplayNumber data={data}  />);
+        const data = variable as SimpleVariable
+        numbers.push(<DisplaySingleValue data={data}  />);
         break;
       }
       case "array": {

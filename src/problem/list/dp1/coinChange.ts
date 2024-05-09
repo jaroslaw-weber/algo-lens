@@ -1,5 +1,5 @@
-import { Problem, ProblemState, Variable } from "../../Problem";
-import { asArray, asSingleValue } from "../../service";
+import { Problem, ProblemState, Variable } from "../../types";
+import { asArray, asSimpleValue } from "../../utils";
 
 function minCoins(p: CoinChangeInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -11,7 +11,7 @@ function minCoins(p: CoinChangeInput): ProblemState[] {
     variables: [
         coinsVariable,
       asArray("dp", dp),
-      ...asSingleValue({ amount }),
+      ...asSimpleValue({ amount }),
     ],
     breakpoint: 1,
   }); //#1
@@ -24,7 +24,7 @@ function minCoins(p: CoinChangeInput): ProblemState[] {
           variables: [
             coinsVariable,
             asArray("dp", dp, i, i - coin),
-            ...asSingleValue({ coin, i, amount }),
+            ...asSimpleValue({ coin, i, amount }),
           ],
           breakpoint: 2,
         }); //#2
@@ -37,7 +37,7 @@ function minCoins(p: CoinChangeInput): ProblemState[] {
     variables: [
         coinsVariable,
       asArray("dp", dp, amount),
-      ...asSingleValue({ result,amount }),
+      ...asSimpleValue({ result,amount }),
     ],
     breakpoint: 3,
   }); //#3

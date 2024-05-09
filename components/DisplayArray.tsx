@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { ArrayVariable } from "../src/problem/Problem";
+import { ArrayVariable } from "../src/problem/types";
 
 const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const { value: array, label: title, pointers } = data;
