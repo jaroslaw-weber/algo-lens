@@ -69,4 +69,5 @@ export const longestIncreasingSubsequenceProblem: Problem<LISInput, ProblemState
     code: code,
     getInput: getInput,
     func: longestIncreasingSubsequence,
+    id: "longest-increasing-subsequence",
 };

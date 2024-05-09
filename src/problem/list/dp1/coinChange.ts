@@ -73,4 +73,5 @@ export const coinChangeProblem: Problem<CoinChangeInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: minCoins,
+  id:"coin-change",
 };

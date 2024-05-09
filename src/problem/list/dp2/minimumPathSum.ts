@@ -116,4 +116,5 @@ export const minPathSumProblem: Problem<MinPathSumInput, MinPathSumState> = {
   code: code,
   getInput: getInput,
   func: minPathSum,
+  id: "minPathSum",
 };

@@ -3,7 +3,14 @@ import { ArrayVariable, Pointer2D, SimpleVariable } from "./types";
 import { problems } from "./list";
 
 
-export const getRandomProblem = () => sample(problems);
+export function getRandomProblem() {
+  return sample(problems);
+}
+
+export function getProblemById(id: string) {
+  console.log("getProblemById", id);
+  return problems.find(p => p.id === id);
+}
 
 export function asSimpleValue(o: any): SimpleVariable[] {
   return Object.keys(o).map(

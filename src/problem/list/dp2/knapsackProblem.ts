@@ -78,4 +78,5 @@ export const knapsackProblem: Problem<KnapsackInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: knapsack,
+  id: "knapsack",
 };

@@ -75,4 +75,5 @@ export const houseRobberProblem: Problem<HouseRobberInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: rob,
+  id: "house-robber",
 };

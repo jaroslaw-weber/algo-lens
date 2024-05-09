@@ -64,4 +64,5 @@ export const climbStairsProblem: Problem<ClimbingStairsInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: climbStairs,
+  id: "climb-stairs",
 };

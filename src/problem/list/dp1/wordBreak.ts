@@ -76,4 +76,5 @@ export const wordBreakProblem: Problem<WordBreakInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: canBreak,
+  id: "word-break",
 };

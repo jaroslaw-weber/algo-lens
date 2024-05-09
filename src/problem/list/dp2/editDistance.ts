@@ -111,4 +111,5 @@ export const editDistanceProblem: Problem<
   code,
   getInput,
   func: editDistance,
+  id: "edit-distance",
 };

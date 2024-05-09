@@ -90,4 +90,5 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   getInput: getInput,
   func: maxProfit,
   url,
+  id:"max-profit",
 };

@@ -1,5 +1,7 @@
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
 export interface Problem<Input, State> {
+  
+  id?:string
   /** Contains the source code for the problem-solving function. */
   code: string;
   
