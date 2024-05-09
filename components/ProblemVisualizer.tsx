@@ -41,7 +41,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   };
 
   return (
-    <div className="card bg-white w-2/3 mx-auto p my-8 min-h-full shadow">
+    <div className="card bg-white mx-auto p my-8 flex-1 shadow">
       <div className="card-body">
         <div className="flex items-center gap-6">
           {" "}
