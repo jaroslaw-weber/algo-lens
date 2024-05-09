@@ -4,6 +4,7 @@ import { ArrayVariable, Pointer } from "../src/problem/types";
 const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const { value: array, label: title, pointers } = data;
 
+  console.log("arr", array)
   // Define a color scheme for pointers
   const colors = ["bg-primary", "bg-secondary", "bg-info"];
 
@@ -50,11 +51,11 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
 
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
-    <tr key={rowIndex}>
+    <tr key={rowIndex} className="flex">
       {items.map((item, colIndex) => (
         <td
           key={colIndex}
-          className={`px-2 py-1 ${getCellStyle(rowIndex, colIndex)}`}
+          className={`px-2 py-1 flex-1 ${getCellStyle(rowIndex, colIndex)}`}
         >
           {typeof item === "object" ? JSON.stringify(item) : formatValue(item)}
         </td>
@@ -65,7 +66,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   return (
     <div className="overflow-x-auto">
       {title && <h3 className="pl-2 pb-2 text-xl font-semibold">{title}</h3>}
-      <table className="w-full table-auto border-collapse border border-gray-200">
+      <table className="w-full table-auto border-collapse border border-gray-200 ">
         <tbody>
           {is2D ? (
             array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
@@ -82,7 +83,15 @@ function formatValue(value: any): any {
   if (value === Infinity) {
     return "∞";
   }
-  return value;
+  if(value === true){
+    //checkbox
+    return "✓"
+  }
+  if(value === false){
+    //checkbox
+    return "✗"
+  }
+  return value
 }
 
 export default DisplayArray;

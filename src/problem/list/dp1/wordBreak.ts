@@ -1,5 +1,6 @@
+import { clone } from "lodash";
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue } from "../../utils";
+import { asArray, asSimpleValue, asStringArray } from "../../utils";
 
 function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -8,21 +9,30 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
   const dp: boolean[] = new Array(n + 1).fill(false);
   dp[0] = true; // Empty string can always be segmented.
   s.push({
-    variables: [...asSimpleValue({ str }), asArray("dp", dp)],
+    variables: [(asStringArray("str", str)), asArray("dp", dp)],
     breakpoint: 1,
   }); //#1
 
   for (let i = 1; i <= n; i++) {
     for (let j = 0; j < i; j++) {
-      if (dp[j] && wordDict.includes(str.substring(j, i))) {
+      const word = str.substring(j, i);
+      s.push({
+        variables: [(asStringArray("str", str, i-1, j)),
+          ...asSimpleValue({  i, j, word }),
+          asArray("dp", dp, i, j),
+        ],
+        breakpoint: 2,
+      }); //#2
+      if (dp[j] && wordDict.includes(word)) {
         dp[i] = true;
         s.push({
-          variables: [
-            ...asSimpleValue({ str, i, j, substring: str.substring(j, i) }),
+          variables: [(asStringArray("str", str,i-1,j)),
+            ...asSimpleValue({  i, j, word }),
             asArray("dp", dp, i, j),
           ],
-          breakpoint: 2,
-        }); //#2
+          breakpoint: 3,
+        }); 
+        //#3
         break;
       }
     }
@@ -30,15 +40,14 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
 
   const result = dp[n];
   s.push({
-    variables: [
+    variables: [(asStringArray("str", str)),
       ...asSimpleValue({
-        str,
         result,
       }),
       asArray("dp", dp, n),
     ],
-    breakpoint: 3,
-  }); //#3
+    breakpoint: 4,
+  }); //#4
   return s;
 }
 
@@ -54,15 +63,17 @@ const code = `function wordBreak(s, wordDict) {
   //#1
   for (let i = 1; i <= n; i++) {
     for (let j = 0; j < i; j++) {
-      if (dp[j] && wordDict.includes(s.substring(j, i))) {
+      const word = s.substring(j, i)
+      //#2
+      if (dp[j] && wordDict.includes(word)) {
         dp[i] = true; 
-        //#2
+        //#3
         break;
       }
     }
   }
   const result = dp[n]; 
-  //#3
+  //#4
   return result;
 }`;
 
