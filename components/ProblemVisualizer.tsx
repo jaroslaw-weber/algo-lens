@@ -41,7 +41,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   };
 
   return (
-    <div className="card bg-white mx-auto p my-8 flex-1 shadow">
+    <div className="card bg-white mx-8 my-8 flex-1 shadow">
       <div className="card-body">
         <div className="flex items-center gap-6">
           {" "}
@@ -60,12 +60,12 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
             ></i>
           </a>
         </div>
-        <div className="flex flex-row ">
-          <div className="flex-1 p-2  w-1/2">
+        <div className="flex flex-col lg:flex-row ">
+          <div className="flex-1 p-2  lg:w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
            
           </div>
-          <div className="pl-6 flex-1 w-1/2  p-2 space-y-4">
+          <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
             <div className="flex items-center gap-6"> <div
               className="tooltip  tooltip-right"
               data-tip="Use slider to see how the code works"

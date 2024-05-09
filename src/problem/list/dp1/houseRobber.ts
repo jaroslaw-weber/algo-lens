@@ -8,19 +8,13 @@ function rob(houses: HouseRobberInput): ProblemState[] {
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
   s.push({
-    variables: [
-      asArray("nums", nums),
-      asArray("dp", dp),
-    ],
+    variables: [asArray("nums", nums), asArray("dp", dp)],
     breakpoint: 1,
   }); //#1
 
   dp[1] = nums[0];
   s.push({
-    variables: [
-      asArray("nums", nums),
-      asArray("dp", dp),
-    ],
+    variables: [asArray("nums", nums), asArray("dp", dp)],
     breakpoint: 2,
   }); //#2
 
@@ -28,9 +22,14 @@ function rob(houses: HouseRobberInput): ProblemState[] {
     dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i - 1]);
     s.push({
       variables: [
-        asArray("nums", nums),
+        asArray("nums", nums,  i - 1),
         asArray("dp", dp, i, i - 1, i - 2),
-        ...asSimpleValue({ i , "dp[i-1]":dp[i-1], "nums[i-1]":nums[i-1], "dp[i-2]":dp[i-2]}),
+        ...asSimpleValue({
+          i,
+          "dp[i-1]": dp[i - 1],
+          "nums[i-1]": nums[i - 1],
+          "dp[i-2]": dp[i - 2],
+        }),
       ],
       breakpoint: 3,
     }); //#3
@@ -77,5 +76,5 @@ export const houseRobberProblem: Problem<HouseRobberInput, ProblemState> = {
   getInput: getInput,
   func: rob,
   id: "house-robber",
-  tested:true
+  tested: true,
 };

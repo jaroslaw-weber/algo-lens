@@ -26,9 +26,9 @@ const DisplayState = ({ state }) => {
   }
 
   return (
-    <div className="flex flex-col  h-full items-center  justify-start">
-    {/* Render arrays */}
-    <div className=" mb-4 pt-8 flex flex-col gap-4">{arrays}</div>
+    <div className="lg:flex flex-col  h-full items-center  justify-start">
+      {/* Render arrays */}
+      <div className="mb-4 pt-8 flex flex-col gap-4">{arrays}</div>
       {/* Render numbers in a grid layout */}
       <div className=" w-full pt-12">{numbers}</div>
 
