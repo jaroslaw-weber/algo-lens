@@ -11,11 +11,15 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const getCellStyle = useMemo(() => {
     return (rowIndex, colIndex) => {
       if (!pointers) return "";
-      const foundPointer = pointers.find((pointer: Pointer) => {
-        return (pointer.dimension === "row" && rowIndex === pointer.value) ||
-               (pointer.dimension === "column" && colIndex === pointer.value);
-      });
-      return foundPointer ? `${colors[pointers.indexOf(foundPointer) % colors.length]} text-white` : "";
+
+      const rowPointer = pointers.find(pointer => pointer.dimension === "row" && rowIndex === pointer.value);
+      const colPointer = pointers.find(pointer => pointer.dimension === "column" && colIndex === pointer.value);
+
+      // Check if both row and column pointers match the current cell indices
+      if (rowPointer && colPointer) {
+        return `${colors[pointers.indexOf(rowPointer) % colors.length]} text-white`;
+      }
+      return "";
     };
   }, [pointers, colors]);
 

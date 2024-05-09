@@ -50,7 +50,7 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
             s1Char: s1.charCodeAt(i - 1),
             s2Char: s2.charCodeAt(j - 1),
           }),
-          asArray("dp", dp, i, j),
+          as2dArray("dp", dp, [{r:i, c:j}]),
           ...asSimpleValue({ op, i, j }),
         ],
         breakpoint: 3,
