@@ -95,7 +95,7 @@ const DisplayBarChart: React.FC<DisplayBarChartProps> = ({ data }) => {
   // Fixed size container using Tailwind CSS
   return (
     <div className="flex-1">
-      <div className="w-60 h-64">
+      <div className="w-40 h-40">
         {/* Adjust width (w-64) and height (h-64) as needed */}
         <Bar data={chartData} options={options} />
       </div>

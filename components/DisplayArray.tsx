@@ -51,7 +51,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
 
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
-    <tr key={rowIndex} className="flex">
+    <tr key={rowIndex} className="flex text-xs">
       {items.map((item, colIndex) => (
         <td
           key={colIndex}

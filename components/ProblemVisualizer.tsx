@@ -81,7 +81,9 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
               onChange={handleSliderChange}
               className="range range-primary mt-4"
             /></div>
+            <div>
             <DisplayState state={state} />
+            </div>
           </div>
         </div>
       </div>
