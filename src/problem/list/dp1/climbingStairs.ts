@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue } from "../../utils";
+import { asArray, asBarChart, asSimpleValue } from "../../utils";
 
 function climbStairs(p: ClimbingStairsInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -10,10 +10,7 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
 
   // Initial states of dp array
   s.push({
-    variables: [
-      asArray("dp", dp),
-      ...asSimpleValue({ n }),
-    ],
+    variables: [asArray("dp", dp), ...asSimpleValue({ n })],
     breakpoint: 1,
   });
 
@@ -22,7 +19,8 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
     s.push({
       variables: [
         asArray("dp", dp, i, i - 1, i - 2),
-        ...asSimpleValue({ i }),
+        ...asSimpleValue({ n }),
+        asBarChart("loop", { i }, { min: 0, max: n }),
       ],
       breakpoint: 2,
     });
@@ -30,10 +28,7 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
 
   const result = dp[n];
   s.push({
-    variables: [
-      asArray("dp", dp, n),
-      ...asSimpleValue({ result }),
-    ],
+    variables: [asArray("dp", dp, n), ...asSimpleValue({ result })],
     breakpoint: 3,
   });
   return s;

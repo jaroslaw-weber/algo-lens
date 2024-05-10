@@ -1,6 +1,6 @@
 import { clone } from "lodash";
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue, asStringArray } from "../../utils";
+import { asArray, asBarChart, asSimpleValue, asStringArray } from "../../utils";
 
 function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -9,7 +9,7 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
   const dp: boolean[] = new Array(n + 1).fill(false);
   dp[0] = true; // Empty string can always be segmented.
   s.push({
-    variables: [(asStringArray("str", str)), asArray("dp", dp)],
+    variables: [asStringArray("str", str), asArray("dp", dp)],
     breakpoint: 1,
   }); //#1
 
@@ -17,8 +17,10 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
     for (let j = 0; j < i; j++) {
       const word = str.substring(j, i);
       s.push({
-        variables: [(asStringArray("str", str, i-1, j)),
-          ...asSimpleValue({  i, j, word }),
+        variables: [
+          asStringArray("str", str, i - 1, j),
+          asBarChart("loops",{ i, j }, { min: 0, max: n }),
+          ...asSimpleValue({ word }),
           asArray("dp", dp, i, j),
         ],
         breakpoint: 2,
@@ -26,12 +28,14 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
       if (dp[j] && wordDict.includes(word)) {
         dp[i] = true;
         s.push({
-          variables: [(asStringArray("str", str,i-1,j)),
-            ...asSimpleValue({  i, j, word }),
+          variables: [
+            asStringArray("str", str, i - 1, j),
+            ...asSimpleValue({  word }),
+            asBarChart("loops",{ i, j }, { min: 0, max: n }),
             asArray("dp", dp, i, j),
           ],
           breakpoint: 3,
-        }); 
+        });
         //#3
         break;
       }
@@ -40,7 +44,8 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
 
   const result = dp[n];
   s.push({
-    variables: [(asStringArray("str", str)),
+    variables: [
+      asStringArray("str", str),
       ...asSimpleValue({
         result,
       }),
@@ -89,5 +94,5 @@ export const wordBreakProblem: Problem<WordBreakInput, ProblemState> = {
   getInput: getInput,
   func: wordBreak,
   id: "word-break",
-  tested:true
+  tested: true,
 };

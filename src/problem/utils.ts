@@ -1,7 +1,11 @@
 import { sample, cloneDeep } from "lodash";
-import { ArrayVariable, Pointer2D, SimpleVariable } from "./types";
+import {
+  ArrayVariable,
+  BarChartVariable,
+  Pointer2D,
+  SimpleVariable,
+} from "./types";
 import { problems } from "./list";
-
 
 export function getRandomProblem() {
   return sample(problems);
@@ -9,13 +13,34 @@ export function getRandomProblem() {
 
 export function getProblemById(id: string) {
   console.log("getProblemById", id);
-  return problems.find(p => p.id === id);
+  return problems.find((p) => p.id === id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {
   return Object.keys(o).map(
     (k) => ({ label: k, value: o[k], type: "number" } as SimpleVariable)
   );
+}
+
+export function asBarChart(
+  label:string,
+  o: any,
+  options: { min: number; max: number }
+): BarChartVariable {
+  const keys = Object.keys(o);
+  const result: BarChartVariable = {
+    data: [],
+    label,
+    type: "barchart",
+    options
+  };
+  for (const key in o) {
+    result.data.push({
+      label: key,
+      value: o[key],
+    });
+  }
+  return result;
 }
 
 export function asArray(
