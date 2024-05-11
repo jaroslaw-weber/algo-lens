@@ -23,7 +23,7 @@ const DisplayState = ({ state }) => {
         arrays.push(<DisplayArray data={data} />);
         break;
       }
-      case "barchart":{
+      case "value-group":{
         const data = variable as ValueGroupVariable;
         others.push(<DisplayValueGroup data={data} />);
         break;
