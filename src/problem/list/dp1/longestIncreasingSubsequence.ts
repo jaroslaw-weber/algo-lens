@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue } from "../../utils";
+import { asArray, asSimpleValue, asValueGroup } from "../../utils";
 
 function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
     const s: ProblemState[] = [];
@@ -19,7 +19,7 @@ function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
             variables: [
                 asArray("dp", dp),
                 asArray("nums", nums, i, j),
-                ...asSimpleValue({ i, j }),
+                asValueGroup("loops", { i, j }, { min: 0, max: nums.length }),
             ],
             breakpoint: 2,
         }); //#2
@@ -29,7 +29,7 @@ function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
                     variables: [
                         asArray("dp", dp, i,j),
                         asArray("nums", nums, i, j),
-                        ...asSimpleValue({ i, j }),
+                        asValueGroup("loops", { i, j }, { min: 0, max: nums.length }),
                     ],
                     breakpoint: 3,
                 }); //#3
