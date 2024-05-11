@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asBarChart, asSimpleValue } from "../../utils";
+import { asArray, asValueGroup, asSimpleValue } from "../../utils";
 
 function coinChange(p: CoinChangeInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -23,7 +23,7 @@ function coinChange(p: CoinChangeInput): ProblemState[] {
       const left = amount - coin;
       const include = dp[left] + 1;
       const exclude = dp[amount];
-      const barChart = asBarChart(
+      const barChart = asValueGroup(
         "should update? " + (include < exclude ? "yes" : "no"),
         { include, exclude },
         { min: 0, max: target }
@@ -34,7 +34,7 @@ function coinChange(p: CoinChangeInput): ProblemState[] {
           asArray("coins", coins, i),
           asArray("dp", dp, amount, amount - coin),
           barChart,
-          asBarChart("diff", { amount, left }, { min: 0, max: target }),
+          asValueGroup("diff", { amount, left }, { min: 0, max: target }),
         ],
         breakpoint: 2,
       }); //#
@@ -48,7 +48,7 @@ function coinChange(p: CoinChangeInput): ProblemState[] {
             asArray("dp", dp, amount, amount - coin),
            
             barChart,
-            asBarChart("diff", { amount, left}, { min: 0, max: target }),
+            asValueGroup("diff", { amount, left}, { min: 0, max: target }),
           ],
           breakpoint: 3,
         }); //#2

@@ -1,6 +1,6 @@
 import { clone } from "lodash";
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asBarChart, asSimpleValue, asStringArray } from "../../utils";
+import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../../utils";
 
 function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -19,7 +19,7 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
       s.push({
         variables: [
           asStringArray("str", str, i - 1, j),
-          asBarChart("loops",{ i, j }, { min: 0, max: n }),
+          asValueGroup("loops",{ i, j }, { min: 0, max: n }),
           ...asSimpleValue({ word }),
           asArray("dp", dp, i, j),
         ],
@@ -31,7 +31,7 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
           variables: [
             asStringArray("str", str, i - 1, j),
             ...asSimpleValue({  word }),
-            asBarChart("loops",{ i, j }, { min: 0, max: n }),
+            asValueGroup("loops",{ i, j }, { min: 0, max: n }),
             asArray("dp", dp, i, j),
           ],
           breakpoint: 3,

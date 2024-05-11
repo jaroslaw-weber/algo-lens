@@ -28,7 +28,7 @@ export interface Variable {
   label: string;
 
   /** Type of the variable, determining whether it's a single number or an array. */
-  type: "number" | "array" | "barchart";
+  type: "number" | "array" | "value-group";
 }
 
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
@@ -70,8 +70,8 @@ export interface SimpleVariable extends Variable {
   value: number | string;
 }
 
-export interface BarChartVariable extends Variable {
-  type: "barchart";
+export interface ValueGroupVariable extends Variable {
+  type: "value-group";
   data: {
     label: string;
     value: number;

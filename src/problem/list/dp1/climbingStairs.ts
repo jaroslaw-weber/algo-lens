@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asBarChart, asSimpleValue } from "../../utils";
+import { asArray, asValueGroup, asSimpleValue } from "../../utils";
 
 function climbStairs(p: ClimbingStairsInput): ProblemState[] {
   const s: ProblemState[] = [];
@@ -20,7 +20,7 @@ function climbStairs(p: ClimbingStairsInput): ProblemState[] {
       variables: [
         asArray("dp", dp, i, i - 1, i - 2),
         ...asSimpleValue({ n }),
-        asBarChart("loop", { i }, { min: 0, max: n }),
+        asValueGroup("loop", { i }, { min: 0, max: n }),
       ],
       breakpoint: 2,
     });

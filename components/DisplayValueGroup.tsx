@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { BarChartVariable } from "../src/problem/types";
+import { ValueGroupVariable } from "../src/problem/types";
 
 // Register the necessary Chart.js components
 ChartJS.register(
@@ -22,7 +22,7 @@ ChartJS.register(
 );
 
 interface DisplayBarChartProps {
-  data: BarChartVariable;
+  data: ValueGroupVariable;
 }
 
 function getAspectRatio(count: number): number {
@@ -35,7 +35,7 @@ function getAspectRatio(count: number): number {
   return 2;
 }
 
-const DisplayBarChart: React.FC<DisplayBarChartProps> = ({ data }) => {
+const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
   console.log("data", data);
   const count = data.data.length;
   const chartData = {
@@ -132,10 +132,10 @@ const DisplayBarChart: React.FC<DisplayBarChartProps> = ({ data }) => {
   // Fixed size container using Tailwind CSS
   return (
     <div className="flex-1">
-      <p className="text-center font-bold pb-1">{data.label}</p>
-      <div className="w-full flex flex-col gap-4">{progressBars}</div>
+      <p className="text-left font-bold pb-1">{data.label}</p>
+      <div className="w-full grid grid-cols-1 gap-2">{progressBars}</div>
     </div>
   );
 };
 
-export default DisplayBarChart;
+export default DisplayValueGroup;

@@ -1,7 +1,7 @@
 import { sample, cloneDeep } from "lodash";
 import {
   ArrayVariable,
-  BarChartVariable,
+  ValueGroupVariable as ValueGroupVariable,
   Pointer2D,
   SimpleVariable,
 } from "./types";
@@ -22,16 +22,17 @@ export function asSimpleValue(o: any): SimpleVariable[] {
   );
 }
 
-export function asBarChart(
+/** display similar values in a group */
+export function asValueGroup(
   label:string,
   o: any,
   options: { min: number; max: number }
-): BarChartVariable {
+): ValueGroupVariable {
   const keys = Object.keys(o);
-  const result: BarChartVariable = {
+  const result: ValueGroupVariable = {
     data: [],
     label,
-    type: "barchart",
+    type: "value-group",
     options
   };
   for (const key in o) {

@@ -1,8 +1,8 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import { ArrayVariable, BarChartVariable, SimpleVariable, Variable } from "../src/problem/types";
-import DisplayBarChart from "./DisplayBarChart";
+import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable } from "../src/problem/types";
+import DisplayValueGroup from "./DisplayValueGroup";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -24,8 +24,8 @@ const DisplayState = ({ state }) => {
         break;
       }
       case "barchart":{
-        const data = variable as BarChartVariable;
-        others.push(<DisplayBarChart data={data} />);
+        const data = variable as ValueGroupVariable;
+        others.push(<DisplayValueGroup data={data} />);
         break;
       }
     }
@@ -39,7 +39,7 @@ const DisplayState = ({ state }) => {
       <div className=" w-full pt-12">{numbers}</div>
 
       {/* Render other types */}
-      <div className="flex flex-col gap-6 mt-8 w-full">{others}</div>
+      <div className="grid grid-cols-2 gap-16 mt-8 w-full">{others}</div>
     </div>
   );
 };
