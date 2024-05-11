@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from "../../types";
-import { as2dArray, asArray, asSimpleValue } from "../../utils";
+import { as2dArray, asArray, asSimpleValue, asValueGroup } from "../../utils";
 
 function uniquePaths(p: UniquePathsInput): ProblemState[] {
   const { m, n } = p;
@@ -10,18 +10,14 @@ function uniquePaths(p: UniquePathsInput): ProblemState[] {
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
     steps.push({
-      variables: [
-        asArray("dp", dp, i, 0)
-      ],
+      variables: [asArray("dp", dp, i, 0)],
       breakpoint: 1,
     });
   }
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
     steps.push({
-      variables: [
-        as2dArray("dp", dp, [{r:0, c:j}])
-      ],
+      variables: [as2dArray("dp", dp, [{ r: 0, c: j }])],
       breakpoint: 2,
     });
   }
@@ -32,8 +28,12 @@ function uniquePaths(p: UniquePathsInput): ProblemState[] {
       dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
       steps.push({
         variables: [
-          as2dArray("dp", dp,  [{r:i, c:j},{r:i-1, c:j}, {r:i, c:j-1}]),
-          ...asSimpleValue({ "i": i, "j": j, "value": dp[i][j] })
+          as2dArray("dp", dp, [
+            { r: i, c: j },
+            { r: i - 1, c: j },
+            { r: i, c: j - 1 },
+          ]),
+          asValueGroup("loops", { i, j }, { min: 0, max: Math.max(m,n) }),
         ],
         breakpoint: 3,
       });
@@ -42,10 +42,7 @@ function uniquePaths(p: UniquePathsInput): ProblemState[] {
 
   const result = dp[m - 1][n - 1];
   steps.push({
-    variables: [
-      asArray("dp", dp),
-      ...asSimpleValue({ "result": result })
-    ],
+    variables: [asArray("dp", dp), ...asSimpleValue({ result: result })],
     breakpoint: 4,
   });
 
@@ -86,10 +83,7 @@ const code = `function uniquePaths(m: number, n: number): number {
 const title = "Unique Paths";
 const getInput = () => ({ m: 3, n: 7 });
 
-export const uniquePathsProblem: Problem<
-  UniquePathsInput,
-  UniquePathsState
-> = {
+export const uniquePathsProblem: Problem<UniquePathsInput, UniquePathsState> = {
   title: title,
   code: code,
   getInput: getInput,
