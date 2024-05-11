@@ -1,10 +1,12 @@
 import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue } from "../../utils";
+import { asArray, asSimpleValue, asValueGroup } from "../../utils";
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
   //save state
   const s: ProblemState[] = [];
   const { prices } = p;
+  const maxPrice = Math.max(...prices);
+  const priceGroupOptions = { min: 0, max: maxPrice };
   const dp: number[] = new Array(prices.length).fill(0);
   let minPrice = prices[0];
   //
@@ -24,7 +26,9 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        ...asSimpleValue({ i, price, minPrice, diff, prev }),
+        asValueGroup("potential profit", {  price,minPrice, diff }, priceGroupOptions),
+        asValueGroup("which is smaller?", { diff,prev }, priceGroupOptions),
+        asValueGroup("loop", { i }, { min: 0, max: prices.length }),
       ],
       breakpoint: 2,
     });
@@ -33,7 +37,9 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        ...asSimpleValue({ i, price, minPrice, diff, prev }),
+        asValueGroup("potential profit", { price, minPrice, diff }, priceGroupOptions),
+        asValueGroup("which is smaller?", { diff,prev }, priceGroupOptions),
+        asValueGroup("loop", { i }, { min: 0, max: prices.length }),
       ],
       breakpoint: 3,
     });
@@ -43,7 +49,9 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        ...asSimpleValue({ i, price, minPrice, diff, prev }),
+        asValueGroup("potential profit", {  price,minPrice, diff }, priceGroupOptions),
+        asValueGroup("which is smaller?", { diff,prev }, priceGroupOptions),
+        asValueGroup("loop", { i }, { min: 0, max: prices.length }),
       ],
       breakpoint: 4,
     });
@@ -52,9 +60,8 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   const result = dp[prices.length - 1];
   s.push({
     variables: [
-      asArray("prices", prices),
       asArray("dp", dp, prices.length - 1),
-      ...asSimpleValue({ minPrice, result }),
+      ...asSimpleValue({ result }),
     ],
     breakpoint: 5,
   });
@@ -92,7 +99,6 @@ const code = `function maxProfit(prices) {
   //#5 Return the highest profit found
   return result;
 }`;
-
 
 const title = "Best Time to Buy and Sell Stock";
 const getInput = () => ({ prices: [7, 1, 5, 3, 6, 4] });

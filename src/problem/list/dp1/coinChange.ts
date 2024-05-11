@@ -24,7 +24,7 @@ function coinChange(p: CoinChangeInput): ProblemState[] {
       const include = dp[left] + 1;
       const exclude = dp[amount];
       const barChart = asValueGroup(
-        "should update? " + (include < exclude ? "yes" : "no"),
+        "include coin?",
         { include, exclude },
         { min: 0, max: target }
       );
@@ -34,7 +34,7 @@ function coinChange(p: CoinChangeInput): ProblemState[] {
           asArray("coins", coins, i),
           asArray("dp", dp, amount, amount - coin),
           barChart,
-          asValueGroup("diff", { amount, left }, { min: 0, max: target }),
+          asValueGroup("difference (amount - coin)", { amount,coin, left }, { min: 0, max: target }),
         ],
         breakpoint: 2,
       }); //#
@@ -48,7 +48,7 @@ function coinChange(p: CoinChangeInput): ProblemState[] {
             asArray("dp", dp, amount, amount - coin),
            
             barChart,
-            asValueGroup("diff", { amount, left}, { min: 0, max: target }),
+            asValueGroup("difference (amount - coin)", { amount,coin, left}, { min: 0, max: target }),
           ],
           breakpoint: 3,
         }); //#2
