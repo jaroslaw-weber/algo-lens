@@ -39,7 +39,7 @@ const DisplayState = ({ state }) => {
       <div className=" w-full pt-12">{numbers}</div>
 
       {/* Render other types */}
-      <div className="flex flex-col gap-4 mt-8">{others}</div>
+      <div className="flex flex-col gap-6 mt-8 w-full">{others}</div>
     </div>
   );
 };

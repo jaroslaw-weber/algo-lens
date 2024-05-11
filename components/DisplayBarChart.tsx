@@ -27,12 +27,12 @@ interface DisplayBarChartProps {
 
 function getAspectRatio(count: number): number {
   if (count == 1) {
-    return 0.5;
+    return 2;
   }
   if (count == 2) {
-    return 1;
+    return 2;
   }
-  return 3;
+  return 2;
 }
 
 const DisplayBarChart: React.FC<DisplayBarChartProps> = ({ data }) => {
@@ -59,6 +59,7 @@ const DisplayBarChart: React.FC<DisplayBarChartProps> = ({ data }) => {
   };
 
   const options = {
+    indexAxis: "y",
     scales: {
       y: {
         min: data.options.min,
@@ -92,13 +93,47 @@ const DisplayBarChart: React.FC<DisplayBarChartProps> = ({ data }) => {
     aspectRatio: getAspectRatio(count),
   };
 
+  const progressBars = [];
+  const color = ["primary", "secondary", "accent"]
+  let i=0
+  for (const x of data.data) {
+    progressBars.push(
+      <div className="flex flex-col gap-1 w-full">
+        <p className="text-xs text-gray-400">{x.label}</p>
+        <div className="flex items-center gap-4">
+          <p className="text-xs">{data.options.min}</p>
+
+          <div
+            className="flex w-full h-6 bg-gray-200 rounded overflow-hidden dark:bg-neutral-700"
+            role="progressbar"
+            aria-valuenow={x.value}
+            aria-valuemin={data.options.min}
+            aria-valuemax={data.options.max}
+          >
+            <div
+              className={`py-2 flex flex-col justify-center rounded overflow-hidden bg-${color[i%color.length]}   text-center whitespace-nowrap transition duration-500`}
+              style={{
+                width: isFinite(x.value)
+                  ? `${(x.value / data.options.max) * 100}%`
+                  : "100%",
+              }}
+            >
+              {x.value}
+            </div>
+          </div>
+
+          <p className="text-xs">{data.options.max}</p>
+        </div>
+      </div>
+    );
+    i++
+  }
+
   // Fixed size container using Tailwind CSS
   return (
     <div className="flex-1">
-      <div className="w-40 h-40">
-        {/* Adjust width (w-64) and height (h-64) as needed */}
-        <Bar data={chartData} options={options} />
-      </div>
+      <p className="text-center font-bold pb-1">{data.label}</p>
+      <div className="w-full flex flex-col gap-4">{progressBars}</div>
     </div>
   );
 };
