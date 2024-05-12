@@ -12,34 +12,40 @@ const groq = new Groq({
 async function main() {
   const response = await enquirer.prompt({
     type: "input",
-    name: "question",
-    message: "What LeetCode question do you want to generate code for?",
-  });
-  const { question } = response as any;
-  const response2 = await enquirer.prompt({
-    type: "input",
     name: "id",
-    message: "What id do you want to use for this problem?",
+    message:
+      "Provide id of leetcode question. For example: https://leetcode.com/problems/house-robber-ii/ will have id: 'house-robber-ii'",
   });
 
-  const { id } = response2 as any;
-  const code = await fs.readFileSync(
-    "./src/problem/list/twoSum.ts",
-    "utf-8"
-  );
+  const { id } = response;
 
-  const chatCompletion = await askAi(question, code);
-  const aiAnswer = chatCompletion.choices[0]?.message?.content || "";
-  console.log("ai answer: " + aiAnswer)
+  const code = await fs.readFileSync("./src/problem/list/twoSum.ts", "utf-8");
 
+  const aiPrompt = getPrompt(id, code);
+  //save prompt to file
+  const promptPath = "./prompt.txt";
+  fs.writeFileSync(promptPath, aiPrompt);
+  //use chat gpt manually
+
+  //create empty file for easier workflow
+  
   const path = "./src/problem/list/" + id + ".ts";
+  fs.writeFileSync(path, "");
+  console.log("Saved completion to " + path);
+
+  /*  const chatCompletion = await askAi(id, code);
+  const aiAnswer = chatCompletion.choices[0]?.message?.content || "";
+  console.log("ai answer: " + aiAnswer);
+
   // Optionally save to a file or just log it
   fs.writeFileSync(path, aiAnswer);
   console.log("Saved completion to " + path);
+  */
 }
 
+/*
 async function askAi(question: string, code: string) {
-    const fullprompt = `Generate code for the LeetCode question: ${question}, based on the pattern below. Include descriptive comments and tag critical lines with //#number for state tracking. Ensure the main variable is exported.\n\n\ ${code}`;
+  const fullprompt = getPrompt(question, code);
 
   console.log("prompt: " + fullprompt.substring(0, 100) + "...");
   return groq.chat.completions.create({
@@ -50,8 +56,13 @@ async function askAi(question: string, code: string) {
       },
     ],
     model: "llama3-70b-8192",
-    max_tokens: 1000,
+    max_tokens:2000,
   });
 }
 
+*/
 main().catch(console.error);
+function getPrompt(question: string, code: string) {
+    return `Generate code for the LeetCode question: ${question}, based on the pattern below. Include descriptive comments and tag as many lines as possible with //#number for state tracking. Create variables for the code to make it more readable. Ensure the main variable is exported.\n\n\ ${code}`;
+}
+
