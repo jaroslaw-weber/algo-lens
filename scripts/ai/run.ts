@@ -4,6 +4,7 @@ import { handleRefactorCode } from "./refactor";
 import { handleNewProblem } from "./newProblem";
 import { handleAddStateTracking } from "./addBreakpoints";
 import { handleAddComments } from "./addComments";
+import { findAndFixIssues } from "./fixBugs";
 
 const enquirer = require("enquirer");
 const fs = require("fs");
@@ -21,7 +22,8 @@ async function main() {
       "Generate new problem",
       "Refactor existing code",
       "Add missing state tracking",
-      "Add comments"
+      "Add comments",
+      "Find and fix any issues",
     ]
   });
 
@@ -38,15 +40,13 @@ async function main() {
     case "Add comments":
       await handleAddComments();
       break;
+      case "Find and fix any issues":
+        await findAndFixIssues();
+        break;
     default:
       console.log("No valid action selected.");
   }
 }
-
-
-
-
-
 
 // Entry point for the script
 main().catch(console.error);
