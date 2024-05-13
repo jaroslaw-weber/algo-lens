@@ -40,11 +40,17 @@ async function main() {
   console.log("Saved completion to " + path);
 
   const chatCompletion = await askAi(aiPrompt);
-  const aiAnswer = chatCompletion.choices[0]?.message?.content || "";
+  let aiAnswer = chatCompletion.choices[0]?.message?.content || "";
   console.log("ai answer: " + aiAnswer);
+  //code will be wrapped in ``` markdown. remove anything before the first ``` and after the last ```
+  aiAnswer = aiAnswer.replace("```typescript", "```");
+  
+  const start = aiAnswer.indexOf("```") + 3;
+  const end = aiAnswer.lastIndexOf("```");
+  const result = aiAnswer.substring(start, end);
 
   // Optionally save to a file or just log it
-  fs.writeFileSync(path, aiAnswer);
+  fs.writeFileSync(path, result);
   console.log("Saved completion to " + path);
 }
 
