@@ -1,8 +1,9 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable } from "../src/problem/types";
+import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable } from "../src/problem/types";
 import DisplayValueGroup from "./DisplayValueGroup";
+import DisplayBinary from "./DisplayBinary";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -26,6 +27,11 @@ const DisplayState = ({ state }) => {
       case "value-group":{
         const data = variable as ValueGroupVariable;
         others.push(<DisplayValueGroup data={data} />);
+        break;
+      }
+      case "binary": {
+        const data = variable as BinaryVariable;
+        numbers.push(<DisplayBinary data={data} />);
         break;
       }
     }

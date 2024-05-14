@@ -10,6 +10,7 @@ import { knapsackProblem } from "./list/dp2/knapsackProblem";
 import { uniquePathsProblem } from "./list/dp2/uniquePaths";
 import { twoSumProblem } from "./list/twoSum";
 import { maxAreaProblem } from "./list/container-with-most-water";
+import { countBitsProblem } from "./list/counting-bits";
 
 export const problems = [
   maxProfitProblem,
@@ -23,5 +24,6 @@ export const problems = [
   knapsackProblem,
   uniquePathsProblem,
   twoSumProblem,
-  maxAreaProblem
+  maxAreaProblem,
+  countBitsProblem
 ].filter((x) => !x.hide);

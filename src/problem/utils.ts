@@ -4,6 +4,7 @@ import {
   ValueGroupVariable as ValueGroupVariable,
   Pointer2D,
   SimpleVariable,
+  BinaryVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -24,7 +25,7 @@ export function asSimpleValue(o: any): SimpleVariable[] {
 
 /** display similar values in a group */
 export function asValueGroup(
-  label:string,
+  label: string,
   o: any,
   options: { min: number; max: number }
 ): ValueGroupVariable {
@@ -33,7 +34,7 @@ export function asValueGroup(
     data: [],
     label,
     type: "value-group",
-    options
+    options,
   };
   for (const key in o) {
     result.data.push({
@@ -70,6 +71,38 @@ export function asArray(
       },
     ],
   };
+  return result;
+}
+
+export function asBinary(
+  o: Record<string, number>,
+  options?: {
+    highlightLast?: boolean;
+  }
+): BinaryVariable {
+  const keys = Object.keys(o);
+  if (keys.length != 1) {
+    throw new Error("asBinary only support one key");
+  }
+  const [label] = keys;
+  const value = o[label];
+
+  
+  //
+  const result: BinaryVariable = {
+    label,
+    type: "binary",
+    value: value,
+    pointers:[]
+  };
+  if(options?.highlightLast){
+    //check what is index of last element of binary representation of the value number and set it as pointer
+    const lastIndex = value.toString(2).length - 1;
+    result.pointers.push({
+      value: lastIndex,
+      dimension: "column",
+    });
+  }
   return result;
 }
 

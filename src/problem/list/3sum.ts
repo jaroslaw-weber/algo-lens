@@ -1,5 +1,4 @@
-re is the code for the LeetCode question: 3sum, based on the pattern you provided:
-```
+
 // Imports specific utility functions and type definitions from the relative paths
 import { Problem, ProblemState } from "../types";
 import {

@@ -28,7 +28,7 @@ export interface Variable {
   label: string;
 
   /** Type of the variable, determining whether it's a single number or an array. */
-  type: "number" | "array" | "value-group";
+  type: "number" | "array" | "value-group" | "binary";
 }
 
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
@@ -59,6 +59,12 @@ export interface ArrayVariable extends Variable {
 
   /** Optional array of pointers for highlighting specific elements. */
   pointers?: Pointer[];
+}
+
+export interface BinaryVariable extends Variable {
+  type: "binary";
+  value: number;
+  pointers?: Pointer[]; 
 }
 
 /** Extends the Variable interface specifically for numeric values. */
