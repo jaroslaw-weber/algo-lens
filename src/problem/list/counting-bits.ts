@@ -31,63 +31,71 @@ export function countBits(p: CountBitsInput): ProblemState[] {
     i?: number;
     num?: number;
   }) {
+    
     const { breakpoint, count, i, num } = p;
+    console.log(`Step ${breakpoint}`);
     const variables: Variable[] = [];
     const step: ProblemState = {
       variables,
       breakpoint,
     };
     variables.push(asArray("result", result, i - 1));
-    if (count!==undefined){
-      variables.push(asBinary({ count },{ highlightLast:true}));
+    if (num !== undefined) {
+      variables.push(asBinary({ num }, { highlightLast: true }));
     }
-    if (num!==undefined) {
-      variables.push(asBinary({ num }));
-    }
-    if (i) {
+
+    if (i !== undefined) {
+      // Split count and i into separate variables within the asValueGroup function
       variables.push(asValueGroup("loop", { i }, { min: 0, max: n }));
     }
+    if (count !== undefined) {
+      variables.push(
+        asValueGroup("count", { count }, { min: 0, max: i })
+      );
+    }
+
     steps.push(step);
   }
 
   // Initial state log before the loop starts
-  log({ breakpoint: 0 });
+  log({ breakpoint: 1 });
 
-  // Helper function to count the number of 1 bits in a number
-  function countOnes(num: number): number {
+
+  //#1 Start the loop to count the number of 1 bits in each integer from 0 to n
+  for (let i = 0; i <= n; i++) {
     let count = 0;
-    let i = num;
+    let num = i
+    log({ breakpoint: 2, i , num});
+    //#2 Calculate the number of 1 bits in the current integer
     while (num > 0) {
-      log({ breakpoint: 4, num, count, i });
-      //#4 Use a bitwise AND operation to check the least significant bit
+      log({ breakpoint: 3, num, count, i });
+      //#3 Use a bitwise AND operation to check the least significant bit
       if (num & 1) {
-        //#5 If the least significant bit is 1, increment the count
+        //#4 If the least significant bit is 1, increment the count
+        log({ breakpoint: 4, num, count, i });
         count++;
+        //#5
+        
         log({ breakpoint: 5, num, count, i });
       }
       //#6 Shift the number to the right to move to the next bit
       num >>= 1;
       log({ breakpoint: 6, num, count, i });
     }
-    return count;
-  }
 
-  //#1 Start the loop to count the number of 1 bits in each integer from 0 to n
-  for (let i = 0; i <= n; i++) {
-    //#2 Calculate the number of 1 bits in the current integer
-    let count = countOnes(i);
-    log({ breakpoint: 2, count, num: count, i });
-
-    //#3 Store the count in the result array
+    //#7 Store the count in the result array
     log({
-      breakpoint: 3,
+      breakpoint: 7,
       count,
       num: i,
       i,
     });
     result[i] = count;
   }
-
+  //#8
+  log({
+    breakpoint: 8,
+  });
   return steps;
 }
 
@@ -97,21 +105,23 @@ const code = `function countBits(n: number): number[] {
 
   //#1 Start the loop to count the number of 1 bits in each integer from 0 to n
   for (let i = 0; i <= n; i++) {
-    //#2 Calculate the number of 1 bits in the current integer
     let count = 0;
     let num = i;
+    //#2 Calculate the number of 1 bits in the current integer
     while (num > 0) {
-      //#4 Use a bitwise AND operation to check the least significant bit
+      //#3 Use a bitwise AND operation to check the least significant bit
       if (num & 1) {
+        //#4 If the least significant bit is 1, increment the count
         count++;
         //#5 If the least significant bit is 1, increment the count
       }
       num >>= 1;
       //#6 Shift the number to the right to move to the next bit
     }
-    //#3 Store the count in the result array
+    //#7 Store the count in the result array
     result[i] = count;
   }
+  //#8
   return result;
 }`;
 

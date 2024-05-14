@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import DisplayState from "./DisplayState";
 import { Problem } from "../src/problem/types";
 import CodePreview from "./CodePreview";
+import Slider from "./Slider";
 
 export interface ProblemVisualizerProps<Input, State> {
   problem: Problem<Input, State>;
@@ -32,19 +33,15 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   const state = states[currentIndex];
   const breakpoint = state.breakpoint;
   const line = breakpointToLineMap.get(breakpoint);
-  console.log("breakpoint", breakpoint);
-  console.log("line", line);
-  console.log("breakpointToLineMap", breakpointToLineMap);
 
-  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentIndex(parseInt(event.target.value, 10));
+  const handleSliderChange = (value: number) => {
+    setCurrentIndex(value);
   };
 
   return (
     <div className="card bg-white mx-8 my-8 flex-1 shadow">
       <div className="card-body">
         <div className="flex items-center gap-6">
-          {" "}
           {/* Adjust the gap as needed */}
           <h2 className="font-display text-3xl pl-2">{title}</h2>
           <a
@@ -63,26 +60,20 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
         <div className="flex flex-col lg:flex-row ">
           <div className="flex-1 p-2  lg:w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
-           
           </div>
           <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-            <div className="flex items-center gap-6"> <div
-              className="tooltip  tooltip-right"
-              data-tip="Use slider to see how the code works"
-            >
-              <i className="fas fa-circle-info pt-6 hover:scale-110 transition-transform duration-300"></i>
-            </div>
+            <div className="flex items-center gap-6">
+              
 
-            <input
-              type="range"
-              min="0"
-              max={states.length - 1}
-              value={currentIndex}
-              onChange={handleSliderChange}
-              className="range range-primary mt-4"
-            /></div>
+              <Slider
+                min={0}
+                max={states.length - 1}
+                value={currentIndex}
+                onChange={handleSliderChange}
+              />
+            </div>
             <div>
-            <DisplayState state={state} />
+              <DisplayState state={state} />
             </div>
           </div>
         </div>

@@ -35,12 +35,27 @@ const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
 
   return (
     <div className="overflow-x-auto">
-      {title && <h3 className="pl-2 pb-2 text-xl font-semibold">{title}</h3>}
-      <table className="table-auto border-collapse border border-gray-200">
-        <tbody>
-          {renderRow(binaryArray)}
-        </tbody>
-      </table>
+      {title && <h3 className="pl-2 pb-2 text-xl text-center font-semibold">{title}</h3>}
+      <div className="flex">
+        <div className="w-1/2 pr-2">
+          <div className="flex items-center justify-end pb-2">
+            <span className="text-xs font-semibold">2 base (binary)</span>
+          </div>
+          <table className="ml-auto table-auto border-collapse border border-gray-200">
+            <tbody>
+              {renderRow(binaryArray)}
+            </tbody>
+          </table>
+        </div>
+        <div className="w-1/2 pl-2">
+          <div className="flex items-center  pb-2">
+            <span className="text-xs font-semibold">base 10</span>
+          </div>
+          <div className="flex items-center justify-left  ">
+            <span className="text-base font-semibold">{value}</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
