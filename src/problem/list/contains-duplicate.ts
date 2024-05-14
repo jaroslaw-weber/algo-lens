@@ -31,10 +31,10 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
       breakpoint: point,
     };
     if (numsIndex !== undefined) {
-      step.variables.push(asSimpleValue({ numsIndex }));
+      step.variables.push(...asSimpleValue({ numsIndex }));
     }
     if (existsInSet !== undefined) {
-      step.variables.push(asSimpleValue({ existsInSet }));
+      step.variables.push(...asSimpleValue({ existsInSet }));
     }
     steps.push(step);
   }

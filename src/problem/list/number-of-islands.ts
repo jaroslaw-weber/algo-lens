@@ -26,10 +26,11 @@ export function numIslands(p: NumIslandsInput): ProblemState[] {
   // Helper function to create and log each step's computational state
   function logStep(point: number, islandCount?: number, gridSnapshot?: string[][]) {
     const step: ProblemState = {
-      variables: [as2dArray("grid", grid, gridSnapshot)],
+      variables: [as2dArray("grid", grid,[])], //, gridSnapshot)],
+      breakpoint: point, 
     };
     if (islandCount !== undefined) {
-      step.variables.push(asSimpleValue({ "Num Islands": islandCount }));
+      step.variables.push(...asSimpleValue({ "Num Islands": islandCount }));
     }
     steps.push(step);
   }

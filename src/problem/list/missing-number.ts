@@ -1,3 +1,4 @@
+import { Problem, ProblemState } from "../types";
 
 // Defines the interface for the input expected by the missingNumber function
 interface MissingNumberInput {
@@ -9,7 +10,7 @@ interface MissingNumberInput {
  * @param p - The input parameters including an array of numbers.
  * @returns The missing number in the sequence.
  */
-export function missingNumber(p: MissingNumberInput): number {
+export function missingNumber(p: MissingNumberInput): ProblemState[] {
   const { nums } = p;
   let n = nums.length + 1; //#1 Define the total count of numbers in the sequence
   let expectedSum = (n * (n + 1)) / 2; //#2 Calculate the expected sum of the sequence
@@ -19,7 +20,8 @@ export function missingNumber(p: MissingNumberInput): number {
     actualSum += nums[i]; //#3 Calculate the actual sum of the given numbers
   }
 
-  return expectedSum - actualSum; //#4 Return the missing number by subtracting the actual sum from the expected sum
+  const result = expectedSum - actualSum; //#4 Return the missing number by subtracting the actual sum from the expected sum
+  return []
 }
 
 // Example implementation of the missingNumber function for demonstration and testing

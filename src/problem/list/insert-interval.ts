@@ -28,6 +28,7 @@ export function insertInterval(p: InsertIntervalInput): ProblemState[] {
   // Helper function to create and log each step's computational state
   function logStep(point: number, intervals?: number[][], newInterval?: number[]) {
     const step: ProblemState = {
+      breakpoint:point,
       variables: [as2dArray("intervals", intervals, [])],
     };
     if (newInterval) {

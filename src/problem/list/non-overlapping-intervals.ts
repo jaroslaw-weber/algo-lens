@@ -28,14 +28,14 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
   // Helper function to create and log each step's computational state
   function logStep(point: number, currentInterval?: number[], nonOverlapping?: number[][]) {
     const step: ProblemState = {
-      variables: [as2dArray("intervals", intervals, lastNonOverlapIndex, nonOverlappingIntervals)],
+      variables: [],//[as2dArray("intervals", intervals, lastNonOverlapIndex, nonOverlappingIntervals)],
       breakpoint: point,
     };
     if (currentInterval) {
       step.variables.push(asArray("currentInterval", currentInterval));
     }
     if (nonOverlapping) {
-      step.variables.push(as2dArray("nonOverlappingIntervals", nonOverlapping));
+      step.variables.push(as2dArray("nonOverlappingIntervals", nonOverlapping, []));
     }
     steps.push(step);
   }

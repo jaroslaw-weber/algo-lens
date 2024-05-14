@@ -1,6 +1,6 @@
 
 import { Problem, ProblemState } from "../types";
-import { asValue } from "../utils";
+import { asBinary } from "../utils";
 
 interface HammingWeightInput {
   n: number;
@@ -12,11 +12,11 @@ export function hammingWeight(p: HammingWeightInput): ProblemState[] {
 
   function logStep(point: number, count?: number) {
     const step: ProblemState = {
-      variables: [asValue("n", n)],
+      variables: [asBinary({n})],
       breakpoint: point,
     };
     if (count !== undefined) {
-      step.variables.push(asValue("count", count));
+      step.variables.push(asBinary({count}));
     }
     steps.push(step);
   }

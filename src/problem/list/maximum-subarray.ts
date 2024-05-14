@@ -32,6 +32,7 @@ export function maxSubArray(p: MaxSubArrayInput): ProblemState[] {
   function logStep(point: number, maxCurrent?: number, maxGlobal?: number) {
     const step: ProblemState = {
       variables: [asArray("nums", nums, start, end)],
+      breakpoint:point
     };
     if (maxCurrent !== undefined) {
       step.variables.push(

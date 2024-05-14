@@ -36,7 +36,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
   function logStep(point: number, queue: [number, number][] = [], visited: boolean[][] = []) {
     const step: ProblemState = {
       variables: [
-        as2dArray("heights", heights),
+        as2dArray("heights", heights, []),
         asArray("queue", queue.map(([r, c]) => `${r},${c}`)),
         as2dArray("visited", visited, (r, c) => (visited[r][c] ? 1 : 0)),
       ],
