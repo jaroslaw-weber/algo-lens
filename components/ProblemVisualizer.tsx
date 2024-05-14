@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
 import { Problem } from "../src/problem/types";
@@ -38,6 +39,11 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
     setCurrentIndex(value);
   };
 
+  const handleCopyCode = () => {
+    copy(code);
+    alert("Code copied to clipboard!");
+  };
+
   return (
     <div className="card bg-white mx-8 my-8 flex-1 shadow">
       <div className="card-body">
@@ -56,6 +62,10 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
               aria-hidden="true"
             ></i>
           </a>
+          <button className="button button-primary tooltip tooltip-right" onClick={handleCopyCode} 
+            data-tip="Copy code">
+            <i className="fas fa-copy"></i>
+          </button>
         </div>
         <div className="flex flex-col lg:flex-row ">
           <div className="flex-1 p-2  lg:w-1/2">
@@ -63,8 +73,6 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
           </div>
           <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
             <div className="flex items-center gap-6">
-              
-
               <Slider
                 min={0}
                 max={states.length - 1}

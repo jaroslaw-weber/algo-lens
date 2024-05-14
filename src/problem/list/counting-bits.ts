@@ -33,7 +33,7 @@ export function countBits(p: CountBitsInput): ProblemState[] {
   }) {
     
     const { breakpoint, count, i, num } = p;
-    console.log(`Step ${breakpoint}`);
+    //console.log(`Step ${breakpoint}`);
     const variables: Variable[] = [];
     const step: ProblemState = {
       variables,
