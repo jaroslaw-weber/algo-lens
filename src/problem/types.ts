@@ -38,6 +38,9 @@ export interface Pointer {
 
   /** The specific index of the column or row being pointed to. */
   value: number;
+
+  /** Color of the pointer. */
+  color?: 1 | 2 | 3;
 }
 
 /** Represents a 2D pointer for navigating through two-dimensional arrays. */
@@ -64,7 +67,7 @@ export interface ArrayVariable extends Variable {
 export interface BinaryVariable extends Variable {
   type: "binary";
   value: number;
-  pointers?: Pointer[]; 
+  pointers?: Pointer[];
 }
 
 /** Extends the Variable interface specifically for numeric values. */
