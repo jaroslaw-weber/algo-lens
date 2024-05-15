@@ -40,7 +40,7 @@ const DisplayState = ({ state }) => {
 
   return (
     <div className="lg:flex flex-col  min-h-full items-center  justify-start">
-    <div className="grid grid-cols-1 gap-16 mt-8 w-full">{binary}</div>
+    <div className="grid grid-cols-2 gap-16 mt-8 w-full">{binary}</div>
     {/* Render numbers in a grid layout */}
     <div className=" w-full pt-12">{numbers}</div>
       {/* Render arrays */}

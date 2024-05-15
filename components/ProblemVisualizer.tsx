@@ -45,8 +45,8 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
   };
 
   return (
-    <div className="card bg-white mx-8 my-8 flex-1 shadow">
-      <div className="card-body">
+    <div className="mx-8 my-8 flex-1">
+      <div className="">
         <div className="flex items-center gap-6">
           {/* Adjust the gap as needed */}
           <h2 className="font-display text-3xl pl-2">{title}</h2>
@@ -67,7 +67,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
             <i className="fas fa-copy"></i>
           </button>
         </div>
-        <div className="flex flex-col lg:flex-row ">
+        <div className="flex flex-col lg:flex-row  lg:gap-20">
           <div className="flex-1 p-2  lg:w-1/2">
             <CodePreview code={code} highlightLineIndex={line} />
           </div>

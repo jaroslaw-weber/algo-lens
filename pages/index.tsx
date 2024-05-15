@@ -16,8 +16,7 @@ const Home: NextPage = () => {
       
 
       <main className="lg:mx-12 w-full mx-auto">
-        <p className="text-center font-display mt-8 flex-shrink">algo-lens: see algorithms in action! </p>
-        <div className="w-full">
+       <div className="w-full lg:pt-10">
         {randomProblem ? <ProblemVisualizer problem={randomProblem} /> : null}</div>
       </main>
     </div>

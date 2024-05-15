@@ -3,11 +3,11 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className="w-full bg-base-100 flex-shrink">
-      <div className="navbar bg-base-100 max-w-3xl mx-auto">
+    <div className="w-full bg-base-100 flex-shrink ">
+      <div className="navbar  mx-auto bg-primary text-primary-content shadow">
         <div className="flex-1">
-          <Link href="/" className="btn btn-ghost normal-case text-xl">
-            algo-lens
+          <Link href="/" className="btn btn-ghost normal-case font-display text-xl">
+          algo-lens: see algorithms in action! 
           </Link>
         </div>
         <div className="flex-none">

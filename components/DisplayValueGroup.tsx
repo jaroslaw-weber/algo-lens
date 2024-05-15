@@ -97,6 +97,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
   const color = ["primary", "secondary"];
   let i = 0;
   for (const x of data.data) {
+    const bgColor = color[i % color.length]
     progressBars.push(
       <div className="flex flex-col gap-1 w-full">
         <p className="text-xs text-gray-400">{x.label}</p>
@@ -112,8 +113,8 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
           >
             <div
               className={`py-2 flex flex-col justify-center rounded overflow-hidden bg-${
-                color[i % color.length]
-              }   text-center whitespace-nowrap transition duration-500`}
+                bgColor
+              }  text-${bgColor}-content text-center whitespace-nowrap transition duration-500`}
               style={{
                 width: getWidthPercent(x, data.options) + "%",
               }}

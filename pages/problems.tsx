@@ -13,9 +13,9 @@ const Problems: NextPage = () => {
       </Head>
 
       <main className="container mx-auto p-4  justify-center flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-center mb-6">Problems</h1>
-        <div className="card bg-base-100 shadow-xl max-w-lg mx-auto">
-          <div className="card-body">
+        <h1 className="text-3xl text-center mb-6 mt-6 font-display">Problems</h1>
+        <div className="max-w-lg mx-auto">
+          <div className="p-4">
             <ul className="list-decimal list-inside">
               {problems.map((problem, index) => (
                 <li key={index} className="py-2">

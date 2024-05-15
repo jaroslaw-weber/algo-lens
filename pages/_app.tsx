@@ -2,10 +2,17 @@ import Head from "next/head";
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { getCurrentTheme } from "../src/theme";
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const theme = getCurrentTheme();
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  });
   return (
-    <div className="min-h-screen w-full font-sans flex flex-col bg-primary items-center">
+    <div className="min-h-screen w-full font-sans flex flex-col bg-base-100 items-center">
       <Head>
         <title>Algo-Lens: Algorithm Visualization Tool</title>
         <meta
