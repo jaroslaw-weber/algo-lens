@@ -1,14 +1,14 @@
 import React from "react";
 import { BinaryVariable, Pointer } from "../src/problem/types";
 
+  // Define a color scheme for pointers
+  const colors = ["bg-primary", "bg-secondary", "bg-info"];
+
 const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
   const { value, label: title, pointers } = data;
 
   // Convert the number to a binary string and split into an array of characters
   const binaryArray = value.toString(2).split("");
-
-  // Define a color scheme for pointers
-  const colors = ["bg-primary", "bg-secondary", "bg-info"];
 
   // Memoize style calculation for cells
   const getCellStyle = React.useMemo(() => {
@@ -22,7 +22,7 @@ const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
       }
       return "";
     };
-  }, [pointers, colors]);
+  }, [pointers]);
 
   // Render a row for the binary array
   const renderRow = (items: string[]) => (
