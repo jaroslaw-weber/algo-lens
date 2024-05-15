@@ -10,7 +10,6 @@ import {
   Legend,
 } from "chart.js";
 import { ValueGroupVariable } from "../src/problem/types";
-import { lerp } from "../scripts/ai/utils";
 import _ from "lodash";
 
 // Register the necessary Chart.js components
