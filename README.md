@@ -10,5 +10,5 @@ Check out [algo-lens](https://jaroslaw-weber.github.io/algo-lens/) to start expl
 - **More to Come**: We're adding new algorithms regularly.
 
 ## Screenshots
-![Dynamic Programming Example](https://github.com/jaroslaw-weber/algo-lens/assets/9774233/096d94a9-dd5c-4e2d-a52d-bcc0e968479b)
-![Graph Algorithm Example](https://github.com/jaroslaw-weber/algo-lens/assets/9774233/56bf356c-ff89-4db6-b7b3-504af2b77ab5)
+![Screenshot (9)](https://github.com/jaroslaw-weber/algo-lens/assets/9774233/e7d81bcd-378c-448b-b0f7-544f0a09566e)
+![Screenshot (10)](https://github.com/jaroslaw-weber/algo-lens/assets/9774233/134905ab-c037-4fb5-a9e2-bba0cfc4fae1)
