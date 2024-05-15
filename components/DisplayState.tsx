@@ -1,8 +1,9 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable } from "../src/problem/types";
+import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable } from "../src/problem/types";
 import DisplayValueGroup from "./DisplayValueGroup";
+import DisplayBinary from "./DisplayBinary";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -10,6 +11,7 @@ const DisplayState = ({ state }) => {
   const numbers = [];
   const arrays = [];
   const others = [];
+  const binary = []
 
   for (const variable of variables) {
     switch (variable.type) {
@@ -28,11 +30,17 @@ const DisplayState = ({ state }) => {
         others.push(<DisplayValueGroup data={data} />);
         break;
       }
+      case "binary": {
+        const data = variable as BinaryVariable;
+        binary.push(<DisplayBinary data={data} />);
+        break;
+      }
     }
   }
 
   return (
     <div className="lg:flex flex-col  min-h-full items-center  justify-start">
+    <div className="grid grid-cols-1 gap-16 mt-8 w-full">{binary}</div>
     {/* Render numbers in a grid layout */}
     <div className=" w-full pt-12">{numbers}</div>
       {/* Render arrays */}
@@ -40,6 +48,7 @@ const DisplayState = ({ state }) => {
 
       {/* Render other types */}
       <div className="grid grid-cols-2 gap-16 mt-8 w-full">{others}</div>
+
     </div>
   );
 };

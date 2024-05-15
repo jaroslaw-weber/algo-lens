@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start --port 3000 --hostname 0.0.0.0",
     "lint": "next lint",
-    "new-problem": "ts-node ./scripts/newProblem.ts"
+    "ai": "ts-node ./scripts/ai/run.ts"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
     "autoprefixer": "^10.4.19",
     "chart.js": "^4.4.2",
+    "copy-to-clipboard": "^3.3.3",
     "dotenv": "^16.4.5",
     "enquirer": "^2.4.1",
     "groq-sdk": "^0.3.3",

@@ -1,15 +1,17 @@
-import { maxProfitProblem } from "./list/dp1/bestTimeToBuyAndSellStocks";
-import { climbStairsProblem } from "./list/dp1/climbingStairs";
-import { houseRobberProblem } from "./list/dp1/houseRobber";
-import { wordBreakProblem } from "./list/dp1/wordBreak";
-import { editDistanceProblem } from "./list/dp2/editDistance";
-import { coinChangeProblem } from "./list/dp1/coinChange";
-import { longestIncreasingSubsequenceProblem } from "./list/dp1/longestIncreasingSubsequence";
-import { minPathSumProblem } from "./list/dp2/minimumPathSum";
-import { knapsackProblem } from "./list/dp2/knapsackProblem";
-import { uniquePathsProblem } from "./list/dp2/uniquePaths";
-import { twoSumProblem } from "./list/twoSum";
+import { maxProfitProblem } from "./list/bestTimeToBuyAndSellStocks";
+import { climbStairsProblem } from "./list/climbingStairs";
+import { houseRobberProblem } from "./list/houseRobber";
+import { wordBreakProblem } from "./list/wordBreak";
+import { editDistanceProblem } from "./list/editDistance";
+import { coinChangeProblem } from "./list/coinChange";
+import { longestIncreasingSubsequenceProblem } from "./list/longestIncreasingSubsequence";
+import { minPathSumProblem } from "./list/minimumPathSum";
+import { knapsackProblem } from "./list/knapsackProblem";
+import { uniquePathsProblem } from "./list/uniquePaths";
+import { twoSumProblem } from "./list/two-sum";
 import { maxAreaProblem } from "./list/container-with-most-water";
+import { countBitsProblem } from "./list/counting-bits";
+import { hammingWeightProblem } from "./list/number-of-1-bits";
 
 export const problems = [
   maxProfitProblem,
@@ -23,5 +25,7 @@ export const problems = [
   knapsackProblem,
   uniquePathsProblem,
   twoSumProblem,
-  maxAreaProblem
+  maxAreaProblem,
+  countBitsProblem,
+  hammingWeightProblem
 ].filter((x) => !x.hide);

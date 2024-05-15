@@ -1,5 +1,5 @@
-import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asValueGroup, asSimpleValue } from "../../utils";
+import { Problem, ProblemState, Variable } from "../types";
+import { asArray, asValueGroup, asSimpleValue } from "../utils";
 
 function coinChange(p: CoinChangeInput): ProblemState[] {
   const s: ProblemState[] = [];

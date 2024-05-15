@@ -1,5 +1,5 @@
-import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue, asValueGroup } from "../../utils";
+import { Problem, ProblemState, Variable } from "../types";
+import { asArray, asSimpleValue, asValueGroup } from "../utils";
 
 function longestIncreasingSubsequence(p: LISInput): ProblemState[] {
     const s: ProblemState[] = [];

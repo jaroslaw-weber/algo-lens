@@ -1,11 +1,12 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
+import { Problem, ProblemState, Variable } from "../types";
 import {
   asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
+  asBinary,
 } from "../utils";
 
 // Defines the interface for the input expected by the twoSum function
@@ -26,45 +27,47 @@ export function twoSum(p: TwoSumInput): ProblemState[] {
   let right = nums.length - 1;
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, sum?: number, result?: number[]) {
+  function log(point: number, sum?: number, result?: number[]) {
+    const v :Variable[] = [];
     const step: ProblemState = {
-      variables: [asArray("nums", nums, left, right)],
+      variables: v,
       breakpoint: point,
     };
+    v.push(asArray("nums", nums, left, right))
     if (sum !== undefined) {
-      step.variables.push(
+      v.push(
         asValueGroup("sum", { sum, target }, { min: 0, max: 2 * target })
       );
     }
     if (result) {
-      step.variables.push(...asSimpleValue({ result: JSON.stringify(result) }));
+      v.push(...asSimpleValue({ result: JSON.stringify(result) }));
     }
     steps.push(step);
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Main loop to check pairs
   while (left < right) {
     const sum = nums[left] + nums[right];
-    logStep(2, sum);
+    log(2, sum);
 
     if (sum === target) {
-      logStep(3, sum, [left, right]);
+      log(3, sum, [left, right]);
       break;
     } else if (sum < target) {
       left++;
-      logStep(4, sum);
+      log(4, sum);
     } else {
       right--;
-      logStep(5, sum);
+      log(5, sum);
     }
   }
 
   // Logs the final state if no two numbers add up to the target
   if (left >= right) {
-    logStep(6);
+    log(6);
   }
 
   return steps;
@@ -100,6 +103,7 @@ const code = `function twoSum(nums: number[], target: number): number[] {
 
 // Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Two Sum";
+
 const getInput = () => ({
   nums: [
     2, 7, 11, 15, 21, 29, 35, 40, 45, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,

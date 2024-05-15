@@ -1,6 +1,6 @@
 import { clone } from "lodash";
-import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../../utils";
+import { Problem, ProblemState, Variable } from "../types";
+import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../utils";
 
 function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];

@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { ArrayVariable, Pointer } from "../src/problem/types";
 
+const colors = ["bg-primary", "bg-secondary", "bg-info"];
+
 const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const { value: array, label: title, pointers } = data;
 
   console.log("arr", array)
-  // Define a color scheme for pointers
-  const colors = ["bg-primary", "bg-secondary", "bg-info"];
 
   // Determine if the array is 2D (computed directly)
   const is2D = useMemo(
@@ -47,7 +47,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
       }
       return "";
     };
-  }, [pointers, colors, is2D]);
+  }, [pointers, is2D]);
 
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
@@ -57,7 +57,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
           key={colIndex}
           className={`px-2 py-1 flex-1 ${getCellStyle(rowIndex, colIndex)}`}
         >
-          {typeof item === "object" ? JSON.stringify(item) : formatValue(item)}
+          {typeof item === "object"? JSON.stringify(item) : formatValue(item)}
         </td>
       ))}
     </tr>
@@ -68,7 +68,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
       {title && <h3 className="pl-2 pb-2 text-xl font-semibold">{title}</h3>}
       <table className="w-full table-auto border-collapse border border-gray-200 ">
         <tbody>
-          {is2D ? (
+          {is2D? (
             array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
           ) : (
             <tr>{renderRow(array, 0)}</tr>

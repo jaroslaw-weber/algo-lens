@@ -28,7 +28,7 @@ export interface Variable {
   label: string;
 
   /** Type of the variable, determining whether it's a single number or an array. */
-  type: "number" | "array" | "value-group";
+  type: "number" | "array" | "value-group" | "binary";
 }
 
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
@@ -38,6 +38,9 @@ export interface Pointer {
 
   /** The specific index of the column or row being pointed to. */
   value: number;
+
+  /** Color of the pointer. */
+  color?: 1 | 2 | 3;
 }
 
 /** Represents a 2D pointer for navigating through two-dimensional arrays. */
@@ -58,6 +61,12 @@ export interface ArrayVariable extends Variable {
   value: any[];
 
   /** Optional array of pointers for highlighting specific elements. */
+  pointers?: Pointer[];
+}
+
+export interface BinaryVariable extends Variable {
+  type: "binary";
+  value: number;
   pointers?: Pointer[];
 }
 
@@ -89,4 +98,14 @@ export interface ProblemState {
 
   /** Identifier for the step or phase in the computation when the state was recorded. */
   breakpoint: number;
+}
+
+
+export class ListNode {
+  val: number;
+  next: ListNode | null;
+  constructor(val?: number, next?: ListNode | null) {
+    this.val = (val===undefined? 0 : val);
+    this.next = (next===undefined? null : next);
+  }
 }
