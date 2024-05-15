@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../../types";
-import { as2dArray, asArray, asSimpleValue, asValueGroup } from "../../utils";
+import { Problem, ProblemState } from "../types";
+import { as2dArray, asArray, asSimpleValue, asValueGroup } from "../utils";
 
 function uniquePaths(p: UniquePathsInput): ProblemState[] {
   const { m, n } = p;

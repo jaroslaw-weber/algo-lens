@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../../types";
-import { as2dArray, asArray, asSimpleValue } from "../../utils";
+import { Problem, ProblemState } from "../types";
+import { as2dArray, asArray, asSimpleValue } from "../utils";
 
 function knapsack(p: KnapsackInput): ProblemState[] {
   const { values, weights, capacity } = p;

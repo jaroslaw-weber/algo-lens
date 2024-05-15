@@ -1,11 +1,11 @@
-import { Problem, ProblemState } from "../../types";
+import { Problem, ProblemState } from "../types";
 import {
   asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "../../utils";
+} from "../utils";
 
 function editDistance(p: EditDistanceInput): ProblemState[] {
   const { s1, s2 } = p;

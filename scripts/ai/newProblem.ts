@@ -2,6 +2,7 @@ import { extractCode, saveFile } from "./utils";
 import { askAi } from "./groq";
 
 const enquirer = require("enquirer");
+
 /**
  * Handles the generation of new problems.
  */
@@ -11,6 +12,11 @@ export async function handleNewProblem() {
       type: "input",
       name: "id",
       message: "Enter the LeetCode question ID:",
+    },
+    {
+      type: "input",
+      name: "requests",
+      message: "What is similar problem?",
     },
     {
       type: "input",
@@ -32,5 +38,10 @@ export async function handleNewProblem() {
  * @returns {string} A complete prompt ready for AI processing.
  */
 function createPrompt(questionId, additionalRequests) {
-  return `Generate code for the LeetCode question: ${questionId}, based on the pattern below. ${additionalRequests} Include descriptive comments and tag lines for state tracking. Ensure readability by using clear variable names. Export the main functionality.\n\n`;
+  return `Generate code for the LeetCode question: ${questionId}, 
+  based on the pattern below. 
+  ${additionalRequests} 
+  Include descriptive comments and tag lines for state tracking. 
+  Ensure readability by using clear variable names. 
+  Export the main functionality.\n\n`;
 }

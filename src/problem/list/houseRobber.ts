@@ -1,6 +1,6 @@
 import { sum } from "lodash";
-import { Problem, ProblemState, Variable } from "../../types";
-import { asArray, asSimpleValue, asValueGroup } from "../../utils";
+import { Problem, ProblemState, Variable } from "../types";
+import { asArray, asSimpleValue, asValueGroup } from "../utils";
 
 function rob(houses: HouseRobberInput): ProblemState[] {
   const s: ProblemState[] = [];
