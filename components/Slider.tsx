@@ -50,7 +50,7 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
         <i className="fas fa-circle-info hover:scale-110 transition-transform duration-300"></i>
       </div>
       <button
-        className="px-2 py-1 rounded-full border  border-gray-300 bg-white text-gray-500 hover:bg-gray-100 focus:outline-none"
+        className="px-2 py-1 rounded-full  bg-primary text-primary-content"
         onClick={() => {
           if (sliderRef.current) {
             sliderRef.current.stepDown();
@@ -72,7 +72,7 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
         //onKeyDown={handleArrowKeyPress}
       />
       <button
-        className="px-2 py-1 rounded-full border  border-gray-300 bg-white text-gray-500 hover:bg-gray-100 focus:outline-none"
+        className="px-2 py-1 rounded-full bg-primary text-primary-content"
         onClick={() => {
           if (sliderRef.current) {
             sliderRef.current.stepUp();
