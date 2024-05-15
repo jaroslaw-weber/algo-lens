@@ -112,4 +112,5 @@ export const maxAreaProblem: Problem<ContainerInput, ProblemState> = {
   getInput,
   func: maxArea,
   id: "container-with-most-water",
+  tags: ["array", "two pointers"],
 };

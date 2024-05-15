@@ -95,4 +95,5 @@ export const wordBreakProblem: Problem<WordBreakInput, ProblemState> = {
   func: wordBreak,
   id: "word-break",
   tested: true,
+  tags: ["dynamic programming", "string"],
 };

@@ -88,4 +88,5 @@ export const houseRobberProblem: Problem<HouseRobberInput, ProblemState> = {
   func: rob,
   id: "house-robber",
   tested: true,
+  tags: ["dynamic programming"],
 };

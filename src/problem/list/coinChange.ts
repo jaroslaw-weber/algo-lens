@@ -112,4 +112,5 @@ export const coinChangeProblem: Problem<CoinChangeInput, ProblemState> = {
   func: coinChange,
   id: "coin-change",
   tested: true,
+  tags: ["dynamic programming"]
 };

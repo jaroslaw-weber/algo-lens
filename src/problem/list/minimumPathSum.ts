@@ -126,4 +126,5 @@ export const minPathSumProblem: Problem<MinPathSumInput, MinPathSumState> = {
   getInput: getInput,
   func: minPathSum,
   id: "minimum-path-sum",
+  tags: ["2d dynamic programming"],
 };

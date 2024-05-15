@@ -20,6 +20,8 @@ export interface Problem<Input, State> {
 
   /* did i test this code? does it work well? */
   tested?: boolean;
+
+  tags?: string[];
 }
 
 /** Represents a variable used within a ProblemState, can be a simple number or an array. */
@@ -100,12 +102,11 @@ export interface ProblemState {
   breakpoint: number;
 }
 
-
 export class ListNode {
   val: number;
   next: ListNode | null;
   constructor(val?: number, next?: ListNode | null) {
-    this.val = (val===undefined? 0 : val);
-    this.next = (next===undefined? null : next);
+    this.val = val === undefined ? 0 : val;
+    this.next = next === undefined ? null : next;
   }
 }

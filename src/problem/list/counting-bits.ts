@@ -138,4 +138,5 @@ export const countBitsProblem: Problem<CountBitsInput, ProblemState> = {
   getInput,
   func: countBits,
   id: "counting-bits",
+  tags: ["bit manipulation"],
 };

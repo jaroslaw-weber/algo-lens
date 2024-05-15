@@ -89,4 +89,5 @@ export const hammingWeightProblem: Problem<HammingWeightInput, ProblemState> = {
   getInput,
   func: hammingWeight,
   id: "hamming-weight",
+  tags: ["bit manipulation"],
 };

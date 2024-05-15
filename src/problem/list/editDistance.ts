@@ -118,4 +118,5 @@ export const editDistanceProblem: Problem<EditDistanceInput, ProblemState> = {
   getInput,
   func: editDistance,
   id: "edit-distance",
+  tags: ["dynamic programming", "string"],
 };

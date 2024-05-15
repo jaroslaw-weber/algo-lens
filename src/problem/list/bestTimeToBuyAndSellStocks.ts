@@ -110,4 +110,5 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   func: maxProfit,
   tested: true,
   id: "best-time-to-buy-and-sell-stock",
+  tags:["dynamic programming"]
 };

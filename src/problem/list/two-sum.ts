@@ -119,4 +119,5 @@ export const twoSumProblem: Problem<TwoSumInput, ProblemState> = {
   getInput,
   func: twoSum,
   id: "two-sum",
+  tags: ["array", "two pointers"],
 };

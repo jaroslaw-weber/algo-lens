@@ -82,4 +82,5 @@ export const missingNumberProblem: Problem<MissingNumberInput, number> = {
   getInput,
   func: missingNumber,
   id: "missing-number",
+  tags: ["math", "array"],
 };

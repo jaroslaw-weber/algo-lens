@@ -141,4 +141,5 @@ export const maxSubArrayProblem: Problem<MaxSubArrayInput, ProblemState> = {
   getInput,
   func: maxSubArray,
   id: "maximum-subarray",
+  tags: ["dynamic programming"],
 };

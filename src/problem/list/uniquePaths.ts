@@ -89,4 +89,5 @@ export const uniquePathsProblem: Problem<UniquePathsInput, UniquePathsState> = {
   getInput: getInput,
   func: uniquePaths,
   id: "unique-paths",
+  tags: ["2d dynamic programming"]
 };

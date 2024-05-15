@@ -79,4 +79,5 @@ export const longestIncreasingSubsequenceProblem: Problem<LISInput, ProblemState
     getInput: getInput,
     func: longestIncreasingSubsequence,
     id: "longest-increasing-subsequence",
+    tags: ["dynamic programming"],
 };
