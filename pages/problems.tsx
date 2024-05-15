@@ -4,6 +4,26 @@ import Link from "next/link";
 import Head from "next/head";
 import { problems } from "../src/problem/list";
 
+//accent -> important
+//neutral -> only a bit important, depending on your goal
+const tagColors = {
+  array: "accent",
+  backtracking: "accent",
+  "bit manipulation": "neutral",
+  "dynamic programming": "secondary",
+  "2d dynamic programming": "secondary",
+  graph: "accent",
+  greedy: "accent",
+  hash: "neutral",
+  math: "neutral",
+  recursion: "neutral",
+  searching: "neutral",
+  string: "accent",
+  tree: "accent",
+  "union-find": "neutral",
+  "two pointers": "accent",
+};
+
 const Problems: NextPage = () => {
   return (
     <div className="">
@@ -19,6 +39,10 @@ const Problems: NextPage = () => {
         <h1 className="text-3xl text-center mb-6 mt-6 font-display">
           Problems
         </h1>
+
+       <div className="h-0 invisible">
+<div className="badge badge-primary">primary</div>
+<div className="badge badge-secondary">secondary</div></div> 
         <div className="max-w-lg mx-auto">
           <div className="p-4">
             <ul className="list-decimal list-inside">
@@ -31,7 +55,14 @@ const Problems: NextPage = () => {
                     {problem.title}
                   </Link>
                   {problem.tags
-                    ? problem.tags.map((x) => <div className="badge badge-accent ml-4 badge-sm text-accent-content" key={x}>{x}</div>)
+                    ? problem.tags.map((x) => (
+                        <div
+                          className={`badge badge-${tagColors[x]} ml-4 badge-sm text-${tagColors[x]}-content opacity-60`}
+                          key={x}
+                        >
+                          {x}
+                        </div>
+                      ))
                     : null}
                 </li>
               ))}
