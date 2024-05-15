@@ -7,6 +7,8 @@ const enquirer = require("enquirer");
  * Handles the generation of new problems.
  */
 export async function handleNewProblem() {
+  // list of example problems that can be used to generate new problems.
+  const similarProblemList = ["two-sum", "number-of-1-bits", "container-with-most-water"];
   const { id, requests } = await enquirer.prompt([
     {
       type: "input",
@@ -14,18 +16,13 @@ export async function handleNewProblem() {
       message: "Enter the LeetCode question ID:",
     },
     {
-      type: "input",
-      name: "requests",
+      type: "autocomplete",
+      name: "similarProblem",
       message: "What is similar problem?",
-    },
-    {
-      type: "input",
-      name: "requests",
-      message: "Any specific requests for the AI?",
-    },
+    }
   ]);
 
-  const q = createPrompt(id, requests);
+  const q = createPrompt(id);
   const answer = await askAi(q);
   const code = extractCode(answer);
   const path = `./src/problem/list/${id}.ts`;
@@ -37,10 +34,9 @@ export async function handleNewProblem() {
  * @param {string} additionalRequests - Additional customization requests for the AI.
  * @returns {string} A complete prompt ready for AI processing.
  */
-function createPrompt(questionId, additionalRequests) {
+function createPrompt(questionId) {
   return `Generate code for the LeetCode question: ${questionId}, 
   based on the pattern below. 
-  ${additionalRequests} 
   Include descriptive comments and tag lines for state tracking. 
   Ensure readability by using clear variable names. 
   Export the main functionality.\n\n`;
