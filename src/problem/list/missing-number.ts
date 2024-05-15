@@ -12,7 +12,7 @@ export function missingNumber(p: MissingNumberInput): ProblemState[] {
   const { nums } = p;
   const states: ProblemState[] = [];
 
-  let n = nums.length + 1;
+  let n = nums.length;
   // Calculate the expected sum of the sequence using the formula for the sum of an arithmetic series
   let expectedSum = (n * (n + 1)) / 2;
 
@@ -25,6 +25,7 @@ export function missingNumber(p: MissingNumberInput): ProblemState[] {
       variables: v,
       breakpoint: point,
     });
+    v.push(asArray("nums", nums));
     const group: any = { expectedSum, actualSum };
     if (result !== undefined) {
       group.result = result;
@@ -49,12 +50,12 @@ export function missingNumber(p: MissingNumberInput): ProblemState[] {
 
 // Example implementation of the missingNumber function for demonstration and testing
 const code = `function missingNumber(nums: number[]): number {
-  let n = nums.length + 1; 
-  // Calculate the expected sum of numbers from 1 to n (inclusive)
+  let n = nums.length; 
+  // Calculate the expected sum of numbers from 0 to n (inclusive)
   let expectedSum = (n * (n + 1)) / 2; 
 
   let actualSum = 0;
-  //#1 Iterate through the given array of numbers
+  //#1: Iterate through the given array of numbers
   for (let i = 0; i < nums.length; i++) {
     actualSum += nums[i];
     //#2: Add the current number to the actualSum
@@ -65,7 +66,8 @@ const code = `function missingNumber(nums: number[]): number {
   //#3: The result will be the missing number
 
   return result;
-}`;
+}
+`;
 
 // Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Missing Number";
