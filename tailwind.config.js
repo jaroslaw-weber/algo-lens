@@ -32,12 +32,12 @@ module.exports = {
   ],
   daisyui: {
     themes: [
+      'emerald',
       'pastel',
       'light',
       'dark',
       'cupcake',
       'bumblebee',
-      'emerald',
       'corporate',
       'synthwave',
       'retro',
