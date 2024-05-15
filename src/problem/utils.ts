@@ -1,4 +1,4 @@
-import { sample, cloneDeep } from "lodash";
+import { sample, cloneDeep, reverse } from "lodash";
 import {
   ArrayVariable,
   ValueGroupVariable as ValueGroupVariable,
@@ -27,9 +27,8 @@ export function asSimpleValue(o: any): SimpleVariable[] {
 export function asValueGroup(
   label: string,
   o: any,
-  options: { min: number; max: number }
+  options: { min: number; max: number; reverse?: any }
 ): ValueGroupVariable {
-  const keys = Object.keys(o);
   const result: ValueGroupVariable = {
     data: [],
     label,
@@ -42,6 +41,7 @@ export function asValueGroup(
       value: o[key],
     });
   }
+
   return result;
 }
 
