@@ -78,6 +78,10 @@ export function asBinary(
   o: Record<string, number>,
   options?: {
     highlightLast?: boolean;
+    /* pointers index but starting from left */
+    pointersLeft?: number[];
+    /* pointers index but starting from right */
+    pointersRight?: number[];
   }
 ): BinaryVariable {
   const keys = Object.keys(o);
@@ -87,22 +91,36 @@ export function asBinary(
   const [label] = keys;
   const value = o[label];
 
-  
   //
   const result: BinaryVariable = {
     label,
     type: "binary",
     value: value,
-    pointers:[]
+    pointers: [],
   };
-  if(options?.highlightLast){
+  const asBinaryString = value.toString(2);
+  if (options?.highlightLast) {
     //check what is index of last element of binary representation of the value number and set it as pointer
-    const lastIndex = value.toString(2).length - 1;
+    const lastIndex = asBinaryString.length - 1;
     result.pointers.push({
       value: lastIndex,
       dimension: "column",
     });
   }
+  for (const pointer in options?.pointersLeft ?? []) {
+    result.pointers.push({
+      value: options?.pointersLeft[pointer],
+      dimension: "column",
+    });
+  }
+
+  for (const pointer in options?.pointersRight ?? []) {
+    result.pointers.push({
+      value: asBinaryString.length - 1 - options?.pointersRight[pointer],
+      dimension: "column",
+    });
+  }
+
   return result;
 }
 

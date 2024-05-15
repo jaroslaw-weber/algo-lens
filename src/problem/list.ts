@@ -11,6 +11,7 @@ import { uniquePathsProblem } from "./list/dp2/uniquePaths";
 import { twoSumProblem } from "./list/twoSum";
 import { maxAreaProblem } from "./list/container-with-most-water";
 import { countBitsProblem } from "./list/counting-bits";
+import { hammingWeightProblem } from "./list/number-of-1-bits";
 
 export const problems = [
   maxProfitProblem,
@@ -25,5 +26,6 @@ export const problems = [
   uniquePathsProblem,
   twoSumProblem,
   maxAreaProblem,
-  countBitsProblem
+  countBitsProblem,
+  hammingWeightProblem
 ].filter((x) => !x.hide);
