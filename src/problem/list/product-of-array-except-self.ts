@@ -24,7 +24,7 @@ export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
   const steps: ProblemState[] = [];
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, product?: number, result?: number[]) {
+  function log(point: number, product?: number, result?: number[]) {
     const step: ProblemState = {
       variables: [asArray("nums", nums)],
       breakpoint: point,
@@ -41,11 +41,11 @@ export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Calculate the total product
   let totalProduct = nums.reduce((a, b) => a * b, 1);
-  logStep(2, totalProduct);
+  log(2, totalProduct);
 
   // Create the output array
   const output: number[] = new Array(nums.length);
@@ -53,11 +53,11 @@ export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
   // Main loop to calculate the product except self
   for (let i = 0; i < nums.length; i++) {
     output[i] = totalProduct / nums[i];
-    logStep(3, totalProduct, nums[i], [output[i]]);
+    log(3, totalProduct, output);
   }
 
   // Logs the final state with the output array
-  logStep(4, undefined, output);
+  log(4, undefined, output);
 
   return steps;
 }

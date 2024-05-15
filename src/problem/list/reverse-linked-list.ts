@@ -1,6 +1,6 @@
 
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
+import { ListNode, Problem, ProblemState } from "../types";
 import {
   asArray,
   as2dArray,

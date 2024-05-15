@@ -28,7 +28,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
   // Helper function to create and log each step's computational state
   function logStep(point: number, rowsWithZero?: boolean[], colsWithZero?: boolean[]) {
     const step: ProblemState = {
-      variables: [as2dArray("matrix", matrix)],
+      variables: [as2dArray("matrix", matrix, [])],
       breakpoint: point,
     };
     if (rowsWithZero !== undefined) {

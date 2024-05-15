@@ -1,3 +1,4 @@
+import { Problem, ProblemState } from "../types";
 
 // Defines the interface for the input expected by the sumOfTwoIntegers function
 interface SumOfTwoIntegersInput {
@@ -10,14 +11,15 @@ interface SumOfTwoIntegersInput {
  * @param p - The input parameters including two integers.
  * @returns The sum of the two integers.
  */
-export function sumOfTwoIntegers(p: SumOfTwoIntegersInput): number {
+export function sumOfTwoIntegers(p: SumOfTwoIntegersInput): ProblemState[] {
+  const s : ProblemState[]= []
   const { a, b } = p; //#1 Extract input parameters
   let result: number; //#2 Initialize result variable
 
   // Calculate the sum of the two integers
   result = a + b; //#3 Calculate the sum
 
-  return result; //#4 Return the result
+  return s //#4 Return the result
 }
 
 // Example implementation of the sumOfTwoIntegers function for demonstration and testing

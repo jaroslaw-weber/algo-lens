@@ -99,3 +99,13 @@ export interface ProblemState {
   /** Identifier for the step or phase in the computation when the state was recorded. */
   breakpoint: number;
 }
+
+
+export class ListNode {
+  val: number;
+  next: ListNode | null;
+  constructor(val?: number, next?: ListNode | null) {
+    this.val = (val===undefined? 0 : val);
+    this.next = (next===undefined? null : next);
+  }
+}

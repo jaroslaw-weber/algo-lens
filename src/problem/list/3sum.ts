@@ -3,7 +3,6 @@
 import { Problem, ProblemState } from "../types";
 import {
   asArray,
-  as3dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
@@ -31,7 +30,7 @@ export function threeSum(p: ThreeSumInput): ProblemState[] {
       breakpoint: point,
     };
     if (triplet) {
-      step.variables.push(asSimpleValue({ result: JSON.stringify(triplet) }));
+      step.variables.push(...asSimpleValue({ result: JSON.stringify(triplet) }));
     }
     steps.push(step);
   }

@@ -1,10 +1,6 @@
-
 // Imports specific utility functions and type definitions from the relative paths
 import { Problem, ProblemState } from "../types";
-import {
-  asArray,
-  asValueGroup,
-} from "../utils";
+import { asArray, asValueGroup } from "../utils";
 
 // Defines the interface for the input expected by the search function
 interface SearchInput {
@@ -26,11 +22,16 @@ export function search(p: SearchInput): ProblemState[] {
   // Helper function to create and log each step's computational state
   function logStep(point: number, leftIndex?: number, rightIndex?: number) {
     const step: ProblemState = {
+      breakpoint: point,
       variables: [asArray("nums", nums, left, right)],
     };
     if (leftIndex !== undefined && rightIndex !== undefined) {
       step.variables.push(
-        asValueGroup("bounds", { left: leftIndex, right: rightIndex })
+        asValueGroup(
+          "bounds",
+          { left: leftIndex, right: rightIndex },
+          { min: 0, max: nums.length - 1 }
+        )
       );
     }
     steps.push(step);

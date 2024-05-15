@@ -38,7 +38,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
       variables: [
         as2dArray("heights", heights, []),
         asArray("queue", queue.map(([r, c]) => `${r},${c}`)),
-        as2dArray("visited", visited, (r, c) => (visited[r][c] ? 1 : 0)),
+        as2dArray("visited", visited, []),
       ],
       breakpoint: point,
     };
@@ -109,7 +109,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
     }
   }
 
-  logStep(step++, [], result.map(([r, c]) => `${r},${c}`));
+  logStep(step++, [], []);
 
   return steps;
 }
