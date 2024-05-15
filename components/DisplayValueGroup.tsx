@@ -10,6 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { ValueGroupVariable } from "../src/problem/types";
+import { lerp } from "../scripts/ai/utils";
+import _ from "lodash";
 
 // Register the necessary Chart.js components
 ChartJS.register(
@@ -97,7 +99,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
   const color = ["primary", "secondary"];
   let i = 0;
   for (const x of data.data) {
-    const bgColor = color[i % color.length]
+    const bgColor = color[i % color.length];
     progressBars.push(
       <div className="flex flex-col gap-1 w-full">
         <p className="text-xs text-gray-400">{x.label}</p>
@@ -112,9 +114,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
             aria-valuemax={data.options.max}
           >
             <div
-              className={`py-2 flex flex-col justify-center rounded overflow-hidden bg-${
-                bgColor
-              }  text-${bgColor}-content text-center whitespace-nowrap transition duration-500`}
+              className={`py-2 flex flex-col justify-center rounded overflow-hidden bg-${bgColor}  text-${bgColor}-content text-center whitespace-nowrap transition duration-500`}
               style={{
                 width: getWidthPercent(x, data.options) + "%",
               }}
@@ -142,11 +142,17 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
     x: { label: string; value: number },
     options: { min: number; max: number }
   ) {
-    const { label, value } = x;
+    // Destructure the value from the object
+    const { value } = x;
     const { min, max } = options;
-    if (value < min) return 0;
-    if (value === Infinity) return 100;
-    return (x.value / data.options.max) * 100;
+
+    // Clamp the value within the range [min, max]
+    const clampedValue = _.clamp(value, min, max);
+
+    // Calculate the percentage
+    const percent = ((clampedValue - min) / (max - min)) * 100;
+
+    return percent;
   }
 };
 

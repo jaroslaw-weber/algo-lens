@@ -1,6 +1,6 @@
-
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
+import { sum } from "lodash";
+import { Problem, ProblemState, Variable } from "../types";
 import {
   asArray,
   as2dArray,
@@ -27,52 +27,66 @@ export function maxSubArray(p: MaxSubArrayInput): ProblemState[] {
   let start = 0;
   let end = 0;
   let tempStart = 0;
+  //for displaying
+  const configMax = sum(nums.filter((x) => x > 0));
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, maxCurrent?: number, maxGlobal?: number) {
+  function log(point: number, i?: number) {
+    const v: Variable[] = [];
     const step: ProblemState = {
-      variables: [asArray("nums", nums, start, end)],
-      breakpoint:point
+      variables: v,
+      breakpoint: point,
     };
-    if (maxCurrent !== undefined) {
-      step.variables.push(
-        asValueGroup("maxCurrent", { maxCurrent, max: maxGlobal }, { min: -100, max: 100 })
-      );
+    v.push(asArray("nums: start - end", nums, start, end));
+    v.push(asArray("nums: tempStart", nums, tempStart));
+    if (i !== undefined) {
+      v.push(asArray("nums: i", nums, i));
     }
-    if (maxGlobal !== undefined) {
-      step.variables.push(
-        asValueGroup("maxGlobal", { maxGlobal, max: maxGlobal }, { min: -100, max: 100 })
-      );
-    }
+    v.push(
+      asValueGroup(
+        "max",
+        { maxCurrent, maxGlobal },
+        { min: -configMax, max: configMax }
+      )
+    );
+
     steps.push(step);
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Main loop to find the maximum subarray
   for (let i = 0; i < nums.length; i++) {
+    log(2, i);
     if (i === 0 || nums[i] > maxCurrent + nums[i]) {
       //#2 Reset maxCurrent and tempStart when a greater number is found
+      log(3, i);
       maxCurrent = nums[i];
       tempStart = i;
+      log(4, i);
     } else {
+      log(5, i);
       //#3 Accumulate maxCurrent
       maxCurrent += nums[i];
+      log(6, i);
     }
 
+    log(7, i);
     //#4 Update maxGlobal if maxCurrent is greater
     if (maxCurrent > maxGlobal) {
+      log(8, i);
       maxGlobal = maxCurrent;
       start = tempStart;
       end = i;
+      log(9, i);
     }
 
-    logStep(5, maxCurrent, maxGlobal);
+    log(10, i);
   }
 
   // Logs the final state
-  logStep(6, maxCurrent, maxGlobal);
+  log(11);
 
   return steps;
 }
@@ -89,29 +103,35 @@ const code = `function maxSubArray(nums: number[]): number {
   for (let i = 0; i < nums.length; i++) {
     //#2 Reset maxCurrent and tempStart when a greater number is found
     if (i === 0 || nums[i] > maxCurrent + nums[i]) {
+      //#3
       maxCurrent = nums[i];
       tempStart = i;
+      //#4
     } else {
-      //#3 Accumulate maxCurrent
+      //#5 Accumulate maxCurrent
       maxCurrent += nums[i];
+      //#6
     }
 
-    //#4 Update maxGlobal if maxCurrent is greater
+    //#7 Update maxGlobal if maxCurrent is greater
     if (maxCurrent > maxGlobal) {
+      //#8
       maxGlobal = maxCurrent;
       start = tempStart;
       end = i;
+      //#9
     }
+    //#10
   }
 
-  //#5 Return the maximum subarray sum
+  //#11 Return the maximum subarray sum
   return maxGlobal;
 }`;
 
 // Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Maximum Subarray";
 const getInput = () => ({
-  nums: [-2, 1, -3, 4, -1, 2, 1, -5, 4],
+  nums: [-2, 2, 1, -9, 4, -7, 2, 1, 1, 5, -5, 4],
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
@@ -120,5 +140,5 @@ export const maxSubArrayProblem: Problem<MaxSubArrayInput, ProblemState> = {
   code,
   getInput,
   func: maxSubArray,
-  id: "max-subarray",
+  id: "maximum-subarray",
 };
