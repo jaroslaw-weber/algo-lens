@@ -1,12 +1,6 @@
-
 // Imports specific utility functions and type definitions from the relative paths
 import { Problem, ProblemState } from "../types";
-import {
-  asArray,
-  as2dArray,
-  asSimpleValue,
-  asValueGroup,
-} from "../utils";
+import { asArray, as2dArray, asSimpleValue, asValueGroup } from "../utils";
 
 // Defines the interface for the input expected by the numIslands function
 interface NumIslandsInput {
@@ -24,48 +18,68 @@ export function numIslands(p: NumIslandsInput): ProblemState[] {
   let numIslands = 0;
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, islandCount?: number, gridSnapshot?: string[][]) {
+  function log(
+    point: number,
+    islandCount?: number,
+    gridSnapshot?: string[][]
+  ) {
+    const rowCount = gridSnapshot.length;
+    const colCount = gridSnapshot[0].length;
     const step: ProblemState = {
-      variables: [as2dArray("grid", grid,[])], //, gridSnapshot)],
-      breakpoint: point, 
+      variables: [as2dArray("grid", grid, [])], //, gridSnapshot)],
+      breakpoint: point,
     };
     if (islandCount !== undefined) {
-      step.variables.push(...asSimpleValue({ "Num Islands": islandCount }));
+      step.variables.push(
+        asValueGroup(
+          "counter",
+          { islandCount },
+          { max: (rowCount * colCount) / 2, min: 0 }
+        )
+      );
     }
     steps.push(step);
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Iterate over the grid to find islands
-  for (let i = 0; i < grid.length; i++) { //#2
-    for (let j = 0; j < grid[0].length; j++) { //#3
-      if (grid[i][j] === '1') {
+  for (let i = 0; i < grid.length; i++) {
+    //#2
+    for (let j = 0; j < grid[0].length; j++) {
+      //#3
+      if (grid[i][j] === "1") {
         numIslands++;
         dfs(grid, i, j); //#4
-        logStep(5, numIslands, cloneGrid(grid));
+        log(5, numIslands, cloneGrid(grid));
       }
     }
   }
 
   // Logs the final state with the total number of islands
-  logStep(6, numIslands);
+  log(6, numIslands);
 
   return steps;
 }
 
 // Helper function to clone the grid for logging
 function cloneGrid(grid: string[][]): string[][] {
-  return grid.map(row => [...row]);
+  return grid.map((row) => [...row]);
 }
 
 // Depth-First Search (DFS) function to mark an island as visited
 function dfs(grid: string[][], i: number, j: number) {
-  if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] !== '1') {
+  if (
+    i < 0 ||
+    i >= grid.length ||
+    j < 0 ||
+    j >= grid[0].length ||
+    grid[i][j] !== "1"
+  ) {
     return;
   }
-  grid[i][j] = '0'; //#7 Mark the cell as visited
+  grid[i][j] = "0"; //#7 Mark the cell as visited
   dfs(grid, i - 1, j); //#8 Explore top cell
   dfs(grid, i + 1, j); //#9 Explore bottom cell
   dfs(grid, i, j - 1); //#10 Explore left cell

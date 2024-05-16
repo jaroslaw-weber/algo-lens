@@ -26,7 +26,7 @@ export function insertInterval(p: InsertIntervalInput): ProblemState[] {
   let result: number[][] = [];
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, intervals?: number[][], newInterval?: number[]) {
+  function log(point: number, intervals?: number[][], newInterval?: number[]) {
     const step: ProblemState = {
       breakpoint:point,
       variables: [as2dArray("intervals", intervals, [])],
@@ -39,7 +39,7 @@ export function insertInterval(p: InsertIntervalInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1, intervals, newInterval);
+  log(1, intervals, newInterval);
 
   // Initialize pointers for the merged result and the current interval index
   let i = 0, j = 0;
@@ -48,7 +48,7 @@ export function insertInterval(p: InsertIntervalInput): ProblemState[] {
   while (i < intervals.length && intervals[i][1] < newInterval[0]) {
     result.push(intervals[i]);
     i++;
-    logStep(2, intervals, newInterval);
+    log(2, intervals, newInterval);
   }
 
   // Merge all overlapping intervals to 'newInterval'
@@ -56,18 +56,18 @@ export function insertInterval(p: InsertIntervalInput): ProblemState[] {
     newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
     newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
     i++;
-    logStep(3, intervals, newInterval);
+    log(3, intervals, newInterval);
   }
 
   // Insert the 'newInterval'
   result.push(newInterval);
-  logStep(4, intervals, newInterval);
+  log(4, intervals, newInterval);
 
   // Add all remaining intervals to the output
   while (i < intervals.length) {
     result.push(intervals[i]);
     i++;
-    logStep(5, intervals, newInterval);
+    log(5, intervals, newInterval);
   }
 
   return steps;

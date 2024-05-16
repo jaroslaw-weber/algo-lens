@@ -24,7 +24,7 @@ export function threeSum(p: ThreeSumInput): ProblemState[] {
   const result: number[][] = [];
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, triplet?: number[]) {
+  function log(point: number, triplet?: number[]) {
     const step: ProblemState = {
       variables: [asArray("nums", nums)],
       breakpoint: point,
@@ -36,7 +36,7 @@ export function threeSum(p: ThreeSumInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Main loop to check triplets
   for (let i = 0; i < nums.length; i++) {
@@ -49,7 +49,7 @@ export function threeSum(p: ThreeSumInput): ProblemState[] {
     //#3 Start the loop to find the remaining two numbers that sum up to 0
     while (left < right) {
       const sum = nums[i] + nums[left] + nums[right];
-      logStep(3, [nums[i], nums[left], nums[right]]);
+      log(3, [nums[i], nums[left], nums[right]]);
 
       if (sum < 0) {
         //#4 If the sum is less than 0, move the left pointer to the right to increase the sum

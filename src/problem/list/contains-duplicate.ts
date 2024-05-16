@@ -25,7 +25,7 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
   const hashSet: Set<number> = new Set();
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, numsIndex?: number, existsInSet?: boolean) {
+  function log(point: number, numsIndex?: number, existsInSet?: boolean) {
     const step: ProblemState = {
       variables: [asArray("nums", nums)],
       breakpoint: point,
@@ -40,22 +40,22 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Main loop to check for duplicates
   for (let i = 0; i < nums.length; i++) {
-    logStep(2, i);
+    log(2, i);
     if (hashSet.has(nums[i])) {
-      logStep(3, i, true);
+      log(3, i, true);
       break;
     } else {
       hashSet.add(nums[i]);
-      logStep(4, i, false);
+      log(4, i, false);
     }
   }
 
   // Logs the final state
-  logStep(5);
+  log(5);
 
   return steps;
 }

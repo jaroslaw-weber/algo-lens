@@ -26,7 +26,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
   const colsWithZero: boolean[] = new Array(matrix[0].length).fill(false);
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, rowsWithZero?: boolean[], colsWithZero?: boolean[]) {
+  function log(point: number, rowsWithZero?: boolean[], colsWithZero?: boolean[]) {
     const step: ProblemState = {
       variables: [as2dArray("matrix", matrix, [])],
       breakpoint: point,
@@ -41,7 +41,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Mark rows and columns with zeros
   for (let i = 0; i < matrix.length; i++) {
@@ -54,7 +54,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
   }
 
   // Log the state after marking rows and columns
-  logStep(2, rowsWithZero, colsWithZero);
+  log(2, rowsWithZero, colsWithZero);
 
   // Set rows and columns to zero
   for (let i = 0; i < matrix.length; i++) {
@@ -66,7 +66,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
   }
 
   // Log the final state after setting rows and columns to zero
-  logStep(3);
+  log(3);
 
   return steps;
 }

@@ -24,7 +24,7 @@ export function reverseLinkedList(p: ReverseLinkedListInput): ProblemState[] {
   const steps: ProblemState[] = [];
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, current?: ListNode, previous?: ListNode, next?: ListNode) {
+  function log(point: number, current?: ListNode, previous?: ListNode, next?: ListNode) {
     const step: ProblemState = {
       variables: [asArray("head", [head], null, null)],
       breakpoint: point,
@@ -42,7 +42,7 @@ export function reverseLinkedList(p: ReverseLinkedListInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   let previous: ListNode | null = null;
   let current: ListNode | null = head;
@@ -50,18 +50,18 @@ export function reverseLinkedList(p: ReverseLinkedListInput): ProblemState[] {
   // Main loop to reverse the linked list
   while (current !== null) {
     const next: ListNode | null = current.next;
-    logStep(2, current, previous, next);
+    log(2, current, previous, next);
 
     current.next = previous;
-    logStep(3, current, previous, next);
+    log(3, current, previous, next);
 
     previous = current;
     current = next;
-    logStep(4, current, previous, next);
+    log(4, current, previous, next);
   }
 
   // Logs the final state after reversing the linked list
-  logStep(5, null, previous, null);
+  log(5, null, previous, null);
 
   return steps;
 }

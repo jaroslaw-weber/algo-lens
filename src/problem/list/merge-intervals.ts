@@ -23,7 +23,7 @@ export function mergeIntervals(p: MergeIntervalsInput): ProblemState[] {
   let current = 0;
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, intervals?: Interval[]) {
+  function log(point: number, intervals?: Interval[]) {
     const step: ProblemState = {
       variables: [asArray("intervals", intervals)],
       breakpoint: point,
@@ -34,7 +34,7 @@ export function mergeIntervals(p: MergeIntervalsInput): ProblemState[] {
   // Sort the intervals based on the start time
   intervals.sort((a, b) => a.start - b.start); //#1
 
-  logStep(1);
+  log(1);
 
   let result: Interval[] = [intervals[0]]; //#2
 
@@ -48,10 +48,10 @@ export function mergeIntervals(p: MergeIntervalsInput): ProblemState[] {
       result.push(currentInterval); //#6
     }
 
-    logStep(2, result);
+    log(2, result);
   }
 
-  logStep(3, result);
+  log(3, result);
 
   return steps;
 }

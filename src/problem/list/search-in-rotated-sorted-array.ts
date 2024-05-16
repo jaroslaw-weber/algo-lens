@@ -20,7 +20,7 @@ export function search(p: SearchInput): ProblemState[] {
   let right = nums.length - 1;
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, leftIndex?: number, rightIndex?: number) {
+  function log(point: number, leftIndex?: number, rightIndex?: number) {
     const step: ProblemState = {
       breakpoint: point,
       variables: [asArray("nums", nums, left, right)],
@@ -38,15 +38,15 @@ export function search(p: SearchInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Main loop to find the target number in the rotated array
   while (left <= right) {
     const mid = Math.floor((left + right) / 2);
-    logStep(2, left, right);
+    log(2, left, right);
 
     if (nums[mid] === target) {
-      logStep(3, left, right);
+      log(3, left, right);
       break;
     }
 
@@ -55,29 +55,29 @@ export function search(p: SearchInput): ProblemState[] {
       if (nums[left] <= target && target < nums[mid]) {
         //#2 If the target is in the left half, move the right pointer
         right = mid - 1;
-        logStep(4, left, right);
+        log(4, left, right);
       } else {
         //#3 If the target is not in the left half, move the left pointer
         left = mid + 1;
-        logStep(5, left, right);
+        log(5, left, right);
       }
     } else {
       //#4 Check if the right half is sorted
       if (nums[mid] < target && target <= nums[right]) {
         //#5 If the target is in the right half, move the left pointer
         left = mid + 1;
-        logStep(6, left, right);
+        log(6, left, right);
       } else {
         //#6 If the target is not in the right half, move the right pointer
         right = mid - 1;
-        logStep(7, left, right);
+        log(7, left, right);
       }
     }
   }
 
   // Logs the final state if the target is not found
   if (left > right) {
-    logStep(8);
+    log(8);
   }
 
   return steps;

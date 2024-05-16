@@ -33,7 +33,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
   let step = 0;
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, queue: [number, number][] = [], visited: boolean[][] = []) {
+  function log(point: number, queue: [number, number][] = [], visited: boolean[][] = []) {
     const step: ProblemState = {
       variables: [
         as2dArray("heights", heights, []),
@@ -46,7 +46,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
   }
 
   // Initial state log before the loop starts
-  logStep(step++);
+  log(step++);
 
   // Add all cells on the Pacific coast to the queue
   for (let i = 0; i < rows; i++) {
@@ -58,7 +58,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
     pacificVisited[0][i] = true;
   }
 
-  logStep(step++);
+  log(step++);
 
   // Perform BFS from the Pacific coast
   while (pacificQueue.length > 0) {
@@ -71,7 +71,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
         pacificQueue.push([nr, nc]);
       }
     }
-    logStep(step++);
+    log(step++);
   }
 
   // Add all cells on the Atlantic coast to the queue
@@ -84,7 +84,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
     atlanticVisited[rows - 1][i] = true;
   }
 
-  logStep(step++);
+  log(step++);
 
   // Perform BFS from the Atlantic coast
   while (atlanticQueue.length > 0) {
@@ -97,7 +97,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
         atlanticQueue.push([nr, nc]);
       }
     }
-    logStep(step++);
+    log(step++);
   }
 
   // Find the cells that can flow to both oceans
@@ -109,7 +109,7 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
     }
   }
 
-  logStep(step++, [], []);
+  log(step++, [], []);
 
   return steps;
 }

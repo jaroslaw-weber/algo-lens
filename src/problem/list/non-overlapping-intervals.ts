@@ -26,7 +26,7 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
   const nonOverlappingIntervals: number[][] = []; //#2 Initialize the result array
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, currentInterval?: number[], nonOverlapping?: number[][]) {
+  function log(point: number, currentInterval?: number[], nonOverlapping?: number[][]) {
     const step: ProblemState = {
       variables: [],//[as2dArray("intervals", intervals, lastNonOverlapIndex, nonOverlappingIntervals)],
       breakpoint: point,
@@ -41,23 +41,23 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Sort the intervals by their end points
   intervals.sort((a, b) => a[1] - b[1]); //#3 Sort the intervals
 
   for (let i = 0; i < intervals.length; i++) {
-    logStep(2, intervals[i]); //#4 Iterate through the intervals
+    log(2, intervals[i]); //#4 Iterate through the intervals
     if (lastNonOverlapIndex === -1 || intervals[i][0] >= nonOverlappingIntervals[lastNonOverlapIndex][1]) {
       //#5 Check for non-overlap with the last non-overlapping interval
       nonOverlappingIntervals.push(intervals[i]);
       lastNonOverlapIndex++;
-      logStep(3, intervals[i], nonOverlappingIntervals); //#6 Update the result
+      log(3, intervals[i], nonOverlappingIntervals); //#6 Update the result
     }
   }
 
   // Logs the final state
-  logStep(4, [], nonOverlappingIntervals); //#7
+  log(4, [], nonOverlappingIntervals); //#7
 
   return steps;
 }

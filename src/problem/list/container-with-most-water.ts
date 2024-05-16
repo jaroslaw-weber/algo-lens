@@ -26,7 +26,7 @@ export function maxArea(p: ContainerInput): ProblemState[] {
   const max = sum(height)*2
 
   // Helper function to create and log each step's computational state
-  function logStep(point: number, area?: number) {
+  function log(point: number, area?: number) {
     const step: ProblemState = {
       variables: [asArray("height", height, left, right)],
       breakpoint: point,
@@ -38,31 +38,31 @@ export function maxArea(p: ContainerInput): ProblemState[] {
   }
 
   // Initial state log before the loop starts
-  logStep(1);
+  log(1);
 
   // Main loop to check areas
   while (left < right) {
     const width = right - left;
     const minHeight = Math.min(height[left], height[right]);
     const area = width * minHeight;
-    logStep(2, area);
+    log(2, area);
 
     if (area > maxArea) {
       maxArea = area;
-      logStep(3, area);
+      log(3, area);
     }
 
     if (height[left] < height[right]) {
       left++;
-      logStep(4, area);
+      log(4, area);
     } else {
       right--;
-      logStep(5, area);
+      log(5, area);
     }
   }
 
   // Logs the final state with the maximum area
-  logStep(6, undefined);
+  log(6, undefined);
 
   return steps;
 }
