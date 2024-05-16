@@ -6,7 +6,6 @@ import { editDistanceProblem } from "./list/editDistance";
 import { coinChangeProblem } from "./list/coinChange";
 import { longestIncreasingSubsequenceProblem } from "./list/longestIncreasingSubsequence";
 import { minPathSumProblem } from "./list/minimumPathSum";
-import { knapsackProblem } from "./list/knapsackProblem";
 import { uniquePathsProblem } from "./list/uniquePaths";
 import { twoSumProblem } from "./list/two-sum";
 import { maxAreaProblem } from "./list/container-with-most-water";
@@ -16,6 +15,7 @@ import { maxSubArrayProblem } from "./list/maximum-subarray";
 import { missingNumberProblem } from "./list/missing-number";
 import { sumOfTwoIntegersProblem } from "./list/sum-of-two-integers";
 import { numIslandsProblem } from "./list/number-of-islands";
+import { productExceptSelfProblem } from "./list/product-of-array-except-self";
 
 export const problems = [
   maxProfitProblem,
@@ -26,7 +26,6 @@ export const problems = [
   editDistanceProblem,
   longestIncreasingSubsequenceProblem,
   minPathSumProblem,
-  knapsackProblem,
   uniquePathsProblem,
   twoSumProblem,
   maxAreaProblem,
@@ -37,4 +36,5 @@ export const problems = [
 
   sumOfTwoIntegersProblem,
   numIslandsProblem,
+  productExceptSelfProblem
 ].filter((x) => !x.hide);
