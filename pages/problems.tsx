@@ -40,9 +40,12 @@ const Problems: NextPage = () => {
           Problems
         </h1>
 
-       <div className="h-0 invisible">
-<div className="badge badge-primary">primary</div>
-<div className="badge badge-secondary">secondary</div></div> 
+        <div className="h-0 invisible">
+          { /* hotfix for missing classes*/}
+          <div className="badge badge-primary">primary</div>
+          <div className="badge badge-secondary">secondary</div>
+          <div className="badge badge-accent">accent</div>
+        </div>
         <div className="max-w-lg mx-auto">
           <div className="p-4">
             <ul className="list-decimal list-inside">
