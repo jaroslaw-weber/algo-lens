@@ -132,7 +132,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
     description?: string;
     pointers?: Pointer2D[];
   }) {
-    const v: Variable[] = [as2dArray("matrix", matrix, pointers ?? [])];
+    const v: Variable[] = [as2dArray("matrix", matrix, pointers ?? [])]; //todo: fix bug where i:0,j:0 is sometimes highlighted
     const step: ProblemState = {
       variables: v,
       breakpoint: point,
