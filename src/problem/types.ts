@@ -30,7 +30,12 @@ export interface Variable {
   label: string;
 
   /** Type of the variable, determining whether it's a single number or an array. */
-  type: "number" | "array" | "value-group" | "binary";
+  type: "number" | "array" | "value-group" | "binary" | "boolean-group";
+}
+export interface BooleanGroupVariable extends Variable{
+  data: Array<{ label: string; value: boolean }>;
+  label: string;
+  type: "boolean-group";
 }
 
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
@@ -100,6 +105,8 @@ export interface ProblemState {
 
   /** Identifier for the step or phase in the computation when the state was recorded. */
   breakpoint: number;
+
+  description?: string;
 }
 
 export class ListNode {

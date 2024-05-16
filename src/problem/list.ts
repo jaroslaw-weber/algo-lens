@@ -16,6 +16,7 @@ import { missingNumberProblem } from "./list/missing-number";
 import { sumOfTwoIntegersProblem } from "./list/sum-of-two-integers";
 import { numIslandsProblem } from "./list/number-of-islands";
 import { productExceptSelfProblem } from "./list/product-of-array-except-self";
+import { setMatrixZeroesProblem } from "./list/set-matrix-zeros";
 
 export const problems = [
   maxProfitProblem,
@@ -36,5 +37,6 @@ export const problems = [
 
   sumOfTwoIntegersProblem,
   numIslandsProblem,
-  productExceptSelfProblem
+  productExceptSelfProblem,
+  setMatrixZeroesProblem
 ].filter((x) => !x.hide);

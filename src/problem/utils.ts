@@ -5,6 +5,8 @@ import {
   Pointer2D,
   SimpleVariable,
   BinaryVariable,
+  Variable,
+  BooleanGroupVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -43,7 +45,23 @@ export function asValueGroup(
   }
 
   return result;
+}/** Display similar boolean values in a group */
+export function asBooleanGroup(label: string, o: Record<string, boolean>): BooleanGroupVariable {
+  const result: BooleanGroupVariable = {
+    data: [],
+    label,
+    type: "boolean-group",
+  };
+  for (const key in o) {
+    result.data.push({
+      label: key,
+      value: o[key],
+    });
+  }
+  return result;
 }
+
+
 
 export function asArray(
   label: string,
@@ -124,8 +142,8 @@ export function asBinary(
   return result;
 }
 
-export function deepClone2DArray(array: string[][]): string[][] {
-  return array.map(row => [...row]);
+export function deepClone2DArray<T>(array: T[][]): T[][] {
+  return array.map(row => cloneDeep(row));
 }
 
 
@@ -166,7 +184,7 @@ export function as2dArray(
   const result: ArrayVariable = {
     label,
     type: "array",
-    value: cloneDeep(arr),
+    value: deepClone2DArray(arr),
     pointers: [],
   };
   for (const p of pointers) {
