@@ -124,6 +124,11 @@ export function asBinary(
   return result;
 }
 
+export function deepClone2DArray(array: string[][]): string[][] {
+  return array.map(row => [...row]);
+}
+
+
 export function asStringArray(
   label: string,
   s: string,

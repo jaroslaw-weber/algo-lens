@@ -49,6 +49,7 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
       >
         <i className="fas fa-circle-info hover:scale-110 transition-transform duration-300"></i>
       </div>
+      <p>{value}</p>
       <button
         className="px-2 py-1 rounded-full  bg-primary text-primary-content"
         onClick={() => {

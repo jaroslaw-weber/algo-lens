@@ -15,6 +15,7 @@ import { hammingWeightProblem } from "./list/number-of-1-bits";
 import { maxSubArrayProblem } from "./list/maximum-subarray";
 import { missingNumberProblem } from "./list/missing-number";
 import { sumOfTwoIntegersProblem } from "./list/sum-of-two-integers";
+import { numIslandsProblem } from "./list/number-of-islands";
 
 export const problems = [
   maxProfitProblem,
@@ -33,6 +34,7 @@ export const problems = [
   hammingWeightProblem,
   maxSubArrayProblem,
   missingNumberProblem,
-  
-  sumOfTwoIntegersProblem
+
+  sumOfTwoIntegersProblem,
+  numIslandsProblem,
 ].filter((x) => !x.hide);
