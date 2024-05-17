@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="flex-grow flex w-full">
+    <div className="flex-grow flex w-full ">
       
 
       <main className="lg:mx-12 w-full mx-auto">

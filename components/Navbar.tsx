@@ -6,9 +6,11 @@ const Navbar = () => {
     <div className="w-full bg-base-100 flex-shrink ">
       <div className="navbar  mx-auto bg-primary text-primary-content shadow">
         <div className="flex-1">
-          <Link href="/" className="btn btn-ghost normal-case font-display text-xl">
-          algo-lens: see algorithms in action! 
-          </Link>
+        <Link href="/" className="btn btn-ghost normal-case font-display text-xl">
+  <span className="hidden sm:inline">algo-lens: see algorithms in action!</span>
+  <span className="inline sm:hidden">algo-lens</span>
+</Link>
+
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal p-0">

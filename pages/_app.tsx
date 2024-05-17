@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     document.documentElement.setAttribute("data-theme", theme);
   });
   return (
-    <div className="min-h-screen w-full font-sans flex flex-col bg-base-100 items-center">
+    <div className="min-h-screen overflow-x-hidden w-full font-sans flex flex-col bg-base-100 items-center">
       <Head>
         <title>Algo-Lens: Algorithm Visualization Tool</title>
         <meta
@@ -25,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
         />
       </Head>
+      
       <Navbar />
       <Component {...pageProps} />
     </div>
