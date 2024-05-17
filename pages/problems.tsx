@@ -41,7 +41,7 @@ const Problems: NextPage = () => {
         </h1>
 
         <div className="h-0 invisible">
-          { /* hotfix for missing classes*/}
+          {/* hotfix for missing classes*/}
           <div className="badge badge-primary">primary</div>
           <div className="badge badge-secondary">secondary</div>
           <div className="badge badge-accent">accent</div>
@@ -57,6 +57,9 @@ const Problems: NextPage = () => {
                   >
                     {problem.title}
                   </Link>
+                  {problem.tested && (
+                    <i className="fas fa-check ml-2 text-content"></i> // Font Awesome icon for tested problems
+                  )}
                   {problem.tags
                     ? problem.tags.map((x) => (
                         <div

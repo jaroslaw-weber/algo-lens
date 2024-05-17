@@ -17,6 +17,7 @@ import { sumOfTwoIntegersProblem } from "./list/sum-of-two-integers";
 import { numIslandsProblem } from "./list/number-of-islands";
 import { productExceptSelfProblem } from "./list/product-of-array-except-self";
 import { setMatrixZeroesProblem } from "./list/set-matrix-zeros";
+import { searchProblem } from "./list/search-in-rotated-sorted-array";
 
 export const problems = [
   maxProfitProblem,
@@ -28,7 +29,7 @@ export const problems = [
   longestIncreasingSubsequenceProblem,
   minPathSumProblem,
   uniquePathsProblem,
-  twoSumProblem,
+//  / twoSumProblem,
   maxAreaProblem,
   countBitsProblem,
   hammingWeightProblem,
@@ -38,5 +39,6 @@ export const problems = [
   sumOfTwoIntegersProblem,
   numIslandsProblem,
   productExceptSelfProblem,
-  setMatrixZeroesProblem
+  setMatrixZeroesProblem,
+  searchProblem
 ].filter((x) => !x.hide);

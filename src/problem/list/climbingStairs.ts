@@ -67,4 +67,5 @@ export const climbStairsProblem: Problem<ClimbingStairsInput, ProblemState> = {
   func: climbStairs,
   id: "climbing-stairs",
   tags: ["dynamic programming"],
+  tested: true
 };

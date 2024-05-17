@@ -2,11 +2,8 @@
 import { Problem, ProblemState, Variable } from "../types";
 import {
   asArray,
-  as2dArray,
   asSimpleValue,
-  asStringArray,
   asValueGroup,
-  asBinary,
 } from "../utils";
 
 // Defines the interface for the input expected by the twoSum function
@@ -23,24 +20,18 @@ interface TwoSumInput {
 export function twoSum(p: TwoSumInput): ProblemState[] {
   const { nums, target } = p;
   const steps: ProblemState[] = [];
-  let left = 0;
-  let right = nums.length - 1;
+  const map = new Map<number, number>();
 
   // Helper function to create and log each step's computational state
-  function log(point: number, sum?: number, result?: number[]) {
-    const v :Variable[] = [];
+  function log(point: number, index?: number, complement?: number, result?: number[]) {
+    const v: Variable[] = [];
     const step: ProblemState = {
       variables: v,
       breakpoint: point,
     };
-    v.push(asArray("nums", nums, left, right))
-    if (sum !== undefined) {
-      v.push(
-        asValueGroup("sum", { sum, target }, { min: 0, max: 2 * target })
-      );
-    }
+    v.push(asArray("nums", nums, index, complement));
     if (result) {
-      v.push(...asSimpleValue({ result: JSON.stringify(result) }));
+      v.push(...asSimpleValue({ result, target }));
     }
     steps.push(step);
   }
@@ -48,27 +39,24 @@ export function twoSum(p: TwoSumInput): ProblemState[] {
   // Initial state log before the loop starts
   log(1);
 
-  // Main loop to check pairs
-  while (left < right) {
-    const sum = nums[left] + nums[right];
-    log(2, sum);
+  // Iterate over the array
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+    log(2, i, complement);
 
-    if (sum === target) {
-      log(3, sum, [left, right]);
-      break;
-    } else if (sum < target) {
-      left++;
-      log(4, sum);
-    } else {
-      right--;
-      log(5, sum);
+    // Check if the complement exists in the map
+    if (map.has(complement)) {
+      log(3, i, complement, [map.get(complement)!, i]);
+      return steps;
     }
+
+    // Store each number and its index in the map
+    map.set(nums[i], i);
+    log(4, i, complement);
   }
 
   // Logs the final state if no two numbers add up to the target
-  if (left >= right) {
-    log(6);
-  }
+  log(5);
 
   return steps;
 }
@@ -106,7 +94,7 @@ const title = "Two Sum";
 
 const getInput = () => ({
   nums: [
-    2, 7, 11, 15, 21, 29, 35, 40, 45, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
+    2, 7, 11, 15, 21, 29, 35, 40, 45, 55, 75, 80, 85, 90, 95, 100,
     105, 110, 115, 120, 125,
   ],
   target: 130,
@@ -119,5 +107,6 @@ export const twoSumProblem: Problem<TwoSumInput, ProblemState> = {
   getInput,
   func: twoSum,
   id: "two-sum",
-  tags: ["array", "two pointers"],
+  tags: ["array", "hash map"],
+  tested: false
 };

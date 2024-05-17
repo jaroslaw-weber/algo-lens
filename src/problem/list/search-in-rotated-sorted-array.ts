@@ -1,6 +1,6 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
-import { asArray, asValueGroup } from "../utils";
+import { Problem, ProblemState, Variable } from "../types";
+import { asArray, asSimpleValue, asValueGroup } from "../utils";
 
 // Defines the interface for the input expected by the search function
 interface SearchInput {
@@ -18,22 +18,18 @@ export function search(p: SearchInput): ProblemState[] {
   const steps: ProblemState[] = [];
   let left = 0;
   let right = nums.length - 1;
+  let result = -1;
 
   // Helper function to create and log each step's computational state
-  function log(point: number, leftIndex?: number, rightIndex?: number) {
+  function log(point: number, mid?: number) {
+    const v: Variable[] = [];
     const step: ProblemState = {
       breakpoint: point,
-      variables: [asArray("nums", nums, left, right)],
+      variables: v,
     };
-    if (leftIndex !== undefined && rightIndex !== undefined) {
-      step.variables.push(
-        asValueGroup(
-          "bounds",
-          { left: leftIndex, right: rightIndex },
-          { min: 0, max: nums.length - 1 }
-        )
-      );
-    }
+    v.push(asArray("nums", nums, left, right, mid));
+    v.push(...asSimpleValue({ target, result }));
+
     steps.push(step);
   }
 
@@ -43,42 +39,48 @@ export function search(p: SearchInput): ProblemState[] {
   // Main loop to find the target number in the rotated array
   while (left <= right) {
     const mid = Math.floor((left + right) / 2);
-    log(2, left, right);
+    log(2, mid);
 
     if (nums[mid] === target) {
-      log(3, left, right);
-      break;
+      result = mid;
+      log(3, mid);
+      return steps;
     }
 
     if (nums[left] <= nums[mid]) {
-      //#1 Check if the left half is sorted
+      log(4, mid);
+      //Check if the left half is sorted
       if (nums[left] <= target && target < nums[mid]) {
         //#2 If the target is in the left half, move the right pointer
         right = mid - 1;
-        log(4, left, right);
+        log(5);
       } else {
         //#3 If the target is not in the left half, move the left pointer
         left = mid + 1;
-        log(5, left, right);
+        log(6);
       }
     } else {
+      log(7);
       //#4 Check if the right half is sorted
       if (nums[mid] < target && target <= nums[right]) {
         //#5 If the target is in the right half, move the left pointer
         left = mid + 1;
-        log(6, left, right);
+        log(8);
       } else {
         //#6 If the target is not in the right half, move the right pointer
         right = mid - 1;
-        log(7, left, right);
+        log(9);
       }
     }
   }
 
   // Logs the final state if the target is not found
   if (left > right) {
-    log(8);
+    result = -1;
+  } else {
+    result = left;
   }
+  log(10);
 
   return steps;
 }
@@ -126,8 +128,8 @@ const code = `function search(nums: number[], target: number): number {
 // Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Search in Rotated Sorted Array";
 const getInput = () => ({
-  nums: [4, 5, 6, 7, 0, 1, 2],
-  target: 0,
+  nums: [13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  target: 1,
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
@@ -137,4 +139,6 @@ export const searchProblem: Problem<SearchInput, ProblemState> = {
   getInput,
   func: search,
   id: "search-in-rotated-sorted-array",
+  tags: ["array", "binary-search"],
+  tested: true,
 };

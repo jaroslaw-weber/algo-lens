@@ -114,4 +114,6 @@ export const productExceptSelfProblem: Problem<
   getInput,
   func: productExceptSelf,
   id: "product-of-array-except-self",
+  tags: ["array", "prefix sum"],
+  tested:true
 };

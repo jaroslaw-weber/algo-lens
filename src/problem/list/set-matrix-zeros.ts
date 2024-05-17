@@ -144,7 +144,7 @@ export function setMatrixZeroes(p: SetMatrixZeroesInput): ProblemState[] {
 }
 
 // Example implementation of the setMatrixZeroes function for demonstration and testing
-const code = `function setMatrixZeroes(matrix: number[][]): void {
+const code = `function setZeroes(matrix: number[][]): void {
   const rows = matrix.length;
   const cols = matrix[0].length;
   let firstRowHasZero = false;
@@ -234,4 +234,5 @@ export const setMatrixZeroesProblem: Problem<
   getInput,
   func: setMatrixZeroes,
   id: "set-matrix-zeroes",
+  tags: ["matrix"],
 };
