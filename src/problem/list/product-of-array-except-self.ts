@@ -62,16 +62,15 @@ export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
     productsRight[i] = productsRight[i + 1] * nums[i + 1];
     log({ point: 3, rightIndex: [i, i + 1], numsIndex: [i + 1] });
   }
-  log({ point: 4 });
 
   // Calculate the output array by combining prefix and suffix products
   for (let i = 0; i < length; i++) {
     output[i] = productsLeft[i] * productsRight[i];
-    log({ point: 5, outputIndex: [i], leftIndex: [i], rightIndex: [i] });
+    log({ point: 4, outputIndex: [i], leftIndex: [i], rightIndex: [i] });
   }
 
   // Logs the final state with the output array
-  log({ point: 6 });
+  log({ point: 5 });
 
   return steps;
 }
@@ -83,18 +82,23 @@ const code = `function productExceptSelf(nums: number[]): number[] {
   const productsLeft = new Array(length).fill(1);
   const productsRight = new Array(length).fill(1);
 
+  //#1
   for (let i = 1; i < length; i++) {
     productsLeft[i] = productsLeft[i - 1] * nums[i - 1];
+    //#2
   }
 
   for (let i = length - 2; i >= 0; i--) {
     productsRight[i] = productsRight[i + 1] * nums[i + 1];
+    //#3
   }
 
   for (let i = 0; i < length; i++) {
     output[i] = productsLeft[i] * productsRight[i];
+    //#4
   }
 
+  //#5
   return output;
 }`;
 
