@@ -7,6 +7,7 @@ import {
   asStringArray,
   asValueGroup,
   asIntervals,
+  getIntervalBounds,
 } from "../utils";
 
 // Defines the interface for the input expected by the eraseOverlapIntervals function
@@ -28,24 +29,16 @@ export function eraseOverlapIntervals(
   const nonOverlappingIntervals: number[][] = [];
 
   // Helper function to create and log each step's computational state
-  function log(
-    point: number,
-    currentInterval?: number[],
-    nonOverlapping?: number[][]
-  ) {
-    const v:Variable[] = [];
+  function log(point: number, i?: number, j?: number) {
+    const v: Variable[] = [];
     const step: ProblemState = {
       variables: v,
       breakpoint: point,
     };
-    if (currentInterval) {
-      v.push(asIntervals("intervals", intervals));
-    }
-    if (nonOverlapping) {
-      v.push(
-        asIntervals("nonOverlappingIntervals", nonOverlapping)
-      );
-    }
+    const { min, max} = getIntervalBounds(intervals);
+    v.push(asIntervals("intervals", intervals, [i], min, max ));
+    v.push(asIntervals("nonOverlappingIntervals", nonOverlappingIntervals,[j], min, max));
+
     steps.push(step);
   }
 
@@ -56,7 +49,7 @@ export function eraseOverlapIntervals(
   intervals.sort((a, b) => a[1] - b[1]); //#3 Sort the intervals
 
   for (let i = 0; i < intervals.length; i++) {
-    log(2, intervals[i]); //#4 Iterate through the intervals
+    log(2, i); //#4 Iterate through the intervals
     if (
       lastNonOverlapIndex === -1 ||
       intervals[i][0] >= nonOverlappingIntervals[lastNonOverlapIndex][1]
@@ -64,11 +57,11 @@ export function eraseOverlapIntervals(
       //#5 Check for non-overlap with the last non-overlapping interval
       nonOverlappingIntervals.push(intervals[i]);
       lastNonOverlapIndex++;
-      log(3, intervals[i], nonOverlappingIntervals); //#6 Update the result
+      log(3, i); //#6 Update the result
     }
   }
 
-  log(4,); //#7
+  log(4); //#7
 
   return steps;
 }

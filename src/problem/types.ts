@@ -107,6 +107,7 @@ export interface ValueGroupVariable extends Variable {
 export interface IntervalVariable extends Variable {
   type: "interval";
   value: number[][];
+  indexes: number[];
   options: {
     min: number;
     max: number;

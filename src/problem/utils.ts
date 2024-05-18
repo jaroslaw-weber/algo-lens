@@ -64,17 +64,24 @@ export function asBooleanGroup(
   }
   return result;
 }
-export function asIntervals(label: string, arr: number[][]): IntervalVariable {
+export function asIntervals(label: string, arr: number[][], highlight:number[], min:number, max:number): IntervalVariable {
   const result: IntervalVariable = {
     label,
     type: "interval",
-    value: arr,
+    value: deepClone2DArray(arr),
+    indexes: highlight,
     options: {
-      min: min(arr.flat()),
-      max: max(arr.flat()),
+      min,
+      max,
     },
   };
   return result;
+}
+
+export function getIntervalBounds(arr: number[][]) {
+  const min = Math.min(...arr.flat());
+  const max = Math.max(...arr.flat());
+  return { min, max };
 }
 
 export function asArray(
