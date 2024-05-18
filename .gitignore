@@ -130,3 +130,4 @@ dist
 .pnp.*
 
 prompt.txt
+.aider*
