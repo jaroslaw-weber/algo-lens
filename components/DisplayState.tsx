@@ -5,6 +5,7 @@ import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVari
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
+import DisplayIntervals from "./DisplayIntervals";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -29,7 +30,7 @@ const DisplayState = ({ state }) => {
       }
       case "value-group": {
         const data = variable as ValueGroupVariable;
-        others.push(<DisplayValueGroup data={data} key={data.label} />);
+        others.push(<DisplayIntervals data={data} key={data.label} />);
         break;
       }
       case "binary": {

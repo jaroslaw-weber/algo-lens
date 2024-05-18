@@ -23,7 +23,7 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
   const { intervals } = p;
   const steps: ProblemState[] = [];
   let lastNonOverlapIndex = -1; //#1 Initialize the last non-overlapping index
-  const nonOverlappingIntervals: number[][] = []; //#2 Initialize the result array
+  const nonOverlappingIntervals: { intervals: number[][], variable: IntervalVariable } = { intervals: [], variable: intervalsVariable }; //#2 Initialize the result array
 
   // Helper function to create and log each step's computational state
   function log(point: number, currentInterval?: number[], nonOverlapping?: number[][]) {
@@ -57,7 +57,19 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
   }
 
   // Logs the final state
-  log(4, [], nonOverlappingIntervals); //#7
+  const intervalsVariable: IntervalVariable = {
+    label: "Non-overlapping Intervals",
+    intervals: nonOverlappingIntervals.map((interval, index) => ({
+      label: `Interval ${index}`,
+      value: interval,
+    })),
+    options: {
+      min: 0,
+      max: Math.max(...nonOverlappingIntervals.map(([start, end]) => end)),
+    },
+    data: nonOverlappingIntervals,
+  };
+  log(4, [intervalsVariable]); //#7
 
   return steps;
 }
