@@ -115,5 +115,6 @@ export const eraseOverlapIntervalsProblem: Problem<
   getInput,
   func: eraseOverlapIntervals,
   id: "non-overlapping-intervals",
-  tested:true
+  tested:true,
+  tags: ["interval"]
 };
