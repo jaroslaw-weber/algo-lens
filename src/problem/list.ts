@@ -19,6 +19,7 @@ import { productExceptSelfProblem } from "./list/product-of-array-except-self";
 import { setMatrixZeroesProblem } from "./list/set-matrix-zeros";
 import { searchProblem } from "./list/search-in-rotated-sorted-array";
 import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
+import { mergeIntervalsProblem } from "./list/merge-intervals";
 
 export const problems = [
   maxProfitProblem,
@@ -42,5 +43,6 @@ export const problems = [
   productExceptSelfProblem,
   setMatrixZeroesProblem,
   searchProblem,
-  eraseOverlapIntervalsProblem
+  eraseOverlapIntervalsProblem,
+  mergeIntervalsProblem
 ].filter((x) => !x.hide);

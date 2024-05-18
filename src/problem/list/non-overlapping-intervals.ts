@@ -95,13 +95,13 @@ const code = `function eraseOverlapIntervals(intervals: number[][]): number {
 const title = "Non-overlapping Intervals";
 const getInput = () => ({
   intervals: [
-    [1, 3],
+    [17, 20],
     [2, 6],
-    [5, 9],
     [8, 10],
     [12, 15],
+    [5, 9],
+    [1, 3],
     [14, 18],
-    [17, 20],
     [19, 22],
   ],
 });
