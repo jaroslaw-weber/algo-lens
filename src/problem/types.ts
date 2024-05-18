@@ -30,9 +30,15 @@ export interface Variable {
   label: string;
 
   /** Type of the variable, determining whether it's a single number or an array. */
-  type: "number" | "array" | "value-group" | "binary" | "boolean-group";
+  type:
+    | "number"
+    | "array"
+    | "value-group"
+    | "binary"
+    | "boolean-group"
+    | "interval";
 }
-export interface BooleanGroupVariable extends Variable{
+export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
   label: string;
   type: "boolean-group";
@@ -92,6 +98,16 @@ export interface ValueGroupVariable extends Variable {
     label: string;
     value: number;
   }[];
+  options: {
+    min: number;
+    max: number;
+  };
+}
+
+export interface IntervalVariable extends Variable {
+  type: "interval";
+  value: number[][];
+  indexes: number[];
   options: {
     min: number;
     max: number;
