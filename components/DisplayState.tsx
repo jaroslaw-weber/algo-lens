@@ -15,6 +15,7 @@ const DisplayState = ({ state }) => {
   const others = [];
   const binary = [];
   const booleans = []; // Added for boolean groups
+  const intervals = []; // Added for intervals
 
   for (const variable of variables) {
     switch (variable.type) {
@@ -45,7 +46,7 @@ const DisplayState = ({ state }) => {
       }
       case "interval": {
         const data = variable as IntervalVariable;
-        others.push(<DisplayIntervals data={data} key={data.label} />);
+        intervals.push(<DisplayIntervals data={data} key={data.label} />);
         break;
       }
     }
@@ -53,15 +54,16 @@ const DisplayState = ({ state }) => {
 
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
-      <div className="grid grid-cols-2 gap-16 mt-8 w-full">{binary}</div>
+    <div className="grid grid-cols-1 gap-16 mt-4 w-full">{intervals}</div>
+      <div className="grid grid-cols-2 gap-16 mt-4 w-full">{binary}</div>
       {/* Render numbers in a grid layout */}
-      <div className="w-full pt-12">{numbers}</div>
+      <div className="w-full mt-4">{numbers}</div>
       {/* Render arrays */}
-      <div className="mb-4 pt-8 flex flex-col gap-4">{arrays}</div>
+      <div className="mt-4 flex flex-col gap-4">{arrays}</div>
       {/* Render boolean groups */}
-      <div className="grid grid-cols-2 gap-16 mt-8 w-full">{booleans}</div>
+      <div className="grid grid-cols-2 gap-16 mt-4 w-full">{booleans}</div>
       {/* Render other types */}
-      <div className="grid grid-cols-2 gap-16 mt-8 w-full">{others}</div>
+      <div className="grid grid-cols-2 gap-16 mt-4 w-full">{others}</div>
     </div>
   );
 };

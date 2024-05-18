@@ -8,8 +8,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar } from 'react-chartjs-2';
-import 'chart.js/auto';
+import { Bar } from "react-chartjs-2";
+import "chart.js/auto";
 import { IntervalVariable } from "../src/problem/types";
 
 // Register the components
@@ -27,32 +27,45 @@ interface DisplayBarChartProps {
 }
 
 const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
+  const backgroundColor = [];
+  const borderColor = [];
+  const indexes = new Set(data.indexes);
+  for (let i = 0; i < data.value.length; i++) {
+    if (indexes.has(i)) {
+      backgroundColor.push("rgba(255, 99, 132, 0.2)");
+      borderColor.push("rgba(255, 99, 132, 1)");
+    } else {
+      backgroundColor.push("rgba(54, 162, 235, 0.2)");
+      borderColor.push("rgba(54, 162, 235, 1)");
+    }
+  }
   const chartData = {
-    labels: data.value.map(() => "test"), // Adjust label generation as necessary
+    labels: data.value.map(() => ""), // Adjust label generation as necessary
     datasets: [
       {
         data: data.value.map((x) => x),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-        ],
+        backgroundColor,
+        borderColor,
         borderWidth: 1,
       },
     ],
   };
   const options = {
-    indexAxis: 'y' as 'y',  // Explicitly typing it as 'y'
+    aspectRatio: 3,
+    indexAxis: "y" as "y", // Explicitly typing it as 'y'
     scales: {
       y: {
         beginAtZero: true,
+        ticks: {
+          stepSize: 1, // Adjust this value based on the granularity you want
+        },
+      },
+      x: {
         min: data.options.min,
         max: data.options.max,
+        ticks: {
+          stepSize: 1, // Adjust this value based on the granularity you want
+        },
       },
     },
     plugins: {
@@ -65,7 +78,6 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
       },
     },
   };
-  
 
   return (
     <div>
