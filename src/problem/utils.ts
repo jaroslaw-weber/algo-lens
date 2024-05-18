@@ -1,4 +1,4 @@
-import { sample, cloneDeep, reverse } from "lodash";
+import { sample, cloneDeep, reverse, min, max } from "lodash";
 import {
   ArrayVariable,
   ValueGroupVariable as ValueGroupVariable,
@@ -7,6 +7,7 @@ import {
   BinaryVariable,
   Variable,
   BooleanGroupVariable,
+  IntervalVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -45,8 +46,11 @@ export function asValueGroup(
   }
 
   return result;
-}/** Display similar boolean values in a group */
-export function asBooleanGroup(label: string, o: Record<string, boolean>): BooleanGroupVariable {
+} /** Display similar boolean values in a group */
+export function asBooleanGroup(
+  label: string,
+  o: Record<string, boolean>
+): BooleanGroupVariable {
   const result: BooleanGroupVariable = {
     data: [],
     label,
@@ -60,8 +64,18 @@ export function asBooleanGroup(label: string, o: Record<string, boolean>): Boole
   }
   return result;
 }
-
-
+export function asIntervals(label: string, arr: number[][]): IntervalVariable {
+  const result: IntervalVariable = {
+    label,
+    type: "interval",
+    value: arr,
+    options: {
+      min: min(arr.flat()),
+      max: max(arr.flat()),
+    },
+  };
+  return result;
+}
 
 export function asArray(
   label: string,
@@ -143,9 +157,8 @@ export function asBinary(
 }
 
 export function deepClone2DArray<T>(array: T[][]): T[][] {
-  return array.map(row => cloneDeep(row));
+  return array.map((row) => cloneDeep(row));
 }
-
 
 export function asStringArray(
   label: string,

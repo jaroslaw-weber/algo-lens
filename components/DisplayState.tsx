@@ -1,7 +1,7 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable, BooleanGroupVariable } from "../src/problem/types";
+import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable, BooleanGroupVariable, IntervalVariable } from "../src/problem/types";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
@@ -30,7 +30,7 @@ const DisplayState = ({ state }) => {
       }
       case "value-group": {
         const data = variable as ValueGroupVariable;
-        others.push(<DisplayIntervals data={data} key={data.label} />);
+        others.push(<DisplayValueGroup data={data} key={data.label} />);
         break;
       }
       case "binary": {
@@ -41,6 +41,11 @@ const DisplayState = ({ state }) => {
       case "boolean-group": { // New case for boolean groups
         const data = variable as BooleanGroupVariable;
         booleans.push(<DisplayBooleanGroup data={data} key={data.label} />);
+        break;
+      }
+      case "interval": {
+        const data = variable as IntervalVariable;
+        others.push(<DisplayIntervals data={data} key={data.label} />);
         break;
       }
     }

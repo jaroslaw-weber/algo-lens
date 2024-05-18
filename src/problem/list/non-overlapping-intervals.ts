@@ -1,12 +1,12 @@
-
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
+import { IntervalVariable, Problem, ProblemState, Variable } from "../types";
 import {
   asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
+  asIntervals,
 } from "../utils";
 
 // Defines the interface for the input expected by the eraseOverlapIntervals function
@@ -19,23 +19,32 @@ interface EraseOverlapIntervalsInput {
  * @param p - The input parameters including an array of intervals.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemState[] {
+export function eraseOverlapIntervals(
+  p: EraseOverlapIntervalsInput
+): ProblemState[] {
   const { intervals } = p;
   const steps: ProblemState[] = [];
   let lastNonOverlapIndex = -1; //#1 Initialize the last non-overlapping index
-  const nonOverlappingIntervals: { intervals: number[][], variable: IntervalVariable } = { intervals: [], variable: intervalsVariable }; //#2 Initialize the result array
+  const nonOverlappingIntervals: number[][] = [];
 
   // Helper function to create and log each step's computational state
-  function log(point: number, currentInterval?: number[], nonOverlapping?: number[][]) {
+  function log(
+    point: number,
+    currentInterval?: number[],
+    nonOverlapping?: number[][]
+  ) {
+    const v:Variable[] = [];
     const step: ProblemState = {
-      variables: [],//[as2dArray("intervals", intervals, lastNonOverlapIndex, nonOverlappingIntervals)],
+      variables: v,
       breakpoint: point,
     };
     if (currentInterval) {
-      step.variables.push(asArray("currentInterval", currentInterval));
+      v.push(asIntervals("intervals", intervals));
     }
     if (nonOverlapping) {
-      step.variables.push(as2dArray("nonOverlappingIntervals", nonOverlapping, []));
+      v.push(
+        asIntervals("nonOverlappingIntervals", nonOverlapping)
+      );
     }
     steps.push(step);
   }
@@ -48,7 +57,10 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
 
   for (let i = 0; i < intervals.length; i++) {
     log(2, intervals[i]); //#4 Iterate through the intervals
-    if (lastNonOverlapIndex === -1 || intervals[i][0] >= nonOverlappingIntervals[lastNonOverlapIndex][1]) {
+    if (
+      lastNonOverlapIndex === -1 ||
+      intervals[i][0] >= nonOverlappingIntervals[lastNonOverlapIndex][1]
+    ) {
       //#5 Check for non-overlap with the last non-overlapping interval
       nonOverlappingIntervals.push(intervals[i]);
       lastNonOverlapIndex++;
@@ -56,20 +68,7 @@ export function eraseOverlapIntervals(p: EraseOverlapIntervalsInput): ProblemSta
     }
   }
 
-  // Logs the final state
-  const intervalsVariable: IntervalVariable = {
-    label: "Non-overlapping Intervals",
-    intervals: nonOverlappingIntervals.map((interval, index) => ({
-      label: `Interval ${index}`,
-      value: interval,
-    })),
-    options: {
-      min: 0,
-      max: Math.max(...nonOverlappingIntervals.map(([start, end]) => end)),
-    },
-    data: nonOverlappingIntervals,
-  };
-  log(4, [intervalsVariable]); //#7
+  log(4,); //#7
 
   return steps;
 }
@@ -111,7 +110,10 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const eraseOverlapIntervalsProblem: Problem<EraseOverlapIntervalsInput, ProblemState> = {
+export const eraseOverlapIntervalsProblem: Problem<
+  EraseOverlapIntervalsInput,
+  ProblemState
+> = {
   title,
   code,
   getInput,

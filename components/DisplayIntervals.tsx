@@ -1,6 +1,26 @@
 import React from "react";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
 import { IntervalVariable } from "../src/problem/types";
+
+// Register the components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface DisplayBarChartProps {
   data: IntervalVariable;
@@ -8,10 +28,10 @@ interface DisplayBarChartProps {
 
 const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
   const chartData = {
-    labels: data.intervals.map((x) => x.label),
+    labels: data.value.map(() => "test"), // Adjust label generation as necessary
     datasets: [
       {
-        data: data.intervals.map((x) => x.value),
+        data: data.value.map((x) => x),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -26,25 +46,26 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
       },
     ],
   };
-
   const options = {
-    indexAxis: "y",
+    indexAxis: 'y' as 'y',  // Explicitly typing it as 'y'
     scales: {
       y: {
+        beginAtZero: true,
         min: data.options.min,
         max: data.options.max,
       },
     },
-    legend: {
-      display: false,
-    },
     plugins: {
+      legend: {
+        display: false,
+      },
       title: {
         display: true,
         text: data.label,
       },
     },
   };
+  
 
   return (
     <div>
