@@ -64,6 +64,19 @@ export function asBooleanGroup(
   }
   return result;
 }
+
+// utils.ts
+import { TreeNode, TreeVariable } from './types';
+
+export function asTree(label: string, value: TreeNode | null, highlight: (TreeNode | null)[]): TreeVariable {
+  return {
+    type: 'tree',
+    label,
+    value,
+    highlight
+  };
+}
+
 export function asIntervals(label: string, arr: number[][], highlight:number[], min:number, max:number): IntervalVariable {
   const result: IntervalVariable = {
     label,
