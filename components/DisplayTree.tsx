@@ -1,7 +1,7 @@
 // DisplayTree.tsx
-import React, { useEffect, useRef } from 'react';
-import cytoscape from 'cytoscape';
-import { TreeNode, TreeVariable } from '../src/problem/types';
+import React, { useEffect, useRef } from "react";
+import cytoscape from "cytoscape";
+import { TreeNode, TreeVariable } from "../src/problem/types";
 
 interface DisplayTreeProps {
   data: TreeVariable;
@@ -11,11 +11,19 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  const highlight = new Set(data.highlight?.filter(Boolean).map((x) => x.id));
+
   const transformTreeToGraph = (node: TreeNode) => {
     const elements: cytoscape.ElementDefinition[] = [];
 
     const traverse = (currentNode: TreeNode, parentId: string | null) => {
-      elements.push({ data: { id: currentNode.id, label: currentNode.val.toString() } });
+      const nodeClass = highlight.has(currentNode?.id)
+        ? "highlighted"
+        : "normal";
+      elements.push({
+        data: { id: currentNode.id, label: currentNode.val.toString() },
+        classes: nodeClass, // Add classes to nodes
+      });
       if (parentId !== null) {
         elements.push({
           data: {
@@ -44,38 +52,44 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
         elements: transformTreeToGraph(data.value),
         style: [
           {
-            selector: 'node',
+            selector: "node",
             style: {
-              'label': 'data(label)',
-              'text-valign': 'center',
-              'color': '#fff',
-              'text-outline-width': 2,
-              'text-outline-color': '#888',
-              'background-color': '#888',
-              'border-width': 2,
-              'border-color': '#888',
-              'user-select': 'none', // disables node selection
-              'user-drag': 'none', // disables dragging
+              label: "data(label)",
+              "text-valign": "center",
+              color: "#fff",
+              "text-outline-width": 2,
+              "text-outline-color": "#888",
+              "background-color": "#888",
+              "border-width": 2,
+              "border-color": "#888",
+              "user-select": "none",
+              "user-drag": "none",
             },
           },
           {
-            selector: 'edge',
+            selector: "node.highlighted",
             style: {
-              'width': 2,
-              'line-color': '#ddd',
-              'target-arrow-color': '#ddd',
-              'target-arrow-shape': 'triangle',
-              'curve-style': 'bezier',
+              "background-color": "#f00", // Change color for highlighted nodes
+            },
+          },
+          {
+            selector: "edge",
+            style: {
+              width: 2,
+              "line-color": "#ddd",
+              "target-arrow-color": "#ddd",
+              "target-arrow-shape": "triangle",
+              "curve-style": "bezier",
             },
           },
         ],
-        
+
         layout: {
-          name: 'breadthfirst',
+          name: "breadthfirst",
           directed: true,
           padding: 10,
           fit: true,
-          align: 'center',
+          align: "center",
           avoidOverlap: true,
         },
       });
@@ -88,7 +102,7 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
     };
   }, [data]);
 
-  return <div ref={containerRef} className='w-20 h-20' />;
+  return <div ref={containerRef} className="w-40 h-40" />;
 };
 
 export default DisplayTree;

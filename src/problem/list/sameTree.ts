@@ -1,5 +1,5 @@
 import { Problem, ProblemState, TreeNode, Variable } from "../types";
-import { asTree, asValueGroup } from "../utils";
+import { asBooleanGroup, asTree, asValueGroup } from "../utils";
 
 interface SameTreeInput {
   p: TreeNode | null;
@@ -19,47 +19,58 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
     const variables: Variable[] = [
       asTree("pTree", p, [pNode]),
       asTree("qTree", q, [qNode]),
-      asValueGroup("result", { result }, { min: 0, max: 1 }),
+      asBooleanGroup("result", { result }),
     ];
     steps.push({ variables, breakpoint: point });
   }
 
   function isSameTree(
     p: TreeNode | null,
-    q: TreeNode | null,
-    point: number
+    q: TreeNode | null
   ): boolean {
-    log(point, p, q, false);
+    log(1, p, q, false);
 
     if (!p && !q) {
-      log(point, p, q, true);
+      log(2, p, q, true);
       return true;
     }
     if (!p || !q) {
-      log(point, p, q, false);
+      log(3, p, q, false);
       return false;
     }
     if (p.val !== q.val) {
-      log(point, p, q, false);
+      log(4, p, q, false);
       return false;
     }
 
-    const leftSame = isSameTree(p.left, q.left, point + 1);
-    const rightSame = isSameTree(p.right, q.right, point + 1);
+    const leftSame = isSameTree(p.left, q.left);
+    const rightSame = isSameTree(p.right, q.right);
     const result = leftSame && rightSame;
-    log(point, p, q, result);
+    log(5, p, q, result);
     return result;
   }
 
-  isSameTree(p, q, 1);
+  isSameTree(p, q);
   return steps;
 }
 
 const code = `function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
-  if (!p && !q) return true;
-  if (!p || !q) return false;
-  if (p.val !== q.val) return false;
-  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+  //#1
+  if (!p && !q) {
+    //#2
+    return true; 
+  }
+  if (!p || !q) {
+    //#3
+    return false; 
+  }
+  if (p.val !== q.val) {
+    //#4
+    return false; 
+  }
+  const result = isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+  //#5
+  return result; 
 }`;
 
 const title = "Same Tree Check";
@@ -67,18 +78,40 @@ const getInput = () => {
   const p: TreeNode = {
     val: 1,
     id: "1",
-    left: { val: 2, left: null, right: null, id: "2" },
-    right: { val: 3, left: null, right: null, id: "3" },
+    left: { 
+      val: 2, 
+      id: "2", 
+      left: { val: 4, left: null, right: null, id: "4" },
+      right: { val: 5, left: null, right: null, id: "5" }
+    },
+    right: { 
+      val: 3, 
+      id: "3", 
+      left: { val: 6, left: null, right: null, id: "6" },
+      right: { val: 7, left: null, right: null, id: "7" }
+    },
   };
-  const q = {
+  const q: TreeNode  = {
     val: 1,
-    id: "4",
-    left: { val: 2, left: null, right: null, id: "5" },
-    right: { val: 3, left: null, right: null, id: "6" },
+    id: "8",
+    left: { 
+      val: 2, 
+      id: "9", 
+      left: { val: 4, left: null, right: null, id: "11" },
+      right: { val: 5, left: null, right: null, id: "12" }
+    },
+    right: { 
+      val: 3, 
+      id: "10", 
+      left: { val: 6, left: null, right: null, id: "13" },
+      // Make a small difference here
+      right: { val: 8, left: null, right: null, id: "14" }
+    },
   };
   const result = { p, q };
   return result;
 };
+
 
 export const sameTreeProblem: Problem<SameTreeInput, ProblemState> = {
   title,
