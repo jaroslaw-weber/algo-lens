@@ -32,12 +32,17 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
     const variables: Variable[] = [
       asTree("pTree", p, [{ node: pNode, color }]),
       asTree("qTree", q, [{ node: qNode, color }]),
-      asBooleanGroup("result", { result }),
     ];
+    if (result !== undefined) {
+      variables.push(asBooleanGroup("result", { result }));
+    }
     steps.push({ variables, breakpoint: point });
   }
 
-  function isSameTree(p: BinaryTreeNode | null, q: BinaryTreeNode | null): boolean {
+  function isSameTree(
+    p: BinaryTreeNode | null,
+    q: BinaryTreeNode | null
+  ): boolean {
     log(1, p, q);
 
     if (!p && !q) {
