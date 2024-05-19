@@ -2,6 +2,8 @@
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
 import { TreeNode, TreeVariable } from "../src/problem/types";
+import { getCurrentTheme } from "../src/theme";
+import {Config} from "daisyui"
 
 interface DisplayTreeProps {
   data: TreeVariable;
@@ -11,15 +13,15 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const highlight = new Set(data.highlight?.filter(Boolean).map((x) => x.id));
+  const highlight = new Map(data.highlight?.filter(x=> x.node).map((x) => [x.node.id,x]));
+
+  // todo: load colors with theme const theme = getCurrentTheme()
 
   const transformTreeToGraph = (node: TreeNode) => {
     const elements: cytoscape.ElementDefinition[] = [];
 
     const traverse = (currentNode: TreeNode, parentId: string | null) => {
-      const nodeClass = highlight.has(currentNode?.id)
-        ? "highlighted"
-        : "normal";
+      const nodeClass = highlight?.get(currentNode?.id)?.color ??""
       elements.push({
         data: { id: currentNode.id, label: currentNode.val.toString() },
         classes: nodeClass, // Add classes to nodes
@@ -56,20 +58,35 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
             style: {
               label: "data(label)",
               "text-valign": "center",
-              color: "#fff",
-              "text-outline-width": 2,
-              "text-outline-color": "#888",
-              "background-color": "#888",
+              color: "black",
+              "text-outline-width": 1,
+              "text-outline-color": "white",
+              "background-color": "white",
               "border-width": 2,
-              "border-color": "#888",
+              "border-color": "black",
               "user-select": "none",
               "user-drag": "none",
             },
           },
           {
-            selector: "node.highlighted",
+            selector: "node.neutral",
             style: {
-              "background-color": "#f00", // Change color for highlighted nodes
+              "background-color": "black", // Change color for highlighted nodes
+              color:"white"
+            },
+          },
+          {
+            selector: "node.good",
+            style: {
+              "background-color": "green", // Change color for highlighted nodes
+              color:"white"
+            },
+          },
+          {
+            selector: "node.bad",
+            style: {
+              "background-color": "red", // Change color for highlighted nodes
+              color:"white"
             },
           },
           {

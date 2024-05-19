@@ -8,6 +8,7 @@ import {
   Variable,
   BooleanGroupVariable,
   IntervalVariable,
+  NodeHighlight,
 } from "./types";
 import { problems } from "./list";
 
@@ -66,18 +67,48 @@ export function asBooleanGroup(
 }
 
 // utils.ts
-import { TreeNode, TreeVariable } from './types';
+import { TreeNode, TreeVariable } from "./types";
 
-export function asTree(label: string, value: TreeNode | null, highlight: (TreeNode | null)[]): TreeVariable {
+function addRandomIds(tree: TreeNode | null, i: number): number {
+  if (!tree) {
+    return;
+  }
+
+  tree.id = i.toString();
+  i++;
+  if (tree.left) {
+    i = addRandomIds(tree.left, i);
+  }
+  i++;
+  if (tree.right) {
+    i = addRandomIds(tree.right, i);
+  }
+  return i;
+}
+
+
+export function asTree(
+  label: string,
+  value: TreeNode | null,
+  highlight: NodeHighlight[]
+): TreeVariable {
+  //add random ids
+  addRandomIds(value, 1);
   return {
-    type: 'tree',
+    type: "tree",
     label,
     value,
-    highlight
+    highlight,
   };
 }
 
-export function asIntervals(label: string, arr: number[][], highlight:number[], min:number, max:number): IntervalVariable {
+export function asIntervals(
+  label: string,
+  arr: number[][],
+  highlight: number[],
+  min: number,
+  max: number
+): IntervalVariable {
   const result: IntervalVariable = {
     label,
     type: "interval",

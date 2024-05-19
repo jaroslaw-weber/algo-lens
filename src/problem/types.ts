@@ -120,9 +120,15 @@ export interface TreeVariable  extends Variable{
   type: 'tree';
   label: string;
   value: TreeNode | null;
-  highlight: (TreeNode | null)[];
+  highlight: NodeHighlight[]
 }
 
+export type HighlightColor = "good" | "bad" | "neutral";
+
+export interface NodeHighlight {
+  node: TreeNode;
+  color: HighlightColor;
+}
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
 export interface ProblemState {
   /** Array of variables in this state, showing their values and changes. */
@@ -144,7 +150,7 @@ export class ListNode {
 }
 // TreeNode.ts
 export interface TreeNode{
-  id:string;
+  id?:string;
   val: number |string;
   left: TreeNode | null;
   right: TreeNode | null;

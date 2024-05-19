@@ -1,4 +1,10 @@
-import { Problem, ProblemState, TreeNode, Variable } from "../types";
+import {
+  HighlightColor,
+  Problem,
+  ProblemState,
+  TreeNode,
+  Variable,
+} from "../types";
 import { asBooleanGroup, asTree, asValueGroup } from "../utils";
 
 interface SameTreeInput {
@@ -14,21 +20,25 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
     point: number,
     pNode: TreeNode | null,
     qNode: TreeNode | null,
-    result: boolean
+    result?: boolean
   ) {
+    let color: HighlightColor = "neutral";
+    if (result === true) {
+      color = "good";
+    }
+    if (result === false) {
+      color = "bad";
+    }
     const variables: Variable[] = [
-      asTree("pTree", p, [pNode]),
-      asTree("qTree", q, [qNode]),
+      asTree("pTree", p, [{ node: pNode, color }]),
+      asTree("qTree", q, [{ node: qNode, color }]),
       asBooleanGroup("result", { result }),
     ];
     steps.push({ variables, breakpoint: point });
   }
 
-  function isSameTree(
-    p: TreeNode | null,
-    q: TreeNode | null
-  ): boolean {
-    log(1, p, q, false);
+  function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
+    log(1, p, q);
 
     if (!p && !q) {
       log(2, p, q, true);
@@ -77,41 +87,34 @@ const title = "Same Tree Check";
 const getInput = () => {
   const p: TreeNode = {
     val: 1,
-    id: "1",
-    left: { 
-      val: 2, 
-      id: "2", 
-      left: { val: 4, left: null, right: null, id: "4" },
-      right: { val: 5, left: null, right: null, id: "5" }
+    left: {
+      val: 2,
+      left: { val: 4, left: null, right: null },
+      right: { val: 5, left: null, right: null },
     },
-    right: { 
-      val: 3, 
-      id: "3", 
-      left: { val: 6, left: null, right: null, id: "6" },
-      right: { val: 7, left: null, right: null, id: "7" }
+    right: {
+      val: 3,
+      left: { val: 6, left: null, right: null },
+      right: { val: 7, left: null, right: null },
     },
   };
-  const q: TreeNode  = {
+  const q: TreeNode = {
     val: 1,
-    id: "8",
-    left: { 
-      val: 2, 
-      id: "9", 
-      left: { val: 4, left: null, right: null, id: "11" },
-      right: { val: 5, left: null, right: null, id: "12" }
+    left: {
+      val: 2,
+      left: { val: 4, left: null, right: null },
+      right: { val: 5, left: null, right: null },
     },
-    right: { 
-      val: 3, 
-      id: "10", 
-      left: { val: 6, left: null, right: null, id: "13" },
+    right: {
+      val: 3,
+      left: { val: 6, left: null, right: null },
       // Make a small difference here
-      right: { val: 8, left: null, right: null, id: "14" }
+      right: { val: 8, left: null, right: null },
     },
   };
   const result = { p, q };
   return result;
 };
-
 
 export const sameTreeProblem: Problem<SameTreeInput, ProblemState> = {
   title,
