@@ -67,9 +67,9 @@ export function asBooleanGroup(
 }
 
 // utils.ts
-import { TreeNode, TreeVariable } from "./types";
+import { BinaryTreeNode, TreeVariable } from "./types";
 
-function addRandomIds(tree: TreeNode | null, i: number): number {
+function addRandomIds(tree: BinaryTreeNode | null, i: number): number {
   if (!tree) {
     return;
   }
@@ -89,7 +89,7 @@ function addRandomIds(tree: TreeNode | null, i: number): number {
 
 export function asTree(
   label: string,
-  value: TreeNode | null,
+  value: BinaryTreeNode | null,
   highlight: NodeHighlight[]
 ): TreeVariable {
   //add random ids

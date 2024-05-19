@@ -2,14 +2,14 @@ import {
   HighlightColor,
   Problem,
   ProblemState,
-  TreeNode,
+  BinaryTreeNode,
   Variable,
 } from "../types";
 import { asBooleanGroup, asTree, asValueGroup } from "../utils";
 
 interface SameTreeInput {
-  p: TreeNode | null;
-  q: TreeNode | null;
+  p: BinaryTreeNode | null;
+  q: BinaryTreeNode | null;
 }
 
 export function sameTree(input: SameTreeInput): ProblemState[] {
@@ -18,8 +18,8 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
 
   function log(
     point: number,
-    pNode: TreeNode | null,
-    qNode: TreeNode | null,
+    pNode: BinaryTreeNode | null,
+    qNode: BinaryTreeNode | null,
     result?: boolean
   ) {
     let color: HighlightColor = "neutral";
@@ -37,7 +37,7 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
     steps.push({ variables, breakpoint: point });
   }
 
-  function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
+  function isSameTree(p: BinaryTreeNode | null, q: BinaryTreeNode | null): boolean {
     log(1, p, q);
 
     if (!p && !q) {
@@ -85,7 +85,7 @@ const code = `function isSameTree(p: TreeNode | null, q: TreeNode | null): boole
 
 const title = "Same Tree Check";
 const getInput = () => {
-  const p: TreeNode = {
+  const p: BinaryTreeNode = {
     val: 1,
     left: {
       val: 2,
@@ -98,7 +98,7 @@ const getInput = () => {
       right: { val: 7, left: null, right: null },
     },
   };
-  const q: TreeNode = {
+  const q: BinaryTreeNode = {
     val: 1,
     left: {
       val: 2,

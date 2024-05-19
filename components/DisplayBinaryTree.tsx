@@ -1,15 +1,15 @@
 // DisplayTree.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import { TreeNode, TreeVariable } from "../src/problem/types";
+import { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "../src/problem/types";
 import { getCurrentTheme } from "../src/theme";
 import {Config} from "daisyui"
 
-interface DisplayTreeProps {
+interface DisplayBinaryTreeProps {
   data: TreeVariable;
 }
 
-const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
+const DisplayTree: React.FC<DisplayBinaryTreeProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -17,10 +17,10 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
 
   // todo: load colors with theme const theme = getCurrentTheme()
 
-  const transformTreeToGraph = (node: TreeNode) => {
+  const transformTreeToGraph = (node: BinaryTreeNode) => {
     const elements: cytoscape.ElementDefinition[] = [];
 
-    const traverse = (currentNode: TreeNode, parentId: string | null) => {
+    const traverse = (currentNode: BinaryTreeNode, parentId: string | null) => {
       const nodeClass = highlight?.get(currentNode?.id)?.color ??""
       elements.push({
         data: { id: currentNode.id, label: currentNode.val.toString() },

@@ -6,7 +6,7 @@ import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
 import DisplayIntervals from "./DisplayIntervals";
-import DisplayTree from "./DisplayTree";
+import DisplayTree from "./DisplayBinaryTree";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
