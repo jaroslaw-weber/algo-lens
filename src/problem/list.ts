@@ -20,6 +20,7 @@ import { setMatrixZeroesProblem } from "./list/set-matrix-zeros";
 import { searchProblem } from "./list/search-in-rotated-sorted-array";
 import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
 import { mergeIntervalsProblem } from "./list/merge-intervals";
+import { sameTreeProblem } from "./list/sameTree";
 
 export const problems = [
   maxProfitProblem,
@@ -44,5 +45,6 @@ export const problems = [
   setMatrixZeroesProblem,
   searchProblem,
   eraseOverlapIntervalsProblem,
-  mergeIntervalsProblem
+  mergeIntervalsProblem,
+  sameTreeProblem
 ].filter((x) => !x.hide);

@@ -36,7 +36,8 @@ export interface Variable {
     | "value-group"
     | "binary"
     | "boolean-group"
-    | "interval";
+    | "interval"
+    | "tree";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -114,6 +115,19 @@ export interface IntervalVariable extends Variable {
   };
 }
 
+export interface TreeVariable extends Variable {
+  type: "tree";
+  label: string;
+  value: BinaryTreeNode | null;
+  highlight: NodeHighlight[];
+}
+
+export type HighlightColor = "good" | "bad" | "neutral";
+
+export interface NodeHighlight {
+  node: BinaryTreeNode;
+  color: HighlightColor;
+}
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
 export interface ProblemState {
   /** Array of variables in this state, showing their values and changes. */
@@ -132,4 +146,11 @@ export class ListNode {
     this.val = val === undefined ? 0 : val;
     this.next = next === undefined ? null : next;
   }
+}
+// TreeNode.ts
+export interface BinaryTreeNode {
+  id?: string;
+  val: number | string;
+  left: BinaryTreeNode | null;
+  right: BinaryTreeNode | null;
 }
