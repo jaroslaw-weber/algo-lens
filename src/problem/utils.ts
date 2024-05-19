@@ -9,6 +9,8 @@ import {
   BooleanGroupVariable,
   IntervalVariable,
   NodeHighlight,
+  ListNode,
+  ListVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -85,7 +87,45 @@ function addRandomIds(tree: BinaryTreeNode | null, i: number): number {
   }
   return i;
 }
+function addRandomIdsToList(node: ListNode | null, i: number): number {
+  let current = node;
+  while (current !== null) {
+    if (current.id !== undefined) {
+      // If the current node already has an ID, we assume we've encountered a cycle and stop
+      return i;
+    }
+    current.id = i.toString(); // Assign ID as a string
+    i++; // Increment i for the next node
+    current = current.next; // Move to the next node
+  }
+  return i; // Return the last used index
+}
 
+export function asList(
+  label: string,
+  value: ListNode | null,
+  highlight: NodeHighlight[]
+): ListVariable {
+  // Add random IDs starting from 1
+  //clone list
+  const list = cloneList(value);
+  addRandomIdsToList(list, 1);
+  return {
+    type: "list",
+    label,
+    value:list,
+    highlight: highlight.filter((x) => x.node),
+  };
+}
+
+export function cloneList(node: ListNode | null): ListNode | null {
+  if (!node) {
+    return null;
+  }
+  const result = new ListNode(node.val);
+  result.next = cloneList(node.next);
+  return result;
+}
 
 export function asTree(
   label: string,

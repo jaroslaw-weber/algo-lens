@@ -37,7 +37,8 @@ export interface Variable {
     | "binary"
     | "boolean-group"
     | "interval"
-    | "tree";
+    | "tree"
+    | "list";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -122,10 +123,17 @@ export interface TreeVariable extends Variable {
   highlight: NodeHighlight[];
 }
 
+export interface ListVariable extends Variable {
+  type: "list"; // Specify the variable type as "list"
+  label: string; // Descriptive label for the variable
+  value: ListNode | null; // The head node of the linked list
+  highlight: NodeHighlight[]; // Array of nodes to be highlighted with specific colors
+}
+
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node: BinaryTreeNode;
+  node: BinaryTreeNode | ListNode ;
   color: HighlightColor;
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
@@ -140,6 +148,7 @@ export interface ProblemState {
 }
 
 export class ListNode {
+  id?: string;
   val: number;
   next: ListNode | null;
   constructor(val?: number, next?: ListNode | null) {

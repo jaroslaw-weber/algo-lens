@@ -1,12 +1,23 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable, BooleanGroupVariable, IntervalVariable, TreeVariable } from "../src/problem/types";
+import {
+  ArrayVariable,
+  ValueGroupVariable,
+  SimpleVariable,
+  Variable,
+  BinaryVariable,
+  BooleanGroupVariable,
+  IntervalVariable,
+  TreeVariable,
+  ListVariable,
+} from "../src/problem/types";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
 import DisplayIntervals from "./DisplayIntervals";
 import DisplayTree from "./DisplayBinaryTree";
+import DisplayLinkedList from "./DisplayLinkedList";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -40,7 +51,8 @@ const DisplayState = ({ state }) => {
         binary.push(<DisplayBinary data={data} key={data.label} />);
         break;
       }
-      case "boolean-group": { // New case for boolean groups
+      case "boolean-group": {
+        // New case for boolean groups
         const data = variable as BooleanGroupVariable;
         booleans.push(<DisplayBooleanGroup data={data} key={data.label} />);
         break;
@@ -50,9 +62,14 @@ const DisplayState = ({ state }) => {
         intervals.push(<DisplayIntervals data={data} key={data.label} />);
         break;
       }
-      case "tree":{
+      case "tree": {
         const data = variable as TreeVariable;
         arrays.push(<DisplayTree data={data} key={data.label} />);
+        break;
+      }
+      case "list": {
+        const data = variable as ListVariable;
+        arrays.push(<DisplayLinkedList data={data} key={data.label} />);
         break;
       }
     }
@@ -60,7 +77,7 @@ const DisplayState = ({ state }) => {
 
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
-    <div className="grid grid-cols-1 gap-16 mt-4 w-full">{intervals}</div>
+      <div className="grid grid-cols-1 gap-16 mt-4 w-full">{intervals}</div>
       <div className="grid grid-cols-2 gap-16 mt-4 w-full">{binary}</div>
       {/* Render numbers in a grid layout */}
       <div className="w-full mt-4">{numbers}</div>
