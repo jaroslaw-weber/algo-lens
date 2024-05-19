@@ -34,7 +34,7 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
       asTree("qTree", q, [{ node: qNode, color }]),
     ];
     if (result !== undefined) {
-      variables.push(asBooleanGroup("result", { result }));
+      variables.push(asBooleanGroup("is node same?", { "return":result }));
     }
     steps.push({ variables, breakpoint: point });
   }
