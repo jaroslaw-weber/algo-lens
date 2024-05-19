@@ -126,7 +126,7 @@ export const sameTreeProblem: Problem<SameTreeInput, ProblemState> = {
   code,
   getInput,
   func: sameTree,
-  id: "same-tree-check",
+  id: "same-tree",
   tested: true,
   tags: ["tree"],
 };
