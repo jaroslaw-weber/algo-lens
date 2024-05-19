@@ -54,6 +54,8 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
               'background-color': '#888',
               'border-width': 2,
               'border-color': '#888',
+              'user-select': 'none', // disables node selection
+              'user-drag': 'none', // disables dragging
             },
           },
           {
@@ -67,10 +69,14 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
             },
           },
         ],
+        
         layout: {
           name: 'breadthfirst',
           directed: true,
           padding: 10,
+          fit: true,
+          align: 'center',
+          avoidOverlap: true,
         },
       });
     }
@@ -82,7 +88,7 @@ const DisplayTree: React.FC<DisplayTreeProps> = ({ data }) => {
     };
   }, [data]);
 
-  return <div ref={containerRef} style={{ width: '100%', height: '500px' }} />;
+  return <div ref={containerRef} className='w-20 h-20' />;
 };
 
 export default DisplayTree;
