@@ -23,7 +23,8 @@ import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
 
-export const problems = [
+
+export const blind75 = [
   maxProfitProblem,
   climbStairsProblem,
   coinChangeProblem,
@@ -33,7 +34,7 @@ export const problems = [
   longestIncreasingSubsequenceProblem,
   minPathSumProblem,
   uniquePathsProblem,
-//  / twoSumProblem,
+  //  / twoSumProblem,
   maxAreaProblem,
   countBitsProblem,
   hammingWeightProblem,
@@ -48,5 +49,14 @@ export const problems = [
   eraseOverlapIntervalsProblem,
   mergeIntervalsProblem,
   sameTreeProblem,
-  containsDuplicateProblem
-].filter((x) => !x.hide);
+  containsDuplicateProblem,
+]
+
+export const other = []
+
+
+export const allProblems = [
+
+  ...blind75,
+  ...other
+]

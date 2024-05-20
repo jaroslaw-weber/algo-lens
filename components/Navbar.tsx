@@ -15,7 +15,10 @@ const Navbar = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal p-0">
             <li>
-              <Link href="/problems">Problems</Link>
+              <Link href="/problems">Blind75</Link>
+            </li>
+            <li>
+              <Link href="/problems">All Problems</Link>
             </li>
             <li>
               <Link href="/settings">Settings</Link>

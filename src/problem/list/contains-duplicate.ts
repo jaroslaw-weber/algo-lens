@@ -96,5 +96,5 @@ export const containsDuplicateProblem: Problem<
   code,
   getInput,
   func: containsDuplicate,
-  id: "contains-duplicate",
+  id: "contains-duplicate"
 };

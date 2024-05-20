@@ -22,7 +22,11 @@ export interface Problem<Input, State> {
   tested?: boolean;
 
   tags?: string[];
+
+  difficulty?: Difficulty
 }
+
+export type Difficulty = "easy" | "medium" | "hard";
 
 /** Represents a variable used within a ProblemState, can be a simple number or an array. */
 export interface Variable {
