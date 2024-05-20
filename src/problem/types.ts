@@ -37,7 +37,9 @@ export interface Variable {
     | "binary"
     | "boolean-group"
     | "interval"
-    | "tree";
+    | "tree"
+    | "hashset"
+    | "hashmap";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -115,6 +117,13 @@ export interface IntervalVariable extends Variable {
   };
 }
 
+export interface HashsetVariable extends Variable {
+  type: "hashset";
+  label: string;
+  value: Set<any>;
+  highlight: HashsetHighlight;
+}
+
 export interface TreeVariable extends Variable {
   type: "tree";
   label: string;
@@ -122,7 +131,16 @@ export interface TreeVariable extends Variable {
   highlight: NodeHighlight[];
 }
 
+export type HashsetHighlight = {
+  value: string | number;
+  color: ThemeColor
+}
+
+export type ThemeColor = "primary" | "secondary" | "accent" | "warning" | "error" | "neutral" | "success"
+
 export type HighlightColor = "good" | "bad" | "neutral";
+
+
 
 export interface NodeHighlight {
   node: BinaryTreeNode;

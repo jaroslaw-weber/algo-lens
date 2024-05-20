@@ -1,12 +1,13 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable, BooleanGroupVariable, IntervalVariable, TreeVariable } from "../src/problem/types";
+import { ArrayVariable, ValueGroupVariable, SimpleVariable, Variable, BinaryVariable, BooleanGroupVariable, IntervalVariable, TreeVariable, HashsetVariable } from "../src/problem/types";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
 import DisplayIntervals from "./DisplayIntervals";
 import DisplayTree from "./DisplayBinaryTree";
+import DisplayHashset from "./DisplayHashset";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
@@ -53,6 +54,11 @@ const DisplayState = ({ state }) => {
       case "tree":{
         const data = variable as TreeVariable;
         arrays.push(<DisplayTree data={data} key={data.label} />);
+        break;
+      }
+      case "hashset": {
+        const data = variable as HashsetVariable;
+        others.push(<DisplayHashset data={data} key={data.label} />);
         break;
       }
     }
