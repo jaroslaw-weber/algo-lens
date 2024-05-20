@@ -264,7 +264,7 @@ export function as2dArray(
   }
   return result;
 }
-export function asHashset<T>(label: string, set: Set<any>, highlight: Highlight): HashsetVariable{
+export function asHashset<T>(label: string, set: Set<any>, highlight: any): HashsetVariable{
   return {
     label,
     type: "hashset",

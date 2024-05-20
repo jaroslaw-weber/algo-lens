@@ -7,6 +7,8 @@ import {
   asSimpleValue,
   asStringArray,
   asValueGroup,
+  asHashset,
+  asBooleanGroup,
 } from "../utils";
 
 // Defines the interface for the input expected by the containsDuplicate function
@@ -25,17 +27,16 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
   const hashSet: Set<number> = new Set();
 
   // Helper function to create and log each step's computational state
-  function log(point: number, numsIndex?: number, existsInSet?: boolean) {
+  function log(point: number, i?: number, existsInSet?: boolean) {
     const step: ProblemState = {
-      variables: [asArray("nums", nums)],
+      variables: [
+        asArray("nums", nums),
+        asHashset("hashSet", hashSet, nums[i]),
+        asBooleanGroup("exist check", { existsInSet }),
+        asValueGroup("loop", { i }, { min:0, max: nums.length }),
+      ],
       breakpoint: point,
     };
-    if (numsIndex !== undefined) {
-      step.variables.push(...asSimpleValue({ numsIndex }));
-    }
-    if (existsInSet !== undefined) {
-      step.variables.push(...asSimpleValue({ existsInSet }));
-    }
     steps.push(step);
   }
 
