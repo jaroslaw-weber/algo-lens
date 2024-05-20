@@ -22,41 +22,58 @@ import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
 import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
+import { ProblemGroup } from "./types";
+import { groupBy } from "lodash";
+export function getBlind75Problems(): ProblemGroup[] {
+  const flatBlind = [
+    maxProfitProblem,
+    climbStairsProblem,
+    coinChangeProblem,
+    houseRobberProblem,
+    wordBreakProblem,
+    editDistanceProblem,
+    longestIncreasingSubsequenceProblem,
+    minPathSumProblem,
+    uniquePathsProblem,
+    // twoSumProblem, // Uncomment or remove if this is intended to be used or not.
+    maxAreaProblem,
+    countBitsProblem,
+    hammingWeightProblem,
+    maxSubArrayProblem,
+    missingNumberProblem,
+    sumOfTwoIntegersProblem,
+    numIslandsProblem,
+    productExceptSelfProblem,
+    setMatrixZeroesProblem,
+    searchProblem,
+    eraseOverlapIntervalsProblem,
+    mergeIntervalsProblem,
+    sameTreeProblem,
+    containsDuplicateProblem,
+  ];
+  const groupedBlind = new Map();
+  for (const problem of flatBlind) {
+    if (problem.tags) {
+      for (const tag of problem.tags) {
+        if (!groupedBlind.has(tag)) {
+          groupedBlind.set(tag, []);
+        }
+        groupedBlind.get(tag).push(problem);
+      }
+    }
+  }
+
+  const blind75: ProblemGroup[] = [];
+  for (const tag of Array.from(groupedBlind.keys())) {
+    blind75.push({
+      label: tag,
+      problems: groupedBlind.get(tag),
+    });
+  }
+  return blind75;
+}
 
 
-export const blind75 = [
-  maxProfitProblem,
-  climbStairsProblem,
-  coinChangeProblem,
-  houseRobberProblem,
-  wordBreakProblem,
-  editDistanceProblem,
-  longestIncreasingSubsequenceProblem,
-  minPathSumProblem,
-  uniquePathsProblem,
-  //  / twoSumProblem,
-  maxAreaProblem,
-  countBitsProblem,
-  hammingWeightProblem,
-  maxSubArrayProblem,
-  missingNumberProblem,
+export const other: ProblemGroup[] = [];
 
-  sumOfTwoIntegersProblem,
-  numIslandsProblem,
-  productExceptSelfProblem,
-  setMatrixZeroesProblem,
-  searchProblem,
-  eraseOverlapIntervalsProblem,
-  mergeIntervalsProblem,
-  sameTreeProblem,
-  containsDuplicateProblem,
-]
-
-export const other = []
-
-
-export const allProblems = [
-
-  ...blind75,
-  ...other
-]
+export const allProblems: ProblemGroup[] = [...getBlind75Problems(), ...other];

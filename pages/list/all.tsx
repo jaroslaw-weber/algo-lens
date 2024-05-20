@@ -2,9 +2,9 @@
 
 // pages/problems/index.tsx
 import Head from "next/head";
-import { allProblems } from "../src/problem/list";
+import { allProblems } from "../../src/problem/list";
 import { NextPage } from "next";
-import ProblemsList from "../components/ProblemList";
+import ProblemsList from "../../components/ProblemList";
 
 const Problems: NextPage = () => {
   return (
@@ -22,7 +22,7 @@ const Problems: NextPage = () => {
           Problems
         </h1>
 
-        <ProblemsList problems={allProblems} />
+        <ProblemsList groups={allProblems} />
       </main>
     </div>
   );

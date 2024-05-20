@@ -23,7 +23,12 @@ export interface Problem<Input, State> {
 
   tags?: string[];
 
-  difficulty?: Difficulty
+  difficulty?: Difficulty;
+}
+
+export type ProblemGroup = {
+  label: string;
+  problems: Problem<any, any>[];
 }
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -137,14 +142,19 @@ export interface TreeVariable extends Variable {
 
 export type HashsetHighlight = {
   value: string | number;
-  color: ThemeColor
-}
+  color: ThemeColor;
+};
 
-export type ThemeColor = "primary" | "secondary" | "accent" | "warning" | "error" | "neutral" | "success"
+export type ThemeColor =
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "warning"
+  | "error"
+  | "neutral"
+  | "success";
 
 export type HighlightColor = "good" | "bad" | "neutral";
-
-
 
 export interface NodeHighlight {
   node: BinaryTreeNode;

@@ -1,8 +1,8 @@
 // pages/blind75/index.tsx
 import Head from "next/head";
-import { blind75 } from "../src/problem/list"; // Adjust the import path as needed
 import { NextPage } from "next";
-import ProblemsList from "../components/ProblemList";
+import ProblemsList from "../../components/ProblemList";
+import { getBlind75Problems } from "../../src/problem/list";
 
 const Blind75: NextPage = () => {
   return (
@@ -20,7 +20,7 @@ const Blind75: NextPage = () => {
           Blind 75 Problems
         </h1>
 
-        <ProblemsList problems={blind75} />
+        <ProblemsList groups={getBlind75Problems()} />
       </main>
     </div>
   );
