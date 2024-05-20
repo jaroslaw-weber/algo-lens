@@ -63,22 +63,22 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
 
 // Example implementation of the containsDuplicate function for demonstration and testing
 const code = `function containsDuplicate(nums: number[]): boolean {
-  //#1 Create a hash set to store unique numbers
+  //Create a hash set to store unique numbers
   const hashSet = new Set<number>();
 
-  //#2 Iterate through the input array
+  //#1 Iterate through the input array
   for (let i = 0; i < nums.length; i++) {
-    //#3 Check if the current number is already in the hash set
+    //#2 Check if the current number is already in the hash set
     if (hashSet.has(nums[i])) {
-      //#4 If the number exists, return true indicating a duplicate
+      //#3 If the number exists, return true indicating a duplicate
       return true;
     } else {
-      //#5 Add the number to the hash set
+      //#4 Add the number to the hash set
       hashSet.add(nums[i]);
     }
   }
 
-  //#6 If no duplicates are found, return false
+  //#5 If no duplicates are found, return false
   return false;
 }`;
 
