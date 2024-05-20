@@ -55,6 +55,11 @@ const DisplayState = ({ state }) => {
         arrays.push(<DisplayTree data={data} key={data.label} />);
         break;
       }
+      case "hashset": {
+        const data = variable as HashsetVariable;
+        others.push(<DisplayHashset data={data} key={data.label} />);
+        break;
+      }
     }
   }
 

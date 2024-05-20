@@ -37,7 +37,9 @@ export interface Variable {
     | "binary"
     | "boolean-group"
     | "interval"
-    | "tree";
+    | "tree"
+    | "hashset"
+    | "hashmap";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -113,6 +115,12 @@ export interface IntervalVariable extends Variable {
     min: number;
     max: number;
   };
+}
+
+export interface HashsetVariable extends Variable {
+  type: "hashset";
+  value: Set<any>;
+  highlight: Highlight;
 }
 
 export interface TreeVariable extends Variable {

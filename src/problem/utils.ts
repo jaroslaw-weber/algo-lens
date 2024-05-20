@@ -9,6 +9,7 @@ import {
   BooleanGroupVariable,
   IntervalVariable,
   NodeHighlight,
+  HashsetVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -262,4 +263,12 @@ export function as2dArray(
     });
   }
   return result;
+}
+export function asHashset<T>(label: string, set: Set<any>, highlight: Highlight): HashsetVariable{
+  return {
+    label,
+    type: "hashset",
+    value: set,
+    highlight
+  };
 }
