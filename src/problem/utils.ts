@@ -10,6 +10,7 @@ import {
   IntervalVariable,
   NodeHighlight,
   HashsetVariable,
+  HashsetHighlight,
 } from "./types";
 import { problems } from "./list";
 
@@ -264,11 +265,11 @@ export function as2dArray(
   }
   return result;
 }
-export function asHashset<T>(label: string, set: Set<any>, highlight: any): HashsetVariable{
+export function asHashset<T>(label: string, set: Set<any>, highlight: HashsetHighlight): HashsetVariable{
   return {
     label,
     type: "hashset",
-    value: set,
+    value: new Set(set),//cloning set
     highlight
   };
 }

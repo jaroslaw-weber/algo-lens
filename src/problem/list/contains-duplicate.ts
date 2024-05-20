@@ -1,6 +1,5 @@
-
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
+import { Problem, ProblemState, ThemeColor } from "../types";
 import {
   asArray,
   as2dArray,
@@ -28,12 +27,12 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
 
   // Helper function to create and log each step's computational state
   function log(point: number, i?: number, existsInSet?: boolean) {
+    const color :ThemeColor= existsInSet ? "error" : "success";
     const step: ProblemState = {
       variables: [
-        asArray("nums", nums),
-        asHashset("hashSet", hashSet, nums[i]),
+        asArray("nums", nums, i),
+        asHashset("hashSet", hashSet, { value: nums[i], color }),
         asBooleanGroup("exist check", { existsInSet }),
-        asValueGroup("loop", { i }, { min:0, max: nums.length }),
       ],
       breakpoint: point,
     };
@@ -48,7 +47,7 @@ export function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] {
     log(2, i);
     if (hashSet.has(nums[i])) {
       log(3, i, true);
-      break;
+      return steps;
     } else {
       hashSet.add(nums[i]);
       log(4, i, false);
@@ -89,7 +88,10 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const containsDuplicateProblem: Problem<ContainsDuplicateInput, ProblemState> = {
+export const containsDuplicateProblem: Problem<
+  ContainsDuplicateInput,
+  ProblemState
+> = {
   title,
   code,
   getInput,

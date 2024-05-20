@@ -2,16 +2,30 @@ import React from "react";
 import { HashsetVariable, Pointer } from "../src/problem/types";
 
 const DisplayHashset = ({ data }: { data: HashsetVariable }) => {
-  const { value: hashset, label: title, pointers } = data;
+  const { value, label, highlight } = data;
 
   return (
     <div className="overflow-x-auto">
-      {title && <h3 className="pl-2 pb-2 text-xl font-semibold">{title}</h3>}
-      <ul className="list-none mb-0">
-        {hashset.value.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
+      {label && <h3 className="pl-2 pb-2 text-xl font-semibold">{label}</h3>}
+      <table className="table w-full">
+        <thead>
+          <tr>
+            <th>Hashset Values</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from(value).map((item, index) => (
+            <tr
+              key={index}
+              className={
+                highlight.value === item ? `bg-${highlight.color} text-${highlight.color}-content` : ""
+              }
+            >
+              <td>{item}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
