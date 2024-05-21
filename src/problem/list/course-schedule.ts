@@ -1,4 +1,10 @@
-import { Problem, ProblemState, ThemeColor, Variable } from "../types";
+import {
+  Pointer2D,
+  Problem,
+  ProblemState,
+  ThemeColor,
+  Variable,
+} from "../types";
 import {
   asArray,
   as2dArray,
@@ -7,143 +13,241 @@ import {
   asHashset,
   asBooleanGroup,
   asHashmap,
+  from2dArrayToMap,
 } from "../utils";
 
 interface CourseScheduleInput {
   numCourses: number;
   prerequisites: number[][];
 }
+interface LogExtraInfo {
+  current?: number;
+  allCoursesTaken?: boolean;
+  inDegreeIndex?: number;
+  prev?: number[];
+  prevIndex?: number;
+  course?: number;
+  prereq?: number;
+  deg?: number;
+  graphRow?: number;
+  neighbor?: number;
+  count?: number;
+}
 
 export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
   const { numCourses, prerequisites } = p;
   const steps: ProblemState[] = [];
   const graph: number[][] = new Array(numCourses).fill(0).map(() => []);
-  const visited: number[] = new Array(numCourses).fill(0);
+  const inDegree: number[] = new Array(numCourses).fill(0);
+  const queue: number[] = [];
+  console.log("graph", graph);
 
-  // Helper function to create and log each step's computational state
-  function log(
-    point: number,
-    p?: {
-      course?: number;
-      prerequisiteCourse?: number;
-      visitedIndex?: number;
-      graphIndex?: number;
+  // Log function to capture steps
+  function log(stepPoint: number, extraInfo: LogExtraInfo) {
+    let values: any = {  };
+
+    const variables: Variable[] = [];
+    const {
+      current,
+      allCoursesTaken,
+      prev,
+      graphRow,
+      neighbor,
+      inDegreeIndex,
+      prevIndex,
+      count,
+    } = extraInfo;
+    values = { ...values };
+
+    if (current) {
+      values.current = current;
     }
-  ) {
-    const v: Variable[] = [];
-    const step: ProblemState = {
-      variables: v,
-      breakpoint: point,
-    };
-    v.push(as2dArray("graph", graph, []));
-    v.push(asArray("visited", visited));
-    v.push(...asSimpleValue({ numCourses }));
-    v.push(as2dArray("prerequisites", prerequisites, []));
-    if (p) {
-      const { course, prerequisiteCourse } = p;
-      if (course) {
-        v.push(...asSimpleValue({ course }));
-      }
-      if (prerequisiteCourse) {
-        v.push(...asSimpleValue({ prerequisiteCourse }));
-      }
+    if (neighbor) {
+      values.neighbor = neighbor;
     }
-    steps.push(step);
-  }
+    const m2 = from2dArrayToMap(prerequisites)
+    variables.push(asHashmap("prerequisites", m2, {value:"", color: "neutral"}),)
+    const m = from2dArrayToMap(graph);
+      variables.push(...asSimpleValue({numCourses}))
+    console.log("graph", m);
+    variables.push(
+      asArray("inDegree", inDegree, inDegreeIndex),
+      asArray("queue", queue)
+    );
+    variables.push(
+      asHashmap("graph", m, {
+        value: graphRow,
+        color: "neutral",
+      })
+    );
 
-  log(1);
-  for (let i = 0; i < numCourses; i++) {
-    graph[i] = [];
-  }
-  log(2);
+    if (count) {
+      variables.push(
+        asValueGroup("courses finished", { count }, { min: 0, max: numCourses })
+      );
+    }
+    if (prev) {
+      variables.push(asArray("prev", prev, prevIndex));
+    }
 
-  for (let i = 0; i < prerequisites.length; i++) {
-    const prerequisite = prerequisites[i];
-    const course = prerequisite[0];
-    const prerequisiteCourse = prerequisite[1];
-    log(3, {
-      course,
-      prerequisiteCourse,
+    variables.push(...asSimpleValue(values));
+    if (allCoursesTaken !== undefined) {
+      variables.push(asBooleanGroup("result", { allCoursesTaken }));
+    }
+
+    steps.push({
+      breakpoint: stepPoint,
+      variables,
     });
-    graph[course].push(prerequisiteCourse);
   }
 
-  function dfs(i: number): boolean {
-    if (visited[i] === -1) {
-      log(4, { visitedIndex: i });
-      return false;
+  log(1, {});
+
+  // Initialize the graph and in-degree array
+  prerequisites.forEach(([course, prereq]) => {
+    log(2, { course, prereq, inDegreeIndex: course });
+    graph[prereq].push(course);
+    inDegree[course]++;
+    log(3, { course, prereq, inDegreeIndex: course });
+  });
+
+  // Log after initialization
+  log(4, {});
+
+  // Add courses with no prerequisites to the queue
+  inDegree.forEach((deg, index) => {
+    log(5, { deg });
+    if (deg === 0) {
+      log(6, { deg });
+      queue.push(index);
     }
-    if (visited[i] === 1) {
-      log(5, { visitedIndex: i });
-      return true;
-    }
-    visited[i] = -1;
-    log(6, { visitedIndex: i });
-    for (const j of graph[i]) {
-      log(7, { graphIndex: j });
-      if (!dfs(j)) {
-        log(8, { graphIndex: j });
-        return false;
+  });
+
+  // Log initial state of the queue
+  log(7, {});
+
+  let count = 0;
+  while (queue.length > 0) {
+    log(8, { count });
+    const current = queue.shift()!;
+    count++;
+
+    // Log state at each course processing
+    log(9, { current, count });
+
+    const prev = graph[current];
+    for (let i = 0; i < prev.length; i++) {
+      const neighbor = prev[i];
+      log(10, {
+        current,
+        graphRow: current,
+        prev,
+        prevIndex: i,
+        inDegreeIndex: neighbor,
+        count,
+      }); // Log before pushing to queue
+
+      inDegree[neighbor]--;
+      log(11, {
+        current,
+        graphRow: current,
+        prev,
+        prevIndex: i,
+        inDegreeIndex: neighbor,
+        count,
+      }); // Log before pushing to queue
+
+      if (inDegree[neighbor] === 0) {
+        queue.push(neighbor);
+        log(12, {
+          current,
+          graphRow: current,
+          prev,
+          prevIndex: i,
+          inDegreeIndex: neighbor,
+          count,
+        }); // Log before pushing to queue
       }
     }
-    log(9, { visitedIndex: i });
-    visited[i] = 1;
-    return true;
+
+    // Log after processing each neighbor
+    log(13, { current, count });
   }
 
-  for (let i = 0; i < numCourses; i++) {
-    if (!dfs(i)) {
-      log(10);
-      return steps;
-    }
-  }
+  // Final log to confirm if all courses can be taken
+  log(14, { allCoursesTaken: count === numCourses, count });
 
-  log(11);
+  // If index is equal to numCourses, all courses can be finished
   return steps;
 }
-
 const code = `function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+  // Initialize graph and in-degree arrays
   const graph: number[][] = new Array(numCourses).fill(0).map(() => []);
-  const visit: number[] = new Array(numCourses).fill(0);
+  const inDegree: number[] = new Array(numCourses).fill(0);
+  const queue: number[] = [];
+  //#1 Data structures initialized - Graph, inDegree, and Queue are setup
 
-  for (let i = 0; i < prerequisites.length; i++) {
-    graph[prerequisites[i][0]].push(prerequisites[i][1]);
+  // Populate the graph and in-degree array from prerequisites
+  for (const [course, prereq] of prerequisites) {
+    //#2
+    graph[prereq].push(course);
+    inDegree[course]++;
+    //#3
   }
+  //#4 Graph populated and inDegree updated with prerequisites
 
-  function dfs(i: number): boolean {
-    if (visit[i] === -1) {
-      return false;
+  // Identify courses with no prerequisites and add them to the queue
+  for (let i = 0; i < numCourses; i++) {
+    //#5
+    if (inDegree[i] === 0) {
+      //#6
+      queue.push(i);
     }
-    if (visit[i] === 1) {
-      return true;
-    }
-    visit[i] = -1;
-    for (const j of graph[i]) {
-      if (!dfs(j)) {
-        return false;
+  }
+  //#7 Courses without prerequisites are identified and added to queue
+
+  let count = 0; // This will count the courses we are able to process
+  while (queue.length > 0) {
+    //#8
+    const current = queue.shift(); //#4 Dequeue a course, preparing to process it
+    count++; // Increase the processed course count
+
+    const prev = graph[current]; 
+    //#9
+    // Decrease in-degree for all neighbors and enqueue any that now have zero in-degree
+    for (const neighbor of prev) {
+      //#10
+      inDegree[neighbor]--;
+      //#11
+      if (inDegree[neighbor] === 0) {
+        queue.push(neighbor);
+        //#12 Neighbor with no remaining prerequisites enqueued
       }
     }
-    visit[i] = 1;
-    return true;
+    //#13 Processed all neighbors for the current course
   }
 
-  for (let i = 0; i < numCourses; i++) {
-    if (!dfs(i)) {
-      return false;
-    }
-  }
-
-  return true;
+  // If we've processed as many courses as we started with, all courses can be finished
+  const allCoursesTaken = count === numCourses;
+  //#14 Check if all courses were processed successfully
+  return allCoursesTaken;
 }`;
 
 const title = "Course Schedule";
 const getInput = () => ({
-  numCourses: 4,
+  numCourses: 10,
   prerequisites: [
     [1, 0],
     [2, 0],
     [3, 1],
     [3, 2],
+    [4, 2],
+    [5, 3],
+    [5, 4],
+    [6, 0],
+    [7, 6],
+    [8, 7],
+    [9, 8],
   ],
 });
 
@@ -154,4 +258,5 @@ export const courseScheduleProblem: Problem<CourseScheduleInput, ProblemState> =
     getInput,
     func: courseSchedule,
     id: "course-schedule",
+    tags: ["graph", "bfs", "topological-sort"],
   };

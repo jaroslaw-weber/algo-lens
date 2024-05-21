@@ -11,6 +11,7 @@ import {
   NodeHighlight,
   HashsetVariable,
   HashHighlight,
+  HashmapVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -87,7 +88,6 @@ function addRandomIds(tree: BinaryTreeNode | null, i: number): number {
   }
   return i;
 }
-
 
 export function asTree(
   label: string,
@@ -265,19 +265,37 @@ export function as2dArray(
   }
   return result;
 }
-export function asHashset<T>(label: string, set: Set<any>, highlight: HashHighlight): HashsetVariable{
+export function asHashset<T>(
+  label: string,
+  set: Set<any>,
+  highlight: HashHighlight
+): HashsetVariable {
   return {
     label,
     type: "hashset",
-    value: new Set(set),//cloning set
-    highlight
+    value: new Set(set), //cloning set
+    highlight,
   };
 }
-export function asHashmap(label: string, map: Map<any, any>, highlight: HashmapHighlight): HashmapVariable {
+export function asHashmap(
+  label: string,
+  map: Map<any, any>,
+  highlight: HashHighlight
+): HashmapVariable {
   return {
     label,
     type: "hashmap",
     value: new Map(map), // cloning the map
     highlight,
   };
+}
+
+export function from2dArrayToMap(arr: any[][]): Map<any, any> {
+  const result = new Map();
+  for (const row of arr) {
+    if (row.length) {
+      result.set(row[0].toString(), row.slice(1).map(x=>x.toString()).join(","));
+    }
+  }
+  return result;
 }
