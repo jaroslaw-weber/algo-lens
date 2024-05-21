@@ -121,7 +121,14 @@ export interface HashsetVariable extends Variable {
   type: "hashset";
   label: string;
   value: Set<any>;
-  highlight: HashsetHighlight;
+  highlight: HashHighlight;
+} 
+
+export interface HashmapVariable extends Variable {
+  type: "hashmap";
+  label: string;
+  value: Map<any, any>;
+  highlight: HashHighlight;
 }
 
 export interface TreeVariable extends Variable {
@@ -131,7 +138,7 @@ export interface TreeVariable extends Variable {
   highlight: NodeHighlight[];
 }
 
-export type HashsetHighlight = {
+export type HashHighlight = {
   value: string | number;
   color: ThemeColor
 }

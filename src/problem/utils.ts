@@ -10,7 +10,7 @@ import {
   IntervalVariable,
   NodeHighlight,
   HashsetVariable,
-  HashsetHighlight,
+  HashHighlight,
 } from "./types";
 import { problems } from "./list";
 
@@ -265,11 +265,19 @@ export function as2dArray(
   }
   return result;
 }
-export function asHashset<T>(label: string, set: Set<any>, highlight: HashsetHighlight): HashsetVariable{
+export function asHashset<T>(label: string, set: Set<any>, highlight: HashHighlight): HashsetVariable{
   return {
     label,
     type: "hashset",
     value: new Set(set),//cloning set
     highlight
+  };
+}
+export function asHashmap(label: string, map: Map<any, any>, highlight: HashmapHighlight): HashmapVariable {
+  return {
+    label,
+    type: "hashmap",
+    value: new Map(map), // cloning the map
+    highlight,
   };
 }
