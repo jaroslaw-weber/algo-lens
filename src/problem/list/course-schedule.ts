@@ -22,6 +22,7 @@ interface CourseScheduleInput {
 }
 interface LogExtraInfo {
   current?: number;
+  prerequisitesIndex?: number;
   allCoursesTaken?: boolean;
   inDegreeIndex?: number;
   prev?: number[];
@@ -44,7 +45,7 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
 
   // Log function to capture steps
   function log(stepPoint: number, extraInfo: LogExtraInfo) {
-    let values: any = {  };
+    let values: any = {};
 
     const variables: Variable[] = [];
     const {
@@ -56,6 +57,7 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
       inDegreeIndex,
       prevIndex,
       count,
+      prerequisitesIndex,
     } = extraInfo;
     values = { ...values };
 
@@ -65,10 +67,15 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
     if (neighbor) {
       values.neighbor = neighbor;
     }
-    const m2 = from2dArrayToMap(prerequisites)
-    variables.push(asHashmap("prerequisites", m2, {value:"", color: "neutral"}),)
+    const m2 = from2dArrayToMap(prerequisites);
+    variables.push(
+      asHashmap("prerequisites", m2, {
+        value: prerequisitesIndex,
+        color: "primary",
+      })
+    );
     const m = from2dArrayToMap(graph);
-      variables.push(...asSimpleValue({numCourses}))
+    variables.push(...asSimpleValue({ numCourses }));
     console.log("graph", m);
     variables.push(
       asArray("inDegree", inDegree, inDegreeIndex),
@@ -77,7 +84,7 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
     variables.push(
       asHashmap("graph", m, {
         value: graphRow,
-        color: "neutral",
+        color: "primary",
       })
     );
 
@@ -105,10 +112,20 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
 
   // Initialize the graph and in-degree array
   prerequisites.forEach(([course, prereq]) => {
-    log(2, { course, prereq, inDegreeIndex: course });
+    log(2, {
+      course,
+      prereq,
+      inDegreeIndex: course,
+      prerequisitesIndex: course,
+    });
     graph[prereq].push(course);
     inDegree[course]++;
-    log(3, { course, prereq, inDegreeIndex: course });
+    log(3, {
+      course,
+      prereq,
+      inDegreeIndex: course,
+      prerequisitesIndex: course,
+    });
   });
 
   // Log after initialization

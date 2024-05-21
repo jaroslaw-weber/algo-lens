@@ -294,7 +294,7 @@ export function from2dArrayToMap(arr: any[][]): Map<any, any> {
   const result = new Map();
   for (const row of arr) {
     if (row.length) {
-      result.set(row[0].toString(), row.slice(1).map(x=>x.toString()).join(","));
+      result.set(row[0], row.slice(1).map(x=>x.toString()).join(","));
     }
   }
   return result;
