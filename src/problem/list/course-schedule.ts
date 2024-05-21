@@ -54,26 +54,39 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
   return steps;
 }
 
-const code = `def canFinish(self, numCourses, prerequisites):
-  graph = [[] for _ in xrange(numCourses)]
-  visit = [0 for _ in xrange(numCourses)]
-  for x, y in prerequisites:
-    graph[x].append(y)
-  def dfs(i):
-    if visit[i] == -1:
-      return False
-    if visit[i] == 1:
-      return True
-    visit[i] = -1
-    for j in graph[i]:
-      if not dfs(j):
-        return False
-    visit[i] = 1
-    return True
-  for i in xrange(numCourses):
-    if not dfs(i):
-      return False
-  return True`;
+const code = `function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+  const graph: number[][] = new Array(numCourses).fill(0).map(() => []);
+  const visit: number[] = new Array(numCourses).fill(0);
+
+  for (let i = 0; i < prerequisites.length; i++) {
+    graph[prerequisites[i][0]].push(prerequisites[i][1]);
+  }
+
+  function dfs(i: number): boolean {
+    if (visit[i] === -1) {
+      return false;
+    }
+    if (visit[i] === 1) {
+      return true;
+    }
+    visit[i] = -1;
+    for (const j of graph[i]) {
+      if (!dfs(j)) {
+        return false;
+      }
+    }
+    visit[i] = 1;
+    return true;
+  }
+
+  for (let i = 0; i < numCourses; i++) {
+    if (!dfs(i)) {
+      return false;
+    }
+  }
+
+  return true;
+}`;
 
 const title = "Course Schedule";
 const getInput = () => ({
