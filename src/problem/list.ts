@@ -22,6 +22,7 @@ import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
 import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
+import { courseScheduleProblem } from "./list/course-schedule";
 
 export const problems = [
   maxProfitProblem,
@@ -48,5 +49,6 @@ export const problems = [
   eraseOverlapIntervalsProblem,
   mergeIntervalsProblem,
   sameTreeProblem,
-  containsDuplicateProblem
+  containsDuplicateProblem,
+  courseScheduleProblem
 ].filter((x) => !x.hide);

@@ -97,4 +97,5 @@ export const containsDuplicateProblem: Problem<
   getInput,
   func: containsDuplicate,
   id: "contains-duplicate",
+  tags: ["hashset"],
 };
