@@ -21,6 +21,8 @@ import { searchProblem } from "./list/search-in-rotated-sorted-array";
 import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
 import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
+import { reverseListProblem } from "./list/reverse-linked-list";
+import { hasCycleProblem } from "./list/linked-list-cycle";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
 import { courseScheduleProblem } from "./list/course-schedule";
 
@@ -49,6 +51,8 @@ export const problems = [
   eraseOverlapIntervalsProblem,
   mergeIntervalsProblem,
   sameTreeProblem,
+  reverseListProblem,
+  hasCycleProblem,
   containsDuplicateProblem,
   courseScheduleProblem
 ].filter((x) => !x.hide);

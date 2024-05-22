@@ -9,8 +9,10 @@ import {
   BooleanGroupVariable,
   IntervalVariable,
   NodeHighlight,
-  HashsetVariable,
+  ListNode,
+  ListVariable,
   HashHighlight,
+  HashsetVariable,
   HashmapVariable,
 } from "./types";
 import { problems } from "./list";
@@ -87,6 +89,55 @@ function addRandomIds(tree: BinaryTreeNode | null, i: number): number {
     i = addRandomIds(tree.right, i);
   }
   return i;
+}
+function addRandomIdsToList(node: ListNode | null, i: number): number {
+  let current = node;
+  while (current !== null) {
+    if (current.id !== undefined) {
+      // If the current node already has an ID, we assume we've encountered a cycle and stop
+      return i;
+    }
+    current.id = i.toString(); // Assign ID as a string
+    i++; // Increment i for the next node
+    current = current.next; // Move to the next node
+  }
+  return i; // Return the last used index
+}
+
+export function asList(
+  label: string,
+  value: ListNode | null,
+  highlight: NodeHighlight[]
+): ListVariable {
+  // Add random IDs starting from 1
+  //clone list
+  const list = cloneList(value);
+  addRandomIdsToList(list, 1);
+  return {
+    type: "list",
+    label,
+    value:list,
+    highlight: highlight.filter((x) => x.node),
+  };
+}
+
+export function cloneList(node: ListNode | null): ListNode | null {
+  const visited = new Map<ListNode, ListNode>();
+
+  function clone(node: ListNode | null): ListNode | null {
+    if (!node) return null;
+
+    if (visited.has(node)) {
+      return visited.get(node) || null;
+    }
+
+    const newNode = new ListNode(node.val);
+    visited.set(node, newNode);
+    newNode.next = clone(node.next);
+    return newNode;
+  }
+
+  return clone(node);
 }
 
 export function asTree(

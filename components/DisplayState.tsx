@@ -10,6 +10,7 @@ import {
   BooleanGroupVariable,
   IntervalVariable,
   TreeVariable,
+  ListVariable,
   HashsetVariable,
   HashmapVariable,
 } from "../src/problem/types";
@@ -18,6 +19,7 @@ import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
 import DisplayIntervals from "./DisplayIntervals";
 import DisplayTree from "./DisplayBinaryTree";
+import DisplayLinkedList from "./DisplayLinkedList";
 import DisplayHashset from "./DisplayHashset";
 import DisplayHashmap from "./DisplayHashmap";
 

@@ -1,104 +1,116 @@
-
-// Imports specific utility functions and type definitions from the relative paths
-import { ListNode, Problem, ProblemState } from "../types";
+// Import or define necessary types and utilities
 import {
-  asArray,
-  as2dArray,
-  asSimpleValue,
-  asStringArray,
-  asValueGroup,
-} from "../utils";
+  HighlightColor,
+  Problem,
+  ProblemState,
+  ListNode,
+  Variable,
+  NodeHighlight,
+} from "../types";
+import { asList, asBooleanGroup, cloneList } from "../utils";
 
-// Defines the interface for the input expected by the reverseLinkedList function
-interface ReverseLinkedListInput {
-  head: ListNode;
+interface ReverseListInput {
+  head: ListNode | null;
 }
 
-/**
- * Implements the reverse linked list algorithm which reverses a singly linked list.
- * @param p - The input parameters including the head of the linked list.
- * @returns An array of ProblemState capturing each step of the computation for visualization.
- */
-export function reverseLinkedList(p: ReverseLinkedListInput): ProblemState[] {
-  const { head } = p;
+export function reverseList(input: ReverseListInput): ProblemState[] {
+  let { head } = input;
   const steps: ProblemState[] = [];
 
-  // Helper function to create and log each step's computational state
-  function log(point: number, current?: ListNode, previous?: ListNode, next?: ListNode) {
-    const step: ProblemState = {
-      variables: [asArray("head", [head], null, null)],
-      breakpoint: point,
-    };
-    if (current !== undefined) {
-      step.variables.push(asValueGroup("current", current.val, null));
-    }
-    if (previous !== undefined) {
-      step.variables.push(asValueGroup("previous", previous.val, null));
-    }
-    if (next !== undefined) {
-      step.variables.push(asValueGroup("next", next.val, null));
-    }
-    steps.push(step);
+  function log(
+    point: number,
+    head: ListNode | null,
+    current: ListNode | null,
+    prev: ListNode | null = null,
+    next: ListNode | null = null,
+  ) {
+    const variables: Variable[] = [
+      asList("head", head, []),
+      asList("current", current, []),
+      asList("prev", prev, []),
+      asList("next", next, []),
+    ];
+
+    steps.push({ variables, breakpoint: point });
   }
 
-  // Initial state log before the loop starts
-  log(1);
+  function reverseLinkedList(head: ListNode | null): ListNode | null {
+    const head1 = cloneList(head);
+    let prev = null;
+    let current = head1
+    let next = null;
 
-  let previous: ListNode | null = null;
-  let current: ListNode | null = head;
+    log(1, head1, current);
+    while (current != null) {
+      next = current.next; // Save next node
+      log(2, head1,  current, prev, next); // Log the state after updating links
+      current.next = prev; // Reverse current node's pointer
+      log(3, head1,  current, prev, next); // Log the state after updating links
+      prev = current; // Move pointers one position ahead
+      log(4, head1,  current, prev, next); // Log the state after updating links
+      current = next;
+      log(5, head1,  current, prev, next); // Log the state after updating links
+    }
 
-  // Main loop to reverse the linked list
-  while (current !== null) {
-    const next: ListNode | null = current.next;
-    log(2, current, previous, next);
-
-    current.next = previous;
-    log(3, current, previous, next);
-
-    previous = current;
-    current = next;
-    log(4, current, previous, next);
+    log(6, head1, current, prev, next); // Final state with the reversed list
+    return prev;
   }
 
-  // Logs the final state after reversing the linked list
-  log(5, null, previous, null);
-
+  reverseLinkedList(head);
+  console.log("steps: ", steps);
   return steps;
 }
 
-// Example implementation of the reverseLinkedList function for demonstration and testing
-const code = `function reverseList(head: ListNode | null): ListNode | null {
-  let previous = null;
-  let current = head;
-
-  //#1 Start the loop to reverse the linked list
-  while (current !== null) {
-    //#2 Store the next node in the list
-    const next = current.next;
-
-    //#3 Reverse the next pointer of the current node
-    current.next = previous;
-
-    //#4 Move the previous and current pointers one step forward
-    previous = current;
+const code = `function reverseLinkedList(head: ListNode | null): ListNode | null {
+  let prev = null, current = head, next = null;
+  //#1
+  while (current != null) {
+    next = current.next;
+    //#2
+    current.next = prev;
+    //#3
+    prev = current;
+    //#4
     current = next;
+    //#5
   }
-
-  //#5 Return the new head of the reversed linked list
-  return previous;
+  //#6
+  return prev;
 }`;
 
-// Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Reverse Linked List";
-const getInput = () => ({
-  head: new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))),
-});
+const getInput = () => {
+  const head: ListNode = {
+    val: 1,
+    next: {
+      val: 2,
+      next: {
+        val: 3,
+        next: {
+          val: 4,
+          next: {
+            val: 5,
+            next: {
+              val: 6,
+              next: {
+                val: 7,
+                next: null,
+              }
+            }
+          }
+        },
+      },
+    },
+  };
+  return { head:head };
+};
 
-// Export the complete problem setup including the input function, the computational function, and other metadata
-export const reverseLinkedListProblem: Problem<ReverseLinkedListInput, ProblemState> = {
+export const reverseListProblem: Problem<ReverseListInput, ProblemState> = {
   title,
   code,
   getInput,
-  func: reverseLinkedList,
-  id: "reverse-linked-list",
+  func: reverseList,
+  id: "reverse-list",
+  tested: false,
+  tags: ["linked-list"],
 };
