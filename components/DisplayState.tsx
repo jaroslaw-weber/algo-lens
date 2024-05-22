@@ -11,6 +11,8 @@ import {
   IntervalVariable,
   TreeVariable,
   ListVariable,
+  HashsetVariable,
+  HashmapVariable,
 } from "../src/problem/types";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
@@ -18,75 +20,62 @@ import DisplayBooleanGroup from "./DisplayBooleanGroup";
 import DisplayIntervals from "./DisplayIntervals";
 import DisplayTree from "./DisplayBinaryTree";
 import DisplayLinkedList from "./DisplayLinkedList";
+import DisplayHashset from "./DisplayHashset";
+import DisplayHashmap from "./DisplayHashmap";
 
 const DisplayState = ({ state }) => {
   const variables = state.variables as Variable[];
 
-  const numbers = [];
-  const arrays = [];
-  const others = [];
-  const binary = [];
-  const booleans = []; // Added for boolean groups
-  const intervals = []; // Added for intervals
-
-  for (const variable of variables) {
-    switch (variable.type) {
-      case "number": {
-        const data = variable as SimpleVariable;
-        numbers.push(<DisplaySingleValue data={data} key={data.label} />);
-        break;
-      }
-      case "array": {
-        const data = variable as ArrayVariable;
-        arrays.push(<DisplayArray data={data} key={data.label} />);
-        break;
-      }
-      case "value-group": {
-        const data = variable as ValueGroupVariable;
-        others.push(<DisplayValueGroup data={data} key={data.label} />);
-        break;
-      }
-      case "binary": {
-        const data = variable as BinaryVariable;
-        binary.push(<DisplayBinary data={data} key={data.label} />);
-        break;
-      }
-      case "boolean-group": {
-        // New case for boolean groups
-        const data = variable as BooleanGroupVariable;
-        booleans.push(<DisplayBooleanGroup data={data} key={data.label} />);
-        break;
-      }
-      case "interval": {
-        const data = variable as IntervalVariable;
-        intervals.push(<DisplayIntervals data={data} key={data.label} />);
-        break;
-      }
-      case "tree": {
-        const data = variable as TreeVariable;
-        arrays.push(<DisplayTree data={data} key={data.label} />);
-        break;
-      }
-      case "list": {
-        const data = variable as ListVariable;
-        arrays.push(<DisplayLinkedList data={data} key={data.label} />);
-        break;
-      }
-    }
-  }
-
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
-      <div className="grid grid-cols-1 gap-16 mt-4 w-full">{intervals}</div>
-      <div className="grid grid-cols-2 gap-16 mt-4 w-full">{binary}</div>
-      {/* Render numbers in a grid layout */}
-      <div className="w-full mt-4">{numbers}</div>
-      {/* Render arrays */}
-      <div className="mt-4 flex flex-col gap-4">{arrays}</div>
-      {/* Render boolean groups */}
-      <div className="grid grid-cols-2 gap-16 mt-4 w-full">{booleans}</div>
-      {/* Render other types */}
-      <div className="grid grid-cols-2 gap-16 mt-4 w-full">{others}</div>
+      <div className="mt-4 flex flex-col gap-8 w-full">
+        {variables.map((variable) => {
+          switch (variable.type) {
+            case "number":
+              const numData = variable as SimpleVariable;
+              return <DisplaySingleValue data={numData} key={numData.label} />;
+            case "array":
+              const arrData = variable as ArrayVariable;
+              return <DisplayArray data={arrData} key={arrData.label} />;
+            case "value-group":
+              const groupData = variable as ValueGroupVariable;
+              return (
+                <DisplayValueGroup data={groupData} key={groupData.label} />
+              );
+            case "binary":
+              const binaryData = variable as BinaryVariable;
+              return <DisplayBinary data={binaryData} key={binaryData.label} />;
+            case "boolean-group":
+              const boolData = variable as BooleanGroupVariable;
+              return (
+                <DisplayBooleanGroup data={boolData} key={boolData.label} />
+              );
+            case "interval":
+              const intervalData = variable as IntervalVariable;
+              return (
+                <DisplayIntervals
+                  data={intervalData}
+                  key={intervalData.label}
+                />
+              );
+            case "tree":
+              const treeData = variable as TreeVariable;
+              return <DisplayTree data={treeData} key={treeData.label} />;
+            case "hashset":
+              const hashsetData = variable as HashsetVariable;
+              return (
+                <DisplayHashset data={hashsetData} key={hashsetData.label} />
+              );
+            case "hashmap":
+              const hashmapData = variable as HashmapVariable;
+              return (
+                <DisplayHashmap data={hashmapData} key={hashmapData.label} />
+              );
+            default:
+              return null;
+          }
+        })}
+      </div>
     </div>
   );
 };

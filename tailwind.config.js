@@ -6,6 +6,8 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+
+
   theme: {
     extend: {
       translate: {
@@ -27,8 +29,18 @@ module.exports = {
         'code': ["Fira Code", 'monospace']
       }
     },
+
   }, plugins: [
     require('daisyui'),
+  ],
+  safelist: [
+    {
+      pattern: /bg-(primary|error|success)/,
+      variants: ['lg', 'hover', 'focus', 'lg:hover'],
+    },{
+      pattern: /text-(primary|error|success)-content/,
+      variants: ['lg', 'hover', 'focus', 'lg:hover'],
+    },
   ],
   daisyui: {
     themes: [

@@ -23,6 +23,8 @@ import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
 import { reverseListProblem } from "./list/reverse-linked-list";
 import { hasCycleProblem } from "./list/linked-list-cycle";
+import { containsDuplicateProblem } from "./list/contains-duplicate";
+import { courseScheduleProblem } from "./list/course-schedule";
 
 export const problems = [
   maxProfitProblem,
@@ -50,5 +52,7 @@ export const problems = [
   mergeIntervalsProblem,
   sameTreeProblem,
   reverseListProblem,
-  hasCycleProblem
+  hasCycleProblem,
+  containsDuplicateProblem,
+  courseScheduleProblem
 ].filter((x) => !x.hide);

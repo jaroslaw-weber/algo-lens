@@ -11,6 +11,9 @@ import {
   NodeHighlight,
   ListNode,
   ListVariable,
+  HashHighlight,
+  HashsetVariable,
+  HashmapVariable,
 } from "./types";
 import { problems } from "./list";
 
@@ -136,7 +139,6 @@ export function cloneList(node: ListNode | null): ListNode | null {
 
   return clone(node);
 }
-
 
 export function asTree(
   label: string,
@@ -311,6 +313,40 @@ export function as2dArray(
       value: p.c,
       dimension: "column",
     });
+  }
+  return result;
+}
+export function asHashset<T>(
+  label: string,
+  set: Set<any>,
+  highlight: HashHighlight
+): HashsetVariable {
+  return {
+    label,
+    type: "hashset",
+    value: new Set(set), //cloning set
+    highlight,
+  };
+}
+export function asHashmap(
+  label: string,
+  map: Map<any, any>,
+  highlight: HashHighlight
+): HashmapVariable {
+  return {
+    label,
+    type: "hashmap",
+    value: new Map(map), // cloning the map
+    highlight,
+  };
+}
+
+export function from2dArrayToMap(arr: any[][]): Map<any, any> {
+  const result = new Map();
+  for (const row of arr) {
+    if (row.length) {
+      result.set(row[0], row.slice(1).map(x=>x.toString()).join(","));
+    }
   }
   return result;
 }
