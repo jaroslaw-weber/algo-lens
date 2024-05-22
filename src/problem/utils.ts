@@ -15,15 +15,15 @@ import {
   HashsetVariable,
   HashmapVariable,
 } from "./types";
-import { problems } from "./list";
+import { allProblems } from "./list";
 
 export function getRandomProblem() {
-  return sample(problems);
+  return sample(allProblems);
 }
 
 export function getProblemById(id: string) {
   console.log("getProblemById", id);
-  return problems.find((p) => p.id === id);
+  return allProblems.find((p) => p.id === id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {

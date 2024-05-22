@@ -24,35 +24,58 @@ import { sameTreeProblem } from "./list/sameTree";
 import { reverseListProblem } from "./list/reverse-linked-list";
 import { hasCycleProblem } from "./list/linked-list-cycle";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
-import { courseScheduleProblem } from "./list/course-schedule";
+import { ProblemGroup } from "./types";
+import { groupBy } from "lodash";
+export function getBlind75Problems(): ProblemGroup[] {
+  const flatBlind = [
+    maxProfitProblem,
+    climbStairsProblem,
+    coinChangeProblem,
+    houseRobberProblem,
+    wordBreakProblem,
+    editDistanceProblem,
+    longestIncreasingSubsequenceProblem,
+    minPathSumProblem,
+    uniquePathsProblem,
+    // twoSumProblem, // Uncomment or remove if this is intended to be used or not.
+    maxAreaProblem,
+    countBitsProblem,
+    hammingWeightProblem,
+    maxSubArrayProblem,
+    missingNumberProblem,
+    sumOfTwoIntegersProblem,
+    numIslandsProblem,
+    productExceptSelfProblem,
+    setMatrixZeroesProblem,
+    searchProblem,
+    eraseOverlapIntervalsProblem,
+    mergeIntervalsProblem,
+    sameTreeProblem,
+    containsDuplicateProblem,
+  ];
+  const groupedBlind = new Map();
+  for (const problem of flatBlind) {
+    if (problem.tags) {
+      for (const tag of problem.tags) {
+        if (!groupedBlind.has(tag)) {
+          groupedBlind.set(tag, []);
+        }
+        groupedBlind.get(tag).push(problem);
+      }
+    }
+  }
 
-export const problems = [
-  maxProfitProblem,
-  climbStairsProblem,
-  coinChangeProblem,
-  houseRobberProblem,
-  wordBreakProblem,
-  editDistanceProblem,
-  longestIncreasingSubsequenceProblem,
-  minPathSumProblem,
-  uniquePathsProblem,
-//  / twoSumProblem,
-  maxAreaProblem,
-  countBitsProblem,
-  hammingWeightProblem,
-  maxSubArrayProblem,
-  missingNumberProblem,
+  const blind75: ProblemGroup[] = [];
+  for (const tag of Array.from(groupedBlind.keys())) {
+    blind75.push({
+      label: tag,
+      problems: groupedBlind.get(tag),
+    });
+  }
+  return blind75;
+}
 
-  sumOfTwoIntegersProblem,
-  numIslandsProblem,
-  productExceptSelfProblem,
-  setMatrixZeroesProblem,
-  searchProblem,
-  eraseOverlapIntervalsProblem,
-  mergeIntervalsProblem,
-  sameTreeProblem,
-  reverseListProblem,
-  hasCycleProblem,
-  containsDuplicateProblem,
-  courseScheduleProblem
-].filter((x) => !x.hide);
+
+export const other: ProblemGroup[] = [];
+
+export const allProblems: ProblemGroup[] = [...getBlind75Problems(), ...other];

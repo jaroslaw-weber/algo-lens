@@ -22,7 +22,16 @@ export interface Problem<Input, State> {
   tested?: boolean;
 
   tags?: string[];
+
+  difficulty?: Difficulty;
 }
+
+export type ProblemGroup = {
+  label: string;
+  problems: Problem<any, any>[];
+}
+
+export type Difficulty = "easy" | "medium" | "hard";
 
 /** Represents a variable used within a ProblemState, can be a simple number or an array. */
 export interface Variable {
@@ -148,14 +157,19 @@ export interface ListVariable extends Variable {
 
 export type HashHighlight = {
   value: string | number;
-  color: ThemeColor
-}
+  color: ThemeColor;
+};
 
-export type ThemeColor = "primary" | "secondary" | "accent" | "warning" | "error" | "neutral" | "success"
+export type ThemeColor =
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "warning"
+  | "error"
+  | "neutral"
+  | "success";
 
 export type HighlightColor = "good" | "bad" | "neutral";
-
-
 
 export interface NodeHighlight {
   node: BinaryTreeNode | ListNode ;
