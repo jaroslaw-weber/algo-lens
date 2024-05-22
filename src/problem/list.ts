@@ -22,9 +22,8 @@ import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
 import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
 import { reverseListProblem } from "./list/reverse-linked-list";
-import { hasCycleProblem } from "./list/linked-list-cycle";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
-import { ProblemGroup } from "./types";
+import { Problem, ProblemGroup } from "./types";
 import { groupBy } from "lodash";
 export function getBlind75Problems(): ProblemGroup[] {
   const flatBlind = [
@@ -52,18 +51,9 @@ export function getBlind75Problems(): ProblemGroup[] {
     mergeIntervalsProblem,
     sameTreeProblem,
     containsDuplicateProblem,
+    reverseListProblem,
   ];
-  const groupedBlind = new Map();
-  for (const problem of flatBlind) {
-    if (problem.tags) {
-      for (const tag of problem.tags) {
-        if (!groupedBlind.has(tag)) {
-          groupedBlind.set(tag, []);
-        }
-        groupedBlind.get(tag).push(problem);
-      }
-    }
-  }
+  const groupedBlind = groupByTags(flatBlind);
 
   const blind75: ProblemGroup[] = [];
   for (const tag of Array.from(groupedBlind.keys())) {
@@ -75,7 +65,20 @@ export function getBlind75Problems(): ProblemGroup[] {
   return blind75;
 }
 
-
 export const other: ProblemGroup[] = [];
 
 export const allProblems: ProblemGroup[] = [...getBlind75Problems(), ...other];
+function groupByTags(flatBlind: Problem<any, any>[]) {
+  const groupedBlind = new Map();
+  for (const problem of flatBlind) {
+    if (problem.tags) {
+      for (const tag of problem.tags) {
+        if (!groupedBlind.has(tag)) {
+          groupedBlind.set(tag, []);
+        }
+        groupedBlind.get(tag).push(problem);
+      }
+    }
+  }
+  return groupedBlind;
+}

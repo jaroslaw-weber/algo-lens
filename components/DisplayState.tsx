@@ -71,6 +71,9 @@ const DisplayState = ({ state }) => {
               return (
                 <DisplayHashmap data={hashmapData} key={hashmapData.label} />
               );
+            case "list":
+              const listData = variable as ListVariable;
+              return <DisplayLinkedList data={listData} key={listData.label} />;
             default:
               return null;
           }

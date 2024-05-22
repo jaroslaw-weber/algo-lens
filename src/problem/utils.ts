@@ -18,12 +18,12 @@ import {
 import { allProblems } from "./list";
 
 export function getRandomProblem() {
-  return sample(allProblems);
+  return sample(allProblems.flatMap(g => g.problems));
 }
 
 export function getProblemById(id: string) {
   console.log("getProblemById", id);
-  return allProblems.find((p) => p.id === id);
+  return allProblems.flatMap(p => p.problems).find((p) => p.id === id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {
