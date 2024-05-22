@@ -119,13 +119,24 @@ export function asList(
 }
 
 export function cloneList(node: ListNode | null): ListNode | null {
-  if (!node) {
-    return null;
+  const visited = new Map<ListNode, ListNode>();
+
+  function clone(node: ListNode | null): ListNode | null {
+    if (!node) return null;
+
+    if (visited.has(node)) {
+      return visited.get(node) || null;
+    }
+
+    const newNode = new ListNode(node.val);
+    visited.set(node, newNode);
+    newNode.next = clone(node.next);
+    return newNode;
   }
-  const result = new ListNode(node.val);
-  result.next = cloneList(node.next);
-  return result;
+
+  return clone(node);
 }
+
 
 export function asTree(
   label: string,

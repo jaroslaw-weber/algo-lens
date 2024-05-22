@@ -33,7 +33,7 @@ export function numIslands(p: NumIslandsInput): ProblemState[] {
       variables: v,
       breakpoint: point,
     };
-    v.push(as2dArray("grid", deepClone2DArray(clonedGrid), [{ r: i, c: j }]));
+    v.push(as2dArray("grid", (clonedGrid), [{ r: i, c: j }]));
     v.push(asValueGroup("counter", { numIslands }, { max: (rowCount * colCount) / 2, min: 0 }));
     steps.push(step);
   }

@@ -1,46 +1,69 @@
 // DisplayLinkedList.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import { ListNode, ListVariable } from "../src/problem/types"; // Assuming you have similar types for the linked list
+import { ListNode, ListVariable, NodeHighlight } from "../src/problem/types"; // Assuming you have similar types for the linked list
 
 interface DisplayLinkedListProps {
   data: ListVariable;
 }
 
+
+export const transformListToGraph = (node: ListNode, highlight: Map<string, NodeHighlight>) => {
+  const elements: cytoscape.ElementDefinition[] = [];
+  const visited = new Set<ListNode>();
+  let currentNode = node;
+
+  while (currentNode != null) {
+    if (visited.has(currentNode)) {
+      // If we encounter a node we've already seen, add an edge back to it and stop processing
+      elements.push({
+        data: {
+          id: `${currentNode.id}->cycle`,
+          source: currentNode.id.toString(),
+          target: currentNode.id.toString(),
+        },
+        classes: 'cycle',
+      });
+      break;
+    }
+
+    visited.add(currentNode);
+
+    const nodeClass = highlight.get(currentNode.id)?.color || "";
+    elements.push({
+      data: { id: currentNode.id, label: currentNode.val.toString() },
+      classes: nodeClass,
+    });
+
+    if (currentNode.next) {
+      elements.push({
+        data: {
+          id: `${currentNode.id}->${currentNode.next.id}`,
+          source: currentNode.id.toString(),
+          target: currentNode.next.id.toString(),
+        },
+      });
+    }
+
+    currentNode = currentNode.next;
+  }
+
+  return elements;
+};
+
 const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const highlight = new Map(data.highlight?.filter(x=>x.node).map(x => [x.node.id, x]));
-
-  const transformListToGraph = (node: ListNode) => {
-    const elements: cytoscape.ElementDefinition[] = [];
-    let currentNode = node;
-    while (currentNode != null) {
-      const nodeClass = highlight.get(currentNode.id)?.color || "";
-      elements.push({
-        data: { id: currentNode.id, label: currentNode.val.toString() },
-        classes: nodeClass,
-      });
-      if (currentNode.next) {
-        elements.push({
-          data: {
-            id: `${currentNode.id}->${currentNode.next.id}`,
-            source: currentNode.id.toString(),
-            target: currentNode.next.id.toString(),
-          },
-        });
-      }
-      currentNode = currentNode.next;
-    }
-    return elements;
-  };
+  const highlight = new Map(
+    data.highlight?.filter((x) => x.node).map((x) => [x.node.id, x])
+  );
 
   useEffect(() => {
     if (containerRef.current) {
       cyRef.current = cytoscape({
         container: containerRef.current,
-        elements: transformListToGraph(data.value),
+        elements: transformListToGraph(data.value, highlight),
         style: [
           {
             selector: "node",
@@ -55,36 +78,37 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
               "border-color": "black",
               "user-select": "none",
               "user-drag": "none",
+  
             },
           },
           // Retaining the node highlighting styles from previous component
           {
             selector: "node.neutral",
             style: {
-              "background-color": "black", 
-              color: "white"
+              "background-color": "black",
+              color: "white",
             },
           },
           {
             selector: "node.good",
             style: {
               "background-color": "green",
-              color: "white"
+              color: "white",
             },
           },
           {
             selector: "node.bad",
             style: {
               "background-color": "red",
-              color: "white"
+              color: "white",
             },
           },
           {
             selector: "edge",
             style: {
-              width: 2,
-              "line-color": "#ddd",
-              "target-arrow-color": "#ddd",
+              width: 3,
+              "line-color": "black",
+              "target-arrow-color": "black",
               "target-arrow-shape": "triangle",
               "curve-style": "bezier",
             },
@@ -94,7 +118,7 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
           name: "grid",
           rows: 1,
           avoidOverlap: true,
-          fit: true,
+          fit: false,
         },
       });
     }
@@ -106,7 +130,12 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
     };
   }, [data]);
 
-  return <div ref={containerRef} className="w-40 h-40" />;
+  return (
+    <div className="w-full">
+      <p>{data.label}</p>
+      <div ref={containerRef} className="w-80 h-36" />
+    </div>
+  );
 };
 
 export default DisplayLinkedList;

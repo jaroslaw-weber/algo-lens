@@ -22,6 +22,7 @@ import { eraseOverlapIntervalsProblem } from "./list/non-overlapping-intervals";
 import { mergeIntervalsProblem } from "./list/merge-intervals";
 import { sameTreeProblem } from "./list/sameTree";
 import { reverseListProblem } from "./list/reverse-linked-list";
+import { hasCycleProblem } from "./list/linked-list-cycle";
 
 export const problems = [
   maxProfitProblem,
@@ -48,5 +49,6 @@ export const problems = [
   eraseOverlapIntervalsProblem,
   mergeIntervalsProblem,
   sameTreeProblem,
-  reverseListProblem
+  reverseListProblem,
+  hasCycleProblem
 ].filter((x) => !x.hide);

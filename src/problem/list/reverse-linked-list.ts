@@ -22,7 +22,7 @@ export function reverseList(input: ReverseListInput): ProblemState[] {
     head: ListNode | null,
     current: ListNode | null,
     prev: ListNode | null = null,
-    next: ListNode | null = null
+    next: ListNode | null = null,
   ) {
     const variables: Variable[] = [
       asList("head", head, []),
@@ -30,25 +30,29 @@ export function reverseList(input: ReverseListInput): ProblemState[] {
       asList("prev", prev, []),
       asList("next", next, []),
     ];
+
     steps.push({ variables, breakpoint: point });
   }
 
   function reverseLinkedList(head: ListNode | null): ListNode | null {
+    const head1 = cloneList(head);
     let prev = null;
-    let current = head;
+    let current = head1
     let next = null;
 
-    log(1, head, current);
+    log(1, head1, current);
     while (current != null) {
       next = current.next; // Save next node
+      log(2, head1,  current, prev, next); // Log the state after updating links
       current.next = prev; // Reverse current node's pointer
+      log(3, head1,  current, prev, next); // Log the state after updating links
       prev = current; // Move pointers one position ahead
+      log(4, head1,  current, prev, next); // Log the state after updating links
       current = next;
-
-      log(2, head,  current, prev, next); // Log the state after updating links
+      log(5, head1,  current, prev, next); // Log the state after updating links
     }
 
-    log(3, head, current, prev, next); // Final state with the reversed list
+    log(6, head1, current, prev, next); // Final state with the reversed list
     return prev;
   }
 
@@ -62,12 +66,15 @@ const code = `function reverseLinkedList(head: ListNode | null): ListNode | null
   //#1
   while (current != null) {
     next = current.next;
-    current.next = prev;
-    prev = current;
-    current = next;
     //#2
+    current.next = prev;
+    //#3
+    prev = current;
+    //#4
+    current = next;
+    //#5
   }
-  //#3
+  //#6
   return prev;
 }`;
 
@@ -81,7 +88,16 @@ const getInput = () => {
         val: 3,
         next: {
           val: 4,
-          next: null,
+          next: {
+            val: 5,
+            next: {
+              val: 6,
+              next: {
+                val: 7,
+                next: null,
+              }
+            }
+          }
         },
       },
     },
