@@ -1,121 +1,183 @@
-
-// Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "../types";
+import { Problem, ProblemState, Variable } from "../types";
 import {
   asArray,
   asSimpleValue,
-  asStringArray,
+  asHashset,
+  asBooleanGroup,
+  asHashmap,
   asValueGroup,
 } from "../utils";
 
-// Defines the interface for the input expected by the threeSum function
 interface ThreeSumInput {
   nums: number[];
 }
 
-/**
- * Implements the 3sum algorithm which finds all triplets in the array that sum up to 0.
- * @param p - The input parameters including an array of numbers.
- * @returns An array of ProblemState capturing each step of the computation for visualization.
- */
 export function threeSum(p: ThreeSumInput): ProblemState[] {
-  const { nums } = p;
-  const steps: ProblemState[] = [];
-  const result: number[][] = [];
+  const nums = [...p.nums];
+  const target = 0;
+  const result = [];
 
-  // Helper function to create and log each step's computational state
-  function log(point: number, triplet?: number[]) {
+  let indices: number[] = [];
+  let triplet: number[] = [];
+
+  const steps: ProblemState[] = [];
+  const seen = new Set<string>(); // To track unique triplets
+  log(1);
+  nums.sort((a, b) => a - b); // Sort the array to handle triplets logically
+
+  function log(point: number) {
+    const v: Variable[] = [];
     const step: ProblemState = {
-      variables: [asArray("nums", nums)],
+      variables: v,
       breakpoint: point,
     };
-    if (triplet) {
-      step.variables.push(...asSimpleValue({ result: JSON.stringify(triplet) }));
+    v.push(...asSimpleValue({ target }));
+    const sum = triplet?.reduce((a, b) => a + b, 0);
+    v.push(asArray("nums", nums, ...(indices ?? [])));
+    if (triplet.length > 0) {
+      v.push(
+        asValueGroup(
+          "triplet",
+          {
+            a: triplet[0],
+            b: triplet[1],
+            c: triplet[2],
+            sum,
+          },
+          { min: -20, max: 20 }
+        )
+      );
     }
+    v.push(
+      ...asSimpleValue({
+        result: result.map((t) => "[" + t.join(",") + "]").join(","),
+      })
+    );
+    if (sum !== undefined) {
+      v.push(asBooleanGroup("found triplet? ", { found: sum == 0 }));
+    }
+
     steps.push(step);
   }
 
-  // Initial state log before the loop starts
-  log(1);
+  log(2);
 
-  // Main loop to check triplets
-  for (let i = 0; i < nums.length; i++) {
-    //#2 Skip the duplicate values to avoid duplicates in the result
-    if (i > 0 && nums[i] === nums[i - 1]) continue;
-
+  for (let i = 0; i < nums.length - 2; i++) {
+    log(3);
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      log(4);
+      continue; // Skip duplicates
+    }
     let left = i + 1;
     let right = nums.length - 1;
-
-    //#3 Start the loop to find the remaining two numbers that sum up to 0
+    indices = [i, left, right];
+    triplet = [nums[i], nums[left], nums[right]];
+    log(5);
     while (left < right) {
       const sum = nums[i] + nums[left] + nums[right];
-      log(3, [nums[i], nums[left], nums[right]]);
+      indices = [i, left, right];
+      triplet = [nums[i], nums[left], nums[right]];
+      log(6);
 
-      if (sum < 0) {
-        //#4 If the sum is less than 0, move the left pointer to the right to increase the sum
+      if (sum === target) {
+        log(7);
+        const tripletKey = triplet.join(",");
+        if (!seen.has(tripletKey)) {
+          seen.add(tripletKey);
+          result.push(triplet);
+          log(8);
+        }
+
+        while (left < right && nums[left] === nums[left - 1]) {
+          left++;
+          log(9);
+        } // Skip duplicates
+        while (left < right && nums[right] === nums[right + 1]) {
+          right--;
+          log(10);
+        } // Skip duplicates
+        log(11);
         left++;
-      } else if (sum > 0) {
-        //#5 If the sum is greater than 0, move the right pointer to the left to decrease the sum
         right--;
+        log(12);
+      } else if (sum < target) {
+        left++;
+        log(13);
       } else {
-        //#6 If the sum is equal to 0, add the triplet to the result and move both pointers
-        result.push([nums[i], nums[left], nums[right]]);
-        left++;
         right--;
-
-        //#7 Skip the duplicate values to avoid duplicates in the result
-        while (left < right && nums[left] === nums[left - 1]) left++;
-        while (left < right && nums[right] === nums[right + 1]) right--;
+        log(14);
       }
     }
   }
 
+  log(15);
   return steps;
 }
+export const threeSumProblem: Problem<ThreeSumInput, ProblemState> = {
+  title: "Three Sum",
+  code: `function threeSum(nums: number[]): number[][] {
+    //#1
+    const target = 0;
+    nums.sort((a, b) => a - b); // Sort the array
+    const seen = new Set(); // To track unique triplets
+    const result = [];
+    //#2
+    for (let i = 0; i < nums.length - 2; i++) {
+      //#3
+      if (i > 0 && nums[i] === nums[i - 1]) 
+        {
+          //#4
+          continue; // Skip duplicate 'i' elements
+        } 
+      let left = i + 1
+      let right = nums.length - 1;
+      //#5
+      while (left < right) {
+        const sum = nums[i] + nums[left] + nums[right];
+        //#6
+        if (sum === target) {
+          const triplet = [nums[i], nums[left], nums[right]];
+          const tripletKey = triplet.join(',');
+          //#7
+          if (!seen.has(tripletKey)) {
+            seen.add(tripletKey);
+            result.push(triplet); // Add unique triplet to the result
+            //#8
+          }
+          while (left < right && nums[left] === nums[left + 1]) 
+            {
+              left++; // Skip duplicate 'left' elements
 
-// Example implementation of the threeSum function for demonstration and testing
-const code = `function threeSum(nums: number[]): number[][] {
-  nums.sort((a, b) => a - b);
-  const result: number[][] = [];
+            //#9
+            }
+          while (left < right && nums[right] === nums[right - 1]) 
+            {
+              right--; 
 
-  for (let i = 0; i < nums.length; i++) {
-    if (i > 0 && nums[i] === nums[i - 1]) continue;
-
-    let left = i + 1;
-    let right = nums.length - 1;
-
-    while (left < right) {
-      const sum = nums[i] + nums[left] + nums[right];
-
-      if (sum < 0) {
-        left++;
-      } else if (sum > 0) {
-        right--;
-      } else {
-        result.push([nums[i], nums[left], nums[right]]);
-        left++;
-        right--;
-
-        while (left < right && nums[left] === nums[left - 1]) left++;
-        while (left < right && nums[right] === nums[right + 1]) right--;
+              //#10
+            }// Skip duplicate 'right' elements
+          //#11
+          left++; 
+          right--;
+          //#12
+        } else if (sum < target) {
+          left++; // Need more positive to reach zero
+          //#13
+        } else {
+          right--; // Need more negative to reach zero
+          //#14
+        }
       }
     }
-  }
+    //#15
+    return result;
+  }`,
+  getInput: () => ({
+    nums: [-1, 0, 1, 2, -1, -4, 4, 3, -3, 0],
+  }),
 
-  return result;
-}`;
-
-// Description for a larger, more complex input set to test and visualize the algorithm
-const title = "3Sum";
-const getInput = () => ({
-  nums: [-1, 0, 1, 2, -1, -4],
-});
-
-// Export the complete problem setup including the input function, the computational function, and other metadata
-export const threeSumProblem: Problem<ThreeSumInput, ProblemState> = {
-  title,
-  code,
-  getInput,
   func: threeSum,
   id: "3sum",
+  tags: ["array", "hash set"],
+  tested: true,
 };

@@ -25,6 +25,8 @@ import { reverseListProblem } from "./list/reverse-linked-list";
 import { containsDuplicateProblem } from "./list/contains-duplicate";
 import { Problem, ProblemGroup } from "./types";
 import { groupBy } from "lodash";
+//import { maxProductProblem } from "./list/maximum-product-subarray";
+import { threeSumProblem } from "./list/3sum";
 export function getBlind75Problems(): ProblemGroup[] {
   const flatBlind = [
     maxProfitProblem,
@@ -52,6 +54,9 @@ export function getBlind75Problems(): ProblemGroup[] {
     sameTreeProblem,
     containsDuplicateProblem,
     reverseListProblem,
+    twoSumProblem,
+   // maxProductProblem,
+    threeSumProblem,
   ];
   const groupedBlind = groupByTags(flatBlind);
 
