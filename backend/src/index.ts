@@ -36,7 +36,8 @@ app.get("/problem/:id", (c) => {
       404
     );
   }
-  return c.json(problem);
+  const rendered = pick(problem, ["id", "title", "difficulty", "code", "url", "tags"])
+  return c.json(rendered);
 });
 
 export default app;

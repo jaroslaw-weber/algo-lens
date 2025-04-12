@@ -1,4 +1,4 @@
-import { sample, cloneDeep, reverse, min, max } from "lodash";
+import { sample, cloneDeep } from "lodash";
 import {
   ArrayVariable,
   ValueGroupVariable as ValueGroupVariable,
