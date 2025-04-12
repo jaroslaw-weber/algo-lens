@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { ArrayVariable, Pointer } from "../src/problem/types";
+import { ArrayVariable, Pointer } from "../backend/problem/core/types";
 
 const colors = ["primary", "secondary"];
 

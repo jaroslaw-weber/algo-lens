@@ -1,5 +1,5 @@
 import React from "react";
-import { BinaryVariable, Pointer } from "../src/problem/types";
+import { BinaryVariable, Pointer } from "../backend/problem/core/types";
 
   // Define a color scheme for pointers
   const colors = ["bg-primary", "bg-secondary", "bg-info"];

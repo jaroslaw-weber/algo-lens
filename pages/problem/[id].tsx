@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import ProblemVisualizer from "../../components/ProblemVisualizer";
-import { getProblemById } from "../../src/problem/utils";
+import { getProblemById } from "../../backend/problem/core/utils";
 
 const ProblemPage = () => {
   const router = useRouter();

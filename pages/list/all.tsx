@@ -2,7 +2,7 @@
 
 // pages/problems/index.tsx
 import Head from "next/head";
-import { allProblems } from "../../src/problem/list";
+import { allProblems } from "../../backend/problem/core/list";
 import { NextPage } from "next";
 import ProblemsList from "../../components/ProblemList";
 

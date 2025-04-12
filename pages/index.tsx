@@ -2,7 +2,7 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import ProblemVisualizer from "../components/ProblemVisualizer";
-import { getRandomProblem } from "../src/problem/utils";
+import { getRandomProblem } from "../backend/problem/core/utils";
 
 const Home: NextPage = () => {
   const [randomProblem, setRandomProblem] = useState(null);

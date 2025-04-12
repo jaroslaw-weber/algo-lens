@@ -1,7 +1,7 @@
 // DisplayLinkedList.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import { ListNode, ListVariable, NodeHighlight } from "../src/problem/types"; // Assuming you have similar types for the linked list
+import { ListNode, ListVariable, NodeHighlight } from "../backend/problem/core/types"; // Assuming you have similar types for the linked list
 
 interface DisplayLinkedListProps {
   data: ListVariable;

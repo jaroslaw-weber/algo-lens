@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { ValueGroupVariable } from "../src/problem/types";
+import { ValueGroupVariable } from "../backend/problem/core/types";
 import _ from "lodash";
 
 // Register the necessary Chart.js components

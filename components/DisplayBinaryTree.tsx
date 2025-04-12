@@ -1,7 +1,7 @@
 // DisplayTree.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "../src/problem/types";
+import { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "../backend/problem/core/types";
 import { getCurrentTheme } from "../src/theme";
 import {Config} from "daisyui"
 

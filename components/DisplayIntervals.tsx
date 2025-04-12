@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
-import { IntervalVariable } from "../src/problem/types";
+import { IntervalVariable } from "../backend/problem/core/types";
 
 // Register the components
 ChartJS.register(

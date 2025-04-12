@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
-import { Problem } from "../src/problem/types";
+import { Problem } from "../backend/problem/core/types";
 import CodePreview from "./CodePreview";
 import Slider from "./Slider";
 

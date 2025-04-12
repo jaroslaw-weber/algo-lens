@@ -2,7 +2,7 @@
 import Head from "next/head";
 import { NextPage } from "next";
 import ProblemsList from "../../components/ProblemList";
-import { getBlind75Problems } from "../../src/problem/list";
+import { getBlind75Problems } from "../../backend/problem/core/list";
 
 const Blind75: NextPage = () => {
   return (
