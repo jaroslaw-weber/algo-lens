@@ -13,7 +13,7 @@ import {
   ListVariable,
   HashsetVariable,
   HashmapVariable,
-} from "../backend/problem/core/types";
+} from "../../backend/problem/core/types";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";

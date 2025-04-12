@@ -4,7 +4,7 @@
 import Head from "next/head";
 import { allProblems } from "../../backend/problem/core/list";
 import { NextPage } from "next";
-import ProblemsList from "../../components/ProblemList";
+import ProblemsList from "../../frontend/components/ProblemList";
 
 const Problems: NextPage = () => {
   return (

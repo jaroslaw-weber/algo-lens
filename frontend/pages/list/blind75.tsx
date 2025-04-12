@@ -1,7 +1,7 @@
 // pages/blind75/index.tsx
 import Head from "next/head";
 import { NextPage } from "next";
-import ProblemsList from "../../components/ProblemList";
+import ProblemsList from "../../frontend/components/ProblemList";
 import { getBlind75Problems } from "../../backend/problem/core/list";
 
 const Blind75: NextPage = () => {

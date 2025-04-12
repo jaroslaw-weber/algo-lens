@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend for algo lens",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Jaroslaw Weber",
+  "license": "MIT"
+}

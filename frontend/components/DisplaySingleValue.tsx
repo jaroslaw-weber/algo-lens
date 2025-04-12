@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SimpleVariable } from "../backend/problem/core/types";
+import { SimpleVariable } from "../../backend/problem/core/types";
 
 const DisplaySingleValue = ({ data }: { data: SimpleVariable }) => {
   const [toggle, setToggle] = useState(false);

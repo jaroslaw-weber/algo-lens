@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ProblemGroup } from "../backend/problem/core/types";
+import { ProblemGroup } from "../../backend/problem/core/types";
 
 // Define your tag colors here, as previously
 const tagColors = {

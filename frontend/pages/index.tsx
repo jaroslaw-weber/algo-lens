@@ -1,7 +1,7 @@
 // pages/index.tsx
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import ProblemVisualizer from "../components/ProblemVisualizer";
+import ProblemVisualizer from "../frontend/components/ProblemVisualizer";
 import { getRandomProblem } from "../backend/problem/core/utils";
 
 const Home: NextPage = () => {

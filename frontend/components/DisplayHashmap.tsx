@@ -1,5 +1,5 @@
 import React from "react";
-import { HashmapVariable, Pointer } from "../backend/problem/core/types";
+import { HashmapVariable, Pointer } from "../../backend/problem/core/types";
 
 const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
   const { value, label, highlight } = data;

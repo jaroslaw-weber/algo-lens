@@ -1,5 +1,5 @@
 import React from "react";
-import { BooleanGroupVariable } from "../backend/problem/core/types";
+import { BooleanGroupVariable } from "../../backend/problem/core/types";
 
 interface DisplayBooleanGroupProps {
   data: BooleanGroupVariable;
