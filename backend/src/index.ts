@@ -1,9 +1,42 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { allProblems, getAllProblems } from "./problem/core/list";
+import { pick, pickBy } from "lodash";
+import { getProblemById } from "./problem/core/utils";
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
 
-export default app
+app.get("/problem", (c) => {
+  const list = getAllProblems().map((x) =>
+    pick(x, ["id", "title", "difficulty"])
+  );
+  return c.json(list);
+});
+
+app.get("/problem/:id", (c) => {
+  const id = c.req.param("id");
+
+  if(!id){
+    return c.json(
+      {
+        error: "No id provided",
+      },
+      400
+    );
+  }
+  const problem = getProblemById(id!)
+  if (!problem) {
+    return c.json(
+      {
+        error: "Problem not found",
+      },
+      404
+    );
+  }
+  return c.json(problem);
+});
+
+export default app;

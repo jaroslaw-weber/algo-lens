@@ -15,7 +15,7 @@ import {
   HashsetVariable,
   HashmapVariable,
 } from "./types";
-import { allProblems } from "./list";
+import { allProblems, getAllProblems } from "./list";
 
 export function getRandomProblem() {
   return sample(allProblems.flatMap(g => g.problems));
@@ -23,7 +23,7 @@ export function getRandomProblem() {
 
 export function getProblemById(id: string) {
   console.log("getProblemById", id);
-  return allProblems.flatMap(p => p.problems).find((p) => p.id === id);
+  return getAllProblems().find((p) => p.id === id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {
@@ -74,9 +74,9 @@ export function asBooleanGroup(
 // utils.ts
 import { BinaryTreeNode, TreeVariable } from "./types";
 
-function addRandomIds(tree: BinaryTreeNode | null, i: number): number {
+function addRandomIds(tree: BinaryTreeNode | null, i: number): number | undefined {
   if (!tree) {
-    return;
+    return undefined
   }
 
   tree.id = i.toString();

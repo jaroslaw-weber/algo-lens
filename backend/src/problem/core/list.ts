@@ -83,3 +83,8 @@ function groupByTags(flatBlind: Problem<any, any>[]) {
   }
   return groupedBlind;
 }
+
+
+export function getAllProblems(): Problem<any, any>[] {
+  return allProblems.flatMap((group) => group.problems);
+}
