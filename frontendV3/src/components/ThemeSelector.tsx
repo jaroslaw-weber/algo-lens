@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCurrentTheme } from '../theme';
+import { getCurrentTheme } from '../../../frontend/theme';
 const themes = [
   'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate', 'synthwave',
   'retro', 'cyberpunk', 'valentine', 'halloween', 'garden', 'forest', 'aqua',

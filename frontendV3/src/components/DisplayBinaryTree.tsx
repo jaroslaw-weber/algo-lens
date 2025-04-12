@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
 import { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "../../backend/problem/core/types";
-import { getCurrentTheme } from "../theme";
+import { getCurrentTheme } from "../../../frontend/theme";
 import {Config} from "daisyui"
 
 interface DisplayBinaryTreeProps {
