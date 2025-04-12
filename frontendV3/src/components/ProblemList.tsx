@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { ProblemGroup } from "../../backend/problem/core/types";
+import { useAtom } from "jotai";
+import { problemsAtom } from "../atom";
+import { useEffect } from "react";
+import { getProblemList } from "../api";
 
 // Define your tag colors here, as previously
 const tagColors = {
@@ -20,11 +24,18 @@ const tagColors = {
   "two pointers": "accent",
 };
 
-type ProblemsListProps = {
-  groups: ProblemGroup[];
-};
+function ProblemsList() {
+  const [problems, setProblems] = useAtom(problemsAtom);
 
-const ProblemsList: React.FC<ProblemsListProps> = ({ groups }) => {
+  async function init() {
+    const ps = await getProblemList();
+    setProblems(ps);
+  }
+
+  useEffect(() => {
+    init();
+  }, []);
+
   console.log("groups: ", groups);
   return (
     <div className="max-w-lg mx-auto">
@@ -63,6 +74,6 @@ const ProblemsList: React.FC<ProblemsListProps> = ({ groups }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProblemsList;
