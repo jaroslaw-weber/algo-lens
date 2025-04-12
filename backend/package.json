@@ -1,11 +1,12 @@
 {
   "name": "backend",
-  "version": "1.0.0",
-  "description": "backend for algo lens",
-  "main": "index.ts",
   "scripts": {
-    "test": "test"
+    "dev": "pnpm run src/index.ts"
   },
-  "author": "Jaroslaw Weber",
-  "license": "MIT"
+  "dependencies": {
+    "hono": "^4.7.6"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
 }

@@ -23,9 +23,7 @@ import { mergeIntervalsProblem } from "../free/merge-intervals";
 import { sameTreeProblem } from "../free/sameTree";
 import { reverseListProblem } from "../free/reverse-linked-list";
 import { containsDuplicateProblem } from "../free/contains-duplicate";
-import { Problem, ProblemGroup } from "./types";
-import { groupBy } from "lodash";
-//import { maxProductProblem } from "./list/maximum-product-subarray";
+import { Problem, ProblemGroup } from "./types"
 import { threeSumProblem } from "../free/3sum";
 export function getBlind75Problems(): ProblemGroup[] {
   const flatBlind = [
@@ -38,7 +36,6 @@ export function getBlind75Problems(): ProblemGroup[] {
     longestIncreasingSubsequenceProblem,
     minPathSumProblem,
     uniquePathsProblem,
-    // twoSumProblem, // Uncomment or remove if this is intended to be used or not.
     maxAreaProblem,
     countBitsProblem,
     hammingWeightProblem,
@@ -55,7 +52,6 @@ export function getBlind75Problems(): ProblemGroup[] {
     containsDuplicateProblem,
     reverseListProblem,
     twoSumProblem,
-   // maxProductProblem,
     threeSumProblem,
   ];
   const groupedBlind = groupByTags(flatBlind);
