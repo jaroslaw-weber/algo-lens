@@ -1,28 +1,9 @@
-import Link from "next/link";
-import { ProblemGroup } from "../../backend/problem/core/types";
+
 import { useAtom } from "jotai";
 import { problemsAtom } from "../atom";
 import { useEffect } from "react";
 import { getProblemList } from "../api";
 
-// Define your tag colors here, as previously
-const tagColors = {
-  array: "accent",
-  backtracking: "accent",
-  "bit manipulation": "neutral",
-  "dynamic programming": "secondary",
-  "2d dynamic programming": "secondary",
-  graph: "accent",
-  greedy: "accent",
-  hash: "neutral",
-  math: "neutral",
-  recursion: "neutral",
-  searching: "neutral",
-  string: "accent",
-  tree: "accent",
-  "union-find": "neutral",
-  "two pointers": "accent",
-};
 
 function ProblemsList() {
   const [problems, setProblems] = useAtom(problemsAtom);
@@ -35,43 +16,18 @@ function ProblemsList() {
   useEffect(() => {
     init();
   }, []);
+  
 
-  console.log("groups: ", groups);
   return (
-    <div className="max-w-lg mx-auto">
-      <div className="p-4">
-        {groups.map((group, index) => (
-          <div key={index} className="pb-4">
-            <p className="font-display">{group.label}</p>
-            <ul className="list-decimal list-inside" key={index}>
-              {group.problems.map((problem) => (
-                <li key={problem.id} className="py-2">
-                  <Link href={`/problem/${problem.id}`}>{problem.title}</Link>
-                  {problem.tested && (
-                    <i
-                      className="fas fa-check ml-2 text-success"
-                      aria-label="Tested"
-                    ></i>
-                  )}
-                  {problem.tags &&
-                    problem.tags.map((tag) => (
-                      <span
-                        className={`badge badge-${
-                          tagColors[tag] || "default"
-                        } ml-4 badge-sm text-${
-                          tagColors[tag] || "default"
-                        }-content opacity-60`}
-                        key={tag}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col gap-4">
+      {problems.map(p => {
+        const { id, title } = p;
+       
+        return <div key={id} className="flex items-center gap-2">
+          <a href={`/problem/${id}`}>{title}</a>
+        </div>
+      }
+      )}
     </div>
   );
 }
