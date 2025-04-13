@@ -2,18 +2,21 @@ import React, { useState, useRef, useEffect } from "react";
 import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
-import { Problem } from "../../backend/problem/core/types";
 import CodePreview from "./CodePreview";
 import Slider from "./Slider";
+import { useAtom } from "jotai";
+import { problemAtom, problemStateAtom, stepAtom } from "../atom";
 
-export interface ProblemVisualizerProps<Input, State> {
-  problem: Problem<Input, State>;
-}
+function ProblemVisualizer() {
+  const [state] = useAtom(problemStateAtom);
+  const [problem, setProblem] = useAtom(problemAtom);
+  if(!state){
+    return null
+  }
+  const [step] = useAtom(stepAtom)
 
-const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
-  problem,
-}) => {
-  const { title, code, getInput, func, id } = problem;
+  if(!problem) return null;
+  const { title, code,  id } = problem;
   const [currentInput, setCurrentInput] = useState(getInput());
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -24,14 +27,11 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
     if (loc.trimStart().startsWith("//#")) {
       //get number from this line with regex
       const no = new RegExp(/\d+/).exec(loc);
-      if (no[0]) {
+      if (no![0]) {
         breakpointToLineMap.set(parseInt(no[0]), i);
       }
     }
   }
-
-  const states = func(currentInput);
-  const state = states[currentIndex];
   const breakpoint = state.breakpoint;
   const line = breakpointToLineMap.get(breakpoint);
 
@@ -75,7 +75,7 @@ const ProblemVisualizer: React.FC<ProblemVisualizerProps<any, any>> = ({
             <div className="flex items-center gap-6">
               <Slider
                 min={0}
-                max={states.length - 1}
+                max={problem.state.max}
                 value={currentIndex}
                 onChange={handleSliderChange}
               />

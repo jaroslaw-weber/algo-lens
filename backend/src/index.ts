@@ -4,7 +4,9 @@ import { pick, pickBy } from "lodash";
 import { getProblemById } from "./problem/core/utils";
 
 const app = new Hono();
+import { cors } from 'hono/cors'
 
+app.use(cors())
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });

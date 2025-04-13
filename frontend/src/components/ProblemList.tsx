@@ -7,7 +7,11 @@ function ProblemsList() {
   const [problems, setProblems] = useAtom(problemsAtom);
 
   async function init() {
+    console.log(
+  "init problem list"
+    )
     const ps = await getProblemList();
+    console.log("init problem list done", ps)
     setProblems(ps);
   }
 
