@@ -1,10 +1,10 @@
 {
   "name": "algo-lens-core",
   "version": "1.0.0",
-  "main": "dist/types.js",
-  "type":"module",
-  "scripts": {
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {},
   "author": "Jaroslaw Weber",
   "license": "MIT",
   "description": ""

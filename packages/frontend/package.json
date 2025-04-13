@@ -29,7 +29,8 @@
     "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18.2.0",
     "reagraph": "^4.17.4",
-    "tailwindcss": "^3.4.3"
+    "tailwindcss": "^3.4.3",
+    "algo-lens-core": "*"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.1",
