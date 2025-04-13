@@ -1,11 +1,13 @@
 {
-  "name": "algo-lens-core",
-  "type": "module",
-  "version": "0.0.1",
+ "name": "algo-lens-core",
+  "version": "1.0.0",
+  "description": "Shared interfaces for algo-lens project",
+  "main": "dist/types.js",
   "scripts": {
-  },
-  "dependencies": {
+    "build": "tsc"
   },
   "devDependencies": {
+    "typescript": "^4.0.0"
   }
+
 }
