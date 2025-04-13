@@ -17,7 +17,6 @@ function ProblemVisualizer() {
 
   if(!problem) return null;
   const { title, code,  id } = problem;
-  const [currentInput, setCurrentInput] = useState(getInput());
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const breakpointToLineMap = new Map<number, number>();
@@ -28,7 +27,7 @@ function ProblemVisualizer() {
       //get number from this line with regex
       const no = new RegExp(/\d+/).exec(loc);
       if (no![0]) {
-        breakpointToLineMap.set(parseInt(no[0]), i);
+        breakpointToLineMap.set(parseInt(no![0]), i);
       }
     }
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
-import {
+import type {
   ArrayVariable,
   ValueGroupVariable,
   SimpleVariable,
@@ -13,7 +13,7 @@ import {
   ListVariable,
   HashsetVariable,
   HashmapVariable,
-} from "../../backend/problem/core/types";
+} from "../../../algo-lens-core/types";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
@@ -23,7 +23,10 @@ import DisplayLinkedList from "./DisplayLinkedList";
 import DisplayHashset from "./DisplayHashset";
 import DisplayHashmap from "./DisplayHashmap";
 
-const DisplayState = ({ state }) => {
+function DisplayState({ state }:{state:any}) {
+  if (!state) {
+    return <div>No state provided</div>;
+  }
   const variables = state.variables as Variable[];
 
   return (
@@ -55,8 +58,7 @@ const DisplayState = ({ state }) => {
               return (
                 <DisplayIntervals
                   data={intervalData}
-                  key={intervalData.label}
-                />
+                  key={intervalData.label} />
               );
             case "tree":
               const treeData = variable as TreeVariable;
@@ -81,6 +83,6 @@ const DisplayState = ({ state }) => {
       </div>
     </div>
   );
-};
+}
 
 export default DisplayState;

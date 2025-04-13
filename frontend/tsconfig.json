@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
+  "include": [".astro/types.d.ts", "**/*", "../algo-lens-core/types.ts"],
   "exclude": ["dist"],
   "compilerOptions": {
     "jsx": "react-jsx",

@@ -26,7 +26,7 @@ function ProblemsList() {
 
         return (
           <div key={id} className="flex items-center gap-2">
-            <a href={`/problem/${id}`}>{title}</a>
+            <a href={`/problem/visualize?id=${id}`}>{title}</a>
           </div>
         );
       })}

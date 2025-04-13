@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { ArrayVariable, Pointer } from "../../backend/problem/core/types";
+import { ArrayVariable, Pointer } from "algo-lens-core";
 
 const colors = ["primary", "secondary"];
 
