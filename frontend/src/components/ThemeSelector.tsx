@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getCurrentTheme } from '../../../frontend/theme';
 const themes = [
   'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate', 'synthwave',
   'retro', 'cyberpunk', 'valentine', 'halloween', 'garden', 'forest', 'aqua',
@@ -9,7 +8,7 @@ const themes = [
 
 const ThemeSelector = () => {
   
-  const [theme, setTheme] = useState(getCurrentTheme());
+  const [theme, setTheme] = useState("test");
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

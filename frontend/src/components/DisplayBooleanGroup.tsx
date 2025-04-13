@@ -1,5 +1,5 @@
 import React from "react";
-import { BooleanGroupVariable } from "../../backend/problem/core/types";
+import type { BooleanGroupVariable } from "algo-lens-core";
 
 interface DisplayBooleanGroupProps {
   data: BooleanGroupVariable;

@@ -1,9 +1,8 @@
 // DisplayTree.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "../../backend/problem/core/types";
-import { getCurrentTheme } from "../../../frontend/theme";
-import {Config} from "daisyui"
+import type { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "algo-lens-core";
+import type {Config} from "daisyui"
 
 interface DisplayBinaryTreeProps {
   data: TreeVariable;

@@ -1,5 +1,5 @@
 import React from "react";
-import { HashsetVariable, Pointer } from "../../backend/problem/core/types";
+import { HashsetVariable, Pointer } from "algo-lens-core";
 
 const DisplayHashset = ({ data }: { data: HashsetVariable }) => {
   const { value, label, highlight } = data;
