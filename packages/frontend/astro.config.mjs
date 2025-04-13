@@ -9,6 +9,9 @@ export default defineConfig({
 			BACKEND_URL: envField.string({ context: "client", access: "public", optional: true }),
 		}
 	},
+	server:{
+
+	},
 	//
 	integrations: [react()],
 });

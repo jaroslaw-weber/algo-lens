@@ -13,7 +13,7 @@ import type {
   ListVariable,
   HashsetVariable,
   HashmapVariable,
-} from "../../../algo-lens-core/src/types";
+} from "algo-lens-core";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
