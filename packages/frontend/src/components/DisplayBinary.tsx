@@ -1,5 +1,5 @@
 import React from "react";
-import type { BinaryVariable, Pointer } from "algo-lens-core/dist/types";
+import type { BinaryVariable, Pointer } from "algo-lens-core";
 
   // Define a color scheme for pointers
   const colors = ["bg-primary", "bg-secondary", "bg-info"];

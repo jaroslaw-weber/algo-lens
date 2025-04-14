@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { ValueGroupVariable } from "algo-lens-core";
+import type { ValueGroupVariable } from "algo-lens-core";
 import _ from "lodash";
 
 // Register the necessary Chart.js components
