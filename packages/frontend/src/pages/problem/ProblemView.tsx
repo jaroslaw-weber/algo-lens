@@ -4,11 +4,29 @@ import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../../atom
 import { getProblem, getProblemState } from "../../api";
 import { useEffect } from "react";
 
-export default function ProblemView() {
+export function useProblemState() {
   const [problem, setProblem] = useAtom(problemAtom);
   const [step, setStep] = useAtom(stepAtom);
   const [state, setState] = useAtom(problemStateAtom);
+
+  useEffect(() => {
+    if (problem && step) {
+      const fetchState = async () => {
+        const s = await getProblemState(problem.id!, step);
+        setState(s);
+      };
+      fetchState();
+    }
+  }, [problem, step]);
+
+  return state;
+}
+
+export default function ProblemView() {
+  const [problem, setProblem] = useAtom(problemAtom);
+  const [step, setStep] = useAtom(stepAtom);
   const [maxStep, setMaxStep] = useAtom(maxStepAtom);
+  const state = useProblemState();
 
   async function init() {
     console.log("init problem visualizer");
@@ -25,7 +43,6 @@ export default function ProblemView() {
 
     console.log("init problem visualizer with problem", p);
     setProblem(p);
-    setState(s);
   }
   useEffect(() => {
     init();

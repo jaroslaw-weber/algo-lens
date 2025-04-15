@@ -14,7 +14,6 @@ function ProblemVisualizer() {
 
   const [step, setStep] = useAtom(stepAtom);
   const [maxStep, setMaxStep] = useAtom(maxStepAtom)
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   
   if(!state ||!problem) {
@@ -38,7 +37,7 @@ function ProblemVisualizer() {
   const line = breakpointToLineMap.get(breakpoint);
 
   const handleSliderChange = (value: number) => {
-    setCurrentIndex(value);
+    setStep(value+1);
   };
 
   const handleCopyCode = () => {
@@ -81,7 +80,7 @@ function ProblemVisualizer() {
               <Slider
                 min={0}
                 max={maxStep}
-                value={currentIndex}
+                value={step}
                 onChange={handleSliderChange}
               />
             </div>
