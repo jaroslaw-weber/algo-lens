@@ -1,8 +1,8 @@
 import React from "react";
 import type { BinaryVariable, Pointer } from "algo-lens-core";
 
-  // Define a color scheme for pointers
-  const colors = ["bg-primary", "bg-secondary", "bg-info"];
+// Define a color scheme for pointers
+const colors = ["bg-primary", "bg-secondary", "bg-info"];
 
 const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
   const { value, label: title, pointers } = data;
@@ -12,13 +12,18 @@ const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
 
   // Memoize style calculation for cells
   const getCellStyle = React.useMemo(() => {
-    return (colIndex) => {
+    return (colIndex: number) => {
       if (!pointers) return "";
 
-      const pointer = pointers.find((pointer) => pointer.dimension === "column" && colIndex === pointer.value);
+      const pointer = pointers.find(
+        (pointer) =>
+          pointer.dimension === "column" && colIndex === pointer.value
+      );
 
       if (pointer) {
-        return `${colors[pointers.indexOf(pointer) % colors.length]} text-white`;
+        return `${
+          colors[pointers.indexOf(pointer) % colors.length]
+        } text-white`;
       }
       return "";
     };
@@ -28,23 +33,28 @@ const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
   const renderRow = (items: string[]) => (
     <tr className=" text-xs items-center">
       {items.map((item, colIndex) => (
-        <td key={colIndex} className={`px-2 py-1 flex-1 ${getCellStyle(colIndex)}`}>{item}</td>
+        <td
+          key={colIndex}
+          className={`px-2 py-1 flex-1 ${getCellStyle(colIndex)}`}
+        >
+          {item}
+        </td>
       ))}
     </tr>
   );
 
   return (
     <div className="overflow-x-auto">
-      {title && <h3 className="pl-2 pb-2 text-xl text-center font-semibold">{title}</h3>}
+      {title && (
+        <h3 className="pl-2 pb-2 text-xl text-center font-semibold">{title}</h3>
+      )}
       <div className="flex">
         <div className="w-1/2 pr-2">
           <div className="flex items-center justify-end pb-2">
             <span className="text-xs font-semibold">2 base (binary)</span>
           </div>
           <table className="ml-auto table-auto border-collapse border border-gray-200">
-            <tbody>
-              {renderRow(binaryArray)}
-            </tbody>
+            <tbody>{renderRow(binaryArray)}</tbody>
           </table>
         </div>
         <div className="w-1/2 pl-2">

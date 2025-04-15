@@ -5,19 +5,22 @@ import DisplayState from "./DisplayState";
 import CodePreview from "./CodePreview";
 import Slider from "./Slider";
 import { useAtom } from "jotai";
-import { problemAtom, problemStateAtom, stepAtom } from "../atom";
+import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
+import { getProblem } from "../api";
 
 function ProblemVisualizer() {
   const [state] = useAtom(problemStateAtom);
   const [problem, setProblem] = useAtom(problemAtom);
-  if(!state){
-    return null
-  }
-  const [step] = useAtom(stepAtom)
 
-  if(!problem) return null;
-  const { title, code,  id } = problem;
+  const [step, setStep] = useAtom(stepAtom);
+  const [maxStep, setMaxStep] = useAtom(maxStepAtom)
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  
+  if(!state ||!problem) {
+    return null;
+  }
+  const { title, code, id } = problem;
 
   const breakpointToLineMap = new Map<number, number>();
   const lines = code.split("\n");
@@ -61,8 +64,11 @@ function ProblemVisualizer() {
               aria-hidden="true"
             ></i>
           </a>
-          <button className="button button-primary tooltip tooltip-right" onClick={handleCopyCode} 
-            data-tip="Copy code">
+          <button
+            className="button button-primary tooltip tooltip-right"
+            onClick={handleCopyCode}
+            data-tip="Copy code"
+          >
             <i className="fas fa-copy"></i>
           </button>
         </div>
@@ -74,7 +80,7 @@ function ProblemVisualizer() {
             <div className="flex items-center gap-6">
               <Slider
                 min={0}
-                max={problem.state.max}
+                max={maxStep}
                 value={currentIndex}
                 onChange={handleSliderChange}
               />
@@ -87,6 +93,6 @@ function ProblemVisualizer() {
       </div>
     </div>
   );
-};
+}
 
 export default ProblemVisualizer;

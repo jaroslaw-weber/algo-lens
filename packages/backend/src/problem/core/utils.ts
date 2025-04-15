@@ -14,7 +14,7 @@ import {
   HashHighlight,
   HashsetVariable,
   HashmapVariable,
-} from "./types";
+} from "algo-lens-core";
 import { allProblems, getAllProblems } from "./list";
 
 export function getRandomProblem() {
