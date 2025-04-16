@@ -133,6 +133,23 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   id: "best-time-to-buy-and-sell-stock",
   tags: ["dynamic programming"],
   metadata:{
-    variables: variableMetadata
+    variables: variableMetadata,
+    groups:[
+      {
+        name: "profit",
+        label: "Profit",
+        description: "The potential profit from buying at the minimum price and selling at the current price."
+      },
+      {
+        name: "smaller",
+        label: "Smaller",
+        description: "The potential profit from buying at the minimum price and selling at the current price minus the minimum price found so far."
+      },
+      {
+        name: "loop",
+        label: "Loop",
+        description: "The current day being considered (prices[i])."
+      }
+    ]
   },
 };

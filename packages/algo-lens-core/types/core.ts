@@ -25,15 +25,20 @@ export interface Problem<Input, State> {
 
   difficulty?: Difficulty;
 
-  metadata?:{
-    variables: VariableMetadata[]
-  }
+  metadata?: {
+    variables: VariableMetadata[];
+    groups?: {
+      name: string;
+      label: string;
+      description?: string;
+    }[];
+  };
 }
 
 export type ProblemGroup = {
   label: string;
   problems: Problem<any, any>[];
-}
+};
 
 export type Difficulty = "easy" | "medium" | "hard";
 
@@ -136,7 +141,7 @@ export interface HashsetVariable extends Variable {
   label: string;
   value: Set<any>;
   highlight: HashHighlight;
-} 
+}
 
 export interface HashmapVariable extends Variable {
   type: "hashmap";
@@ -176,7 +181,7 @@ export type ThemeColor =
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node: BinaryTreeNode | ListNode ;
+  node: BinaryTreeNode | ListNode;
   color: HighlightColor;
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
@@ -190,9 +195,9 @@ export interface ProblemState {
   description?: string;
 }
 
-export interface VariableMetadata{
+export interface VariableMetadata {
   name: string;
-  emoji:string;
+  emoji: string;
   description: string;
 }
 
