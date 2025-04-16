@@ -5,7 +5,7 @@ import {
   asHashset,
   asBooleanGroup,
   asHashmap
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 interface TwoSumInput {
   nums: number[];

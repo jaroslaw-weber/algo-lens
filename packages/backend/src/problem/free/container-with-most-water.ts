@@ -6,7 +6,7 @@ import {
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 interface ContainerInput {
   height: number[];

@@ -1,5 +1,5 @@
 import { Problem, ProblemState, Variable } from "algo-lens-core"
-import { asArray, asSimpleValue, asValueGroup } from "algo-lens-core/src/utils";
+import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
   //save state

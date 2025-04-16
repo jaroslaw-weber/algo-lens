@@ -5,7 +5,7 @@ import {
   BinaryTreeNode,
   Variable,
 } from "algo-lens-core";
-import { asBooleanGroup, asTree, asValueGroup } from "algo-lens-core/src/utils";
+import { asBooleanGroup, asTree, asValueGroup } from "../core/utils";
 
 interface SameTreeInput {
   p: BinaryTreeNode | null;

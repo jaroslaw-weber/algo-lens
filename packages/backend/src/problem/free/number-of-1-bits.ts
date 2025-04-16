@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { asBinary, asValueGroup } from "algo-lens-core/src/utils";
+import { asBinary, asValueGroup } from "../core/utils";
 
 interface HammingWeightInput {
   n: number;

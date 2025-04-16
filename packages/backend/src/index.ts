@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import { getAllProblems } from "./problem/core/list";
 import { pick } from "lodash";
-import { getProblemById } from "algo-lens-core/src/utils";
 
 const app = new Hono();
 import { cors } from "hono/cors";
 import { Problem, ProblemState } from "algo-lens-core";
+import { getProblemById } from "./problem/core/utils";
 
 app.use(cors());
 

@@ -8,7 +8,7 @@ import {
   asValueGroup,
   asHashset,
   asBooleanGroup,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 // Defines the interface for the input expected by the containsDuplicate function
 interface ContainsDuplicateInput {

@@ -6,7 +6,7 @@ import {
   asBooleanGroup,
   asHashmap,
   asValueGroup,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 interface ThreeSumInput {
   nums: number[];

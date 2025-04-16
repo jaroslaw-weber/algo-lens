@@ -14,7 +14,7 @@ import {
   asBooleanGroup,
   asHashmap,
   from2dArrayToMap,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 interface CourseScheduleInput {
   numCourses: number;

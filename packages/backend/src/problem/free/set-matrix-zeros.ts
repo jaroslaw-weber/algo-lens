@@ -8,7 +8,7 @@ import {
   asValueGroup,
   deepClone2DArray,
   asBooleanGroup,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 // Defines the interface for the input expected by the setMatrixZeroes function
 interface SetMatrixZeroesInput {

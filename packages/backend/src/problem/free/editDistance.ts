@@ -5,7 +5,7 @@ import {
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 function editDistance(p: EditDistanceInput): ProblemState[] {
   const { s1, s2 } = p;

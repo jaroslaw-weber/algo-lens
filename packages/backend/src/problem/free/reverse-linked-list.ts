@@ -7,7 +7,7 @@ import {
   Variable,
   NodeHighlight,
 } from "algo-lens-core";
-import { asList, asBooleanGroup, cloneList } from "algo-lens-core/src/utils";
+import { asList, asBooleanGroup, cloneList } from "../core/utils";
 
 interface ReverseListInput {
   head: ListNode | null;

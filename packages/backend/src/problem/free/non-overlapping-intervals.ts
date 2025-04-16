@@ -7,7 +7,7 @@ import {
   asValueGroup,
   asIntervals,
   getIntervalBounds,
-} from "algo-lens-core/src/utils";
+} from "../core/utils";
 
 interface EraseOverlapIntervalsInput {
   intervals: number[][];
