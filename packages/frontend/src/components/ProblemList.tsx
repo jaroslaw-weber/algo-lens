@@ -23,7 +23,7 @@ function ProblemsList() {
       <p className="mb-8 text-lg text-center text-gray-600">
         Explore and visualize algorithms step by step.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 bg-base-200 rounded-lg shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4  ">
         {problems.map((p) => {
           const { id, title } = p;
 
