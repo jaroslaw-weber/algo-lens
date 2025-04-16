@@ -97,7 +97,7 @@ app.get("/problem/:problemId/state/:step", (c) => {
 
   const problem = getProblemById(problemId!);
 
-  const state = stateCache.get(problem, step);
+  const state = stateCache.get(problem!, step);
 
   return c.json(state);
 });
@@ -107,7 +107,7 @@ app.get("/problem/:problemId/size", (c) => {
 
   const problem = getProblemById(problemId!);
 
-  const size = stateCache.getSize(problem);
+  const size = stateCache.getSize(problem!);
 
   return c.json(size);
 });
