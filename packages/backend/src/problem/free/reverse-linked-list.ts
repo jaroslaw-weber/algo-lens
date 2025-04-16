@@ -6,8 +6,8 @@ import {
   ListNode,
   Variable,
   NodeHighlight,
-} from "../core/types";
-import { asList, asBooleanGroup, cloneList } from "../core/utils";
+} from "algo-lens-core";
+import { asList, asBooleanGroup, cloneList } from "algo-lens-core/src/utils";
 
 interface ReverseListInput {
   head: ListNode | null;

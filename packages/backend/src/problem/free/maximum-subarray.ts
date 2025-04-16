@@ -1,13 +1,13 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { sum } from "lodash";
-import { Problem, ProblemState, Variable } from "../core/types";
+import { Problem, ProblemState, Variable } from "algo-lens-core";
 import {
   asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 // Defines the interface for the input expected by the maxSubArray function
 interface MaxSubArrayInput {

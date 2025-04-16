@@ -4,7 +4,7 @@ import {
   ProblemState,
   ThemeColor,
   Variable,
-} from "../core/types";
+} from "algo-lens-core";
 import {
   asArray,
   as2dArray,
@@ -14,7 +14,7 @@ import {
   asBooleanGroup,
   asHashmap,
   from2dArrayToMap,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 interface CourseScheduleInput {
   numCourses: number;

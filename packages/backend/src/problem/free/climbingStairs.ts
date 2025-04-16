@@ -1,5 +1,5 @@
-import { Problem, ProblemState, Variable } from "../core/types";
-import { asArray, asValueGroup, asSimpleValue } from "../core/utils";
+import { Problem, ProblemState, Variable } from "algo-lens-core"
+import { asArray, asValueGroup, asSimpleValue } from "algo-lens-core/src/utils";
 
 function climbStairs(p: ClimbingStairsInput): ProblemState[] {
   const s: ProblemState[] = [];

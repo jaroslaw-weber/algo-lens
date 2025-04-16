@@ -1,11 +1,11 @@
-import { Problem, ProblemState } from "../core/types";
+import { Problem, ProblemState } from "algo-lens-core";
 import {
   asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 function editDistance(p: EditDistanceInput): ProblemState[] {
   const { s1, s2 } = p;

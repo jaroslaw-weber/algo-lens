@@ -1,11 +1,11 @@
-import { Problem, ProblemState, Variable } from "../core/types";
+import { Problem, ProblemState, Variable } from "algo-lens-core";
 import {
   asArray,
   asSimpleValue,
   asHashset,
   asBooleanGroup,
   asHashmap
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 interface TwoSumInput {
   nums: number[];

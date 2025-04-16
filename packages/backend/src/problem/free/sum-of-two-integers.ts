@@ -1,4 +1,4 @@
-import { Problem, ProblemState, Variable, BinaryVariable } from "../core/types";
+import { Problem, ProblemState, Variable, BinaryVariable } from "algo-lens-core";
 
 // Defines the interface for the input expected by the sumOfTwoIntegers function
 interface SumOfTwoIntegersInput {

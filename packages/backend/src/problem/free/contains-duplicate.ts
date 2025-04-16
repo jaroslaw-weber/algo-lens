@@ -1,5 +1,5 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState, ThemeColor } from "../core/types";
+import { Problem, ProblemState, ThemeColor } from "algo-lens-core"
 import {
   asArray,
   as2dArray,
@@ -8,7 +8,7 @@ import {
   asValueGroup,
   asHashset,
   asBooleanGroup,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 // Defines the interface for the input expected by the containsDuplicate function
 interface ContainsDuplicateInput {

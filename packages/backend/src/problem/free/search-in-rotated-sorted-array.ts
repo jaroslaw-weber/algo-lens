@@ -1,6 +1,6 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState, Variable } from "../core/types";
-import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
+import { Problem, ProblemState, Variable } from "algo-lens-core";
+import { asArray, asSimpleValue, asValueGroup } from "algo-lens-core/src/utils";
 
 // Defines the interface for the input expected by the search function
 interface SearchInput {

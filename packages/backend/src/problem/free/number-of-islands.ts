@@ -1,7 +1,7 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { cloneDeep } from "lodash";
-import { Problem, ProblemState, Variable } from "../core/types";
-import { as2dArray, asValueGroup, deepClone2DArray } from "../core/utils";
+import { Problem, ProblemState, Variable } from "algo-lens-core";
+import { as2dArray, asValueGroup, deepClone2DArray } from "algo-lens-core/src/utils";
 
 // Defines the interface for the input expected by the numIslands function
 interface NumIslandsInput {

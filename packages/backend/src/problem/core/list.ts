@@ -23,7 +23,7 @@ import { mergeIntervalsProblem } from "../free/merge-intervals";
 import { sameTreeProblem } from "../free/sameTree";
 import { reverseListProblem } from "../free/reverse-linked-list";
 import { containsDuplicateProblem } from "../free/contains-duplicate";
-import { Problem, ProblemGroup } from "./types"
+import { Problem, ProblemGroup } from "algo-lens-core"
 import { threeSumProblem } from "../free/3sum";
 export function getBlind75Problems(): ProblemGroup[] {
   const flatBlind = [

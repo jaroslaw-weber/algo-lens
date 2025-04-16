@@ -1,8 +1,7 @@
 import { Hono } from "hono";
-import { allProblems, getAllProblems } from "./problem/core/list";
-import { pick, pickBy } from "lodash";
-import { getProblemById } from "./problem/core/utils";
-import { rateLimiter } from "hono-rate-limiter";
+import { getAllProblems } from "./problem/core/list";
+import { pick } from "lodash";
+import { getProblemById } from "algo-lens-core/src/utils";
 
 const app = new Hono();
 import { cors } from "hono/cors";
@@ -11,16 +10,6 @@ import { Problem, ProblemState } from "algo-lens-core";
 app.use(cors());
 
 
-// Apply the rate limiting middleware to all requests.
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-    standardHeaders: "draft-6", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
-    keyGenerator: (c) => "<unique_key>", // Method to generate custom identifiers for clients.
-    // store: ... , // Redis, MemoryStore, etc. See below.
-  })
-);
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });

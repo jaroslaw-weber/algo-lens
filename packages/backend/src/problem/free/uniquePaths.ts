@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../core/types";
-import { as2dArray, asArray, asSimpleValue, asValueGroup } from "../core/utils";
+import { Problem, ProblemState } from "algo-lens-core";
+import { as2dArray, asArray, asSimpleValue, asValueGroup } from "algo-lens-core/src/utils";
 
 function uniquePaths(p: UniquePathsInput): ProblemState[] {
   const { m, n } = p;

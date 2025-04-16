@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "../core/types";
-import { as2dArray, asArray, asSimpleValue } from "../core/utils";
+import { Problem, ProblemState } from "algo-lens-core";
+import { as2dArray, asArray, asSimpleValue } from "algo-lens-core/src/utils";
 
 function minPathSum(p: MinPathSumInput): ProblemState[] {
   const { grid } = p;

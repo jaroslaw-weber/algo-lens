@@ -1,5 +1,5 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState, Variable } from "../core/types";
+import { Problem, ProblemState, Variable } from "algo-lens-core";
 import {
   asArray,
   as2dArray,
@@ -7,7 +7,7 @@ import {
   asStringArray,
   asValueGroup,
   asBinary,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 // Defines the interface for the input expected by the countBits function
 interface CountBitsInput {

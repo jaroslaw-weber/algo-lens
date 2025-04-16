@@ -1,4 +1,4 @@
-import { IntervalVariable, Problem, ProblemState, Variable } from "../core/types";
+import { IntervalVariable, Problem, ProblemState, Variable } from "algo-lens-core";
 import {
   asArray,
   as2dArray,
@@ -7,7 +7,7 @@ import {
   asValueGroup,
   asIntervals,
   getIntervalBounds,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 interface MergeIntervalsInput {
   intervals: number[][];

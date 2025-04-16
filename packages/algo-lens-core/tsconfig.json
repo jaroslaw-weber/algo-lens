@@ -1,9 +1,9 @@
 {
-  "include": ["src","types"], // Include the 'src' directory
+  "include": ["src","types", "src/utils.ts"], // Include the 'src' directory
   "exclude": ["node_modules", "dist"], // Exclude 'node_modules' and 'dist' directories
 
   "compilerOptions": {
-    "rootDirs": ["src"],
+    "rootDirs": ["/src/"],
     "typeRoots": ["types/*.d.ts"],
     "target": "ESNext", // Target latest version of ECMAScript
     "module": "ESNext", // Use module syntax as per the target

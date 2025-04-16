@@ -1,12 +1,12 @@
 import { sum } from "lodash";
-import { Problem, ProblemState } from "../core/types";
+import { Problem, ProblemState } from "algo-lens-core"
 import {
   asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 interface ContainerInput {
   height: number[];

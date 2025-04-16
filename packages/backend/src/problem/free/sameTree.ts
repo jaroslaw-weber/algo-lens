@@ -4,8 +4,8 @@ import {
   ProblemState,
   BinaryTreeNode,
   Variable,
-} from "../core/types";
-import { asBooleanGroup, asTree, asValueGroup } from "../core/utils";
+} from "algo-lens-core";
+import { asBooleanGroup, asTree, asValueGroup } from "algo-lens-core/src/utils";
 
 interface SameTreeInput {
   p: BinaryTreeNode | null;

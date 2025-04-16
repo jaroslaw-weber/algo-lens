@@ -14,8 +14,8 @@ import {
   HashHighlight,
   HashsetVariable,
   HashmapVariable,
-} from "algo-lens-core";
-import { allProblems, getAllProblems } from "./list";
+} from "../types/core";
+import { allProblems, getAllProblems } from "../../backend/src/problem/core/list";
 
 export function getRandomProblem() {
   return sample(allProblems.flatMap(g => g.problems));

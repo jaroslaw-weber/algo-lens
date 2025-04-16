@@ -1,5 +1,5 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Pointer, Pointer2D, Problem, ProblemState, Variable } from "../core/types";
+import { Pointer, Pointer2D, Problem, ProblemState, Variable } from "algo-lens-core";
 import {
   asArray,
   as2dArray,
@@ -8,7 +8,7 @@ import {
   asValueGroup,
   deepClone2DArray,
   asBooleanGroup,
-} from "../core/utils";
+} from "algo-lens-core/src/utils";
 
 // Defines the interface for the input expected by the setMatrixZeroes function
 interface SetMatrixZeroesInput {
