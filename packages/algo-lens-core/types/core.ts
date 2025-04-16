@@ -186,6 +186,12 @@ export interface ProblemState {
   description?: string;
 }
 
+export interface VariableMetadata{
+  name: string;
+  emoji:string;
+  description: string;
+}
+
 export class ListNode {
   id?: string;
   val: number;

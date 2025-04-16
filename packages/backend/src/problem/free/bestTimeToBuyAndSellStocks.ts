@@ -1,5 +1,42 @@
-import { Problem, ProblemState, Variable } from "algo-lens-core"
+import { Problem, ProblemState, VariableMetadata } from "algo-lens-core";
 import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
+
+//// Define a constant object for variable descriptions
+const variableMetadata: VariableMetadata[] = [
+  {
+    name: "prices",
+    description:
+      "The stock prices for each day. You're choosing the best day to buy and sell.",
+    emoji: "📈",
+  },
+  {
+    name: "dp",
+    description: "The maximum profit you could have made up to that day.",
+    emoji: "💰",
+  },
+  {
+    name: "price",
+    description: "The current day's price being considered (prices[i]).",
+    emoji: "💵",
+  },
+  {
+    name: "minPrice",
+    description: "The lowest price seen so far — you 'buy' at this price.",
+    emoji: "🏦",
+  },
+  {
+    name: "diff",
+    description:
+      "The possible profit if you bought at minPrice and sold today (price - minPrice).",
+    emoji: "🔍",
+  },
+  {
+    name: "prev",
+    description: "The best profit found until the previous day (dp[i - 1]).",
+    emoji: "📊",
+  },
+  { name: "i", description: "The current step/day in the loop.", emoji: "🔄" },
+];
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
   //save state
@@ -26,8 +63,12 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        asValueGroup("potential profit", {  price,minPrice, diff }, priceGroupOptions),
-        asValueGroup("which is smaller?", { diff,prev }, priceGroupOptions),
+        asValueGroup(
+          "potential profit",
+          { price, minPrice, diff },
+          priceGroupOptions
+        ),
+        asValueGroup("which is smaller?", { diff, prev }, priceGroupOptions),
         asValueGroup("loop", { i }, { min: 0, max: prices.length }),
       ],
       breakpoint: 2,
@@ -37,8 +78,12 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        asValueGroup("potential profit", { price, minPrice, diff }, priceGroupOptions),
-        asValueGroup("which is smaller?", { diff,prev }, priceGroupOptions),
+        asValueGroup(
+          "potential profit",
+          { price, minPrice, diff },
+          priceGroupOptions
+        ),
+        asValueGroup("which is smaller?", { diff, prev }, priceGroupOptions),
         asValueGroup("loop", { i }, { min: 0, max: prices.length }),
       ],
       breakpoint: 3,
@@ -49,8 +94,12 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
       variables: [
         asArray("prices", prices, i),
         asArray("dp", dp, i, i - 1),
-        asValueGroup("potential profit", {  price,minPrice, diff }, priceGroupOptions),
-        asValueGroup("which is smaller?", { diff,prev }, priceGroupOptions),
+        asValueGroup(
+          "potential profit",
+          { price, minPrice, diff },
+          priceGroupOptions
+        ),
+        asValueGroup("which is smaller?", { diff, prev }, priceGroupOptions),
         asValueGroup("loop", { i }, { min: 0, max: prices.length }),
       ],
       breakpoint: 4,
@@ -110,5 +159,6 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   func: maxProfit,
   tested: true,
   id: "best-time-to-buy-and-sell-stock",
-  tags:["dynamic programming"]
+  tags: ["dynamic programming"],
+  variableMetadata: variableMetadata,
 };
