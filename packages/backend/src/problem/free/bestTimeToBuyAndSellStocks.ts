@@ -50,6 +50,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   l.array("prices", prices, 0);
   l.array("dp", dp);
   l.simple({ minPrice });
+  l.save()
 
   for (let i = 1; i < prices.length; i++) {
     const price = prices[i];
@@ -62,6 +63,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     l.group("profit", { price, minPrice, diff }, priceGroupOptions);
     l.group("smaller", { diff, prev }, priceGroupOptions);
     l.group("loop", { i }, { min: 0, max: prices.length });
+    l.save()
     dp[i] = Math.max(prev, diff); //
 
     l.breakpoint(3);
@@ -70,6 +72,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     l.group("profit", { price, minPrice, diff }, priceGroupOptions);
     l.group("smaller", { diff, prev }, priceGroupOptions);
     l.group("loop", { i }, { min: 0, max: prices.length });
+    l.save()
     minPrice = Math.min(minPrice, price);
     //
 
@@ -79,6 +82,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     l.group("profit", { price, minPrice, diff }, priceGroupOptions);
     l.group("smaller", { diff, prev }, priceGroupOptions);
     l.group("loop", { i }, { min: 0, max: prices.length });
+    l.save()
   }
 
   const result = dp[prices.length - 1];
@@ -86,6 +90,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   l.breakpoint(5);
   l.array("prices", prices, prices.length - 1);
   l.simple({ result });
+  l.save()
 
   return l.getSteps();
 }

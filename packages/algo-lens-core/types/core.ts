@@ -13,6 +13,7 @@ export interface Problem<Input, State> {
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
 
+
   /** Optional URL for reference or problem description. */
   url?: string;
 
