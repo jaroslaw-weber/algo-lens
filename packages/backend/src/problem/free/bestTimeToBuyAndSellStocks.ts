@@ -1,5 +1,5 @@
 import { Problem, ProblemState, VariableMetadata } from "algo-lens-core";
-import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
+import { StepLogger } from "../core/StepLogger";
 
 //// Define a constant object for variable descriptions
 const variableMetadata: VariableMetadata[] = [
@@ -39,83 +39,55 @@ const variableMetadata: VariableMetadata[] = [
 ];
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
-  //save state
-  const s: ProblemState[] = [];
+  const l = new StepLogger();
   const { prices } = p;
   const maxPrice = Math.max(...prices);
   const priceGroupOptions = { min: 0, max: maxPrice };
   const dp: number[] = new Array(prices.length).fill(0);
   let minPrice = prices[0];
   //
-  s.push({
-    variables: [
-      asArray("prices", prices, 0),
-      asArray("dp", dp),
-      ...asSimpleValue({ minPrice }),
-    ],
-    breakpoint: 1,
-  });
+  l.breakpoint(1);
+  l.array("prices", prices, 0);
+  l.array("dp", dp);
+  l.simple({ minPrice });
+
   for (let i = 1; i < prices.length; i++) {
     const price = prices[i];
     const diff = price - minPrice; //
     const prev = dp[i - 1];
-    s.push({
-      variables: [
-        asArray("prices", prices, i),
-        asArray("dp", dp, i, i - 1),
-        asValueGroup(
-          "potential profit",
-          { price, minPrice, diff },
-          priceGroupOptions
-        ),
-        asValueGroup("which is smaller?", { diff, prev }, priceGroupOptions),
-        asValueGroup("loop", { i }, { min: 0, max: prices.length }),
-      ],
-      breakpoint: 2,
-    });
+
+    l.breakpoint(2);
+    l.array("prices", prices, i);
+    l.array("dp", dp, i, i - 1);
+    l.group("profit", { price, minPrice, diff }, priceGroupOptions);
+    l.group("smaller", { diff, prev }, priceGroupOptions);
+    l.group("loop", { i }, { min: 0, max: prices.length });
     dp[i] = Math.max(prev, diff); //
-    s.push({
-      variables: [
-        asArray("prices", prices, i),
-        asArray("dp", dp, i, i - 1),
-        asValueGroup(
-          "potential profit",
-          { price, minPrice, diff },
-          priceGroupOptions
-        ),
-        asValueGroup("which is smaller?", { diff, prev }, priceGroupOptions),
-        asValueGroup("loop", { i }, { min: 0, max: prices.length }),
-      ],
-      breakpoint: 3,
-    });
+
+    l.breakpoint(3);
+    l.array("prices", prices, i);
+    l.array("dp", dp, i, i - 1);
+    l.group("profit", { price, minPrice, diff }, priceGroupOptions);
+    l.group("smaller", { diff, prev }, priceGroupOptions);
+    l.group("loop", { i }, { min: 0, max: prices.length });
     minPrice = Math.min(minPrice, price);
     //
-    s.push({
-      variables: [
-        asArray("prices", prices, i),
-        asArray("dp", dp, i, i - 1),
-        asValueGroup(
-          "potential profit",
-          { price, minPrice, diff },
-          priceGroupOptions
-        ),
-        asValueGroup("which is smaller?", { diff, prev }, priceGroupOptions),
-        asValueGroup("loop", { i }, { min: 0, max: prices.length }),
-      ],
-      breakpoint: 4,
-    });
+
+    l.breakpoint(4);
+    l.array("prices", prices, i);
+    l.array("dp", dp, i, i - 1);
+    l.group("profit", { price, minPrice, diff }, priceGroupOptions);
+    l.group("smaller", { diff, prev }, priceGroupOptions);
+    l.group("loop", { i }, { min: 0, max: prices.length });
   }
 
   const result = dp[prices.length - 1];
-  s.push({
-    variables: [
-      asArray("dp", dp, prices.length - 1),
-      ...asSimpleValue({ result }),
-    ],
-    breakpoint: 5,
-  });
 
-  return s;
+  l.breakpoint(5);
+  l.array("prices", prices, prices.length - 1);
+  l.simple({ result });
+
+  return l.getSteps();
 }
 
 interface MaxProfitInput {
@@ -160,5 +132,7 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   tested: true,
   id: "best-time-to-buy-and-sell-stock",
   tags: ["dynamic programming"],
-  variableMetadata: variableMetadata,
+  metadata:{
+    variables: variableMetadata
+  },
 };

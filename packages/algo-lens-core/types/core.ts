@@ -24,6 +24,10 @@ export interface Problem<Input, State> {
   tags?: string[];
 
   difficulty?: Difficulty;
+
+  metadata?:{
+    variables: VariableMetadata[]
+  }
 }
 
 export type ProblemGroup = {
