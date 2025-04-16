@@ -11,6 +11,8 @@
   "dependencies": {
     "@astrojs/react": "^4.2.3",
     "@monaco-editor/react": "^4.6.0",
+    "@tailwindcss/vite": "^4.1.4",
+    "algo-lens-core": "*",
     "astro": "^5.6.1",
     "autoprefixer": "^10.4.19",
     "chart.js": "^4.4.2",
@@ -29,15 +31,14 @@
     "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18.2.0",
     "reagraph": "^4.17.4",
-    "tailwindcss": "^3.4.3",
-    "algo-lens-core": "*"
+    "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.1",
     "@types/node": "^20.11.6",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
-    "daisyui": "^4.10.5",
+    "daisyui": "^5.0.22",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "typescript": "^5.3.3"
