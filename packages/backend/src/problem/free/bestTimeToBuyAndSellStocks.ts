@@ -34,8 +34,7 @@ const variableMetadata: VariableMetadata[] = [
     name: "prev",
     description: "The best profit found until the previous day (dp[i - 1]).",
     emoji: "📊",
-  },
-  { name: "i", description: "The current step/day in the loop.", emoji: "🔄" },
+  }, { name: "i", description: "The current step/day in the loop.", emoji: "🔄" },
 ];
 
 function maxProfit(p: MaxProfitInput): ProblemState[] {
@@ -50,7 +49,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   l.array("prices", prices, 0);
   l.array("dp", dp);
   l.simple({ minPrice });
-  l.save()
+  l.save();
 
   for (let i = 1; i < prices.length; i++) {
     const price = prices[i];
@@ -63,7 +62,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     l.group("profit", { price, minPrice, diff }, priceGroupOptions);
     l.group("smaller", { diff, prev }, priceGroupOptions);
     l.group("loop", { i }, { min: 0, max: prices.length });
-    l.save()
+    l.save();
     dp[i] = Math.max(prev, diff); //
 
     l.breakpoint(3);
@@ -72,7 +71,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     l.group("profit", { price, minPrice, diff }, priceGroupOptions);
     l.group("smaller", { diff, prev }, priceGroupOptions);
     l.group("loop", { i }, { min: 0, max: prices.length });
-    l.save()
+    l.save();
     minPrice = Math.min(minPrice, price);
     //
 
@@ -82,7 +81,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
     l.group("profit", { price, minPrice, diff }, priceGroupOptions);
     l.group("smaller", { diff, prev }, priceGroupOptions);
     l.group("loop", { i }, { min: 0, max: prices.length });
-    l.save()
+    l.save();
   }
 
   const result = dp[prices.length - 1];
@@ -90,7 +89,7 @@ function maxProfit(p: MaxProfitInput): ProblemState[] {
   l.breakpoint(5);
   l.array("prices", prices, prices.length - 1);
   l.simple({ result });
-  l.save()
+  l.save();
 
   return l.getSteps();
 }
@@ -137,24 +136,26 @@ export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
   tested: true,
   id: "best-time-to-buy-and-sell-stock",
   tags: ["dynamic programming"],
-  metadata:{
+  metadata: {
     variables: variableMetadata,
-    groups:[
+    groups: [
       {
         name: "profit",
-        label: "Profit",
-        description: "The potential profit from buying at the minimum price and selling at the current price."
+        label: "Potential Profit Calculation",
+        description:
+          "The potential profit from buying at the minimum price and selling at the current price.",
       },
       {
         name: "smaller",
-        label: "Smaller",
-        description: "The potential profit from buying at the minimum price and selling at the current price minus the minimum price found so far."
+        label: "Profit Comparison with Previous Minimum",
+        description:
+          "The potential profit from buying at the minimum price and selling at the current price minus the minimum price found so far.",
       },
       {
         name: "loop",
-        label: "Loop",
-        description: "The current day being considered (prices[i])."
-      }
-    ]
+        label: "Current Day in Price Analysis Loop",
+        description: "The current day being considered (prices[i]).",
+      },
+    ],
   },
 };
