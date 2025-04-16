@@ -6,17 +6,16 @@ import CodePreview from "./CodePreview";
 import Slider from "./Slider";
 import { useAtom } from "jotai";
 import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
-import { getProblem } from "../api";
+import { getProblem, getProblemSize } from "../api";
 
 function ProblemVisualizer() {
   const [state] = useAtom(problemStateAtom);
   const [problem, setProblem] = useAtom(problemAtom);
 
   const [step, setStep] = useAtom(stepAtom);
-  const [maxStep, setMaxStep] = useAtom(maxStepAtom)
+  const [maxStep, setMaxStep] = useAtom(maxStepAtom);
 
-  
-  if(!state ||!problem) {
+  if (!state || !problem) {
     return null;
   }
   const { title, code, id } = problem;
@@ -37,13 +36,17 @@ function ProblemVisualizer() {
   const line = breakpointToLineMap.get(breakpoint);
 
   const handleSliderChange = (value: number) => {
-    setStep(value+1);
+    setStep(value + 1);
   };
 
   const handleCopyCode = () => {
     copy(code);
     alert("Code copied to clipboard!");
   };
+
+  useEffect(() => {
+    getProblemSize(problem.id!).then((size) => setMaxStep(size));
+  }, [problem]);
 
   return (
     <div className="mx-8 my-8 flex-1">

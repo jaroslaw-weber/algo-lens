@@ -9,7 +9,6 @@ import { getProblemById } from "./problem/core/utils";
 
 app.use(cors());
 
-
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
@@ -109,7 +108,7 @@ app.get("/problem/:problemId/size", (c) => {
 
   const size = stateCache.getSize(problem!);
 
-  return c.json(size);
+  return c.json({ size });
 });
 
 export default app;

@@ -20,3 +20,9 @@ export async function getProblemState(id: string, step: number) {
   const result = await be.get<ProblemState>(`problem/${id}/state/${step}`);
   return result.json();
 }
+
+export async function getProblemSize(id:string){
+  const result = await be.get<{size:number}>(`problem/${id}/size`);
+  const json = await result.json();
+  return json.size;
+}

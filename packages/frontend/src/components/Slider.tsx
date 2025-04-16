@@ -7,6 +7,20 @@ interface SliderProps {
   onChange: (value: number) => void;
 }
 
+function Arrow(p: { direction: string; onClick: () => void }) {
+  const { direction, onClick } = p;
+  return (
+    <button
+      className="w-8 h-8 rounded-full bg-primary text-primary-content"
+      onClick={() => {
+        onClick();
+      }}
+    >
+      <i className={`fas ${direction}`}></i>
+    </button>
+  );
+}
+
 const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
   const sliderRef = useRef<HTMLInputElement>(null);
 
@@ -31,7 +45,7 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
 
   function onSliderValueChanged() {
     const value = sliderRef.current?.value;
-    const parsed = parseInt(value?? "", 10);
+    const parsed = parseInt(value ?? "", 10);
     onChange(parsed);
   }
 
@@ -50,17 +64,15 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
         <i className="fas fa-circle-info hover:scale-110 transition-transform duration-300"></i>
       </div>
       <p>{value}</p>
-      <button
-        className="px-2 py-1 rounded-full  bg-primary text-primary-content"
-        onClick={() => {
-          if (sliderRef.current) {
-            sliderRef.current.stepDown();
-            onSliderValueChanged();
-          }
-        }}
-      >
-        <i className="fas fa-arrow-left"></i>
-      </button>
+     
+     <div>
+      <Arrow direction="fa-arrow-left" onClick={() => {
+        if (sliderRef.current) {
+          sliderRef.current.stepDown();
+          onSliderValueChanged();
+        }
+      }} />
+     </div>
       <input
         type="range"
         min={min}
@@ -72,17 +84,17 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
         ref={sliderRef}
         //onKeyDown={handleArrowKeyPress}
       />
-      <button
-        className="px-2 py-1 rounded-full bg-primary text-primary-content"
-        onClick={() => {
-          if (sliderRef.current) {
-            sliderRef.current.stepUp();
-            onSliderValueChanged();
-          }
-        }}
-      >
-        <i className="fas fa-arrow-right"></i>
-      </button>
+      <div>
+        <Arrow
+          direction="fa-arrow-right"
+          onClick={() => {
+            if (sliderRef.current) {
+              sliderRef.current.stepUp();
+              onSliderValueChanged();
+            }
+          }}
+        />
+      </div>
     </div>
   );
 };

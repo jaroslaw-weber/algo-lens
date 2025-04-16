@@ -24,8 +24,6 @@ export function useProblemState() {
 
 export default function ProblemView() {
   const [problem, setProblem] = useAtom(problemAtom);
-  const [step, setStep] = useAtom(stepAtom);
-  const [maxStep, setMaxStep] = useAtom(maxStepAtom);
   const state = useProblemState();
 
   async function init() {
@@ -39,7 +37,6 @@ export default function ProblemView() {
     console.log("init problem visualizer with id", id);
     //fetch problem details from backend
     const p = await getProblem(id!);
-    const s = await getProblemState(id!, step);
 
     console.log("init problem visualizer with problem", p);
     setProblem(p);
