@@ -114,6 +114,6 @@ app.get("/problem/:problemId/size", (c) => {
 
 
 export default { 
-  port: 3000, 
+  port: port, 
   fetch: app.fetch, 
 } 
