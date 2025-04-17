@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { getAllProblems } from "./problem/core/list";
 import { pick } from "lodash";
 
+const port = process.env.PORT || 3000;
 const app = new Hono();
 import { cors } from "hono/cors";
 import { Problem, ProblemState } from "algo-lens-core";
@@ -111,4 +112,8 @@ app.get("/problem/:problemId/size", (c) => {
   return c.json({ size });
 });
 
-export default app;
+
+export default { 
+  port: 3000, 
+  fetch: app.fetch, 
+} 
