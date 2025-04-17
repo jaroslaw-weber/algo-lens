@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+
+@plugin "daisyui/theme" {
+  name: "algo-lens";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(93% 0 0);
+  --color-base-300: oklch(86% 0 0);
+  --color-base-content: oklch(35.519% 0.032 262.988);
+  --color-primary: oklch(70% 0.165 254.624);
+  --color-primary-content: oklch(98% 0.003 247.858);
+  --color-secondary: oklch(92% 0.12 95.746);
+  --color-secondary-content: oklch(44% 0.043 257.281);
+  --color-accent: oklch(83% 0.128 66.29);
+  --color-accent-content: oklch(0% 0 0);
+  --color-neutral: oklch(97% 0.014 254.604);
+  --color-neutral-content: oklch(20% 0.042 265.755);
+  --color-info: oklch(95% 0.026 236.824);
+  --color-info-content: oklch(0% 0 0);
+  --color-success: oklch(92% 0.084 155.995);
+  --color-success-content: oklch(0% 0 0);
+  --color-warning: oklch(84.71% 0.199 83.87);
+  --color-warning-content: oklch(0% 0 0);
+  --color-error: oklch(80% 0.114 19.571);
+  --color-error-content: oklch(0% 0 0);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}

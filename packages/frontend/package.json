@@ -1,0 +1,46 @@
+{
+  "name": "frontendv3",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.3",
+    "@monaco-editor/react": "^4.6.0",
+    "@tailwindcss/vite": "^4.1.4",
+    "algo-lens-core": "*",
+    "astro": "^5.6.1",
+    "autoprefixer": "^10.4.19",
+    "chart.js": "^4.4.2",
+    "copy-to-clipboard": "^3.3.3",
+    "cytoscape": "^3.29.2",
+    "dotenv": "^16.4.5",
+    "enquirer": "^2.4.1",
+    "groq-sdk": "^0.3.3",
+    "jotai": "^2.12.2",
+    "ky": "^1.8.0",
+    "lodash": "^4.17.21",
+    "next": "^14.1.0",
+    "postcss": "^8.4.38",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-cytoscapejs": "^2.0.0",
+    "react-dom": "^18.2.0",
+    "reagraph": "^4.17.4",
+    "tailwindcss": "^4.1.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.1",
+    "@types/node": "^20.11.6",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "daisyui": "^5.0.22",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0",
+    "typescript": "^5.3.3"
+  }
+}

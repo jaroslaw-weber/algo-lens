@@ -1,0 +1,14 @@
+{
+  "name": "algo-lens-core",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "types/core.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --outDir dist --declaration",
+    "watch": "tsc --watch --outDir dist --declaration"
+  },
+  "author": "Jaroslaw Weber",
+  "license": "MIT",
+  "description": ""
+}

@@ -1,8 +1,31 @@
 # algo-vision
 Easily visualize and practice Data Structures and Algorithms (DSA). Starting with dynamic programming, we also support bit manipulation, binary search, and more.
 
-## Quick Start
-Visit [algo-lens](https://jaroslaw-weber.github.io/algo-lens/) to explore algorithm visualizations.
+## How to use
+2025-04-17 : Working on separating code to frontend and backend to develop service.
+To run it on local:
+
+add .env file in the /frontend/ folder:
+
+```
+BACKEND_URL="http://localhost:3000"
+```
+
+go to /backend/ folder and run 
+
+```
+bun run dev
+```
+
+Then go to /frontend/ folder and run:
+
+```
+npm run dev
+```
+
+Now, open the frontend url and it should work :)
+
+I will work on better UX
 
 ## What’s Inside
 - **Dynamic Programming**: See step-by-step visualizations to understand how solutions are built.

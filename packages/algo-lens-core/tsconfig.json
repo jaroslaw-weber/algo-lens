@@ -1,0 +1,16 @@
+{
+  "include": ["src","types", "../backend/src/problem/core/utils.ts"], // Include the 'src' directory
+  "exclude": ["node_modules", "dist"], // Exclude 'node_modules' and 'dist' directories
+
+  "compilerOptions": {
+    "rootDirs": ["/src/"],
+    "typeRoots": ["types/*.d.ts"],
+    "target": "ESNext", // Target latest version of ECMAScript
+    "module": "ESNext", // Use module syntax as per the target
+    "lib": ["DOM", "ESNext"], // Include DOM and ESNext library declarations
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Enable interoperability between ESM and CJS modules
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true // Ensure consistent casing in file names
+  }
+}
