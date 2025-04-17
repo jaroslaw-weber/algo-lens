@@ -14,6 +14,10 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
+app.get("/health", (c) => {
+  return c.json({ status: "ok" });
+})
+
 app.get("/problem", (c) => {
   const list = getAllProblems().map((x) =>
     pick(x, ["id", "title", "difficulty"])
