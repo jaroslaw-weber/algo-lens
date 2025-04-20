@@ -1,4 +1,4 @@
-import { maxProfitProblem } from "../free/bestTimeToBuyAndSellStocks";
+import { maxProfitProblem } from "../free/bestTimeToBuyAndSellStocks/problem";
 import { climbStairsProblem } from "../free/climbingStairs";
 import { houseRobberProblem } from "../free/houseRobber";
 import { wordBreakProblem } from "../free/wordBreak";
