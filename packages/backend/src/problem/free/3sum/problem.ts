@@ -4,6 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { ThreeSumInput } from "./types";
+import { threeSumTestCases } from './testcase';
 
 export const threeSumProblem: Problem<ThreeSumInput, ProblemState> = {
   title: "Three Sum",
@@ -12,6 +13,7 @@ export const threeSumProblem: Problem<ThreeSumInput, ProblemState> = {
     nums: [-1, 0, 1, 2, -1, -4, 4, 3, -3, 0],
   }),
   func: generateSteps,
+  testCases: threeSumTestCases, // Add the test cases here
   tested: false, // Mark as untested for now
   id: "3sum",
   tags: ["array", "hash set", "two pointers"], // Keep updated tags
