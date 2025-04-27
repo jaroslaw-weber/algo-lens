@@ -22,7 +22,7 @@ import { eraseOverlapIntervalsProblem } from "../free/non-overlapping-intervals"
 import { mergeIntervalsProblem } from "../free/merge-intervals";
 import { sameTreeProblem } from "../free/sameTree";
 import { reverseListProblem } from "../free/reverse-linked-list";
-import { containsDuplicateProblem } from "../free/contains-duplicate";
+import { containsDuplicateProblem } from "../free/containsDuplicate/problem";
 import { Problem, ProblemGroup } from "algo-lens-core"
 import { threeSumProblem } from "../free/3sum";
 export function getBlind75Problems(): ProblemGroup[] {
