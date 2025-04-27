@@ -1,9 +1,11 @@
 # algo-vision
 Easily visualize and practice Data Structures and Algorithms (DSA). Starting with dynamic programming, we also support bit manipulation, binary search, and more.
 
-## How to use
-2025-04-17 : Working on separating code to frontend and backend to develop service.
-To run it on local:
+## Quick start
+
+Just go to https://algolens.dev/ to start using it!
+
+## How to run on local
 
 add .env file in the /frontend/ folder:
 
