@@ -1,6 +1,10 @@
 # algo-vision
 Easily visualize and practice Data Structures and Algorithms (DSA). Starting with dynamic programming, we also support bit manipulation, binary search, and more.
 
+## Huge refactor in progress
+
+Some things may not work when running it on local env so please use the Quick Start (go to https://algolens.dev/).
+
 ## Quick start
 
 Just go to https://algolens.dev/ to start using it!
