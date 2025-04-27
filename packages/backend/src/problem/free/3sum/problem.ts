@@ -4,7 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { ThreeSumInput } from "./types";
-import { testCases } from "./test-cases"; // Added import
+import { testCases } from "./testcase"; // Updated import path
 import { runProblemTests } from "../../core/test-runner"; // Added import
 
 export const threeSumProblem: Problem<ThreeSumInput, ProblemState> = {

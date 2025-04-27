@@ -58,9 +58,10 @@ function compareOutputs<TExpected>(actual: TExpected, expected: TExpected): bool
 export async function runProblemTests<TInput, TExpected>(
   problemFunction: (input: TInput) => ProblemState[],
   testCases: TestCase<TInput, TExpected>[]
-): Promise<void> { // Return Promise<void> as it's async and logs to console
+): Promise<boolean> { // Changed return type to Promise<boolean>
 
   console.log(`\nRunning ${testCases.length} test cases...`);
+  let allPassed = true; // Initialize overall success flag
 
   for (let i = 0; i < testCases.length; i++) {
     const testCase = testCases[i];
@@ -70,51 +71,72 @@ export async function runProblemTests<TInput, TExpected>(
     try {
       const states = problemFunction(testCase.input);
 
+      let testCasePassed = true; // Flag for the current test case
+
       if (!states || states.length === 0) {
         console.error(`Test Case ${i + 1}: FAILED - No states returned by the problem function.`);
-        continue; // Move to the next test case
+        testCasePassed = false;
+        // continue; // Don't continue, let it fall through to update allPassed
       }
 
-      const lastState = states[states.length - 1];
-      const resultVariable = lastState?.variables.find(v => v.label === 'result');
+      // Proceed only if states were returned
+      let lastState: ProblemState | undefined;
+      let resultVariable: ProblemState['variables'][number] | undefined;
+      let actualOutput: TExpected | undefined;
 
-      if (!resultVariable) {
+      if (testCasePassed) {
+        lastState = states[states.length - 1];
+        resultVariable = lastState?.variables.find(v => v.label === 'result');
+
+        if (!resultVariable) {
           // Check if expected output is also considered 'empty' (e.g., [], null, undefined)
-          // This handles cases where the function correctly returns no result when expected
           const expectedIsEmpty = testCase.expectedOutput === null ||
                                   testCase.expectedOutput === undefined ||
                                   (Array.isArray(testCase.expectedOutput) && testCase.expectedOutput.length === 0);
 
           if (expectedIsEmpty) {
               console.log(`Test Case ${i + 1}: SUCCESS (No 'result' variable found, and expected output was empty)`);
+              // testCasePassed remains true
           } else {
               console.error(`Test Case ${i + 1}: FAILED - 'result' variable not found in the last state.`);
               console.log("Expected:", testCase.expectedOutput);
               console.log("Last State Variables:", lastState?.variables);
+              testCasePassed = false;
           }
-        continue;
+          // No continue here, let it fall through
+        } else {
+          // 'result' variable found, proceed with comparison
+          // Assuming resultVariable.value can be directly cast to TExpected.
+          actualOutput = resultVariable.value as TExpected;
+          testCasePassed = compareOutputs(actualOutput, testCase.expectedOutput);
+
+          console.log(`Test Case ${i + 1}: ${testCasePassed ? 'SUCCESS' : 'FAILED'}`);
+
+          if (!testCasePassed) {
+            console.log("Expected:", JSON.stringify(testCase.expectedOutput, null, 2));
+            console.log("Actual:  ", JSON.stringify(actualOutput, null, 2));
+            // Optionally log the full last state for debugging failed cases
+            // console.log("Last State:", JSON.stringify(lastState, null, 2));
+          }
+        }
       }
 
-      // Assuming resultVariable.value can be directly cast to TExpected.
-      // More robust handling might be needed depending on actual ProblemState structure.
-      const actualOutput = resultVariable.value as TExpected;
-
-      const success = compareOutputs(actualOutput, testCase.expectedOutput);
-
-      console.log(`Test Case ${i + 1}: ${success ? 'SUCCESS' : 'FAILED'}`);
-
-      if (!success) {
-        console.log("Expected:", JSON.stringify(testCase.expectedOutput, null, 2));
-        console.log("Actual:  ", JSON.stringify(actualOutput, null, 2));
-        // Optionally log the full last state for debugging failed cases
-        // console.log("Last State:", JSON.stringify(lastState, null, 2));
-      }
+      } // End of if (testCasePassed) block for state processing
 
     } catch (error) {
         console.error(`Test Case ${i + 1}: FAILED - Error during execution:`, error);
         console.log("Input:", testCase.input);
         console.log("Expected:", testCase.expectedOutput);
+        testCasePassed = false; // Mark as failed due to error
     }
-  }
+
+    // Update overall success flag
+    if (!testCasePassed) {
+      allPassed = false;
+    }
+  } // End of for loop
+
   console.log("\n--- Test Execution Finished ---");
+  console.log(`Overall Result: ${allPassed ? 'All tests passed' : 'Some tests failed'}`);
+  return allPassed; // Return overall success status
 }

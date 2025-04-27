@@ -1,7 +1,8 @@
 {
   "name": "backend2",
   "scripts": {
-    "dev": "PORT=4005 bun run --hot src/index.ts"
+    "dev": "PORT=4005 bun run --hot src/index.ts",
+    "test": "bun test"
   },
   "dependencies": {
     "hono": "^4.7.6",
