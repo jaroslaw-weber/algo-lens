@@ -1,6 +1,66 @@
-import { Problem, ProblemState, VariableMetadata } from "algo-lens-core";
-import { asArray, asSimpleValue, asValueGroup } from "./utils";
+import { Problem, ProblemState, VariableMetadata, ArrayVariable, SimpleVariable, ValueGroupVariable } from "algo-lens-core"; // Added ArrayVariable, SimpleVariable, ValueGroupVariable
+// Removed import { asArray, asSimpleValue, asValueGroup } from "./utils";
 import _ = require("lodash");
+import { cloneDeep } from "lodash"; // Added cloneDeep import
+
+// TODO: Remove these functions once all problems are migrated
+export function asSimpleValue(o: any): SimpleVariable[] {
+  return Object.keys(o).map(
+    (k) => ({ label: k, value: o[k], type: "number" } as SimpleVariable)
+  );
+}
+
+/** display similar values in a group */
+export function asValueGroup(
+  label: string,
+  o: any,
+  options: { min: number; max: number; reverse?: any }
+): ValueGroupVariable {
+  const result: ValueGroupVariable = {
+    data: [],
+    label,
+    type: "value-group",
+    options,
+  };
+  for (const key in o) {
+    result.data.push({
+      label: key,
+      value: o[key],
+    });
+  }
+
+  return result;
+}
+
+export function asArray(
+  label: string,
+  arr: any[],
+  column1?: number,
+  column2?: number,
+  column3?: number
+): ArrayVariable {
+  const result: ArrayVariable = {
+    label,
+    type: "array",
+    value: cloneDeep(arr),
+    pointers: [
+      {
+        value: column1,
+        dimension: "column",
+      },
+      {
+        value: column2,
+        dimension: "column",
+      },
+      {
+        value: column3,
+        dimension: "column",
+      },
+    ],
+  };
+  return result;
+}
+// End of functions to remove
 
 export class StepLogger {
   private steps: ProblemState[];
