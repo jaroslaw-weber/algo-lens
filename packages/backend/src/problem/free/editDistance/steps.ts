@@ -1,13 +1,13 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { ProblemState } from "algo-lens-core";
+import { EditDistanceInput } from "./types";
 import {
-  asArray,
   as2dArray,
   asSimpleValue,
   asStringArray,
   asValueGroup,
-} from "../core/utils";
+} from "../../core/utils"; // Adjusted import path
 
-function editDistance(p: EditDistanceInput): ProblemState[] {
+export function generateSteps(p: EditDistanceInput): ProblemState[] { // Renamed function and used EditDistanceInput
   const { s1, s2 } = p;
   const steps: ProblemState[] = [];
   const m = s1.length;
@@ -44,6 +44,7 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
       let op = 0; // Operation cost
       if (s1[i - 1] === s2[j - 1]) {
         op = dp[i - 1][j - 1]; // No operation needed if characters match
+        dp[i][j] = op; // Assign dp value when characters match <<<< CORRECTED LINE
       } else {
         op = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
         dp[i][j] = op;
@@ -75,48 +76,3 @@ function editDistance(p: EditDistanceInput): ProblemState[] {
 
   return steps;
 }
-
-interface EditDistanceInput {
-  s1: string;
-  s2: string;
-}
-
-const code = `function editDistance(s1: string, s2: string): number {
-  const m = s1.length, n = s2.length;
-  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
-
-  for (let i = 0; i <= m; i++) {
-    dp[i][0] = i;
-    //#1
-  }
-  for (let j = 0; j <= n; j++) {
-    dp[0][j] = j;
-    //#2
-  }
-
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      if (s1[i - 1] === s2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1];
-      } else {
-        dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
-      }
-      //#3
-    }
-  }
-
-  //#4
-  return dp[m][n];
-}`;
-
-const title = "Edit Distance";
-const getInput = () => ({ s1: "kitten", s2: "sitting" });
-
-export const editDistanceProblem: Problem<EditDistanceInput, ProblemState> = {
-  title,
-  code,
-  getInput,
-  func: editDistance,
-  id: "edit-distance",
-  tags: ["dynamic programming", "string"],
-};
