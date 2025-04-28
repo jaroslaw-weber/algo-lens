@@ -18,7 +18,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
   l.breakpoint(1, "Initial state before sorting");
   l.array("nums", nums);
   l.simple({ target });
-  l.json("result", result);
+  l.array2d("result", result);
   l.save();
 
   nums.sort((a, b) => a - b); // Sort the array
@@ -27,7 +27,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
   l.breakpoint(2, "Array sorted");
   l.array("nums", nums);
   l.simple({ target });
-  l.json("result", result);
+  l.array2d("result", result);
   l.save();
 
   for (let i = 0; i < nums.length - 2; i++) {
@@ -35,7 +35,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
     l.array("nums", nums, i);
     l.simple({ target });
     l.group(pointersGroup, { i });
-    l.json("result", result);
+    l.array2d("result", result);
     l.save();
 
     if (i > 0 && nums[i] === nums[i - 1]) {
@@ -43,7 +43,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
       l.array("nums", nums, i);
       l.simple({ target });
       l.group(pointersGroup, { i });
-      l.json("result", result);
+      l.array2d("result", result);
       l.save();
       continue; // Skip duplicates
     }
@@ -55,7 +55,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
     l.array("nums", nums, i, left, right);
     l.simple({ target });
     l.group(pointersGroup, { i, left, right });
-    l.json("result", result);
+    l.array2d("result", result);
     l.save();
 
     while (left < right) {
@@ -67,7 +67,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
       l.simple({ target });
       l.group(pointersGroup, { i, left, right });
       l.group(tripletInfoGroup, { triplet, sum });
-      l.json("result", result);
+      l.array2d("result", result);
       l.save();
 
       if (sum === target) {
@@ -77,7 +77,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         l.simple({ target });
         l.group(pointersGroup, { i, left, right });
         l.group(tripletInfoGroup, { triplet, sum });
-        l.json("result", result);
+        l.array2d("result", result);
         // Add seen set visualization if StepLogger supports it
         // l.set('seen', seen);
         l.save();
@@ -90,7 +90,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
           l.simple({ target });
           l.group(pointersGroup, { i, left, right });
           l.group(tripletInfoGroup, { triplet, sum });
-          l.json("result", result);
+          l.array2d("result", result);
           l.save();
         }
 
@@ -106,7 +106,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
              l.simple({ target });
              l.group(pointersGroup, { i, left, right });
              l.group(tripletInfoGroup, { triplet, sum }); // Keep old triplet info for context
-             l.json("result", result);
+             l.array2d("result", result);
              l.save();
         }
 
@@ -123,7 +123,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
              l.simple({ target });
              l.group(pointersGroup, { i, left, right });
              l.group(tripletInfoGroup, { triplet, sum }); // Keep old triplet info for context
-             l.json("result", result);
+             l.array2d("result", result);
              l.save();
          }
 
@@ -133,7 +133,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         l.simple({ target });
         l.group(pointersGroup, { i, left, right });
         l.group(tripletInfoGroup, { triplet, sum });
-        l.json("result", result);
+        l.array2d("result", result);
         l.save();
 
         left++;
@@ -144,7 +144,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         l.simple({ target });
         l.group(pointersGroup, { i, left, right });
         // Don't log triplet/sum here as they are recalculated at the start of the next iteration
-        l.json("result", result);
+        l.array2d("result", result);
         l.save();
 
       } else if (sum < target) {
@@ -153,7 +153,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         l.simple({ target });
         l.group(pointersGroup, { i, left, right });
         l.group(tripletInfoGroup, { triplet, sum });
-        l.json("result", result);
+        l.array2d("result", result);
         l.save();
         left++;
       } else { // sum > target
@@ -162,7 +162,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         l.simple({ target });
         l.group(pointersGroup, { i, left, right });
         l.group(tripletInfoGroup, { triplet, sum });
-        l.json("result", result);
+        l.array2d("result", result);
         l.save();
         right--;
       }
@@ -172,14 +172,14 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
      l.array("nums", nums, i, left, right);
      l.simple({ target });
      l.group(pointersGroup, { i, left, right });
-     l.json("result", result);
+     l.array2d("result", result);
      l.save();
   }
 
   l.breakpoint(15, "Finished searching for triplets");
   l.array("nums", nums);
   l.simple({ target });
-  l.json("result", result);
+  l.array2d("result", result);
   l.save();
 
   return l.getSteps();

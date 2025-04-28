@@ -32,13 +32,13 @@ This repository uses a monorepo structure managed by npm workspaces:
 3.  **Run Development Servers:**
     - Run the following command in the root directory:
       ```
-      bun run dev
+      npm run dev
       ```
     - This command uses `concurrently` to start the development servers for the frontend, backend, and landing page simultaneously.
 
 4.  **Access the applications:**
     - Frontend application: Typically runs on `http://localhost:4321` (check console output).
-    - Backend API: Typically runs on `http://localhost:30004005` (check console output).
+    - Backend API: Typically runs on `http://localhost:4005` (check console output).
     - Landing page: Typically runs on a different port (check console output, often `http://localhost:4322`).
 
 ## What’s Inside

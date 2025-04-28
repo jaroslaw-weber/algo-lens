@@ -1,5 +1,5 @@
-import { Problem, ProblemState, VariableMetadata } from "algo-lens-core";
-import { asArray, asSimpleValue, asValueGroup } from "./utils";
+import { Pointer2D, Problem, ProblemState, VariableMetadata } from "algo-lens-core";
+import { as2dArray, asArray, asSimpleValue, asValueGroup } from "./utils";
 import _ = require("lodash");
 
 export class StepLogger {
@@ -40,6 +40,19 @@ export class StepLogger {
     });
   }
 
+  public array2d(
+    name: string,
+    values: any[][],
+    pointer1?: Pointer2D,
+    pointer2?: Pointer2D,
+    pointer3?: Pointer2D
+  ){
+    this.temp.push({
+      variables: [as2dArray(name, values, [pointer1!, pointer2!, pointer3!])],
+      breakpoint: this.currentBreakpoint,
+    });
+  }
+
   public simple(value: Record<string, any>) {
     this.temp.push({
       variables: asSimpleValue(value),
@@ -57,6 +70,10 @@ export class StepLogger {
       breakpoint: this.currentBreakpoint,
     });
   }
+
+  public json(
+
+  )
 
   public setMeta(name: string, metadata: VariableMetadata) {
     this.metadata.set(name, metadata);
