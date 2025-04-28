@@ -64,7 +64,6 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
 
   return (
     <div className="overflow-x-auto">
-      {title && <h3 className="pl-2 pb-2 text-xl font-semibold">{title}</h3>}
       <table className="w-full table-auto border-collapse border border-gray-200 ">
         <tbody>
           {is2D ? (

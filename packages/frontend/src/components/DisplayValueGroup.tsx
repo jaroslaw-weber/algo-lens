@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import type { ValueGroupVariable } from "algo-lens-core";
+import type { Problem, ValueGroupVariable } from "algo-lens-core";
 import _ from "lodash";
 
 // Register the necessary Chart.js components
@@ -36,8 +36,13 @@ function getAspectRatio(count: number): number {
   return 2;
 }
 
-const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
+const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
+  data,
+}: {
+  data: any;
+}) => {
   console.log("data", data);
+
   const count = data.data.length;
   const chartData = {
     labels: data.data.map((x) => x.label),
@@ -132,7 +137,6 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({ data }) => {
   // Fixed size container using Tailwind CSS
   return (
     <div className="flex-1">
-      <p className="text-left font-bold pb-1">{data.label}</p>
       <div className="w-full grid grid-cols-1 gap-2">{progressBars}</div>
     </div>
   );

@@ -1,18 +1,37 @@
+export interface ProblemMetadata {
+  variables: VariableMetadata[];
+  groups?: {
+    name: string;
+    label: string;
+    description?: string;
+    emoji?: string;
+  }[];
+}
+
+export interface TestCase<Input, State> {
+  input: Input;
+  expected: State;
+}
+
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
 export interface Problem<Input, State> {
   id?: string;
   /** Contains the source code for the problem-solving function. */
   code: string;
 
-  /** A function that provides the input data for the problem. */
-  getInput: () => Input;
+  /** A function that provides the input data for the problem.
+   *
+   * @deprecated
+   */
+  getInput?: () => Input;
+
+  testCases?: TestCase<Input, State>[];
 
   /** Title of the problem. */
   title: string;
 
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
-
 
   /** Optional URL for reference or problem description. */
   url?: string;
@@ -26,14 +45,7 @@ export interface Problem<Input, State> {
 
   difficulty?: Difficulty;
 
-  metadata?: {
-    variables: VariableMetadata[];
-    groups?: {
-      name: string;
-      label: string;
-      description?: string;
-    }[];
-  };
+  metadata?: ProblemMetadata;
 }
 
 export type ProblemGroup = {

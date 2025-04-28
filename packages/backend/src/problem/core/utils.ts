@@ -9,21 +9,25 @@ import {
   BooleanGroupVariable,
   IntervalVariable,
   NodeHighlight,
-  ListNode,
   ListVariable,
   HashHighlight,
   HashsetVariable,
   HashmapVariable,
-} from "../../../../algo-lens-core/types/core";
-import { allProblems, getAllProblems } from "./list";
+  BinaryTreeNode,
+  TreeVariable,
+  ListNode,
+} from "algo-lens-core";
+import { getAllProblems } from "./list";
 
-export function getRandomProblem() {
-  return sample(allProblems.flatMap(g => g.problems));
+export async function getRandomProblem() {
+  const all = await getAllProblems();
+  return sample(all);
 }
 
-export function getProblemById(id: string) {
+export async function getProblemById(id: string) {
   console.log("getProblemById", id);
-  return getAllProblems().find((p) => p.id === id);
+  const all = await getAllProblems();
+  return all.find((p) => p.id === id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {
@@ -71,12 +75,12 @@ export function asBooleanGroup(
   return result;
 }
 
-// utils.ts
-import { BinaryTreeNode, TreeVariable } from "./types";
-
-function addRandomIds(tree: BinaryTreeNode | null, i: number): number | undefined {
+function addRandomIds(
+  tree: BinaryTreeNode | null,
+  i: number
+): number | undefined {
   if (!tree) {
-    return undefined
+    return undefined;
   }
 
   tree.id = i.toString();
@@ -116,7 +120,7 @@ export function asList(
   return {
     type: "list",
     label,
-    value:list,
+    value: list,
     highlight: highlight.filter((x) => x.node),
   };
 }
@@ -345,7 +349,13 @@ export function from2dArrayToMap(arr: any[][]): Map<any, any> {
   const result = new Map();
   for (const row of arr) {
     if (row.length) {
-      result.set(row[0], row.slice(1).map(x=>x.toString()).join(","));
+      result.set(
+        row[0],
+        row
+          .slice(1)
+          .map((x) => x.toString())
+          .join(",")
+      );
     }
   }
   return result;

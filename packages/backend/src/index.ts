@@ -16,16 +16,15 @@ app.get("/", (c) => {
 
 app.get("/health", (c) => {
   return c.json({ status: "ok" });
-})
+});
 
-app.get("/problem", (c) => {
-  const list = getAllProblems().map((x) =>
-    pick(x, ["id", "title", "difficulty"])
-  );
+app.get("/problem", async (c) => {
+  const all = await getAllProblems();
+  const list = all.map((x) => pick(x, ["id", "title", "difficulty"]));
   return c.json(list);
 });
 
-app.get("/problem/:id", (c) => {
+app.get("/problem/:id", async (c) => {
   const id = c.req.param("id");
 
   if (!id) {
@@ -36,7 +35,7 @@ app.get("/problem/:id", (c) => {
       400
     );
   }
-  const problem = getProblemById(id!);
+  const problem = await getProblemById(id!);
   if (!problem) {
     return c.json(
       {
@@ -52,7 +51,11 @@ app.get("/problem/:id", (c) => {
     "code",
     "url",
     "tags",
+    "metadata",
   ]);
+  if (Object.keys(rendered).length === 0) {
+    throw new Error("invalid problem: " + problem);
+  }
   return c.json(rendered);
 });
 
@@ -95,29 +98,31 @@ class ProblemStateCache {
 }
 
 const stateCache = new ProblemStateCache();
-app.get("/problem/:problemId/state/:step", (c) => {
+app.get("/problem/:problemId/state/:step", async (c) => {
   const problemId = c.req.param("problemId");
   const step = parseInt(c.req.param("step"));
 
-  const problem = getProblemById(problemId!);
+  const problem = await getProblemById(problemId!);
+  if (!problem) {
+    throw new Error(`Problem not found: ${problemId} `);
+  }
 
   const state = stateCache.get(problem!, step);
 
   return c.json(state);
 });
 
-app.get("/problem/:problemId/size", (c) => {
+app.get("/problem/:problemId/size", async (c) => {
   const problemId = c.req.param("problemId");
 
-  const problem = getProblemById(problemId!);
+  const problem = await getProblemById(problemId!);
 
   const size = stateCache.getSize(problem!);
 
   return c.json({ size });
 });
 
-
-export default { 
-  port: port, 
-  fetch: app.fetch, 
-} 
+export default {
+  port: port,
+  fetch: app.fetch,
+};

@@ -36,7 +36,7 @@ function ProblemVisualizer() {
   const line = breakpointToLineMap.get(breakpoint);
 
   const handleSliderChange = (value: number) => {
-    setStep(value + 1);
+    setStep(value);
   };
 
   const handleCopyCode = () => {
@@ -81,14 +81,14 @@ function ProblemVisualizer() {
           <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
             <div className="flex items-center gap-6">
               <Slider
-                min={0}
+                min={1}
                 max={maxStep}
                 value={step}
                 onChange={handleSliderChange}
               />
             </div>
             <div>
-              <DisplayState state={state} />
+              <DisplayState state={state} problem={problem} />
             </div>
           </div>
         </div>
