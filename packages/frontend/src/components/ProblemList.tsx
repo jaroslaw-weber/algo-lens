@@ -25,13 +25,16 @@ function ProblemsList() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4  ">
         {problems.map((p) => {
-          const { id, title } = p;
+          // Destructure emoji along with id and title
+          const { id, title, emoji } = p; 
 
           return (
             <div
               key={id}
               className="flex items-center gap-2 p-3 bg-primary rounded-md transition-colors"
             >
+              {/* Display emoji if it exists */}
+              {emoji && <span className="text-lg mr-2">{emoji}</span>} 
               <a
                 href={`/problem/visualize?id=${id}`}
                 className="text-lg font-semibold text-primary-content hover:underline"

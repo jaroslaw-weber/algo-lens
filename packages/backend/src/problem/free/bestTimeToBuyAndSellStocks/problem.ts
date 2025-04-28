@@ -11,6 +11,7 @@ const title = "Best Time to Buy and Sell Stock";
 
 export const problem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
+  emoji: '📈',
   code: code,
   func: generateSteps,
   id: "best-time-to-buy-and-sell-stock",

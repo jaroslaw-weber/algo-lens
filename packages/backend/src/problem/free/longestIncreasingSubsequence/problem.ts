@@ -8,6 +8,7 @@ const getInput = () => ({ nums: [10, 9, 2, 5, 3, 7, 101, 18] });
 
 export const problem: Problem<LISInput, ProblemState> = {
     title: title,
+    emoji: '📈',
     code: code,
     getInput: getInput,
     func: generateSteps, // Use the renamed function

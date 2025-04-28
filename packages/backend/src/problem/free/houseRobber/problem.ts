@@ -10,6 +10,7 @@ const getInput = () => ({ nums: [2, 7, 9, 3, 1] }); // Ensure getInput is define
 
 export const problem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
+  emoji: '💰',
   code: code, // Use imported code
   getInput: getInput,
   func: generateSteps, // Use imported generateSteps function

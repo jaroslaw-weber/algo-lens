@@ -230,6 +230,7 @@ export const problem: Problem<
   ProblemState
 > = {
   title,
+  emoji: '0️⃣',
   code,
   getInput,
   func: setMatrixZeroes,

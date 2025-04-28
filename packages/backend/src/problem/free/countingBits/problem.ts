@@ -12,6 +12,7 @@ const getInput = () => ({
 
 export const problem: Problem<CountBitsInput, ProblemState> = {
   title: title,
+  emoji: '💻',
   code: code,
   getInput: getInput,
   func: generateSteps, // Use the new step generator function

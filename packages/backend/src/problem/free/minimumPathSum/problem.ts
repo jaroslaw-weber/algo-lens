@@ -16,6 +16,7 @@ const getInput = () => ({
 // If specific state aspects were needed, they'd be handled within generateSteps.
 export const problem: Problem<MinPathSumInput, ProblemState> = {
   title: title,
+  emoji: '🗺️',
   code: code,
   getInput: getInput,
   func: generateSteps, // Use the renamed function

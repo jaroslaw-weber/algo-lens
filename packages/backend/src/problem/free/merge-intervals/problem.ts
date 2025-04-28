@@ -23,6 +23,7 @@ export const problem: Problem<
   ProblemState
 > = {
   title,
+  emoji: '🤝',
   code,
   getInput,
   func: generateSteps, // Use the renamed function

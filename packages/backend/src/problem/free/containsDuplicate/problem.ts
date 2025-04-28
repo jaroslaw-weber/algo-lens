@@ -65,6 +65,7 @@ export const problem: Problem<
   ProblemState
 > = {
   title,
+  emoji: '👯',
   code, // Use imported code
   getInput,
   func: containsDuplicate, // Use local function

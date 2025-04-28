@@ -8,6 +8,7 @@ const getInput = () => ({ n: 9 });
 
 export const problem: Problem<HammingWeightInput, ProblemState> = {
   title,
+  emoji: '1️⃣',
   code,
   getInput,
   func: generateSteps, // Use the renamed function

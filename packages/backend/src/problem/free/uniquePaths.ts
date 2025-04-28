@@ -85,6 +85,7 @@ const getInput = () => ({ m: 3, n: 7 });
 
 export const problem: Problem<UniquePathsInput, UniquePathsState> = {
   title: title,
+  emoji: '🤖',
   code: code,
   getInput: getInput,
   func: uniquePaths,

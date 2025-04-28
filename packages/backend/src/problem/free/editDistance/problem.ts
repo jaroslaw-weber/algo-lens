@@ -10,6 +10,7 @@ const getInput = (): EditDistanceInput => ({ s1: "kitten", s2: "sitting" });
 
 export const problem: Problem<EditDistanceInput, ProblemState> = {
   title,
+  emoji: '✏️',
   id: "edit-distance",
   tags: ["dynamic programming", "string"],
   code,

@@ -10,6 +10,7 @@ const getInput = () => ({
 
 export const problem: Problem<ContainerInput, ProblemState> = {
   title,
+  emoji: '🌊',
   code,
   getInput,
   func: generateSteps, // Use the renamed function

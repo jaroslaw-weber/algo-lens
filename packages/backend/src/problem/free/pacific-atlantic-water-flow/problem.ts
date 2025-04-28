@@ -19,6 +19,7 @@ const getInput = () => ({
 // Note: Original problem didn't have tags, so omitting them here.
 export const problem: Problem<PacificAtlanticInput, ProblemState> = {
   title,
+  emoji: '🌊',
   code,
   getInput,
   func: generateSteps, // Use the renamed function

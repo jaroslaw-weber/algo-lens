@@ -114,6 +114,7 @@ export const problem: Problem<
   ProblemState
 > = {
   title,
+  emoji: '✖️',
   code,
   getInput,
   func: productExceptSelf,
