@@ -1,5 +1,11 @@
 {
 	"name": "algo-lens",
 	"private": true,
-	"workspaces": ["packages/*", "landing-page"]
+	"workspaces": ["packages/*"],
+	"scripts": {
+		"dev": "concurrently \"npm run dev --workspace=packages/frontend\" \"npm run dev --workspace=packages/backend\" \"npm run dev --workspace=packages/landing-page\""
+	},
+	"devDependencies": {
+		"concurrently": "^8.0.0"
+	}
 }

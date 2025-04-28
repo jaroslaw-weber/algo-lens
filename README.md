@@ -9,29 +9,37 @@ Some things may not work when running it on local env so please use the Quick St
 
 Just go to https://algolens.dev/ to start using it!
 
+## Project Structure
+
+This repository uses a monorepo structure managed by npm workspaces:
+
+- `packages/frontend`: The main web application built with Astro.
+- `packages/backend`: The Node.js backend API.
+- `packages/landing-page`: The simple landing page built with Astro.
+- `packages/algo-lens-core`: Core logic shared between packages (potential future use).
+
 ## How to run on local
 
-add .env file in the /frontend/ folder:
+1.  **Environment Setup:**
+    - Add a `.env` file in the `packages/frontend/` folder with the following content:
+      ```
+      BACKEND_URL="http://localhost:3000"
+      ```
 
-```
-BACKEND_URL="http://localhost:3000"
-```
+2.  **Install Dependencies:**
+    - Run `npm install` in the root directory. This will install dependencies for all workspaces.
 
-go to /backend/ folder and run 
+3.  **Run Development Servers:**
+    - Run the following command in the root directory:
+      ```
+      npm run dev
+      ```
+    - This command uses `concurrently` to start the development servers for the frontend, backend, and landing page simultaneously.
 
-```
-bun run dev
-```
-
-Then go to /frontend/ folder and run:
-
-```
-npm run dev
-```
-
-Now, open the frontend url and it should work :)
-
-I will work on better UX
+4.  **Access the applications:**
+    - Frontend application: Typically runs on `http://localhost:4321` (check console output).
+    - Backend API: Typically runs on `http://localhost:3000` (check console output).
+    - Landing page: Typically runs on a different port (check console output, often `http://localhost:4322`).
 
 ## What’s Inside
 - **Dynamic Programming**: See step-by-step visualizations to understand how solutions are built.
