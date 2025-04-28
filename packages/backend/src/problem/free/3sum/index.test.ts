@@ -1,8 +1,6 @@
 
-import { testcases } from "./testcase";
-import { cloneDeep } from "lodash";
+import { it } from "bun:test";
 import { problem } from "./problem";
-import { Problem } from "algo-lens-core";
 import { runTests } from "../../core/test";
 
 it("3sum", () => {
