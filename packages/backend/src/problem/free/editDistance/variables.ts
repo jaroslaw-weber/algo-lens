@@ -1,60 +1,61 @@
-import { VariableMetadataMap, VariableType } from "algo-lens-core";
+import { VariableMetadata } from "algo-lens-core"; // Updated import
 
-export const variableMetadata: VariableMetadataMap = {
-  dp: {
-    type: VariableType.TABLE,
-    label: "DP Table",
-    description: "Dynamic programming table storing edit distances",
+export const variableMetadata: VariableMetadata[] = [ // Changed to array
+  {
+    name: "dp", // Key became name
+    label: "dp", // Label added (same as name)
+    description: "Dynamic programming table storing edit distances", // Kept description
+    emoji: "🔢", // Added emoji
   },
-  i: {
-    type: VariableType.INDEX,
+  {
+    name: "i",
     label: "i",
     description: "Outer loop index (for s1)",
+    emoji: "➡️",
   },
-  j: {
-    type: VariableType.INDEX,
+  {
+    name: "j",
     label: "j",
     description: "Inner loop index (for s2)",
+    emoji: "⬇️",
   },
-  s1: {
-    type: VariableType.STRING_ARRAY,
+  {
+    name: "s1",
     label: "s1",
     description: "First input string",
+    emoji: "📄",
   },
-  s2: {
-    type: VariableType.STRING_ARRAY,
+  {
+    name: "s2",
     label: "s2",
     description: "Second input string",
+    emoji: "📄",
   },
-  op: {
-    type: VariableType.NUMBER,
-    label: "Operation Cost",
-    description:
-      "Cost of the current operation (match or mismatch/insertion/deletion)",
+  {
+    name: "op",
+    label: "op",
+    description: "Cost of the current operation (match or mismatch/insertion/deletion)",
+    emoji: "💲",
   },
-  result: {
-    type: VariableType.NUMBER,
-    label: "Result",
+  {
+    name: "result",
+    label: "result",
     description: "Final edit distance",
+    emoji: "🏁",
   },
-  s1Length: {
-    type: VariableType.NUMBER,
-    label: "Length of s1",
+  {
+    name: "s1Length",
+    label: "s1Length",
     description: "Length of the first input string",
+    emoji: "📏",
   },
-  s2Length: {
-    type: VariableType.NUMBER,
-    label: "Length of s2",
+  {
+    name: "s2Length",
+    label: "s2Length",
     description: "Length of the second input string",
+    emoji: "📏",
   },
-  loop: {
-    type: VariableType.GROUP,
-    label: "Initialization Loop",
-    description: "Loop variables during DP table initialization",
-  },
-  loops: {
-    type: VariableType.GROUP,
-    label: "Main Loop",
-    description: "Loop variables during DP table computation",
-  },
-};
+  // Removed 'loop' and 'loops' groups as they don't represent specific variables
+  // in the same way as the others and might be better handled dynamically if needed.
+  // If they represent loop counters, 'i' and 'j' already cover that.
+];
