@@ -135,6 +135,7 @@ const getInput = () => ({
 // Export the complete problem setup including the input function, the computational function, and other metadata
 export const problem: Problem<SearchInput, ProblemState> = {
   title,
+  emoji: '🔍',
   code,
   getInput,
   func: search,

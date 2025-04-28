@@ -14,6 +14,7 @@ const getInput = () => ({
 
 export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   title: title,
+  emoji: '➕',
   code: code,
   getInput: getInput,
   func: generateSteps, // Use generateSteps from steps.ts

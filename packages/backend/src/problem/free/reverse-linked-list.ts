@@ -107,6 +107,7 @@ const getInput = () => {
 
 export const problem: Problem<ReverseListInput, ProblemState> = {
   title,
+  emoji: '↩️',
   code,
   getInput,
   func: reverseList,

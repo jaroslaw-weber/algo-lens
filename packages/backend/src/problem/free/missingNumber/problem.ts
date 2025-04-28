@@ -16,6 +16,7 @@ const getInput = () => ({
 // Export the complete problem setup
 export const problem: Problem<MissingNumberInput> = {
   title,
+  emoji: '❓',
   id: "missing-number",
   tags: ["math", "array"],
   getInput,

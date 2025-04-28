@@ -123,6 +123,7 @@ const getInput = () => {
 
 export const problem: Problem<SameTreeInput, ProblemState> = {
   title,
+  emoji: '🌲',
   code,
   getInput,
   func: sameTree,

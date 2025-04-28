@@ -10,6 +10,7 @@ const title = "Coin Change";
 
 export const problem: Problem<CoinChangeInput, ProblemState> = {
   title: title,
+  emoji: '🪙',
   code: code,
   func: generateSteps, // Use generateSteps from steps.ts
   testCases: coinChangeTestCases,

@@ -10,6 +10,7 @@ const title = "Climbing Stairs";
 
 export const problem: Problem<ClimbingStairsInput, ProblemState> = {
   title: title,
+  emoji: '🪜',
   code: code,
   func: generateSteps, // Use generateSteps from steps.ts
   testCases: climbingStairsTestCases,

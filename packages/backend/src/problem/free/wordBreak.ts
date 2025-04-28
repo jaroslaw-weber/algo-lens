@@ -90,6 +90,7 @@ const getInput = () => ({
 
 export const problem: Problem<WordBreakInput, ProblemState> = {
   title: title,
+  emoji: '📖',
   code: code,
   getInput: getInput,
   func: wordBreak,

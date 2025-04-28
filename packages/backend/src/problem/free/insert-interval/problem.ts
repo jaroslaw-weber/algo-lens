@@ -13,6 +13,7 @@ const getInput = () => ({
 
 export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
+  emoji: '➕',
   code: code,
   getInput: getInput,
   func: generateSteps, // Use generateSteps from steps.ts

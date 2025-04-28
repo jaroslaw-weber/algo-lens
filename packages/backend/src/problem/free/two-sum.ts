@@ -57,6 +57,7 @@ export function twoSum(p: TwoSumInput): ProblemState[] {
 
 export const problem: Problem<TwoSumInput, ProblemState> = {
   title: "Two Sum",
+  emoji: '🎯',
   code: `function twoSum(nums: number[], target: number): number[] {
     const seen = new Map();
     //#1

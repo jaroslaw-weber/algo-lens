@@ -8,6 +8,7 @@ import { testcases } from "./testcase";
 
 export const problem: Problem<ThreeSumInput, ProblemState> = {
   title: "Three Sum",
+  emoji: '🔢',
   code: code,
   func: generateSteps,
   testCases: testcases, // Add the test cases here
