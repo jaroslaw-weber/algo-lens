@@ -1,25 +1,21 @@
 
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState } from "algo-lens-core";
+import { ProblemState } from "algo-lens-core"; // Removed Problem
 import {
   asArray,
   as2dArray,
-  asSimpleValue,
-  asStringArray,
-  asValueGroup,
+  // Removed unused imports asSimpleValue, asStringArray, asValueGroup
 } from "../core/utils";
+import { PacificAtlanticInput } from "./types"; // Import PacificAtlanticInput
 
-// Defines the interface for the input expected by the pacificAtlanticWaterFlow function
-interface PacificAtlanticInput {
-  heights: number[][];
-}
+// Removed PacificAtlanticInput interface definition
 
 /**
  * Implements the pacificAtlanticWaterFlow algorithm which finds the cells that can flow to both the Pacific and Atlantic oceans.
  * @param p - The input parameters including a 2D array of heights.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[] {
+export function generateSteps(p: PacificAtlanticInput): ProblemState[] { // Renamed and Exported
   const { heights } = p;
   const rows = heights.length;
   const cols = heights[0].length;
@@ -114,28 +110,4 @@ export function pacificAtlanticWaterFlow(p: PacificAtlanticInput): ProblemState[
   return steps;
 }
 
-// Example implementation of the pacificAtlanticWaterFlow function for demonstration and testing
-const code = `function pacificAtlanticWaterFlow(heights: number[][]): number[][] {
-  // ...
-}`;
-
-// Description for a larger, more complex input set to test and visualize the algorithm
-const title = "Pacific Atlantic Water Flow";
-const getInput = () => ({
-  heights: [
-    [1, 2, 2, 3, 5],
-    [3, 2, 3, 4, 4],
-    [2, 4, 5, 3, 1],
-    [6, 7, 1, 4, 5],
-    [5, 1, 1, 2, 4],
-  ],
-});
-
-// Export the complete problem setup including the input function, the computational function, and other metadata
-export const pacificAtlanticWaterFlowProblem: Problem<PacificAtlanticInput, ProblemState> = {
-  title,
-  code,
-  getInput,
-  func: pacificAtlanticWaterFlow,
-  id: "pacific-atlantic-water-flow",
-};
+// Removed code, title, getInput, Problem export

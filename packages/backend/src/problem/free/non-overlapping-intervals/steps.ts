@@ -1,19 +1,13 @@
-import { IntervalVariable, Problem, ProblemState, Variable } from "algo-lens-core";
+import { ProblemState, Variable } from "algo-lens-core"; // Removed IntervalVariable, Problem
 import {
-  asArray,
-  as2dArray,
-  asSimpleValue,
-  asStringArray,
+  // Removed unused imports
   asValueGroup,
   asIntervals,
   getIntervalBounds,
 } from "../core/utils";
+import { EraseOverlapIntervalsInput } from "./types"; // Import EraseOverlapIntervalsInput
 
-interface EraseOverlapIntervalsInput {
-  intervals: number[][];
-}
-
-export function eraseOverlapIntervals(
+export function generateSteps( // Renamed and Exported
   p: EraseOverlapIntervalsInput
 ): ProblemState[] {
   const { intervals } = p;
@@ -67,54 +61,4 @@ export function eraseOverlapIntervals(
   return steps;
 }
 
-const code = `function eraseOverlapIntervals(intervals: number[][]): number {
-  //#1 Sort intervals by their end points
-  intervals.sort((a, b) => a[1] - b[1]);
-  let lastEnd = Number.MIN_SAFE_INTEGER;
-  let removalCount = 0;
-
-  //#2 Iterate through the intervals
-  for (let i = 0; i < intervals.length; i++) {
-    const currentStart = intervals[i][0];
-
-    //#3 Check for overlap
-    if (currentStart < lastEnd) {
-      //#4 Increment removal count on overlap
-      removalCount++;
-    } else {
-      //#5 Update lastEnd if no overlap
-      lastEnd = intervals[i][1];
-    }
-  }
-
-  //#6 Return the count of removed intervals
-  return removalCount;
-}`;
-
-
-const title = "Non-overlapping Intervals";
-const getInput = () => ({
-  intervals: [
-    [17, 20],
-    [2, 6],
-    [8, 10],
-    [12, 15],
-    [5, 9],
-    [1, 3],
-    [14, 18],
-    [19, 22],
-  ],
-});
-
-export const eraseOverlapIntervalsProblem: Problem<
-  EraseOverlapIntervalsInput,
-  ProblemState
-> = {
-  title,
-  code,
-  getInput,
-  func: eraseOverlapIntervals,
-  id: "non-overlapping-intervals",
-  tested:true,
-  tags: ["interval"]
-};
+// Removed EraseOverlapIntervalsInput interface, code, title, getInput, tested flag, Problem export
