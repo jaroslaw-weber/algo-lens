@@ -1,85 +1,86 @@
-import { VariableDefinition } from "algo-lens-core";
+import { VariableMetadata } from "algo-lens-core"; // Updated import
 
 // Define the core variables used in the Course Schedule algorithm
-export const courseScheduleVariables: VariableDefinition[] = [
+export const variableMetadata: VariableMetadata[] = [ // Renamed export
   {
-    id: "numCourses",
-    name: "Number of Courses",
-    type: "simple",
-    description: "The total number of courses.",
+    name: "Number of Courses", // Kept name
+    label: "Number of Courses", // Added label
+    description: "The total number of courses.", // Kept description
+    emoji: "📚", // Added emoji (example)
   },
   {
-    id: "prerequisites",
     name: "Prerequisites",
-    type: "hashmap", // Representing as a map for visualization
+    label: "Prerequisites",
     description: "List of prerequisite pairs [course, prerequisite].",
+    emoji: "🔗", // Added emoji (example)
   },
   {
-    id: "graph",
     name: "Adjacency List",
-    type: "hashmap", // Representing the graph as a map for visualization
+    label: "Adjacency List",
     description: "Graph representation where key is prerequisite and value is list of courses.",
+    emoji: "🗺️", // Added emoji (example)
   },
   {
-    id: "inDegree",
     name: "In-Degree",
-    type: "array",
+    label: "In-Degree",
     description: "Array storing the in-degree of each course.",
+    emoji: "📉", // Added emoji (example)
   },
   {
-    id: "queue",
     name: "Queue",
-    type: "array",
+    label: "Queue",
     description: "Queue storing courses with zero in-degree, ready to be processed.",
+    emoji: "➡️", // Added emoji (example)
   },
   {
-    id: "count",
     name: "Courses Finished",
-    type: "value-group", // Part of a value group
+    label: "Courses Finished",
     description: "Counter for the number of courses successfully processed.",
+    emoji: "✅", // Added emoji (example)
   },
   {
-    id: "current",
     name: "Current Course",
-    type: "simple",
+    label: "Current Course",
     description: "The course currently being processed from the queue.",
+    emoji: "🎓", // Added emoji (example)
   },
    {
-    id: "prev", // Keep 'prev' as used in logStep, maps to neighbors conceptually
     name: "Neighbors",
-    type: "array",
+    label: "Neighbors",
     description: "Neighbors of the current course being processed.",
+    emoji: "🧑‍🤝‍🧑", // Added emoji (example)
   },
   {
-    id: "neighbor",
     name: "Neighbor",
-    type: "simple",
+    label: "Neighbor",
     description: "A neighbor of the current course.",
+    emoji: "👤", // Added emoji (example)
   },
   {
-    id: "allCoursesTaken",
     name: "Result",
-    type: "boolean-group", // Part of a boolean group
+    label: "Result",
     description: "Indicates if all courses can be finished.",
+    emoji: "🏁", // Added emoji (example)
   },
    {
-    id: "course",
     name: "Course (from Prereq)",
-    type: "simple",
+    label: "Course (from Prereq)",
     description: "Course being processed during graph initialization.",
+    emoji: "📖", // Added emoji (example)
   },
   {
-    id: "prereq",
     name: "Prerequisite (from Prereq)",
-    type: "simple",
+    label: "Prerequisite (from Prereq)",
     description: "Prerequisite being processed during graph initialization.",
+    emoji: "🔑", // Added emoji (example)
   },
   {
-    id: "deg",
     name: "Degree (In-Degree Check)",
-    type: "simple",
+    label: "Degree (In-Degree Check)",
     description: "In-degree value being checked during queue initialization.",
+    emoji: "🔢", // Added emoji (example)
   }
   // Note: Visualization details like pointers (inDegreeIndex, prevIndex, etc.)
   // are handled dynamically in logStep, not defined statically here.
+  // Removed id and type properties
 ];
