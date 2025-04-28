@@ -1,5 +1,5 @@
 import { Problem } from "algo-lens-core";
-import { cloneDeep } from "lodash";
+import { cloneDeep, last } from "lodash";
 import { describe, it, expect } from "bun:test";
 
 export function runTests(problem: Problem<any, any>) {
@@ -7,8 +7,9 @@ export function runTests(problem: Problem<any, any>) {
 	  const input = cloneDeep(testCase.input);
 	  const expected = cloneDeep(testCase.expected);
 	  const states = problem.func(input);
+	  const state = last(states)
   
-	  expect(states).toEqual(expected);
+	  expect(state).toEqual(expected);
 	}
 	
   }
