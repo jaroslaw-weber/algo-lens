@@ -4,8 +4,8 @@ export interface ProblemMetadata {
 }
 
 export interface TestCase<Input, State> {
-  input: any;
-  expected: any;
+  input: Input;
+  expected: State;
 }
 
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
