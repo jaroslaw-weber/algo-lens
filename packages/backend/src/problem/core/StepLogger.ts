@@ -71,10 +71,6 @@ export class StepLogger {
     });
   }
 
-  public json(
-
-  )
-
   public setMeta(name: string, metadata: VariableMetadata) {
     this.metadata.set(name, metadata);
   }
