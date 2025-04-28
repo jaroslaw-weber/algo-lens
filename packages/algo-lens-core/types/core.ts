@@ -1,11 +1,6 @@
 export interface ProblemMetadata {
   variables: VariableMetadata[];
-  groups?: {
-    name: string;
-    label: string;
-    description?: string;
-    emoji?: string;
-  }[];
+  groups?: GroupMetadata[];
 }
 
 export interface TestCase<Input, State> {
@@ -201,8 +196,16 @@ export interface ProblemState {
 
 export interface VariableMetadata {
   name: string;
+  label?: string;
   emoji: string;
   description: string;
+}
+
+export interface GroupMetadata {
+  name: string;
+  label?: string;
+  emoji?: string;
+  description?: string;
 }
 
 export class ListNode {
