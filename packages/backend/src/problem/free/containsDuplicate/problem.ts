@@ -60,7 +60,7 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const containsDuplicateProblem: Problem<
+export const problem: Problem<
   ContainsDuplicateInput,
   ProblemState
 > = {

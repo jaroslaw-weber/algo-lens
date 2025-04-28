@@ -88,7 +88,7 @@ const getInput = () => ({
   wordDict: ["cats", "dog", "sand", "and", "cat"],
 });
 
-export const wordBreakProblem: Problem<WordBreakInput, ProblemState> = {
+export const problem: Problem<WordBreakInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

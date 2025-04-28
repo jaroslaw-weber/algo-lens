@@ -12,7 +12,7 @@ const getInput = () => ({
   nums: [-2, 2, 1, -9, 4, -7, 2, 1, 1, 5, -5, 4], // Output: 10
 });
 
-export const maximumSubarrayProblem: Problem<MaximumSubarrayInput, ProblemState> = {
+export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

@@ -14,7 +14,7 @@ const getInput = () => ({
 
 // Note: The original file used MinPathSumState, but ProblemState is the standard.
 // If specific state aspects were needed, they'd be handled within generateSteps.
-export const minPathSumProblem: Problem<MinPathSumInput, ProblemState> = {
+export const problem: Problem<MinPathSumInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

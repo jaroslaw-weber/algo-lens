@@ -83,7 +83,7 @@ const code = `function uniquePaths(m: number, n: number): number {
 const title = "Unique Paths";
 const getInput = () => ({ m: 3, n: 7 });
 
-export const uniquePathsProblem: Problem<UniquePathsInput, UniquePathsState> = {
+export const problem: Problem<UniquePathsInput, UniquePathsState> = {
   title: title,
   code: code,
   getInput: getInput,

@@ -6,7 +6,7 @@ import { LISInput } from "./types"; // Import input type from types.ts
 const title = "Longest Increasing Subsequence";
 const getInput = () => ({ nums: [10, 9, 2, 5, 3, 7, 101, 18] });
 
-export const longestIncreasingSubsequenceProblem: Problem<LISInput, ProblemState> = {
+export const problem: Problem<LISInput, ProblemState> = {
     title: title,
     code: code,
     getInput: getInput,

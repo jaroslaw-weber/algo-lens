@@ -25,7 +25,7 @@ const getInput = (): CourseScheduleInput => ({
 });
 
 // Define the problem structure
-export const courseScheduleProblem: Problem<CourseScheduleInput, ProblemState> =
+export const problem: Problem<CourseScheduleInput, ProblemState> =
   {
     title: title,
     code: code, // Use the imported code string

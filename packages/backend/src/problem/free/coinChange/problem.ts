@@ -8,7 +8,7 @@ import { CoinChangeInput } from "./types";
 const title = "Coin Change";
 const getInput = () => ({ coins: [1, 2, 5], target: 11 });
 
-export const coinChangeProblem: Problem<CoinChangeInput, ProblemState> = {
+export const problem: Problem<CoinChangeInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

@@ -17,7 +17,7 @@ const getInput = () => ({
   ],
 });
 
-export const eraseOverlapIntervalsProblem: Problem<
+export const problem: Problem<
   EraseOverlapIntervalsInput,
   ProblemState
 > = {

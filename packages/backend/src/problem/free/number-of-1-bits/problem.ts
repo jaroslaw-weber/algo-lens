@@ -6,7 +6,7 @@ import { HammingWeightInput } from "./types"; // Import input type from types.ts
 const title = "Hamming Weight";
 const getInput = () => ({ n: 9 });
 
-export const hammingWeightProblem: Problem<HammingWeightInput, ProblemState> = {
+export const problem: Problem<HammingWeightInput, ProblemState> = {
   title,
   code,
   getInput,

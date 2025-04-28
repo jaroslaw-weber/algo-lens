@@ -14,7 +14,7 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup
-export const missingNumberProblem: Problem<MissingNumberInput> = {
+export const problem: Problem<MissingNumberInput> = {
   title,
   id: "missing-number",
   tags: ["math", "array"],

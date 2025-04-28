@@ -121,7 +121,7 @@ const getInput = () => {
   return result;
 };
 
-export const sameTreeProblem: Problem<SameTreeInput, ProblemState> = {
+export const problem: Problem<SameTreeInput, ProblemState> = {
   title,
   code,
   getInput,

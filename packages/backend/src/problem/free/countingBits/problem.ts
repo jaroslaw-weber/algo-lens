@@ -10,7 +10,7 @@ const getInput = () => ({
   n: 15, // Using the same example input as the original file
 });
 
-export const countBitsProblem: Problem<CountBitsInput, ProblemState> = {
+export const problem: Problem<CountBitsInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

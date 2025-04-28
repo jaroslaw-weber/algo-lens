@@ -18,7 +18,7 @@ const getInput = () => ({
   ],
 });
 
-export const mergeIntervalsProblem: Problem<
+export const problem: Problem<
   MergeIntervalsInput,
   ProblemState
 > = {

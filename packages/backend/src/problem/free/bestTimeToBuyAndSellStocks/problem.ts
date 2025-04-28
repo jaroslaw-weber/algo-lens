@@ -10,7 +10,7 @@ import { MaxProfitInput } from "./types";
 const title = "Best Time to Buy and Sell Stock";
 const getInput = () => ({ prices: [7, 1, 5, 3, 6, 4] });
 
-export const maxProfitProblem: Problem<MaxProfitInput, ProblemState> = {
+export const problem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,
