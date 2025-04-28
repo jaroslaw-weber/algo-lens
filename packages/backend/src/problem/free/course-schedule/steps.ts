@@ -6,7 +6,7 @@ import {
   asValueGroup,
   asBooleanGroup,
   from2dArrayToMap,
-} from "../../../core/utils"; // Adjusted import path
+} from "../../core/utils"; // Adjusted import path
 import { LogExtraInfo } from "./types"; // Import from types.ts
 
 // This function will be called by the main algorithm to log state

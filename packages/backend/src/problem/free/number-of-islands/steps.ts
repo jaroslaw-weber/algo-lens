@@ -1,7 +1,7 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { cloneDeep } from "lodash";
 import { ProblemState, Variable } from "algo-lens-core"; // Removed Problem
-import { as2dArray, asValueGroup, deepClone2DArray } from "../core/utils";
+import { as2dArray, asValueGroup, deepClone2DArray } from "../../core/utils";
 import { NumIslandsInput } from "./types"; // Import NumIslandsInput
 
 // Removed duplicate NumIslandsInput interface definition

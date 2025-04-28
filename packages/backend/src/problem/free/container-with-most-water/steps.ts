@@ -4,7 +4,7 @@ import {
   asArray,
   // Removed unused imports
   asValueGroup,
-} from "../core/utils";
+} from "../../core/utils";
 import { ContainerInput } from "./types"; // Import from ./types
 
 // Export ContainerInput as per instruction (even though it's imported)

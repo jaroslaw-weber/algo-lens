@@ -3,7 +3,7 @@ import {
   // Removed unused imports
   asIntervals,
   getIntervalBounds,
-} from "../core/utils";
+} from "../../core/utils";
 import { MergeIntervalsInput } from "./types"; // Import MergeIntervalsInput
 
 export function generateSteps(p: MergeIntervalsInput): ProblemState[] { // Renamed and Exported
