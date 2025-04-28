@@ -19,12 +19,6 @@ export interface Problem<Input, State> {
   /** Contains the source code for the problem-solving function. */
   code: string;
 
-  /** A function that provides the input data for the problem.
-   *
-   * @deprecated
-   */
-  getInput?: () => Input;
-
   testCases?: TestCase<Input, State>[];
 
   /** Title of the problem. */
@@ -37,9 +31,6 @@ export interface Problem<Input, State> {
   url?: string;
 
   hide?: boolean;
-
-  /* did i test this code? does it work well? */
-  tested?: boolean;
 
   tags?: string[];
 
