@@ -13,9 +13,7 @@ const getInput = () => ({ prices: [7, 1, 5, 3, 6, 4] });
 export const problem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
   code: code,
-  getInput: getInput,
   func: generateSteps,
-  tested: true,
   id: "best-time-to-buy-and-sell-stock",
   tags: ["dynamic programming"],
   metadata: {

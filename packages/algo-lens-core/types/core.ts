@@ -14,7 +14,7 @@ export interface Problem<Input, State> {
   /** Contains the source code for the problem-solving function. */
   code: string;
 
-  testCases?: TestCase<Input, State>[];
+  testCases: TestCase<Input, State>[];
 
   /** Title of the problem. */
   title: string;
@@ -25,13 +25,11 @@ export interface Problem<Input, State> {
   /** Optional URL for reference or problem description. */
   url?: string;
 
-  hide?: boolean;
-
   tags?: string[];
 
   difficulty?: Difficulty;
 
-  metadata?: ProblemMetadata;
+  metadata: ProblemMetadata;
 }
 
 export type ProblemGroup = {
