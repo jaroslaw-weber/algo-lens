@@ -1,5 +1,5 @@
 {
 	"name": "algo-lens",
 	"private": true,
-	"workspaces": ["packages/*"]
-  }
+	"workspaces": ["packages/*", "landing-page"]
+}
