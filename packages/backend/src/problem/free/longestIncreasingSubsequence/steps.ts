@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core"; // Removed Problem, Variable
-import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
+import { asArray, asSimpleValue, asValueGroup } from "../../core/utils";
 import { LISInput } from "./types"; // Import LISInput
 
 export function generateSteps(p: LISInput): ProblemState[] { // Renamed and Exported

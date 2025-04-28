@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core"; // Removed Problem
-import { asBinary, asValueGroup } from "../core/utils";
+import { asBinary, asValueGroup } from "../../core/utils";
 import { HammingWeightInput } from "./types"; // Import HammingWeightInput
 
 export function generateSteps(p: HammingWeightInput): ProblemState[] { // Renamed and Exported

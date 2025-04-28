@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core"; // Removed Problem
-import { as2dArray, asArray, asSimpleValue } from "../core/utils";
+import { as2dArray, asArray, asSimpleValue } from "../../core/utils";
 import { MinPathSumInput } from "./types"; // Import MinPathSumInput
 
 export function generateSteps(p: MinPathSumInput): ProblemState[] { // Renamed and Exported

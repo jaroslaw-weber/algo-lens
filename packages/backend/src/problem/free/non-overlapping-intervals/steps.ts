@@ -4,7 +4,7 @@ import {
   asValueGroup,
   asIntervals,
   getIntervalBounds,
-} from "../core/utils";
+} from "../../core/utils";
 import { EraseOverlapIntervalsInput } from "./types"; // Import EraseOverlapIntervalsInput
 
 export function generateSteps( // Renamed and Exported
