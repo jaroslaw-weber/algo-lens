@@ -79,7 +79,8 @@ class ProblemStateCache {
   }
 
   private cacheProblem(problem: Problem<any, any>) {
-    const states = problem.func(problem.getInput());
+    const testcase = problem.testCases[0];
+    const states = problem.func(testcase);
     for (let i = 0; i < states.length; i++) {
       const state = states[i];
       const key2 = this.getKey(problem, i + 1);
