@@ -8,7 +8,7 @@ import { variableMetadata } from "./variables"; // Import variableMetadata
 const title = "House Robber";
 const getInput = () => ({ nums: [2, 7, 9, 3, 1] }); // Ensure getInput is defined
 
-export const houseRobberProblem: Problem<HouseRobberInput, ProblemState> = {
+export const problem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
   code: code, // Use imported code
   getInput: getInput,

@@ -6,7 +6,7 @@ import { code } from "./code";
 import { ThreeSumInput } from "./types";
 import { threeSumTestCases } from "./testcase";
 
-export const threeSumProblem: Problem<ThreeSumInput, ProblemState> = {
+export const problem: Problem<ThreeSumInput, ProblemState> = {
   title: "Three Sum",
   code: code,
   getInput: () => ({

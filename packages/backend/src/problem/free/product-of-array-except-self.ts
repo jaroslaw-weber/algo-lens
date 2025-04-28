@@ -109,7 +109,7 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const productExceptSelfProblem: Problem<
+export const problem: Problem<
   ProductExceptSelfInput,
   ProblemState
 > = {

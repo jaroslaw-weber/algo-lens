@@ -55,7 +55,7 @@ export function twoSum(p: TwoSumInput): ProblemState[] {
   return steps;
 }
 
-export const twoSumProblem: Problem<TwoSumInput, ProblemState> = {
+export const problem: Problem<TwoSumInput, ProblemState> = {
   title: "Two Sum",
   code: `function twoSum(nums: number[], target: number): number[] {
     const seen = new Map();

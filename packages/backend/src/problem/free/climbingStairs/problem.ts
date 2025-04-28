@@ -8,7 +8,7 @@ import { ClimbingStairsInput } from "./types";
 const title = "Climbing Stairs";
 const getInput = () => ({ n: 8 });
 
-export const climbStairsProblem: Problem<ClimbingStairsInput, ProblemState> = {
+export const problem: Problem<ClimbingStairsInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

@@ -15,7 +15,7 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const numIslandsProblem: Problem<NumIslandsInput, ProblemState> = {
+export const problem: Problem<NumIslandsInput, ProblemState> = {
   title,
   code,
   getInput,

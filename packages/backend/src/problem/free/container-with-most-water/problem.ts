@@ -8,7 +8,7 @@ const getInput = () => ({
   height: [1, 8, 6, 2, 5, 4, 8, 3, 7],
 });
 
-export const maxAreaProblem: Problem<ContainerInput, ProblemState> = {
+export const problem: Problem<ContainerInput, ProblemState> = {
   title,
   code,
   getInput,

@@ -11,7 +11,7 @@ const getInput = () => ({
   newInterval: [2, 5] as Interval, // Add type assertion for clarity
 });
 
-export const insertIntervalProblem: Problem<InsertIntervalInput, ProblemState> = {
+export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
   code: code,
   getInput: getInput,

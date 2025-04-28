@@ -105,7 +105,7 @@ const getInput = () => {
   return { head:head };
 };
 
-export const reverseListProblem: Problem<ReverseListInput, ProblemState> = {
+export const problem: Problem<ReverseListInput, ProblemState> = {
   title,
   code,
   getInput,

@@ -225,7 +225,7 @@ const getInput = () => ({
 });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const setMatrixZeroesProblem: Problem<
+export const problem: Problem<
   SetMatrixZeroesInput,
   ProblemState
 > = {

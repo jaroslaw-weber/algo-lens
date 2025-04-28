@@ -110,7 +110,7 @@ const code = `function sumOfTwoIntegers(a: number, b: number): number {
 }`;
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
-export const sumOfTwoIntegersProblem: Problem<SumOfTwoIntegersInput, number> = {
+export const problem: Problem<SumOfTwoIntegersInput, number> = {
   title: "Sum of Two Integers",
   code,
   getInput: () => ({ a: 3, b: 5 }),

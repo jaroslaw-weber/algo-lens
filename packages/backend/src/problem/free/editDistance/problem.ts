@@ -8,7 +8,7 @@ import { groups } from "./groups";
 const title = "Edit Distance";
 const getInput = (): EditDistanceInput => ({ s1: "kitten", s2: "sitting" });
 
-export const editDistanceProblem: Problem<EditDistanceInput, ProblemState> = {
+export const problem: Problem<EditDistanceInput, ProblemState> = {
   title,
   id: "edit-distance",
   tags: ["dynamic programming", "string"],
