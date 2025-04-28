@@ -1,7 +1,7 @@
 import { VariableGroup } from "algo-lens-core";
 
 export const groups: VariableGroup[] = [
-  { name: "dpCalculation", title: "DP Calculation" },
-  { name: "loopInfo", title: "Loop Info" },
-  { name: "result", title: "Result" }, // Added for final result
+  { name: "dpCalculation", title: "DP Calculation", emoji: "💰" },
+  { name: "loopInfo", title: "Loop Info", emoji: "🔁" },
+  { name: "result", title: "Result", emoji: "🏁" }, // Added for final result
 ];
