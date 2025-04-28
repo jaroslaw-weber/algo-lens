@@ -19,7 +19,7 @@ export async function getAllProblemGroups(): Promise<ProblemGroup[]> {
   const freeDirPath = path.join(__dirname, "../free");
   console.log("loading problems from", freeDirPath);
   const dirEntries = fs.readdirSync(freeDirPath, { withFileTypes: true });
-  console.log(dirEntries);
+  //console.log(dirEntries);
 
   const dynamicallyLoadedProblems: Problem<any, any>[] = [];
   const loadedProblemTitles = new Set<string>();
