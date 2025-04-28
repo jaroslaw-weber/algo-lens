@@ -48,7 +48,7 @@ export class StepLogger {
     pointer3?: Pointer2D
   ){
     this.temp.push({
-      variables: [as2dArray(name, values, [pointer1!, pointer2!, pointer3!])],
+      variables: [as2dArray(name, values, [pointer1, pointer2, pointer3].filter(x => !!x))],
       breakpoint: this.currentBreakpoint,
     });
   }
