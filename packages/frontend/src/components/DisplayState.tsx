@@ -38,9 +38,13 @@ const Wrapper = ({
   children: React.ReactNode;
   variable: Variable;
 }) => (
-  <div className="border border-primary shadow rounded-xl p-6 relative">
+  <div
+    className={`border border-primary shadow rounded-xl p-6 relative ${
+      variable.hide ? 'opacity-50' : ''
+    }`}
+  >
     <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold">
-      {emoji} {label}
+      {emoji} {label} {variable.hide? '(not in memory)' : ''}
     </div>
     {description && <p className="text-xs text-gray-500 mb-2">{description}</p>}
     {children}
@@ -84,6 +88,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={numData.label}
+                  variable={variable}
                 >
                   <DisplaySingleValue data={numData} />
                 </Wrapper>
@@ -96,6 +101,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={arrData.label}
+                  variable={variable}
                 >
                   <DisplayArray data={arrData} />
                 </Wrapper>
@@ -108,6 +114,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={groupData.label}
+                  variable={variable}
                 >
                   <DisplayValueGroup data={groupData} />
                 </Wrapper>
@@ -120,6 +127,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={binaryData.label}
+                  variable={variable}
                 >
                   <DisplayBinary data={binaryData} />
                 </Wrapper>
@@ -132,6 +140,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={boolData.label}
+                  variable={variable}
                 >
                   <DisplayBooleanGroup data={boolData} />
                 </Wrapper>
@@ -144,6 +153,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={intervalData.label}
+                  variable={variable}
                 >
                   <DisplayIntervals data={intervalData} />
                 </Wrapper>
@@ -156,6 +166,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={treeData.label}
+                  variable={variable}
                 >
                   <DisplayTree data={treeData} />
                 </Wrapper>
@@ -168,6 +179,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={hashsetData.label}
+                  variable={variable}
                 >
                   <DisplayHashset data={hashsetData} />
                 </Wrapper>
@@ -180,6 +192,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={hashmapData.label}
+                  variable={variable}
                 >
                   <DisplayHashmap data={hashmapData} />
                 </Wrapper>
@@ -192,6 +205,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={listData.label}
+                  variable={variable}
                 >
                   <DisplayLinkedList data={listData} />
                 </Wrapper>

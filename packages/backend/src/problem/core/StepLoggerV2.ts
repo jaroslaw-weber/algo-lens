@@ -34,9 +34,14 @@ export class StepLoggerV2 {
   }
 
   private upsert(variable: Variable) {
+    //replace or add to array (use lodash), keep the order
     
-    this.variables = this.variables.filter((v) => v.label!== variable.label);
-    this.variables.push(variable);
+    const index = this.variables.findIndex((s) => s.label === variable.label);
+    if (index!== -1) {
+      this.variables[index] = variable;
+    } else {
+      this.variables.push(variable);
+    }
   }
 
   public array(
