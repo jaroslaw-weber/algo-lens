@@ -19,7 +19,7 @@ export class StepLoggerV2 {
     this.metadata = new Map();
   }
 
-  public save() {
+  private save() {
     const aggregated: ProblemState = {
       variables: this.variables,
       breakpoint: this.currentBreakpoint,

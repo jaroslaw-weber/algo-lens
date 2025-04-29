@@ -54,6 +54,9 @@ export function generateSteps(p: MaxProfitInput): ProblemState[] {
     l.group("smaller", { diff, prev });
     l.group("loop", { i }, { min: 0, max: prices.length });
     l.breakpoint(4, `Day ${i}: State after updating minimum price. Preparing for next iteration.`);
+    l.hide("smaller");
+    l.hide("profit");
+    l.hide("loop");
   }
 
   const result = dp[prices.length - 1];
