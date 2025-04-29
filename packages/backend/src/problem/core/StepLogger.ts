@@ -1,4 +1,9 @@
-import { Pointer2D, Problem, ProblemState, VariableMetadata } from "algo-lens-core";
+import {
+  Pointer2D,
+  Problem,
+  ProblemState,
+  VariableMetadata,
+} from "algo-lens-core";
 import { as2dArray, asArray, asSimpleValue, asValueGroup } from "./utils";
 import _ = require("lodash");
 
@@ -46,9 +51,15 @@ export class StepLogger {
     pointer1?: Pointer2D,
     pointer2?: Pointer2D,
     pointer3?: Pointer2D
-  ){
+  ) {
     this.temp.push({
-      variables: [as2dArray(name, values, [pointer1, pointer2, pointer3].filter(x => !!x))],
+      variables: [
+        as2dArray(
+          name,
+          values,
+          [pointer1, pointer2, pointer3].filter((x) => !!x)
+        ),
+      ],
       breakpoint: this.currentBreakpoint,
     });
   }
@@ -60,13 +71,23 @@ export class StepLogger {
     });
   }
 
+  /**
+   * dont use group! instead just add group metadata to group variables
+   * @deprecated
+   */
   public group(
     name: string,
     values: Record<string, any>,
     options?: { min?: number; max?: number; reverse?: any }
   ) {
+    const o = options ?? this.groupOptions.find((g) => g.name === name);
+    if (!o) {
+      console.error("no options for this group: " + name);
+      throw new Error("no options for this group: " + name);
+    }
+
     this.temp.push({
-      variables: [asValueGroup(name, values, options as any)],
+      variables: [asValueGroup(name, values, o)],
       breakpoint: this.currentBreakpoint,
     });
   }
