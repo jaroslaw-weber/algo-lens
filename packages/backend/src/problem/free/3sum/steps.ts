@@ -3,9 +3,10 @@ import { StepLogger } from "../../core/StepLogger"; // Assuming StepLogger is in
 import { ThreeSumInput } from "./types";
 // Import group names - adjust if groups.ts exports differently
 import { groups } from "./groups";
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 export function generateSteps(p: ThreeSumInput): ProblemState[] {
-  const l = new StepLogger();
+  const l = new StepLoggerV2();
   const nums = [...p.nums];
   const target = 0;
   const result: number[][] = [];
