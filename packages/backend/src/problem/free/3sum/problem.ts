@@ -11,7 +11,7 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
   emoji: '🔢',
   code: code,
   func: generateSteps,
-  testCases: testcases, // Add the test cases here
+  testcases: testcases, // Add the test cases here
   id: "3sum",
   tags: ["array", "hash set", "two pointers"], // Keep updated tags
   metadata: {

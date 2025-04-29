@@ -1,11 +1,12 @@
 import { sum } from "lodash";
-import { ProblemState } from "algo-lens-core" // Removed Problem
+import { ProblemState } from "algo-lens-core"; // Removed Problem
 import {
   asArray,
   // Removed unused imports
   asValueGroup,
 } from "../../core/utils";
 import { ContainerInput } from "./types"; // Import from ./types
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 // Export ContainerInput as per instruction (even though it's imported)
 export type { ContainerInput };
@@ -16,23 +17,25 @@ export type { ContainerInput };
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
 export function generateSteps(p: ContainerInput): ProblemState[] { // Renamed and Exported
+
+  const l = new StepLoggerV2();
   const { height } = p;
-  const steps: ProblemState[] = [];
   let left = 0;
   let right = height.length - 1;
   let maxArea = 0;
-  const max = sum(height)*2
+  const max = sum(height) * 2;
 
   // Helper function to create and log each step's computational state
   function log(point: number, area?: number) {
-    const step: ProblemState = {
-      variables: [asArray("height", height, left, right)],
-      breakpoint: point,
-    };
-      step.variables.push(
-        asValueGroup("area", { area, maxArea }, { min: 0, max })
-      );
-    steps.push(step);
+    l.array("height", height, left, right);
+    l.simple({  maxArea });
+    if(area!==undefined){
+      l.simple({ area });
+    }
+    else{
+      l.hide("area");
+    }
+    l.breakpoint(point);
   }
 
   // Initial state log before the loop starts
@@ -62,7 +65,7 @@ export function generateSteps(p: ContainerInput): ProblemState[] { // Renamed an
   // Logs the final state with the maximum area
   log(6, undefined);
 
-  return steps;
+  return l.getSteps();
 }
 
 // Removed code, title, getInput, id, tags, Problem export

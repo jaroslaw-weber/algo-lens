@@ -13,7 +13,7 @@ export const problem: Problem<CoinChangeInput, ProblemState> = {
   emoji: '🪙',
   code: code,
   func: generateSteps, // Use generateSteps from steps.ts
-  testCases: coinChangeTestCases,
+  testcases: coinChangeTestCases,
   id: "coin-change",
   tags: ["dynamic programming"],
   metadata: {

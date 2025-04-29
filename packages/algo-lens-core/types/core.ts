@@ -14,7 +14,7 @@ export interface Problem<Input, State> {
   /** Contains the source code for the problem-solving function. */
   code: string;
 
-  testCases: TestCase<Input, any>[];
+  testcases: TestCase<Input, any>[];
 
   /** Title of the problem. */
   title: string;

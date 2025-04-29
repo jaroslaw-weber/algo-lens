@@ -29,7 +29,7 @@ export const problem: Problem<CourseScheduleInput, ProblemState> = {
   title: title,
   emoji: "📚",
   code: code, // Use the imported code string
-  testCases: [
+  testcases: [
     {
       input: {
         numCourses: 10,
