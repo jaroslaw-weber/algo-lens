@@ -12,7 +12,6 @@ export class StepLoggerV2 {
   private variables: ProblemState[];
   private metadata: Map<string, VariableMetadata>;
   private currentBreakpoint = 0;
-
   constructor() {
 	this.steps = [];
 	this.variables = [];
@@ -30,6 +29,7 @@ export class StepLoggerV2 {
 
   public breakpoint(breakpoint: number, description?: string) {
 	this.currentBreakpoint = breakpoint;
+	this.save()
   }
 
   private upsert(variable: Variable) {
