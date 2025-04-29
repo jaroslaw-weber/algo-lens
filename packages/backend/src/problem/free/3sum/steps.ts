@@ -6,12 +6,6 @@ import { groups } from "./groups";
 
 export function generateSteps(p: ThreeSumInput): ProblemState[] {
   const l = new StepLogger();
-  l.groupOptions.push({
-    name: "nums",
-    min: 0,
-    max: p.nums.length,
-  });
-
   const nums = [...p.nums];
   const target = 0;
   const result: number[][] = [];
