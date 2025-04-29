@@ -80,7 +80,7 @@ export class StepLogger {
     values: Record<string, any>,
     options?: { min?: number; max?: number; reverse?: any }
   ) {
-    const o = options ?? this.groupOptions.find((g) => g.name === name);
+    const o = options as any
     if (!o) {
       console.error("no options for this group: " + name);
       throw new Error("no options for this group: " + name);

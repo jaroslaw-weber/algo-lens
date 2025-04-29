@@ -47,6 +47,9 @@ export interface Variable {
   /** Name of the variable. */
   label: string;
 
+  /** if true, make it gray or less visible */
+  hide?:boolean;
+
   /** Type of the variable, determining whether it's a single number or an array. */
   type:
     | "number"

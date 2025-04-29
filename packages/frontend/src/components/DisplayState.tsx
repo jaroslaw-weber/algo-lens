@@ -30,11 +30,13 @@ const Wrapper = ({
   description,
   emoji,
   children,
+  variable
 }: {
   label: string;
   description?: string;
   emoji?: string;
   children: React.ReactNode;
+  variable: Variable;
 }) => (
   <div className="border border-primary shadow rounded-xl p-6 relative">
     <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold">

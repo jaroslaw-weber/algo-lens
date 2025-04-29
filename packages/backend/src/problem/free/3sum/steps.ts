@@ -4,10 +4,24 @@ import { ThreeSumInput } from "./types";
 // Import group names - adjust if groups.ts exports differently
 import { groups } from "./groups";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import _ = require("lodash");
 
 export function generateSteps(p: ThreeSumInput): ProblemState[] {
   const l = new StepLoggerV2();
-  const nums = [...p.nums];
+
+  const nums = [...p.nums];  
+  const min = _.min(nums);
+  const max = _.max(nums);
+  l.groupOptions.set("triplet", {
+    min,
+    max,
+    reverse: false,
+  })
+  l.groupOptions.set("result", {
+    min,
+    max,
+    reverse: false,
+  });
   const target = 0;
   const result: number[][] = [];
   const seen = new Set<string>(); // To track unique triplets
@@ -55,7 +69,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
 
       l.array("nums", nums, i, left, right);
       l.simple({ target });
-      l.array("triplet", triplet);
+      l.group("triplet", triplet);
       l.simple({ sum });
       l.array2d("result", result);
       l.breakpoint(
@@ -68,7 +82,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
 
         l.array("nums", nums, i, left, right);
         l.simple({ target });
-        l.array("triplet", triplet);
+        l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
         // Add seen set visualization if StepLogger supports it
@@ -86,7 +100,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
 
           l.array("nums", nums, i, left, right);
           l.simple({ target });
-          l.array("triplet", triplet);
+          l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
           l.breakpoint(
@@ -104,7 +118,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         if (skippedLeft) {
           l.array("nums", nums, i, left, right);
           l.simple({ target });
-          l.array("triplet", triplet);
+          l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
           l.breakpoint(
@@ -122,7 +136,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
         if (skippedRight) {
           l.array("nums", nums, i, left, right);
           l.simple({ target });
-          l.array("triplet", triplet);
+          l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
           l.breakpoint(
@@ -133,7 +147,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
 
         l.array("nums", nums, i, left, right);
         l.simple({ target });
-        l.array("triplet", triplet);
+        l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
         l.breakpoint(
@@ -146,10 +160,11 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
 
         l.array("nums", nums, i, left, right);
         l.simple({ target });
-        l.array("triplet", triplet);
+        l.group("triplet", triplet);
         l.simple({ sum });
         // Don't log triplet/sum here as they are recalculated at the start of the next iteration
         l.array2d("result", result);
+        l.hide("triplet");
         l.breakpoint(
           12,
           `Inner loop: Moved pointers, new left = ${left}, new right = ${right}`
@@ -157,7 +172,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
       } else if (sum < target) {
         l.array("nums", nums, i, left, right);
         l.simple({ target });
-        l.array("triplet", triplet);
+        l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
         l.breakpoint(
@@ -170,7 +185,7 @@ export function generateSteps(p: ThreeSumInput): ProblemState[] {
 
         l.array("nums", nums, i, left, right);
         l.simple({ target });
-        l.array("triplet", triplet);
+        l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
         l.breakpoint(
