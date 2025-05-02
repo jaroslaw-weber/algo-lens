@@ -1,6 +1,6 @@
-import { ValueGroupMetadata } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core";
 
-export const groups: ValueGroupMetadata[] = [
+export const groups: GroupMetadata[] = [
   {
     name: "sum",
     label: "Sum Calculation",

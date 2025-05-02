@@ -1,7 +1,7 @@
-import { GroupDefinition } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core";
 
 // Define groups for visualizing the Course Schedule problem state
-export const courseScheduleGroups: GroupDefinition[] = [
+export const courseScheduleGroups: GroupMetadata[] = [
   {
     id: "input",
     title: "Input",
