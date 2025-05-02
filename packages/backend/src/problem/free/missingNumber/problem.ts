@@ -4,6 +4,7 @@ import { generateSteps } from "./steps";
 import { code } from "./code";
 import { variableMetadata } from "./variables";
 import { groups } from "./groups";
+import { testcases } from "./testcase";
 
 // Define the title
 const title = "Missing Number";
@@ -21,6 +22,7 @@ export const problem: Problem<MissingNumberInput> = {
   getInput,
   code, // Imported from ./code
   func: generateSteps, // Imported from ./steps
+  testCases: testcases,
   metadata: {
     variables: variableMetadata, // Imported from ./variables
     groups, // Imported from ./groups

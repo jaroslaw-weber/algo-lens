@@ -7,6 +7,7 @@ import {
 } from "../../core/utils"; // Adjusted path
 import { ContainsDuplicateInput } from "./types"; // New import
 import { code } from "./code"; // New import
+import { testcases } from "./testcase";
 
 /**
  * Implements the containsDuplicate algorithm which checks if there are any duplicate numbers in an array.
@@ -69,5 +70,6 @@ export const problem: Problem<
   getInput,
   func: containsDuplicate, // Use local function
   id: "contains-duplicate", // Keep original ID for now, might need adjustment later
+  testCases: testcases,
   tags: ["hashset"],
 };

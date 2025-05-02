@@ -4,6 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { InsertIntervalInput, Interval } from "./types"; // Import Interval as well
+import { testcases } from "./testcase";
 
 const title = "Insert Interval";
 const getInput = () => ({
@@ -17,6 +18,7 @@ export const problem: Problem<InsertIntervalInput, ProblemState> = {
   getInput: getInput,
   func: generateSteps, // Use generateSteps from steps.ts
   id: "insert-interval",
+  testCases: testcases,
   tags: ["intervals", "array", "merging"], // Added relevant tags
   tested: true, // Assuming it was tested, keep as true
   metadata: {

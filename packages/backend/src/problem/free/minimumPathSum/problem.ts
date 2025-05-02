@@ -2,6 +2,7 @@ import { Problem, ProblemState } from "algo-lens-core"; // Assuming ProblemState
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { code } from "./code";
 import { MinPathSumInput } from "./types"; // Import input type from types.ts
+import { testcases } from "./testcase";
 
 const title = "Minimum Path Sum";
 const getInput = () => ({
@@ -20,5 +21,6 @@ export const problem: Problem<MinPathSumInput, ProblemState> = {
   getInput: getInput,
   func: generateSteps, // Use the renamed function
   id: "minimum-path-sum",
+  testCases: testcases,
   tags: ["2d dynamic programming"],
 };

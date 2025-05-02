@@ -1,6 +1,7 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { Problem, ProblemState, Variable } from "algo-lens-core";
 import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
+import { testcases } from "./testcase";
 
 // Defines the interface for the input expected by the productExceptSelf function
 interface ProductExceptSelfInput {
@@ -118,6 +119,7 @@ export const problem: Problem<
   getInput,
   func: productExceptSelf,
   id: "product-of-array-except-self",
+  testCases: testcases,
   tags: ["array", "prefix sum"],
   tested:true
 };

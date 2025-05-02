@@ -2,6 +2,7 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { code } from "./code";
 import { EraseOverlapIntervalsInput } from "./types"; // Import input type from types.ts
+import { testcases } from "./testcase";
 
 const title = "Non-overlapping Intervals";
 const getInput = () => ({
@@ -26,6 +27,7 @@ export const problem: Problem<
   getInput,
   func: generateSteps, // Use the renamed function
   id: "non-overlapping-intervals",
+  testCases: testcases,
   tested:true, // Keep tested flag if present
   tags: ["interval"]
 };

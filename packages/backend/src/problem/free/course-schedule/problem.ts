@@ -3,6 +3,7 @@ import { courseSchedule, code } from "./code"; // Import the algorithm function 
 import { CourseScheduleInput } from "./types"; // Import the input type
 import { courseScheduleGroups } from "./groups"; // Import group definitions
 import { courseScheduleVariables } from "./variables"; // Import variable definitions
+import { testcases } from "./testcase";
 
 const title = "Course Schedule";
 
@@ -32,6 +33,7 @@ export const problem: Problem<CourseScheduleInput, ProblemState> =
     getInput: getInput,
     func: courseSchedule, // Use the imported algorithm function
     id: "course-schedule",
+    testCases: testcases,
     tags: ["graph", "bfs", "topological-sort"],
     groupDefinition: courseScheduleGroups, // Add group definitions
     variableDefinition: courseScheduleVariables, // Add variable definitions

@@ -4,6 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { MaximumSubarrayInput } from "./types";
+import { testcases } from "./testcase";
 
 const title = "Maximum Subarray";
 const getInput = () => ({
@@ -18,6 +19,7 @@ export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   getInput: getInput,
   func: generateSteps, // Use generateSteps from steps.ts
   id: "maximum-subarray",
+  testCases: testcases,
   tags: ["dynamic programming", "array", "kadane's algorithm"], // Added relevant tags
   tested: true, // Assuming it was tested, keep as true
   metadata: {

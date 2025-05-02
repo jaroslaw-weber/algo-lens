@@ -4,6 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { CountBitsInput } from "./types";
+import { testcases } from "./testcase";
 
 const title = "Counting Bits";
 const getInput = () => ({
@@ -15,6 +16,7 @@ export const problem: Problem<CountBitsInput, ProblemState> = {
   code: code,
   getInput: getInput,
   func: generateSteps, // Use the new step generator function
+  testCases: testcases,
   tested: true, // Assuming it will be tested, set to true
   id: "counting-bits", // Keep the original ID
   tags: ["bit manipulation"], // Keep the original tags

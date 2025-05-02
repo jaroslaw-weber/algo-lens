@@ -2,6 +2,7 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { code } from "./code";
 import { PacificAtlanticInput } from "./types"; // Import input type from types.ts
+import { testcases } from "./testcase";
 
 // Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Pacific Atlantic Water Flow";
@@ -23,4 +24,5 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
   getInput,
   func: generateSteps, // Use the renamed function
   id: "pacific-atlantic-water-flow",
+  testCases: testcases,
 };

@@ -4,7 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { CoinChangeInput } from "./types";
-import { coinChangeTestCases } from './testcase';
+import { testcases } from './testcase';
 
 const title = "Coin Change";
 
@@ -12,7 +12,7 @@ export const problem: Problem<CoinChangeInput, ProblemState> = {
   title: title,
   code: code,
   func: generateSteps, // Use generateSteps from steps.ts
-  testCases: coinChangeTestCases,
+  testCases: testcases,
   id: "coin-change",
   tags: ["dynamic programming"],
   metadata: {

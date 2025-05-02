@@ -4,7 +4,7 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code";
 import { ClimbingStairsInput } from "./types";
-import { climbingStairsTestCases } from './testcase';
+import { testcases } from './testcase';
 
 const title = "Climbing Stairs";
 
@@ -12,7 +12,7 @@ export const problem: Problem<ClimbingStairsInput, ProblemState> = {
   title: title,
   code: code,
   func: generateSteps, // Use generateSteps from steps.ts
-  testCases: climbingStairsTestCases,
+  testCases: testcases,
   id: "climbing-stairs",
   tags: ["dynamic programming"],
   metadata: {
