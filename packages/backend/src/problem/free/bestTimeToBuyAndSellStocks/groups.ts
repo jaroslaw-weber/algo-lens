@@ -1,4 +1,6 @@
-export const groups = [
+import { GroupMetadata } from 'algo-lens-core';
+
+export const groups: GroupMetadata[] = [
 	{
 	  name: "profit",
 	  label: "Potential Profit Calculation",

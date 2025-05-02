@@ -1,11 +1,6 @@
-// Define a simple interface for VariableGroup if not available globally
-interface VariableGroup {
-  name: string;
-  label: string;
-  description: string;
-}
+import { GroupMetadata } from 'algo-lens-core';
 
-export const groups: VariableGroup[] = [
+export const groups: GroupMetadata[] = [
   {
     name: "input",
     label: "Input",

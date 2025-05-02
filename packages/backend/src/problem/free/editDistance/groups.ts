@@ -1,6 +1,6 @@
-import { Group } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core";
 
-export const groups: Group[] = [
+export const groups: GroupMetadata[] = [
   { title: "Inputs", variables: ["s1", "s2"], emoji: "📥" },
   { title: "DP Table", variables: ["dp"], emoji: "📊" },
   { title: "Loop Variables", variables: ["i", "j", "op"], emoji: "🔁" },
