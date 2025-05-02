@@ -16,11 +16,9 @@ export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   title: title,
   emoji: '➕',
   code: code,
-  getInput: getInput,
   func: generateSteps, // Use generateSteps from steps.ts
   id: "maximum-subarray",
   tags: ["dynamic programming", "array", "kadane's algorithm"], // Added relevant tags
-  tested: true, // Assuming it was tested, keep as true
   metadata: {
     variables: variableMetadata,
     groups: groups,

@@ -232,7 +232,6 @@ export const problem: Problem<
   title,
   emoji: '0️⃣',
   code,
-  getInput,
   func: setMatrixZeroes,
   id: "set-matrix-zeroes",
   tags: ["matrix"],

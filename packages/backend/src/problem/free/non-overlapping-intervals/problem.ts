@@ -24,9 +24,7 @@ export const problem: Problem<
   title,
   emoji: '✂️',
   code,
-  getInput,
   func: generateSteps, // Use the renamed function
   id: "non-overlapping-intervals",
-  tested:true, // Keep tested flag if present
   tags: ["interval"]
 };

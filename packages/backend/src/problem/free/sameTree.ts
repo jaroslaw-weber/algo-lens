@@ -125,9 +125,7 @@ export const problem: Problem<SameTreeInput, ProblemState> = {
   title,
   emoji: '🌲',
   code,
-  getInput,
   func: sameTree,
   id: "same-tree",
-  tested: true,
   tags: ["tree"],
 };

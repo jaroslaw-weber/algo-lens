@@ -12,10 +12,8 @@ export const problem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
   emoji: '💰',
   code: code, // Use imported code
-  getInput: getInput,
   func: generateSteps, // Use imported generateSteps function
   id: "house-robber",
-  tested: true, // Keep tested as true
   tags: ["dynamic programming"], // Keep tags
   metadata: { // Add metadata
     variables: variableMetadata,

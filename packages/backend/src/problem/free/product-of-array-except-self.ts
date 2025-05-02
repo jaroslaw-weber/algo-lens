@@ -116,9 +116,7 @@ export const problem: Problem<
   title,
   emoji: '✖️',
   code,
-  getInput,
   func: productExceptSelf,
   id: "product-of-array-except-self",
   tags: ["array", "prefix sum"],
-  tested:true
 };

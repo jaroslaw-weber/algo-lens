@@ -19,7 +19,6 @@ export const problem: Problem<MissingNumberInput> = {
   emoji: '❓',
   id: "missing-number",
   tags: ["math", "array"],
-  getInput,
   code, // Imported from ./code
   func: generateSteps, // Imported from ./steps
   metadata: {

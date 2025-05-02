@@ -73,12 +73,7 @@ export const problem: Problem<TwoSumInput, ProblemState> = {
     }
     return [-1, -1];
   }`,
-  getInput: () => ({
-    nums: [2, 7, 11, 15, 21, 29, 35, 40, 45, 55, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125],
-    target: 130
-  }),
   func: twoSum,
   id: "two-sum",
   tags: ["array", "hash set"],
-  tested: true
 };

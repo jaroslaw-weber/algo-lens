@@ -109,9 +109,7 @@ export const problem: Problem<ReverseListInput, ProblemState> = {
   title,
   emoji: '↩️',
   code,
-  getInput,
   func: reverseList,
   id: "reverse-list",
-  tested: false,
   tags: ["linked-list"],
 };
