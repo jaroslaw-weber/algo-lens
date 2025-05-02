@@ -10,7 +10,6 @@ export const problem: Problem<LISInput, ProblemState> = {
     title: title,
     emoji: '📈',
     code: code,
-    getInput: getInput,
     func: generateSteps, // Use the renamed function
     id: "longest-increasing-subsequence",
     tags: ["dynamic programming"],

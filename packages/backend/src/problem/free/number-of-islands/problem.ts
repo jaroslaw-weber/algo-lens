@@ -19,7 +19,6 @@ export const problem: Problem<NumIslandsInput, ProblemState> = {
   title,
   emoji: '🏝️',
   code,
-  getInput,
   func: generateSteps, // Use the renamed function
   id: "number-of-islands",
   tags: ["graph"],

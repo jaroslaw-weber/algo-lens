@@ -18,7 +18,6 @@ export const problem: Problem<MinPathSumInput, ProblemState> = {
   title: title,
   emoji: '🗺️',
   code: code,
-  getInput: getInput,
   func: generateSteps, // Use the renamed function
   id: "minimum-path-sum",
   tags: ["2d dynamic programming"],

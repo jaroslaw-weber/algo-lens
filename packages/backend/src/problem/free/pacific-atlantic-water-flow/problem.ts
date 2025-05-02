@@ -21,7 +21,6 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
   title,
   emoji: '🌊',
   code,
-  getInput,
   func: generateSteps, // Use the renamed function
   id: "pacific-atlantic-water-flow",
 };

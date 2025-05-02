@@ -15,11 +15,9 @@ export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
   emoji: '➕',
   code: code,
-  getInput: getInput,
   func: generateSteps, // Use generateSteps from steps.ts
   id: "insert-interval",
   tags: ["intervals", "array", "merging"], // Added relevant tags
-  tested: true, // Assuming it was tested, keep as true
   metadata: {
     variables: variableMetadata,
     groups: groups,

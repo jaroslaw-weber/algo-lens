@@ -14,9 +14,7 @@ export const problem: Problem<CountBitsInput, ProblemState> = {
   title: title,
   emoji: '💻',
   code: code,
-  getInput: getInput,
   func: generateSteps, // Use the new step generator function
-  tested: true, // Assuming it will be tested, set to true
   id: "counting-bits", // Keep the original ID
   tags: ["bit manipulation"], // Keep the original tags
   metadata: {

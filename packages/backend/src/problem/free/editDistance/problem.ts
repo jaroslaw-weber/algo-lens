@@ -15,7 +15,6 @@ export const problem: Problem<EditDistanceInput, ProblemState> = {
   tags: ["dynamic programming", "string"],
   code,
   func: generateSteps, // Corrected function assignment
-  getInput,
   metadata: {
     variableMetadata,
     groups,

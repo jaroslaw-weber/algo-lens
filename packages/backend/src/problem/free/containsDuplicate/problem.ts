@@ -67,7 +67,6 @@ export const problem: Problem<
   title,
   emoji: '👯',
   code, // Use imported code
-  getInput,
   func: containsDuplicate, // Use local function
   id: "contains-duplicate", // Keep original ID for now, might need adjustment later
   tags: ["hashset"],

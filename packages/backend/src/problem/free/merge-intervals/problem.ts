@@ -25,9 +25,7 @@ export const problem: Problem<
   title,
   emoji: '🤝',
   code,
-  getInput,
   func: generateSteps, // Use the renamed function
   id: "merge-intervals",
-  tested: true, // Keep tested flag if present
   tags: ["interval"]
 };

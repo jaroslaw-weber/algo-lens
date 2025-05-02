@@ -137,9 +137,7 @@ export const problem: Problem<SearchInput, ProblemState> = {
   title,
   emoji: '🔍',
   code,
-  getInput,
   func: search,
   id: "search-in-rotated-sorted-array",
   tags: ["array", "binary-search"],
-  tested: true,
 };
