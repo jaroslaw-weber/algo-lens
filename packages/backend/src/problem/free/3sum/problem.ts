@@ -10,6 +10,7 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
   emoji: "🔢",
   func: generateSteps,
   testcases: testcases,
+  difficulty: "medium",
   id: "3sum",
   tags: ["array", "hash set", "two pointers"],
   metadata: {

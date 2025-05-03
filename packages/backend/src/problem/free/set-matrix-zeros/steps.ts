@@ -23,7 +23,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
   // Determine if the first column has any zeros
   for (let i = 0; i < rows; i++) {
-    l.array2d("matrix", matrix, [{ r: i, c: 0 }]);
+    l.array2d("matrix", matrix, ...[{ r: i, c: 0 }]);
     l.simple({ rows, cols, i });
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
     l.breakpoint(2, `Check first column, row i=${i}`);
