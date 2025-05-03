@@ -4,5 +4,5 @@ import { runTests } from "../../core/test";
 import { testcases } from "./testcase"; // Import the renamed testcases
 
 it("bestTimeToBuyAndSellStocks", () => {
-  runTests(problem, testcases); // Pass both problem and testcases to runTests
+  runTests(problem); // Pass both problem and testcases to runTests
 });

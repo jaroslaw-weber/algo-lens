@@ -3,8 +3,9 @@ import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { testcases } from "./testcase";
+import { ThreeSumInput } from "./types";
 
-export const problem: Problem<number[], ProblemState> = {
+export const problem: Problem<ThreeSumInput, ProblemState> = {
   title: "Three Sum",
   emoji: "🔢",
   func: generateSteps,
