@@ -29,27 +29,6 @@ export const problem: Problem<CourseScheduleInput, ProblemState> = {
   title: title,
   emoji: "📚",
   code: code, // Use the imported code string
-  testcases: [
-    {
-      input: {
-        numCourses: 10,
-        prerequisites: [
-          [1, 0],
-          [2, 0],
-          [3, 1],
-          [3, 2],
-          [4, 2],
-          [5, 3],
-          [5, 4],
-          [6, 0],
-          [7, 6],
-          [8, 7],
-          [9, 8],
-        ],
-      },
-      expected: {},
-    },
-  ],
   func: courseSchedule, // Use the imported algorithm function
   id: "course-schedule",
   tags: ["graph", "bfs", "topological-sort"],
