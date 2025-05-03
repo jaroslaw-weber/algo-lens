@@ -1,10 +1,11 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "grid",
     label: "grid",
-    description: "The input 2D grid representing land ('1') and water ('0'). Also modified during DFS/BFS.",
+    description:
+      "The input 2D grid representing land ('1') and water ('0'). Also modified during DFS/BFS.",
     emoji: "🗺️", // Map emoji
   },
   {

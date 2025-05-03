@@ -7,7 +7,7 @@ import { NumIslandsInput } from "./types"; // Import NumIslandsInput
 
 // Removed duplicate NumIslandsInput interface definition
 
-export function generateSteps(grid: number[][]): ProblemState[] {
+export function generateSteps(grid: string[][]): ProblemState[] {
   // Renamed and Exported
   const l = new StepLoggerV2();
   const clonedGrid = deepClone2DArray(grid); // Use the deep clone for operations

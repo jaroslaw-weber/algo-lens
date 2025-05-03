@@ -45,10 +45,12 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     // No explicit breakpoint 4 in the original structure, but logging the map update is useful
   }
 
+  l.array("result", []); // No solution found
+
   // Original code didn't have a specific step for not found,
   // but we can add one if needed, mirroring the original return pattern.
   // If loop finishes without finding a pair, implicitly means no solution.
-  //l.breakpoint(5); // Optional: Corresponds to original log(5) if needed
+  l.breakpoint(5); // Optional: Corresponds to original log(5) if needed
 
   return l.getSteps(); // Return steps even if no solution is found during the loop
 }
