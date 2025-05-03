@@ -1,5 +1,7 @@
 import {
+  BinaryTreeNode,
   HashHighlight,
+  NodeHighlight,
   Pointer2D,
   ProblemState,
   Variable,
@@ -8,10 +10,12 @@ import {
 import {
   as2dArray,
   asArray,
+  asBinary,
   asHashmap,
   asHashset,
   asIntervals,
   asSimpleValue,
+  asTree,
   asValueGroup,
 } from "./utils";
 import _ = require("lodash");
@@ -51,6 +55,27 @@ export class StepLoggerV2 {
     } else {
       this.variables.push(variable);
     }
+  }
+
+  public tree(
+    label: string,
+    value: BinaryTreeNode | null,
+    highlight: NodeHighlight[] = []
+  ) {
+    const variable = asTree(label, value, highlight);
+    this.upsert(variable);
+  }
+
+  public binary(
+    o: Record<string, number>,
+    options?: {
+      highlightLast?: boolean;
+      pointersLeft?: number[];
+      pointersRight?: number[];
+    }
+  ) {
+    const variable = asBinary(o, options);
+    this.upsert(variable);
   }
 
   public array(
