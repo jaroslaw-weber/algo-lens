@@ -6,13 +6,15 @@ import { code } from "./code/typescript";
 import { CoinChangeInput } from "./types";
 import { testcases } from "./testcase";
 
+type CoinChangeInputType = [number[], number];
+
 const title = "Coin Change";
 
 export const problem: Problem<[number[], number], ProblemState> = {
   title: title,
   emoji: "🪙",
   code: code,
-  func: (input: [number[], number]) => generateSteps(input[0], input[1]),
+  func: (input: CoinChangeInputType) => generateSteps(...input),
   testcases,
   id: "coin-change",
   tags: ["dynamic programming"],
