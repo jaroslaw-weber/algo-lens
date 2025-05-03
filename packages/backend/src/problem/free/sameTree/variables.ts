@@ -1,25 +1,42 @@
-import { TreeVariable, BooleanGroupVariable } from "algo-lens-core";
+import { Variable } from "algo-lens-core";
 
-export const pTree: TreeVariable = {
+const pTree = {
   label: "pTree",
   type: "tree",
-  value: null, // Initial value, will be updated by log
+  value: null,
   highlight: [],
 };
 
-export const qTree: TreeVariable = {
+const qTree = {
   label: "qTree",
   type: "tree",
-  value: null, // Initial value, will be updated by log
+  value: null,
   highlight: [],
 };
 
-export const isNodeSame: BooleanGroupVariable = {
+const isNodeSame = {
   label: "is node same?",
   type: "boolean-group",
-  data: [{ label: "return", value: false }], // Initial value, will be updated by log
+  data: [{ label: "return", value: false }],
 };
 
-// Export all variables in an array or object if needed by the framework,
-// or just export them individually as above.
-// Assuming individual exports are sufficient for now.
+export const variables: Variable[] = [
+  {
+    ...pTree,
+    name: "pTree",
+    description: "Placeholder description for pTree",
+    emoji: "🌴",
+  },
+  {
+    ...qTree,
+    name: "qTree",
+    description: "Placeholder description for qTree",
+    emoji: "🌳",
+  },
+  {
+    ...isNodeSame,
+    name: "is node same?",
+    description: "Placeholder description for isNodeSame",
+    emoji: "❓",
+  },
+];
