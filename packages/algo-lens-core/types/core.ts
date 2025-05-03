@@ -11,10 +11,6 @@ export interface TestCase<Input, State> {
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
 export interface Problem<Input, State> {
   id?: string;
-  /** Contains the source code for the problem-solving function.
-   * @deprecated this will be loaded dynamically from typescript.ts file
-   */
-  code?: string;
 
   testcases: TestCase<Input, any>[];
 

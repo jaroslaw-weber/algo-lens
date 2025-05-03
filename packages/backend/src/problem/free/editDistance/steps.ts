@@ -7,8 +7,8 @@ import {
   asValueGroup,
 } from "../../core/utils"; // Adjusted import path
 
-export function generateSteps(p: EditDistanceInput): ProblemState[] { // Renamed function and used EditDistanceInput
-  const { s1, s2 } = p;
+export function generateSteps(s1: string, s2: string): ProblemState[] {
+  // Renamed function and used EditDistanceInput
   const steps: ProblemState[] = [];
   const m = s1.length;
   const n = s2.length;
@@ -22,7 +22,7 @@ export function generateSteps(p: EditDistanceInput): ProblemState[] { // Renamed
     steps.push({
       variables: [
         as2dArray("dp", dp, [{ r: i, c: 0 }]),
-        asValueGroup("loop", { i }, { min: 0,max: m }),
+        asValueGroup("loop", { i }, { min: 0, max: m }),
       ],
       breakpoint: 1,
     });
@@ -32,7 +32,7 @@ export function generateSteps(p: EditDistanceInput): ProblemState[] { // Renamed
     steps.push({
       variables: [
         as2dArray("dp", dp, [{ r: 0, c: j }]),
-        asValueGroup("loop", { j }, { min: 0, max:n }),
+        asValueGroup("loop", { j }, { min: 0, max: n }),
       ],
       breakpoint: 2,
     });

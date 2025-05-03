@@ -1,3 +1,1 @@
-export interface ContainsDuplicateInput {
-  nums: number[];
-}
+export type ContainsDuplicateInput = number[];

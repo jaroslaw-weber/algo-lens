@@ -12,7 +12,7 @@ export const problem: Problem<EditDistanceInput, ProblemState> = {
   emoji: "✍️", // Updated emoji
   id: "editDistance", // Updated id
   tags: ["dynamic programming", "string"],
-  func: generateSteps, // Corrected function assignment
+  func: (input) => generateSteps(...input), // Corrected function assignment
   testcases, // Added testcases property
   metadata: {
     variables,
