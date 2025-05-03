@@ -7,9 +7,9 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
  */
 export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
-
-  let n = nums.length;
-  let expectedSum = (n * (n + 1)) / 2;
+  const n = nums.length;
+  const expectedSum = (n * (n + 1)) / 2;
+  l.groupOptions.set("sum", { min: 0, max: expectedSum, reverse: false });
   let actualSum = 0;
 
   // Breakpoint 1: Initial state

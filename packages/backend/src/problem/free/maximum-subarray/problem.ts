@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variables } from "./variables";
+import { variableMetadata } from "./variables"; // Renamed import
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { MaximumSubarrayInput } from "./types";
@@ -15,7 +15,7 @@ export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   id: "maximum-subarray",
   tags: ["dynamic programming", "array", "divide and conquer"], // Updated tags
   metadata: {
-    variables,
+    variables: variableMetadata, // Updated usage
     groups: groups,
   },
 };
