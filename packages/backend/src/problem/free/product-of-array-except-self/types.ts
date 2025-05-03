@@ -1,4 +1,2 @@
 // Defines the interface for the input expected by the productExceptSelf function
-export interface ProductExceptSelfInput {
-  nums: number[];
-}
+export type ProductExceptSelfInput = number[];

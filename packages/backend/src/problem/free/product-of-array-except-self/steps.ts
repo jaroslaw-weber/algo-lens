@@ -8,8 +8,7 @@ import { asArray } from "../../core/utils";
  * @param p - The input parameters including an array of numbers.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function generateSteps(p: ProductExceptSelfInput): ProblemState[] {
-  const { nums } = p;
+export function generateSteps(nums: number[]): ProblemState[] {
   const steps: ProblemState[] = [];
   const length = nums.length;
   const output: number[] = new Array(length).fill(1);

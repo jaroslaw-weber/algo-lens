@@ -3,6 +3,10 @@ import { cloneDeep, last } from "lodash";
 import { describe, it, expect } from "bun:test";
 
 export function runTests(problem: Problem<any, ProblemState>) {
+  const { testcases } = problem;
+  if (testcases.length < 4) {
+    throw new Error("Test cases count should be at least 4");
+  }
   for (const testcase of problem.testcases) {
     const input = cloneDeep(testcase.input);
     const expected = cloneDeep(testcase.expected);

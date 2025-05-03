@@ -1,11 +1,7 @@
-import { ProductExceptSelfInput } from './types';
+import { TestCase } from "algo-lens-core";
+import { ProductExceptSelfInput } from "./types";
 
-interface TestCase {
-  input: ProductExceptSelfInput;
-  // Add other properties like expected output if needed later
-}
-
-export const testcases: TestCase[] = [
+export const testcases: TestCase<ProductExceptSelfInput, any>[] = [
   {
     input: {
       nums: [1, 2, 3, 4, 5],
@@ -19,7 +15,7 @@ export const testcases: TestCase[] = [
   },
   {
     input: {
-        nums: [2, 3, 0, 0]
-    }
-  }
+      nums: [2, 3, 0, 0],
+    },
+  },
 ];

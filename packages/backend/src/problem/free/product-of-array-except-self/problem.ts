@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from 'algo-lens-core';
-import { variableMetadata } from './variables';
+import { variables } from './variables';
 import { generateSteps } from './steps';
 import { groups } from './groups';
 import { code } from './code/typescript';
@@ -20,7 +20,7 @@ export const problem: Problem<ProductExceptSelfInput, ProblemState> = {
   func: generateSteps,
   testcases,
   metadata: {
-    variables: variableMetadata,
+    variables,
     groups,
   },
 };
