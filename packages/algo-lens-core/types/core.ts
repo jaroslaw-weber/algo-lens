@@ -5,7 +5,7 @@ export interface ProblemMetadata {
 
 export interface TestCase<Input, State> {
   input: Input;
-  expected: Partial<State>;
+  expected: any;
   description?: string;
 }
 
