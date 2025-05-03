@@ -20,8 +20,10 @@ export function runTests(problem: Problem<any, ProblemState>) {
     //@ts-expect-error
     const value = result.value;
     expect(value).toEqual(expected);
+    /** 
     console.log(
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(value)}`
     );
+    **/
   }
 }
