@@ -1,3 +1,1 @@
-export interface HouseRobberInput {
-  nums: number[];
-}
+export type HouseRobberInput = number[];

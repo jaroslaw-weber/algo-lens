@@ -5,15 +5,17 @@ import { groups } from "./groups"; // Import groups
 
 // Removed ProblemState import and utils imports as StepLoggerV2 handles variable creation
 
-export function generateSteps(houses: HouseRobberInput) { // Renamed function
+export function generateSteps(nums: number[]) {
+  // Renamed function
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   // Safely find group names
-  const dpCalculationGroup = groups.find(g => g.name === 'dpCalculation')?.name || 'dpCalculation';
-  const loopInfoGroup = groups.find(g => g.name === 'loopInfo')?.name || 'loopInfo';
-  const resultGroup = groups.find(g => g.name === 'result')?.name || 'result';
+  const dpCalculationGroup =
+    groups.find((g) => g.name === "dpCalculation")?.name || "dpCalculation";
+  const loopInfoGroup =
+    groups.find((g) => g.name === "loopInfo")?.name || "loopInfo";
+  const resultGroup = groups.find((g) => g.name === "result")?.name || "result";
 
-  const { nums } = houses;
   const n = nums.length;
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
@@ -35,10 +37,14 @@ export function generateSteps(houses: HouseRobberInput) { // Renamed function
     const includeCurrent = twoHousesBefore + currentHouse;
     dp[i] = Math.max(skipCurrent, includeCurrent);
 
-    l.breakpoint(3, "Calculate dp[i] based on max of skipping or including current house");
+    l.breakpoint(
+      3,
+      "Calculate dp[i] based on max of skipping or including current house"
+    );
     l.array("nums", nums, i - 1); // Highlight current house
     l.array("dp", dp, i, i - 1, i - 2); // Highlight relevant dp values
-    l.group(dpCalculationGroup, { // Use defined group name
+    l.group(dpCalculationGroup, {
+      // Use defined group name
       skipCurrent,
       includeCurrent,
       twoHousesBefore,
