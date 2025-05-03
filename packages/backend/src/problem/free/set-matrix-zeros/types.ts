@@ -1,3 +1,1 @@
-export interface SetMatrixZeroesInput {
-  matrix: number[][];
-}
+export type SetMatrixZeroesInput = number[][];

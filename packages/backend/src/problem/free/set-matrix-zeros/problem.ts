@@ -15,6 +15,7 @@ export const problem: Problem<SetMatrixZeroesInput, ProblemState> = {
   testcases: testcases,
   id: "set-matrix-zeroes", // Keep the id from the original file
   tags: ["matrix"], // Keep the tags from the original file
+  difficulty: "medium", // Keep the difficulty from the original file
   metadata: {
     variables,
     groups,

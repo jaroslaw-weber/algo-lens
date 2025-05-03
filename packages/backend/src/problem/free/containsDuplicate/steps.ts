@@ -7,9 +7,8 @@ import { ContainsDuplicateInput } from "./types";
  * @param p - The input parameters including an array of numbers.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function generateSteps(p: ContainsDuplicateInput): ProblemState[] {
+export function generateSteps(nums: number[]): ProblemState[] {
   // Renamed export to function
-  const { nums } = p;
   const steps: ProblemState[] = [];
   const hashSet: Set<number> = new Set();
 
