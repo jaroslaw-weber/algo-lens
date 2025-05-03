@@ -17,9 +17,7 @@ export function runTests(problem: Problem<any, ProblemState>) {
     const value = result.value;
     expect(value).toEqual(expected);
     console.log(
-      `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
-        expected
-      )}`
+      `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(value)}`
     );
   }
 }
