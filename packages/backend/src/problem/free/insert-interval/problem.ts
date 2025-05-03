@@ -9,9 +9,10 @@ const title = "Insert Interval";
 
 export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
-  emoji: '➕',
-  func: generateSteps, // Use generateSteps from steps.ts
+  emoji: "➕",
+  func: (i) => generateSteps(...i), // Use generateSteps from steps.ts
   testcases,
+  difficulty: "medium",
   id: "insert-interval",
   tags: ["array", "intervals"], // Updated tags
   metadata: {
