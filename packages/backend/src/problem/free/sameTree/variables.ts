@@ -1,4 +1,4 @@
-import { Variable } from "algo-lens-core";
+import { Variable, VariableMetadata } from "algo-lens-core";
 
 const pTree = {
   label: "pTree",
@@ -20,7 +20,7 @@ const isNodeSame = {
   data: [{ label: "return", value: false }],
 };
 
-export const variables: Variable[] = [
+export const variables: VariableMetadata[] = [
   {
     ...pTree,
     name: "pTree",
