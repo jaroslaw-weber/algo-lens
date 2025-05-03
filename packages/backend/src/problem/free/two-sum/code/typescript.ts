@@ -60,20 +60,22 @@ export const problem: Problem<TwoSumInput, ProblemState> = {
   emoji: '🎯',
   code: `function twoSum(nums: number[], target: number): number[] {
     const seen = new Map();
-    //#1
+    //#1 Initialize an empty hash map 'seen'.
     for (let i = 0; i < nums.length; i++) {
       const num = nums[i];
-      const need = target - num;
-      //#2
-      if (seen.has(need)) {
-        //#3
-        return [seen.get(need), i];
+      const complement = target - num;
+      //#2 Calculate complement and check if it exists in 'seen'.
+      if (seen.has(complement)) {
+        //#3 Complement found, return indices.
+        return [seen.get(complement), i];
       }
+      //#4 Complement not found, add current number and index to 'seen'.
       seen.set(num, i);
     }
-    return [-1, -1];
+    //#5 Loop finished, no solution found (though problem guarantees one).
+    return [-1, -1]; // Should be unreachable based on problem description
   }`,
-  func: twoSum,
+  func: twoSum, // Keep the reference to the old function for now, it might be removed later
   id: "two-sum",
   tags: ["array", "hash set"],
 };

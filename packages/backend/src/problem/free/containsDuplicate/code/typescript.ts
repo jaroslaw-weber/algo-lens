@@ -1,19 +1,48 @@
-export const code = `function containsDuplicate(nums: number[]): boolean {
-  //Create a hash set to store unique numbers
-  const hashSet = new Set<number>();
+// Add the core algorithm function here (if not already present)
+export function containsDuplicateAlgorithm(nums: number[]): boolean {
+  // Create a hash set to store unique numbers
+  const seenSet = new Set<number>();
 
-  //#1 Iterate through the input array
+  //#1 Initialize seen set. Start loop.
   for (let i = 0; i < nums.length; i++) {
-    //#2 Check if the current number is already in the hash set
-    if (hashSet.has(nums[i])) {
-      //#3 If the number exists, return true indicating a duplicate
+    const num = nums[i];
+    //#2 Inside loop. Get current number nums[i].
+    //#3 Check if the current number is already in the seen set.
+    if (seenSet.has(num)) {
+      //#4 Duplicate found. Return true.
       return true;
     } else {
-      //#4 Add the number to the hash set
-      hashSet.add(nums[i]);
+      //#5 Number not seen before. Add it to the seen set.
+      seenSet.add(num);
     }
+     //#6 End of loop iteration. Continue loop.
   }
 
-  //#5 If no duplicates are found, return false
+  //#7 Loop finished. No duplicates found. Return false.
+  return false;
+}
+
+
+// Update the exported code string to match the algorithm with breakpoints
+export const code = `function containsDuplicate(nums: number[]): boolean {
+  const seenSet = new Set<number>();
+
+  //#1 Initialize seen set. Start loop.
+  for (let i = 0; i < nums.length; i++) {
+    const num = nums[i];
+    //#2 Inside loop. Get current number nums[i].
+
+    //#3 Check if the current number is already in the seen set.
+    if (seenSet.has(num)) {
+      //#4 Duplicate found. Return true.
+      return true;
+    } else {
+      //#5 Number not seen before. Add it to the seen set.
+      seenSet.add(num);
+    }
+    //#6 End of loop iteration. Continue loop.
+  }
+
+  //#7 Loop finished. No duplicates found. Return false.
   return false;
 }`;

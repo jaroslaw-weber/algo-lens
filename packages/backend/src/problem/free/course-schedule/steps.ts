@@ -1,94 +1,125 @@
-import { ProblemState, Variable } from "algo-lens-core";
-import {
-  asArray,
-  asHashmap,
-  asSimpleValue,
-  asValueGroup,
-  asBooleanGroup,
-  from2dArrayToMap,
-} from "../../core/utils"; // Adjusted import path
-import { LogExtraInfo } from "./types"; // Import from types.ts
+import { StepLoggerV2, Array2DHighlight } from '@algo-lens/problem-template';
+import type { CourseScheduleInput } from './types';
 
-// This function will be called by the main algorithm to log state
-export function logStep(
-  steps: ProblemState[],
-  stepPoint: number,
-  numCourses: number,
-  prerequisites: number[][],
-  graph: number[][],
-  inDegree: number[],
-  queue: number[],
-  extraInfo: LogExtraInfo
-) {
-  let values: any = {};
-  const variables: Variable[] = [];
-  const {
-    current,
-    allCoursesTaken,
-    prev,
-    graphRow,
-    neighbor,
-    inDegreeIndex,
-    prevIndex,
-    count,
-    prerequisitesIndex,
-  } = extraInfo;
-  values = { ...values }; // Ensure values is initialized
+export function generateSteps(p: CourseScheduleInput): ProblemState[] {
+  const l = new StepLoggerV2();
+  const { numCourses, prerequisites } = p;
 
-  if (current !== undefined) { // Check for undefined, not just falsy
-    values.current = current;
-  }
-  if (neighbor !== undefined) { // Check for undefined
-    values.neighbor = neighbor;
+  // --- Initial State ---
+  l.simple('numCourses', numCourses);
+  l.array2d('prerequisites', prerequisites);
+  l.snapshot('Initial input: number of courses and prerequisites list');
+
+  // --- Data Structures Initialization ---
+  const adjList = new Map<number, number[]>();
+  const inDegree: number[] = new Array(numCourses).fill(0);
+  const queue: number[] = [];
+  for (let i = 0; i < numCourses; i++) {
+      adjList.set(i, []);
   }
 
-  const prereqMap = from2dArrayToMap(prerequisites);
-  variables.push(
-    asHashmap("prerequisites", prereqMap, {
-      value: prerequisitesIndex,
-      color: "primary",
-    })
-  );
+  l.map('adjList', adjList);
+  l.array('inDegree', inDegree);
+  l.queue('queue', queue);
+  l.snapshot('Initialized adjacency list, in-degree array, and queue');
+  l.breakpoint(1); // Corresponds to #1 in code/typescript.ts
 
-  const graphMap = from2dArrayToMap(graph);
-  variables.push(...asSimpleValue({ numCourses }));
-  variables.push(
-    asArray("inDegree", inDegree, inDegreeIndex),
-    asArray("queue", queue)
-  );
-  variables.push(
-    asHashmap("graph", graphMap, { // Use graphMap here
-      value: graphRow,
-      color: "primary",
-    })
-  );
+  // --- Build Graph and In-Degrees ---
+  l.snapshot('Building graph and calculating in-degrees...');
+  for (let i = 0; i < prerequisites.length; i++) {
+      const [course, prereq] = prerequisites[i];
+       l.array2d('prerequisites', prerequisites, [{ r: i, label: 'Processing', color: 'info'}]);
+       l.snapshot(`Processing prerequisite [${course}, ${prereq}]`);
+       l.breakpoint(2); // Corresponds to #2
 
-  if (count !== undefined) { // Check for undefined
-    variables.push(
-      asValueGroup("courses finished", { count }, { min: 0, max: numCourses })
-    );
+      // Add edge to adjacency list
+      adjList.get(prereq)?.push(course);
+      // Increment in-degree of the course
+      inDegree[course]++;
+
+      l.map('adjList', adjList, { key: prereq, label: 'Updated', color: 'info' });
+      l.array('inDegree', inDegree, { ptr: course, label: 'Incremented', color: 'info' });
+      l.snapshot(`Added edge ${prereq} -> ${course}. Incremented in-degree for course ${course}.`);
+      l.breakpoint(3); // Corresponds to #3
   }
-  if (prev) { // prev can be empty array, so just check if it exists
-    variables.push(asArray("prev", prev, prevIndex));
+  l.snapshot('Graph built and in-degrees calculated.');
+  l.breakpoint(4); // Corresponds to #4
+
+  // --- Initialize Queue with Zero In-Degree Courses ---
+  l.snapshot('Initializing queue with courses having in-degree 0...');
+  for (let i = 0; i < numCourses; i++) {
+      l.array('inDegree', inDegree, { ptr: i, label: 'Checking', color: 'info' });
+      l.snapshot(`Checking in-degree of course ${i}: ${inDegree[i]}`);
+      l.breakpoint(5); // Corresponds to #5
+      if (inDegree[i] === 0) {
+          l.snapshot(`Course ${i} has in-degree 0. Adding to queue.`);
+          l.breakpoint(6); // Corresponds to #6
+          queue.push(i);
+          l.queue('queue', queue, { item: i, label: 'Added', color: 'success' });
+          l.snapshot(`Queue: [${queue.join(', ')}]`);
+      }
+  }
+  l.snapshot('Queue initialized.');
+  l.breakpoint(7); // Corresponds to #7
+
+  // --- Process Queue (Kahn's Algorithm) ---
+  let count = 0;
+  l.simple('count', count);
+  l.snapshot('Starting topological sort processing...');
+
+  while (queue.length > 0) {
+      l.snapshot(`Queue is not empty. Current count: ${count}`);
+      l.breakpoint(8); // Corresponds to #8
+
+      const current = queue.shift()!;
+      l.simple('current', current);
+      l.queue('queue', queue); // Show queue after dequeue
+      l.snapshot(`Dequeued course ${current}.`);
+
+      count++;
+      l.simple('count', count);
+      l.snapshot(`Incremented count to ${count}.`);
+      l.breakpoint(9); // Corresponds to #9 (after count increment)
+
+
+      const neighbors = adjList.get(current) || [];
+      l.array('neighbors', neighbors); // Log neighbors being processed
+      l.map('adjList', adjList, { key: current, label: 'Processing neighbors', color: 'info' });
+      l.snapshot(`Processing neighbors of course ${current}: [${neighbors.join(', ')}]`);
+
+
+      for (let i = 0; i < neighbors.length; i++) {
+          const neighbor = neighbors[i];
+          l.simple('neighbor', neighbor);
+          l.array('neighbors', neighbors, { ptr: i, label: 'Processing', color: 'info' });
+          l.snapshot(`Processing neighbor ${neighbor}`);
+          l.breakpoint(10); // Corresponds to #10
+
+          inDegree[neighbor]--;
+          l.array('inDegree', inDegree, { ptr: neighbor, label: 'Decremented', color: 'warning' });
+          l.snapshot(`Decremented in-degree of neighbor ${neighbor} to ${inDegree[neighbor]}.`);
+          l.breakpoint(11); // Corresponds to #11
+
+          if (inDegree[neighbor] === 0) {
+              l.snapshot(`In-degree of neighbor ${neighbor} is now 0. Adding to queue.`);
+              l.breakpoint(12); // Corresponds to #12
+              queue.push(neighbor);
+              l.queue('queue', queue, { item: neighbor, label: 'Added', color: 'success' });
+              l.snapshot(`Queue: [${queue.join(', ')}]`);
+          }
+      }
+      l.snapshot(`Finished processing neighbors for course ${current}.`);
+      l.breakpoint(13); // Corresponds to #13
   }
 
-  // Add simple values only if they have been defined in extraInfo
-  if (extraInfo.course !== undefined) values.course = extraInfo.course;
-  if (extraInfo.prereq !== undefined) values.prereq = extraInfo.prereq;
-  if (extraInfo.deg !== undefined) values.deg = extraInfo.deg;
+  // --- Final Result Check ---
+  l.snapshot(`Queue is empty. Checking if all courses were processed.`);
+  const canFinish = count === numCourses;
+  l.simple('count', count);
+  l.simple('numCourses', numCourses);
+  l.boolean('canFinish', canFinish);
+  l.snapshot(`Final check: count (${count}) === numCourses (${numCourses}) -> ${canFinish}`);
+  l.breakpoint(14); // Corresponds to #14
 
-  // Only add non-empty simple values
-  if (Object.keys(values).length > 0) {
-      variables.push(...asSimpleValue(values));
-  }
-
-
-  if (allCoursesTaken !== undefined) { // Check for undefined
-    variables.push(asBooleanGroup("result", { allCoursesTaken }));
-  }
-
-  steps.push({
-    breakpoint: stepPoint,
-    variables,
-  });
+  return l.getSteps();
 }

@@ -1,73 +1,45 @@
 // Imports specific utility functions and type definitions
-import { Problem, ProblemState, ThemeColor } from "algo-lens-core";
-import {
-  asArray,
-  asHashset,
-  asBooleanGroup,
-} from "../../core/utils"; // Adjusted path
-import { ContainsDuplicateInput } from "./types"; // New import
-import { code } from "./code/typescript"; // New import
+import { Problem } from 'algo-lens-core';
+import { ContainsDuplicateInput } from './types';
+import { code } from './code/typescript'; // Import code string
+import { generateSteps } from './steps';   // Import new step generator
+import { variables } from './variables'; // Import variable metadata
+import { groups } from './groups';     // Import groups metadata
+import { testcases } from './testcase'; // Import test cases
 
-/**
- * Implements the containsDuplicate algorithm which checks if there are any duplicate numbers in an array.
- * @param p - The input parameters including an array of numbers.
- * @returns An array of ProblemState capturing each step of the computation for visualization.
- */
-function containsDuplicate(p: ContainsDuplicateInput): ProblemState[] { // Renamed export to function
-  const { nums } = p;
-  const steps: ProblemState[] = [];
-  const hashSet: Set<number> = new Set();
+// The old step generation function is removed.
 
-  // Helper function to create and log each step's computational state
-  function log(point: number, i?: number, existsInSet?: boolean) {
-    const color :ThemeColor= existsInSet ? "error" : "success";
-    const step: ProblemState = {
-      variables: [
-        asArray("nums", nums, i),
-        asHashset("hashSet", hashSet, { value: nums[i], color }),
-        asBooleanGroup("exist check", { existsInSet }),
-      ],
-      breakpoint: point,
-    };
-    steps.push(step);
-  }
-
-  // Initial state log before the loop starts
-  log(1);
-
-  // Main loop to check for duplicates
-  for (let i = 0; i < nums.length; i++) {
-    log(2, i);
-    if (hashSet.has(nums[i])) {
-      log(3, i, true);
-      return steps;
-    } else {
-      hashSet.add(nums[i]);
-      log(4, i, false);
-    }
-  }
-
-  // Logs the final state
-  log(5);
-
-  return steps;
-}
-
-// Description for a larger, more complex input set to test and visualize the algorithm
-const title = "Contains Duplicate";
-const getInput = () => ({
-  nums: [1, 2, 3, 1, 4, 5, 6, 6],
-});
-
-// Export the complete problem setup including the input function, the computational function, and other metadata
-export const problem: Problem<
-  ContainsDuplicateInput,
-  ProblemState
-> = {
-  title,
+// Export the complete problem setup using the new structure
+export const containsDuplicateProblem: Problem<ContainsDuplicateInput> = {
+  id: 'contains-duplicate',
+  title: 'Contains Duplicate',
+  description: `<p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears <strong>at least twice</strong> in the array, and return <code>false</code> if every element is distinct.</p>`,
+  tags: ['Array', 'Hash Table', 'Set'], // Updated tags
+  constraints: [
+    '<code>1 <= nums.length <= 10<sup>5</sup></code>',
+    '<code>-10<sup>9</sup> <= nums[i] <= 10<sup>9</sup></code>',
+  ],
+  variables, // Add variable metadata
+  groups,    // Add groups metadata
+  testCases: testcases.map(tc => ({ input: tc.input })), // Map testcases to only include input
+  generateSteps, // Use new step generator
+  code, // Use imported code string
+  visualizers: [ // Add default visualizer configuration
+      {
+        name: 'HashSet Check',
+        default: true,
+        description: 'Visualization using a HashSet to track seen numbers',
+        id: 'hashset-check',
+        elements: [
+          { component: 'Array', props: { name: 'nums', label: 'Input Array' } },
+          { component: 'Set', props: { name: 'seenSet', label: 'Seen Numbers' } },
+          { component: 'Value', props: { name: 'i', label: 'Current Index' } },
+          { component: 'Value', props: { name: 'num', label: 'Current Number' } },
+          { component: 'Value', props: { name: 'result', label: 'Result' } },
+        ],
+      },
+  ],
+  difficulty: 'Easy',
+  category: 'Free',
   emoji: '👯',
-  code, // Use imported code
-  func: containsDuplicate, // Use local function
-  id: "contains-duplicate", // Keep original ID for now, might need adjustment later
-  tags: ["hashset"],
 };

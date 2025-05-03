@@ -111,53 +111,56 @@ export function courseSchedule(p: CourseScheduleInput): ProblemState[] {
 // The core logic of checking if courses can be finished (used for display/problem definition)
 export const code = `function canFinish(numCourses: number, prerequisites: number[][]): boolean {
   // Initialize graph and in-degree arrays
-  const graph: number[][] = new Array(numCourses).fill(0).map(() => []);
+  const adjList = new Map<number, number[]>(); // Using Map for graph
   const inDegree: number[] = new Array(numCourses).fill(0);
   const queue: number[] = [];
-  //#1 Data structures initialized - Graph, inDegree, and Queue are setup
+  for (let i = 0; i < numCourses; i++) {
+      adjList.set(i, []);
+  }
+  //#1 Initialize graph (adjList), inDegree array, and queue.
 
   // Populate the graph and in-degree array from prerequisites
   for (const [course, prereq] of prerequisites) {
-    //#2
-    graph[prereq].push(course);
+    //#2 Processing a prerequisite pair [course, prereq].
+    adjList.get(prereq)?.push(course);
     inDegree[course]++;
-    //#3
+    //#3 Added edge prereq->course, incremented inDegree[course].
   }
-  //#4 Graph populated and inDegree updated with prerequisites
+  //#4 Finished building graph and calculating initial in-degrees.
 
   // Identify courses with no prerequisites and add them to the queue
   for (let i = 0; i < numCourses; i++) {
-    //#5
+    //#5 Checking in-degree of course i.
     if (inDegree[i] === 0) {
-      //#6
+      //#6 Course i has in-degree 0. Enqueueing.
       queue.push(i);
     }
   }
-  //#7 Courses without prerequisites are identified and added to queue
+  //#7 Finished initial queue population.
 
   let count = 0; // This will count the courses we are able to process
   while (queue.length > 0) {
-    //#8
-    const current = queue.shift(); // Dequeue a course, preparing to process it
-    count++; // Increase the processed course count
+    //#8 Start of main loop iteration. Queue not empty.
+    const current = queue.shift()!; // Dequeue a course, preparing to process it
+    count++;
+    //#9 Dequeued 'current' course, incremented count.
 
-    const neighbors = graph[current];
-    //#9
+    const neighbors = adjList.get(current) || [];
     // Decrease in-degree for all neighbors and enqueue any that now have zero in-degree
-    for (const neighbor of neighbors) { // Changed from 'prev' to 'neighbors' for clarity
-      //#10
+    for (const neighbor of neighbors) {
+      //#10 Processing neighbor of 'current'.
       inDegree[neighbor]--;
-      //#11
+      //#11 Decremented in-degree of neighbor.
       if (inDegree[neighbor] === 0) {
+        //#12 Neighbor's in-degree is 0. Enqueueing neighbor.
         queue.push(neighbor);
-        //#12 Neighbor with no remaining prerequisites enqueued
       }
     }
-    //#13 Processed all neighbors for the current course
+    //#13 Finished processing all neighbors for the current course.
   }
 
   // If we've processed as many courses as we started with, all courses can be finished
-  const allCoursesTaken = count === numCourses;
-  //#14 Check if all courses were processed successfully
-  return allCoursesTaken;
+  const canFinish = count === numCourses;
+  //#14 Loop finished. Check if count equals numCourses.
+  return canFinish;
 }`;

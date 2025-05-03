@@ -1,39 +1,29 @@
-import { ProblemState, TestCase, BooleanVariable } from 'algo-lens-core';
 import { ContainsDuplicateInput } from './types';
 
-// Define a few basic test cases
-export const testcases: TestCase<ContainsDuplicateInput, ProblemState>[] = [
+// Define test cases using the input interface and expecting a boolean output
+export const testcases: { input: ContainsDuplicateInput; output: boolean }[] = [
   {
     input: { nums: [1, 2, 3, 1] }, // Contains duplicate
-    expected: {
-      variables: [
-        // Assuming the final boolean result is stored in a variable named 'result'
-        { label: "result", type: "boolean", value: true } as BooleanVariable 
-      ]
-    }
+    output: true
   },
   {
     input: { nums: [1, 2, 3, 4] }, // No duplicates
-    expected: {
-      variables: [
-        { label: "result", type: "boolean", value: false } as BooleanVariable
-      ]
-    }
+    output: false
   },
   {
     input: { nums: [] }, // Empty array
-    expected: {
-      variables: [
-        { label: "result", type: "boolean", value: false } as BooleanVariable
-      ]
-    }
+    output: false
   },
   {
     input: { nums: [1, 1, 1, 1] }, // All duplicates
-    expected: {
-      variables: [
-        { label: "result", type: "boolean", value: true } as BooleanVariable
-      ]
-    }
+    output: true
+  },
+  {
+    input: { nums: [1] }, // Single element
+    output: false
+  },
+  {
+    input: { nums: [1, 2, 3, 4, 5, 6, 1] }, // Duplicate at the end
+    output: true
   }
 ];

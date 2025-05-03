@@ -14,109 +14,79 @@ interface ProductExceptSelfInput {
  */
 export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
   const { nums } = p;
-  const steps: ProblemState[] = [];
+  // Note: The ProblemState[] return type and the old log function are no longer needed here,
+  // as step generation is handled separately. This function now directly returns the result array.
   const length = nums.length;
   const output: number[] = new Array(length).fill(1);
-  // Create the left (prefix) and right (suffix) products arrays
   const productsLeft: number[] = new Array(length).fill(1);
   const productsRight: number[] = new Array(length).fill(1);
 
-  // Helper function to create and log each step's computational state
-  function log(p: {
-    point: number;
-    numsIndex?: number[];
-    leftIndex?: number[];
-    rightIndex?: number[];
-    outputIndex?: number[];
-  }) {
-    const v: Variable[] = [];
-    const { point, numsIndex, leftIndex, rightIndex, outputIndex } = p;
-    const step: ProblemState = {
-      variables: v,
-      breakpoint: point,
-    };
-    v.push(asArray("nums", nums, ... (numsIndex??[])))
-    if (productsLeft) {
-      v.push(asArray("productsLeft", productsLeft, ...(leftIndex??[])))
-    }
-    if (productsRight) {
-      v.push(asArray("productsRight", productsRight, ...(rightIndex??[])))
-    }
-    if (output) {
-      v.push(asArray("output", output, ...(outputIndex??[])));
-    }
-    steps.push(step);
-  }
-
-  // Initial state log before the loop starts
-  log({ point: 1 });
-
-  // Fill productsLeft array (prefix products)
+  //#1 Initialize prefix, suffix, and result arrays. Start prefix calculation loop.
   for (let i = 1; i < length; i++) {
     productsLeft[i] = productsLeft[i - 1] * nums[i - 1];
-    log({ point: 2, leftIndex: [i, i - 1], numsIndex: [i - 1] });
+    //#2 Calculated prefix product for index i. Continue loop or start suffix calculation.
   }
 
-  // Fill productsRight array (suffix products)
+  //#3 Start suffix calculation loop (iterating backwards).
   for (let i = length - 2; i >= 0; i--) {
     productsRight[i] = productsRight[i + 1] * nums[i + 1];
-    log({ point: 3, rightIndex: [i, i + 1], numsIndex: [i + 1] });
+    //#4 Calculated suffix product for index i. Continue loop or start final result calculation.
   }
 
-  // Calculate the output array by combining prefix and suffix products
+  //#5 Start final result calculation loop.
   for (let i = 0; i < length; i++) {
     output[i] = productsLeft[i] * productsRight[i];
-    log({ point: 4, outputIndex: [i], leftIndex: [i], rightIndex: [i] });
+    //#6 Calculated final result for index i. Continue loop or prepare to return.
   }
 
-  // Logs the final state with the output array
-  log({ point: 5 });
-
-  return steps;
+  //#7 Final result array 'output' is ready. Return 'output'.
+  return output; // Return the actual result array
 }
 
-// Example implementation of the productExceptSelf function for demonstration and testing
+// The code string below should ideally reflect the function above with breakpoints.
+// Let's update it to match.
 const code = `function productExceptSelf(nums: number[]): number[] {
   const length = nums.length;
   const output = new Array(length).fill(1);
   const productsLeft = new Array(length).fill(1);
   const productsRight = new Array(length).fill(1);
 
-  //#1
+  //#1 Initialize prefix, suffix, and result arrays. Start prefix calculation loop.
   for (let i = 1; i < length; i++) {
     productsLeft[i] = productsLeft[i - 1] * nums[i - 1];
-    //#2
+    //#2 Calculated prefix product for index i. Continue loop or start suffix calculation.
   }
 
+  //#3 Start suffix calculation loop (iterating backwards).
   for (let i = length - 2; i >= 0; i--) {
     productsRight[i] = productsRight[i + 1] * nums[i + 1];
-    //#3
+    //#4 Calculated suffix product for index i. Continue loop or start final result calculation.
   }
 
+  //#5 Start final result calculation loop.
   for (let i = 0; i < length; i++) {
     output[i] = productsLeft[i] * productsRight[i];
-    //#4
+    //#6 Calculated final result for index i. Continue loop or prepare to return.
   }
 
-  //#5
+  //#7 Final result array 'output' is ready. Return 'output'.
   return output;
 }`;
 
 // Description for a larger, more complex input set to test and visualize the algorithm
 const title = "Product of Array Except Self";
-const getInput = () => ({
-  nums: [1, 2, 3, 4, 5],
-});
+// const getInput = () => ({ // getInput is usually defined in testcase.ts now
+//   nums: [1, 2, 3, 4, 5],
+// });
 
 // Export the complete problem setup including the input function, the computational function, and other metadata
 export const problem: Problem<
-  ProductExceptSelfInput,
-  ProblemState
+  ProductExceptSelfInput // ProblemState is typically handled by generateSteps now
 > = {
   title,
   emoji: '✖️',
-  code,
-  func: productExceptSelf,
+  code, // This code string now matches the function above
+  // func: productExceptSelf, // func is usually removed when generateSteps is primary
   id: "product-of-array-except-self",
   tags: ["array", "prefix sum"],
 };
