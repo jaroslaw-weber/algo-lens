@@ -1,6 +1,7 @@
 import {
   BinaryTreeNode,
   HashHighlight,
+  ListNode,
   NodeHighlight,
   Pointer2D,
   ProblemState,
@@ -14,6 +15,7 @@ import {
   asHashmap,
   asHashset,
   asIntervals,
+  asList,
   asSimpleValue,
   asTree,
   asValueGroup,
@@ -86,6 +88,11 @@ export class StepLoggerV2 {
     pointer3?: number
   ) {
     const variable = asArray(name, values, pointer1, pointer2, pointer3);
+    this.upsert(variable);
+  }
+
+  public list(name: string, node: ListNode, highlight: NodeHighlight[] = []) {
+    const variable = asList(name, node, highlight);
     this.upsert(variable);
   }
 
