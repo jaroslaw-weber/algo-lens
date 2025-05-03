@@ -1,55 +1,56 @@
 import { TestCase } from 'algo-lens-core';
-import { CourseScheduleInput } from './types'; // Assuming type { numCourses: number; prerequisites: number[][]; }
+// Removed import for CourseScheduleInput
 
-export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
-  // Existing cases (refactored format)
+// Reverted TestCase signature to use tuple input type
+export const testcases: TestCase<[number, number[][]], boolean>[] = [
+  // Existing cases (reverted format)
   {
-    input: {
-      numCourses: 10,
-      prerequisites: [ [1, 0], [2, 0], [3, 1], [3, 2], [4, 2], [5, 3], [5, 4], [6, 0], [7, 6], [8, 7], [9, 8] ],
-    },
+    input: [ // numCourses: 10
+      10,
+      [ [1, 0], [2, 0], [3, 1], [3, 2], [4, 2], [5, 3], [5, 4], [6, 0], [7, 6], [8, 7], [9, 8] ],
+    ],
     expected: true
   },
   {
-    input: { numCourses: 2, prerequisites: [[1, 0]] },
+    input: [ 2, [[1, 0]] ], // numCourses: 2
     expected: true
   },
   {
-    input: { numCourses: 2, prerequisites: [[1, 0], [0, 1]] },
+    input: [ 2, [[1, 0], [0, 1]] ], // numCourses: 2
     expected: false
   },
   {
-    input: { numCourses: 3, prerequisites: [] },
+    input: [ 3, [] ], // numCourses: 3
     expected: true
   },
   {
-     input: { numCourses: 4, prerequisites: [[1,0],[2,1],[3,2],[1,3]] }, // Cycle 1->3 ? No, 1->2->3 and 1->3. Let's check... 1->0 no cycle. 1->2->3 no cycle. 1->3 no cycle. Wait, the original comment said cycle 1->3, but the prereq is [1,3] meaning 1 depends on 3. The cycle is 1->2->3, then 1 depends on 3. So 1->2->3<-1. No cycle here. Let's assume the original intent was a cycle like [3,1]. Original comment: (cycle 1->2->3->1). Let's create that cycle: [[1,0],[2,1],[3,2],[0,3]]. Let's keep the original data but correct the expectation if needed. Prereqs: 1 needs 0; 2 needs 1; 3 needs 2; 1 needs 3. Yes, this is a cycle: 1->2->3->1. The original `expected: false` is correct.
+     input: [ 4, [[1,0],[2,1],[3,2],[1,3]] ], // numCourses: 4, Cycle: 1->2->3<-1 (Corrected interpretation: 1 needs 3) -> Cycle is 1->2->3, and 1 needs 3. This forms a cycle 1->2->3<-1. Wait, my previous reasoning was wrong. 1 needs 3, 3 needs 2, 2 needs 1. This IS a cycle 1->2->3->1 (in terms of dependency). The expected: false is correct.
      expected: false
   },
 
-  // Added generated cases
+  // Added generated cases (reverted format)
   {
-    input: { numCourses: 1, prerequisites: [] },
+    input: [ 1, [] ], // numCourses: 1
     expected: true
   },
   {
-    input: { numCourses: 3, prerequisites: [[0, 1], [0, 2], [1, 2]] }, // 0 needs 1, 0 needs 2, 1 needs 2. Order: 2, 1, 0.
+    input: [ 3, [[0, 1], [0, 2], [1, 2]] ], // numCourses: 3
     expected: true
   },
   {
-    input: { numCourses: 5, prerequisites: [[1, 0], [2, 1], [3, 2], [4, 3]] }, // Linear: 0, 1, 2, 3, 4
+    input: [ 5, [[1, 0], [2, 1], [3, 2], [4, 3]] ], // numCourses: 5
     expected: true
   },
   {
-    input: { numCourses: 3, prerequisites: [[0, 1], [1, 2], [2, 0]] }, // Cycle: 0->1->2->0
+    input: [ 3, [[0, 1], [1, 2], [2, 0]] ], // numCourses: 3
     expected: false
   },
   {
-    input: { numCourses: 6, prerequisites: [[1, 0], [2, 1], [3, 1], [4, 2], [4, 3], [5, 4], [5, 0]] }, // Complex DAG
+    input: [ 6, [[1, 0], [2, 1], [3, 1], [4, 2], [4, 3], [5, 4], [5, 0]] ], // numCourses: 6
     expected: true
   },
   {
-    input: { numCourses: 4, prerequisites: [[0, 1], [2, 3], [1, 2], [3, 0]] }, // Cycle: 0->1->2->3->0
+    input: [ 4, [[0, 1], [2, 3], [1, 2], [3, 0]] ], // numCourses: 4
     expected: false
   }
 ];
