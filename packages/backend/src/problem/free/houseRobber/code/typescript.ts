@@ -1,4 +1,4 @@
-export const code = `function rob(nums) {
+function rob(nums: number[]): number {
   const n = nums.length;
   const dp = new Array(n + 1).fill(0);
   dp[0] = 0; 
@@ -16,4 +16,4 @@ export const code = `function rob(nums) {
   const result = dp[n]; 
   //#4
   return result;
-}`;
+}

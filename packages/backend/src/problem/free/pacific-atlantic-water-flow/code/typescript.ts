@@ -1,7 +1,4 @@
-// Note: The original code variable was incomplete ('// ...').
-// Providing a placeholder or a more complete BFS/DFS implementation might be necessary
-// depending on how this 'code' variable is used. For now, using the placeholder.
-export const code = `function pacificAtlanticWaterFlow(heights: number[][]): number[][] {
+function pacificAtlanticWaterFlow(heights: number[][]): number[][] {
   const rows = heights.length;
   const cols = heights[0].length;
   const pacificReachable = new Array(rows).fill(0).map(() => new Array(cols).fill(false));
@@ -51,4 +48,4 @@ export const code = `function pacificAtlanticWaterFlow(heights: number[][]): num
   }
 
   return result;
-}`;
+}

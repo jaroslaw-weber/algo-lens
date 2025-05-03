@@ -1,4 +1,4 @@
-export const code = `function longestIncreasingSubsequence(nums) {
+function longestIncreasingSubsequence(nums: number[]): number {
     const dp = new Array(nums.length).fill(1); 
     //#1
     for (let i = 1; i < nums.length; i++) {
@@ -13,4 +13,4 @@ export const code = `function longestIncreasingSubsequence(nums) {
     const result = Math.max(...dp); 
     //#4
     return result;
-}`;
+}

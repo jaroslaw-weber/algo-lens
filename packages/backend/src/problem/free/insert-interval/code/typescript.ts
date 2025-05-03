@@ -1,6 +1,6 @@
-export const code = `function insertInterval(intervals, newInterval) {
+function insertInterval(intervals: number[][], newInterval: number[]): number[][] {
   //#1 Initialize the result array to store the merged intervals
-  let result = [];
+  let result: number[][] = [];
 
   // Initialize index 'i' to iterate through intervals
   let i = 0;
@@ -30,4 +30,4 @@ export const code = `function insertInterval(intervals, newInterval) {
 
   //#6 Return the final result array
   return result;
-}`;
+}

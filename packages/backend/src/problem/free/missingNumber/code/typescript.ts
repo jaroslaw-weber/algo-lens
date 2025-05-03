@@ -1,5 +1,4 @@
-// Example implementation of the missingNumber function for demonstration and testing
-export const code = `function missingNumber(nums: number[]): number {
+function missingNumber(nums: number[]): number {
   let n = nums.length; 
   // Calculate the expected sum of numbers from 0 to n (inclusive)
   let expectedSum = (n * (n + 1)) / 2; 
@@ -17,4 +16,3 @@ export const code = `function missingNumber(nums: number[]): number {
 
   return result;
 }
-`;

@@ -1,4 +1,4 @@
-export const code = `function merge(intervals: number[][]): number[][] {
+function merge(intervals: number[][]): number[][] {
   //#1 Sort intervals by their start points
   intervals.sort((a, b) => a[0] - b[0]);
   let merged = [intervals[0]];
@@ -17,4 +17,4 @@ export const code = `function merge(intervals: number[][]): number[][] {
 
   //#6 All intervals processed, return the merged intervals
   return merged;
-}`;
+}

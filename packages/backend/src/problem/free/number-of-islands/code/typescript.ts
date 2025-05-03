@@ -1,4 +1,4 @@
-export const code = `function numIslands(grid: string[][]): number {
+function numIslands(grid: string[][]): number {
   const directions = [
     [-1, 0],
     [1, 0],
@@ -50,4 +50,4 @@ export const code = `function numIslands(grid: string[][]): number {
   }
 
   return numIslands;
-}`;
+}
