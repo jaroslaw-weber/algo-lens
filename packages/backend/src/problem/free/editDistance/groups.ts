@@ -1,8 +1,8 @@
 import { GroupMetadata } from "algo-lens-core";
 
 export const groups: GroupMetadata[] = [
-  { title: "Inputs", variables: ["s1", "s2"], emoji: "📥" },
-  { title: "DP Table", variables: ["dp"], emoji: "📊" },
-  { title: "Loop Variables", variables: ["i", "j", "op"], emoji: "🔁" },
-  { title: "Result", variables: ["result", "s1Length", "s2Length"], emoji: "🏁" },
+  { name: "inputs", label: "Inputs", emoji: "📥" },
+  { name: "dpTable", label: "DP Table", emoji: "📊" },
+  { name: "loopVariables", label: "Loop Variables", emoji: "🔁" },
+  { name: "result", label: "Result", emoji: "🏁" },
 ];
