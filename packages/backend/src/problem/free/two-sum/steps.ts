@@ -3,47 +3,49 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2";
 import { TwoSumInput } from "./types"; // Assuming types.ts will be created later
 import _ = require("lodash"); // Added lodash, might not be needed but good practice based on 3sum
 
-export function generateSteps(p: TwoSumInput): ProblemState[] {
+export function generateSteps(nums: number[], target: number): ProblemState[] {
   const l = new StepLoggerV2();
-  const { nums, target } = p;
   const seen = new Map<number, number>();
 
-  l.simple('target', target);
-  l.array('nums', nums);
-  l.hashmap('seen', seen);
+  l.simple("target", target);
+  l.array("nums", nums);
+  l.hashmap("seen", seen);
   l.breakpoint(1); // Corresponds to #1 in original code
 
   for (let i = 0; i < nums.length; i++) {
     const num = nums[i];
     const complement = target - num;
-    
+
     // Highlight current element and show complement needed
-    l.array('nums', nums, { [i]: 'primary' });
-    l.simple('complement', complement); 
+    l.array("nums", nums, { [i]: "primary" });
+    l.simple("complement", complement);
     l.breakpoint(2); // Corresponds to #2
 
     const complementIndex = seen.get(complement);
     const existsInSet = complementIndex !== undefined;
 
     // Log the check against the 'seen' map
-    l.hashmap('seen', seen, { value: complement, color: existsInSet ? 'success' : 'error' });
+    l.hashmap("seen", seen, {
+      value: complement,
+      color: existsInSet ? "success" : "error",
+    });
 
     if (existsInSet) {
       // Highlight the found pair in nums array
-      l.array('nums', nums, { [i]: 'success', [complementIndex]: 'success' });
+      l.array("nums", nums, { [i]: "success", [complementIndex]: "success" });
       // Show the final result
-      l.array('result', [complementIndex, i]);
+      l.array("result", [complementIndex, i]);
       l.breakpoint(3); // Corresponds to #3
       return l.getSteps();
     }
 
     seen.set(num, i);
     // Log adding the current number to 'seen' map
-    l.hashmap('seen', seen, { value: num, color: 'primary' }); 
+    l.hashmap("seen", seen, { value: num, color: "primary" });
     // No explicit breakpoint 4 in the original structure, but logging the map update is useful
   }
 
-  // Original code didn't have a specific step for not found, 
+  // Original code didn't have a specific step for not found,
   // but we can add one if needed, mirroring the original return pattern.
   // If loop finishes without finding a pair, implicitly means no solution.
   // l.breakpoint(5); // Optional: Corresponds to original log(5) if needed
