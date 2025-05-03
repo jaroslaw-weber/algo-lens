@@ -1,71 +1,54 @@
-import { ProblemState, ThemeColor } from "algo-lens-core";
-import { asArray, asHashset, asBooleanGroup } from "../../core/utils";
-import { ContainsDuplicateInput } from "./types";
+import { ProblemState } from "algo-lens-core"; // Keep ProblemState for return type hint
+import { asArray, asHashset } from "../../core/utils"; // Keep utils used by logger internally
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 /**
  * Implements the containsDuplicate algorithm which checks if there are any duplicate numbers in an array.
- * @param p - The input parameters including an array of numbers.
+ * @param nums - The input array of numbers.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
 export function generateSteps(nums: number[]): ProblemState[] {
-  // Renamed export to function
-  const steps: ProblemState[] = [];
+  const logger = new StepLoggerV2();
   let result = false; // Initialize result to false
   const hashSet: Set<number> = new Set();
 
-  // Helper function to create and log each step's computational state
-  function log(point: number, i?: number, existsInSet?: boolean) {
-    const color: ThemeColor = existsInSet ? "error" : "success";
-    const step: ProblemState = {
-      variables: [
-        asArray("nums", nums, i),
-        asHashset("hashSet", hashSet, { value: nums[i], color }),
-        asBooleanGroup("exist check", { existsInSet }),
-      ],
-      breakpoint: point,
-    };
-    steps.push(step);
-  }
-
   // Initial state log before the loop starts
-  log(1);
+  logger.array("nums", nums);
+  logger.hashset("hashSet", hashSet, {}); // Initial empty hashset state
+  logger.simple({ result }); // Initial result state
+  logger.breakpoint(1);
 
   // Main loop to check for duplicates
   for (let i = 0; i < nums.length; i++) {
-    log(2, i);
+    // Log state before checking hashSet
+    logger.array("nums", nums, i);
+    logger.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Highlight value being checked
+    logger.simple({ result });
+    logger.breakpoint(2);
+
     if (hashSet.has(nums[i])) {
       result = true; // Set result to true if duplicate found
-      log(3, i, true);
-      // Add final step logging result before returning
-      steps.push({
-        variables: [
-          asArray("nums", nums, i),
-          asHashset("hashSet", hashSet, { value: nums[i], color: "error" }),
-          asBooleanGroup("exist check", { existsInSet: true }),
-          asBooleanGroup("result", { result }), // Log final result
-        ],
-        breakpoint: 5, // Use a distinct breakpoint for the final result log
-      });
-      return steps;
+      // Log duplicate found state
+      logger.array("nums", nums, i);
+      logger.hashset("hashSet", hashSet, { value: nums[i], color: "error" }); // Highlight duplicate
+      logger.simple({ result }); // Log final true result
+      logger.breakpoint(3);
+      return logger.getSteps(); // Return early
     } else {
       hashSet.add(nums[i]);
-      log(4, i, false);
+      // Log state after adding to hashSet
+      logger.array("nums", nums, i);
+      logger.hashset("hashSet", hashSet, { value: nums[i], color: "success" }); // Highlight added value
+      logger.simple({ result });
+      logger.breakpoint(4);
     }
   }
 
-  // Logs the final state before returning when no duplicate is found
-  log(5); // Log the state after the loop completes
+  // Logs the final state when no duplicate is found
+  logger.array("nums", nums); // Final array state
+  logger.hashset("hashSet", hashSet, {}); // Final hashset state
+  logger.simple({ result }); // Log final false result
+  logger.breakpoint(5);
 
-  // Add final step logging result before returning
-  steps.push({
-    variables: [
-      asArray("nums", nums), // No specific index highlighted here
-      asHashset("hashSet", hashSet), // Show final hashSet state
-      // Optionally include exist check if needed, or omit if loop finished without finding duplicate
-      asBooleanGroup("result", { result }), // Log final result
-    ],
-    breakpoint: 5, // Use the same final breakpoint
-  });
-
-  return steps;
+  return logger.getSteps();
 }
