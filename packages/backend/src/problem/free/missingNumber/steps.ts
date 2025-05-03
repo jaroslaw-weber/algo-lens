@@ -5,9 +5,8 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 /**
  * Generates the states for the missing number algorithm visualization using StepLoggerV2.
  */
-export function generateSteps(p: MissingNumberInput): ProblemState[] {
+export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
-  const { nums } = p;
 
   let n = nums.length;
   let expectedSum = (n * (n + 1)) / 2;

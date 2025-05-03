@@ -15,4 +15,8 @@ export const testcases: TestCase<ProductExceptSelfInput, any>[] = [
     input: [2, 3, 0, 0],
     expected: 0,
   },
+  {
+    input: [],
+    expected: 1,
+  },
 ];
