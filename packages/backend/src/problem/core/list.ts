@@ -46,6 +46,16 @@ export async function getAllProblemGroups(): Promise<ProblemGroup[]> {
           | undefined;
 
         if (foundProblem && !loadedProblemTitles.has(foundProblem.title)) {
+          // Load the code from typescript.ts file
+          const codeFilePath = path.join(entryPath, "/code/typescript.ts");
+          if (fs.existsSync(codeFilePath)) {
+            foundProblem.code = fs.readFileSync(codeFilePath, "utf-8");
+          } else {
+            console.warn(
+              `Code file not found for problem: ${foundProblem.title}`
+            );
+          }
+
           dynamicallyLoadedProblems.push(foundProblem);
           loadedProblemTitles.add(foundProblem.title);
         } else if (foundProblem) {
