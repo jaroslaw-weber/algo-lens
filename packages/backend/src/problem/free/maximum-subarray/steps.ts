@@ -146,6 +146,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.array("nums", nums, [], inputGroup);
   l.simple({ maxEndingHere }, kadaneGroup);
   l.simple({ maxSoFar }, kadaneGroup); // Final result
+  l.simple({ result: maxSoFar }, kadaneGroup); // Add this line to log 'result'
   l.breakpoint(6, `Loop finished. Final maximum subarray sum is ${maxSoFar}.`); // Breakpoint 6 as per code.ts
 
   return l.getSteps();
