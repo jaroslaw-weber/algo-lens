@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "n",
     label: "n",
@@ -10,19 +10,22 @@ export const variableMetadata: VariableMetadata[] = [
   {
     name: "result",
     label: "result",
-    description: "Array storing the count of set bits for each number from 0 to n.",
+    description:
+      "Array storing the count of set bits for each number from 0 to n.",
     emoji: "📊",
   },
   {
     name: "i",
     label: "i",
-    description: "The current number being processed in the outer loop (from 0 to n).",
+    description:
+      "The current number being processed in the outer loop (from 0 to n).",
     emoji: "🔄",
   },
   {
     name: "num",
     label: "num",
-    description: "Temporary variable holding the value of 'i' for bit manipulation, or the original 'i' when logging.",
+    description:
+      "Temporary variable holding the value of 'i' for bit manipulation, or the original 'i' when logging.",
     emoji: "🔍",
   },
   {

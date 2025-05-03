@@ -9,11 +9,12 @@ const title = "Counting Bits";
 
 export const problem: Problem<CountBitsInput, ProblemState> = {
   title: title,
-  emoji: '🧮',
+  emoji: "🧮",
   func: generateSteps,
   testcases,
   id: "countingBits",
   tags: ["dynamic programming", "bit manipulation"],
+  difficulty: "easy",
   metadata: {
     variables,
     groups,

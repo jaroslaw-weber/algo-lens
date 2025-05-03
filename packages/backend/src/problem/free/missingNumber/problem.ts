@@ -1,7 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { MissingNumberInput } from "./types";
 import { generateSteps } from "./steps";
-import { code } from "./code";
 import { variables } from "./variables";
 import { groups } from "./groups";
 import { testcases } from "./testcase";
@@ -17,6 +16,7 @@ export const problem: Problem<MissingNumberInput, ProblemState> = {
   tags: ["math", "array"],
   func: generateSteps, // Imported from ./steps
   testcases,
+  difficulty: "easy",
   metadata: {
     variables, // Imported from ./variables
     groups, // Imported from ./groups

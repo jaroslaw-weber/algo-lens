@@ -1,7 +1,7 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { ProblemState, Variable } from "algo-lens-core";
-import { asArray } from "../core/utils"; // Assuming asArray is in this relative path
 import { ProductExceptSelfInput } from "./types"; // Import the interface
+import { asArray } from "../../core/utils";
 
 /**
  * Implements the product of array except self algorithm which calculates the product of all numbers in the input array except for the number at each index, generating steps for visualization.
@@ -31,15 +31,15 @@ export function generateSteps(p: ProductExceptSelfInput): ProblemState[] {
       variables: v,
       breakpoint: point,
     };
-    v.push(asArray("nums", nums, ... (numsIndex??[])))
+    v.push(asArray("nums", nums, ...(numsIndex ?? [])));
     if (productsLeft) {
-      v.push(asArray("productsLeft", productsLeft, ...(leftIndex??[])))
+      v.push(asArray("productsLeft", productsLeft, ...(leftIndex ?? [])));
     }
     if (productsRight) {
-      v.push(asArray("productsRight", productsRight, ...(rightIndex??[])))
+      v.push(asArray("productsRight", productsRight, ...(rightIndex ?? [])));
     }
     if (output) {
-      v.push(asArray("output", output, ...(outputIndex??[])));
+      v.push(asArray("output", output, ...(outputIndex ?? [])));
     }
     steps.push(step);
   }

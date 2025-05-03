@@ -1,3 +1,1 @@
-export interface CountBitsInput {
-  n: number;
-}
+export type CountBitsInput = number;

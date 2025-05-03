@@ -6,6 +6,7 @@ export interface ProblemMetadata {
 export interface TestCase<Input, State> {
   input: Input;
   expected: Partial<State>;
+  description?: string;
 }
 
 /** Defines a generic interface for a problem, parameterized by Input and State types. */

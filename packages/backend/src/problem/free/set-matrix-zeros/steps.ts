@@ -179,6 +179,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   l.array2d("matrix", matrix);
   l.simple({ rows, cols });
   l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
+  l.array2d("result", matrix); //not sure if correct
   l.breakpoint(16, "Final state after setting rows and columns to zero");
 
   return l.getSteps();
