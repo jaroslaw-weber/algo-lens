@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "prices",
     label: "prices",
@@ -39,5 +39,10 @@ export const variableMetadata: VariableMetadata[] = [
     description: "The best profit found until the previous day (dp[i - 1]).",
     emoji: "📊",
   },
-  { name: "i", label: "i", description: "The current step/day in the loop.", emoji: "🔄" },
+  {
+    name: "i",
+    label: "i",
+    description: "The current step/day in the loop.",
+    emoji: "🔄",
+  },
 ];

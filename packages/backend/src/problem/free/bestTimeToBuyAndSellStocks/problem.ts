@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { MaxProfitInput } from "./types";
@@ -15,7 +15,7 @@ export const problem: Problem<MaxProfitInput, ProblemState> = {
   testcases,
   tags: ["dynamic programming"],
   metadata: {
-    variables: variableMetadata,
-    groups: groups,
+    variables,
+    groups,
   },
 };
