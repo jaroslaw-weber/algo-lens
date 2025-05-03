@@ -1,4 +1,4 @@
-import { ProblemState, ThemeColor } from "algo-lens-core";
+import { ProblemState, ThemeColor, SimpleVariable } from "algo-lens-core";
 import { asArray, asHashset, asBooleanGroup } from "../../core/utils";
 import { ContainsDuplicateInput } from "./types";
 
@@ -34,6 +34,11 @@ export function generateSteps(nums: number[]): ProblemState[] {
     log(2, i);
     if (hashSet.has(nums[i])) {
       log(3, i, true);
+      // Add result variable before returning true
+      if (steps.length > 0) {
+          const lastStep = steps[steps.length - 1];
+          lastStep.variables.push({ label: "result", value: true, type: "boolean" } as SimpleVariable);
+      }
       return steps;
     } else {
       hashSet.add(nums[i]);
@@ -43,6 +48,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
   // Logs the final state
   log(5);
+
+  // Add result variable before returning false (loop completed)
+  if (steps.length > 0) {
+      const lastStep = steps[steps.length - 1];
+      lastStep.variables.push({ label: "result", value: false, type: "boolean" } as SimpleVariable);
+  }
 
   return steps;
 }

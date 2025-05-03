@@ -9,6 +9,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   // It's crucial to clone the input matrix to avoid modifying the original test case data
   matrix = deepClone2DArray(matrix);
   const l = new StepLoggerV2();
+  l.groupOptions.set("zeroFlags", { min: 0, max: 1, reverse: false });
 
   const rows = matrix.length;
   const cols = matrix[0].length;
@@ -176,10 +177,10 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   }
 
   // Final state
-  l.array2d("matrix", matrix);
+  // l.array2d("matrix", matrix); // Removed redundant logging
   l.simple({ rows, cols });
   l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-  l.array2d("result", matrix); //not sure if correct
+  l.array2d("result", matrix); // Ensure this logs the final state correctly
   l.breakpoint(16, "Final state after setting rows and columns to zero");
 
   return l.getSteps();
