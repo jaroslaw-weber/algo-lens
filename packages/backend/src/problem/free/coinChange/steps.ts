@@ -1,10 +1,10 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLogger } from "../../core/StepLogger"; // Adjusted path
+import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
 import { CoinChangeInput } from "./types";
 import { groups } from "./groups"; // Import groups
 
 export function generateSteps(p: CoinChangeInput): ProblemState[] {
-  const l = new StepLogger();
+  const l = new StepLoggerV2();
   const { coins, target } = p;
 
   // Initialize dp array
@@ -16,7 +16,6 @@ export function generateSteps(p: CoinChangeInput): ProblemState[] {
   l.array("coins", coins, [], groups.find(g => g.name === "input")!.name);
   l.array("dp", dp, [0], groups.find(g => g.name === "dp_table")!.name);
   l.breakpoint(1, "Initialize dp table with base case dp[0] = 0");
-  l.save();
 
   // Outer loop: Iterate through coins
   // Note: The original code uses for...of, but the original ProblemState generation used indices.
@@ -41,7 +40,6 @@ export function generateSteps(p: CoinChangeInput): ProblemState[] {
       l.simple({ include }, groups.find(g => g.name === "loops")!.name);
       l.simple({ exclude }, groups.find(g => g.name === "loops")!.name);
       l.breakpoint(2, `Evaluating amount ${amount} with coin ${coin}`);
-      l.save();
 
 
       if (include < exclude) {
@@ -58,7 +56,6 @@ export function generateSteps(p: CoinChangeInput): ProblemState[] {
         l.simple({ include }, groups.find(g => g.name === "loops")!.name);
         l.simple({ exclude: dp[amount] }, groups.find(g => g.name === "loops")!.name); // exclude is now equal to the new dp[amount]
         l.breakpoint(3, `Updated dp[${amount}] using coin ${coin}`);
-        l.save();
       }
     }
   }
@@ -70,7 +67,6 @@ export function generateSteps(p: CoinChangeInput): ProblemState[] {
   l.array("dp", dp, [target], groups.find(g => g.name === "dp_table")!.name); // Highlight final dp[target]
   l.simple({ result }, groups.find(g => g.name === "result")!.name);
   l.breakpoint(4, "Determine final result from dp[target]"); // Adjusted breakpoint number to match code comment
-  l.save();
 
   return l.getSteps();
 }
