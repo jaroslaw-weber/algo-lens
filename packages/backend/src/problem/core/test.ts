@@ -33,7 +33,7 @@ export function runTests(problem: Problem<any, ProblemState>) {
       throw new Error("No result found in last state");
     }
     //@ts-expect-error
-    const value = result.value || result.values;
+    const value = result.value ?? result.values;
     expect(value).toEqual(expected);
     /** 
     console.log(
