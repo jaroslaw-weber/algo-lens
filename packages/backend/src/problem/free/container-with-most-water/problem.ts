@@ -1,6 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Import only generateSteps from steps
-import { code } from "./code";
+import { code } from "./code/typescript";
 import { ContainerInput } from "./types"; // Import ContainerInput from types
 import { testcases } from "./testcase";
 

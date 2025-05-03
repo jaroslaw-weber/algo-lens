@@ -1,5 +1,5 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { courseSchedule, code } from "./code"; // Import the algorithm function and code string
+import { courseSchedule, code } from "./code/typescript"; // Import the algorithm function and code string
 import { CourseScheduleInput } from "./types"; // Import the input type
 import { courseScheduleGroups } from "./groups"; // Import group definitions
 import { variableMetadata } from "./variables"; // Import variable definitions
