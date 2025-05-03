@@ -2,7 +2,7 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { variableMetadata } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code";
+import { code } from "./code/typescript";
 import { CountBitsInput } from "./types";
 
 const title = "Counting Bits";

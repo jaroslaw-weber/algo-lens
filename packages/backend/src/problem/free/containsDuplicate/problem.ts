@@ -6,7 +6,7 @@ import {
   asBooleanGroup,
 } from "../../core/utils"; // Adjusted path
 import { ContainsDuplicateInput } from "./types"; // New import
-import { code } from "./code"; // New import
+import { code } from "./code/typescript"; // New import
 
 /**
  * Implements the containsDuplicate algorithm which checks if there are any duplicate numbers in an array.

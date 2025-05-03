@@ -1,7 +1,7 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Corrected import name
 import { EditDistanceInput } from "./types";
-import { code } from "./code";
+import { code } from "./code/typescript";
 import { variableMetadata } from "./variables";
 import { groups } from "./groups";
 
