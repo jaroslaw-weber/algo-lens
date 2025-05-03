@@ -1,7 +1,7 @@
 import { GroupMetadata } from "algo-lens-core";
 
 // Define groups for visualizing the Course Schedule problem state
-export const courseScheduleGroups: GroupMetadata[] = [
+export const groups: GroupMetadata[] = [
   {
     name: "input",
     label: "Input",
@@ -25,8 +25,8 @@ export const courseScheduleGroups: GroupMetadata[] = [
   },
   // Add other potential simple value variables used in logging
   {
-      name: "tempValues",
-      label: "Temporary Values",
-      emoji: "🧪",
-  }
+    name: "tempValues",
+    label: "Temporary Values",
+    emoji: "🧪",
+  },
 ];
