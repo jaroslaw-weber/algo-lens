@@ -10,6 +10,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const n = nums.length;
   const expectedSum = (n * (n + 1)) / 2;
   l.groupOptions.set("sum", { min: 0, max: expectedSum, reverse: false });
+  l.groupOptions.set("loop", { min: 0, max: n });
   let actualSum = 0;
 
   // Breakpoint 1: Initial state
