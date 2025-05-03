@@ -1,7 +1,7 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { ProblemState } from "algo-lens-core"; // Import ProblemState
-import { StepLoggerV2 } from "../core/StepLoggerV2";
 import { ProductExceptSelfInput } from "./types"; // Import the interface
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 /**
  * Implements the product of array except self algorithm which calculates the product of all numbers in the input array except for the number at each index, generating steps for visualization.
@@ -36,9 +36,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Fill productsRight array (suffix products)
   for (let i = length - 2; i >= 0; i--) {
     productsRight[i] = productsRight[i + 1] * nums[i + 1];
-    logger.array("nums", nums, { pointer: [i + 1] });
+    logger.array("nums", nums, ...[i + 1]);
     logger.array("productsLeft", productsLeft);
-    logger.array("productsRight", productsRight, { pointer: [i, i + 1] });
+    logger.array("productsRight", productsRight, ...[i, i + 1]);
     logger.array("output", output);
     logger.breakpoint(3);
   }
@@ -47,9 +47,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
   for (let i = 0; i < length; i++) {
     output[i] = productsLeft[i] * productsRight[i];
     logger.array("nums", nums);
-    logger.array("productsLeft", productsLeft, { pointer: [i] });
-    logger.array("productsRight", productsRight, { pointer: [i] });
-    logger.array("output", output, { pointer: [i] });
+    logger.array("productsLeft", productsLeft, i);
+    logger.array("productsRight", productsRight, i);
+    logger.array("output", output, i);
     logger.breakpoint(4);
   }
 
