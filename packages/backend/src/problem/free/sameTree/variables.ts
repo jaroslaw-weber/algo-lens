@@ -14,7 +14,7 @@ const qTree = {
   highlight: [],
 };
 
-const isNodeSame = {
+const isNodeSameVariableTemplate = {
   label: "is node same?",
   type: "boolean-group",
   data: [{ label: "return", value: false }],
@@ -34,7 +34,7 @@ export const variables: Variable[] = [
     emoji: "🌳",
   },
   {
-    ...isNodeSame,
+    ...isNodeSameVariableTemplate,
     name: "is node same?",
     description: "Placeholder description for isNodeSame",
     emoji: "❓",
