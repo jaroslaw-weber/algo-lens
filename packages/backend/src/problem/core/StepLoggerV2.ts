@@ -1,4 +1,5 @@
 import {
+  HashHighlight,
   Pointer2D,
   ProblemState,
   Variable,
@@ -7,6 +8,8 @@ import {
 import {
   as2dArray,
   asArray,
+  asHashmap,
+  asHashset,
   asIntervals,
   asSimpleValue,
   asValueGroup,
@@ -112,6 +115,16 @@ export class StepLoggerV2 {
   public simple(value: Record<string, any>) {
     const variables = asSimpleValue(value);
     variables.forEach((variable) => this.upsert(variable));
+  }
+
+  public hashset(label: string, set: Set<any>, highlight: HashHighlight) {
+    const variable = asHashset(label, set, highlight);
+    this.upsert(variable);
+  }
+
+  public hashmap(label: string, map: Map<any, any>, highlight: HashHighlight) {
+    const variable = asHashmap(label, map, highlight);
+    this.upsert(variable);
   }
 
   public setMeta(name: string, metadata: VariableMetadata) {
