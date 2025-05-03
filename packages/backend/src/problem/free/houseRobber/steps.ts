@@ -43,6 +43,7 @@ export function generateSteps(nums: number[]) {
     );
     l.array("nums", nums, i - 1); // Highlight current house
     l.array("dp", dp, i, i - 1, i - 2); // Highlight relevant dp values
+    l.groupOptions.set(dpCalculationGroup, { min: 0 }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
     l.group(dpCalculationGroup, {
       // Use defined group name
       skipCurrent,
