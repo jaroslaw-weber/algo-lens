@@ -1,18 +1,14 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Problem, ProblemState, Variable } from "algo-lens-core";
-import { asArray, asSimpleValue, asValueGroup } from "../core/utils";
-
-// Defines the interface for the input expected by the productExceptSelf function
-interface ProductExceptSelfInput {
-  nums: number[];
-}
+import { ProblemState, Variable } from "algo-lens-core";
+import { asArray } from "../core/utils"; // Assuming asArray is in this relative path
+import { ProductExceptSelfInput } from "./types"; // Import the interface
 
 /**
- * Implements the product of array except self algorithm which calculates the product of all numbers in the input array except for the number at each index.
+ * Implements the product of array except self algorithm which calculates the product of all numbers in the input array except for the number at each index, generating steps for visualization.
  * @param p - The input parameters including an array of numbers.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
+export function generateSteps(p: ProductExceptSelfInput): ProblemState[] {
   const { nums } = p;
   const steps: ProblemState[] = [];
   const length = nums.length;
@@ -74,49 +70,3 @@ export function productExceptSelf(p: ProductExceptSelfInput): ProblemState[] {
 
   return steps;
 }
-
-// Example implementation of the productExceptSelf function for demonstration and testing
-const code = `function productExceptSelf(nums: number[]): number[] {
-  const length = nums.length;
-  const output = new Array(length).fill(1);
-  const productsLeft = new Array(length).fill(1);
-  const productsRight = new Array(length).fill(1);
-
-  //#1
-  for (let i = 1; i < length; i++) {
-    productsLeft[i] = productsLeft[i - 1] * nums[i - 1];
-    //#2
-  }
-
-  for (let i = length - 2; i >= 0; i--) {
-    productsRight[i] = productsRight[i + 1] * nums[i + 1];
-    //#3
-  }
-
-  for (let i = 0; i < length; i++) {
-    output[i] = productsLeft[i] * productsRight[i];
-    //#4
-  }
-
-  //#5
-  return output;
-}`;
-
-// Description for a larger, more complex input set to test and visualize the algorithm
-const title = "Product of Array Except Self";
-const getInput = () => ({
-  nums: [1, 2, 3, 4, 5],
-});
-
-// Export the complete problem setup including the input function, the computational function, and other metadata
-export const problem: Problem<
-  ProductExceptSelfInput,
-  ProblemState
-> = {
-  title,
-  emoji: '✖️',
-  code,
-  func: productExceptSelf,
-  id: "product-of-array-except-self",
-  tags: ["array", "prefix sum"],
-};
