@@ -1,4 +1,1 @@
-export interface CoinChangeInput {
-  coins: number[];
-  target: number;
-}
+export type CoinChangeInput = [number[], number];
