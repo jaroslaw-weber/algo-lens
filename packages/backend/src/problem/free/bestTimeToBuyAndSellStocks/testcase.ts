@@ -19,4 +19,25 @@ export const testcases: TestCase<MaxProfitInput, number>[] = [
     input: [1],
     expected: 0,
   },
+  // Added test cases
+  {
+    input: [2, 4, 1],
+    expected: 2,
+  },
+  {
+    input: [3, 2, 6, 5, 0, 3],
+    expected: 4,
+  },
+  {
+    input: [1, 1, 1, 1],
+    expected: 0,
+  },
+  {
+    input: [5, 4, 3, 2, 1],
+    expected: 0,
+  },
+  {
+    input: [2, 7, 1, 8, 2, 8],
+    expected: 7,
+  },
 ];
