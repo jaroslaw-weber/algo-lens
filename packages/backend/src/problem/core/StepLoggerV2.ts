@@ -4,12 +4,18 @@ import {
   Variable,
   VariableMetadata,
 } from "algo-lens-core";
-import { as2dArray, asArray, asSimpleValue, asValueGroup } from "./utils";
+import {
+  as2dArray,
+  asArray,
+  asIntervals,
+  asSimpleValue,
+  asValueGroup,
+} from "./utils";
 import _ = require("lodash");
 
 export class StepLoggerV2 {
   private steps: ProblemState[];
-  private variables: Variable[]
+  private variables: Variable[];
   private metadata: Map<string, VariableMetadata>;
   private currentBreakpoint = 0;
   groupOptions: Map<string, any> = new Map();
@@ -35,9 +41,9 @@ export class StepLoggerV2 {
 
   private upsert(variable: Variable) {
     //replace or add to array (use lodash), keep the order
-    
+
     const index = this.variables.findIndex((s) => s.label === variable.label);
-    if (index!== -1) {
+    if (index !== -1) {
       this.variables[index] = variable;
     } else {
       this.variables.push(variable);
@@ -85,13 +91,23 @@ export class StepLoggerV2 {
     this.upsert(variable);
   }
 
+  public intervals(
+    label: string,
+    arr: number[][],
+    highlight: number[],
+    min: number,
+    max: number
+  ) {
+    const variable = asIntervals(label, arr, highlight, min, max);
+    this.upsert(variable);
+  }
+
   public hide(name: string) {
     const variable = this?.variables.find((v) => v.label === name);
-    if(variable) {
+    if (variable) {
       variable.hide = true;
     }
   }
-
 
   public simple(value: Record<string, any>) {
     const variables = asSimpleValue(value);

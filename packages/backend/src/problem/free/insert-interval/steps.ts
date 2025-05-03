@@ -7,20 +7,22 @@ export function generateSteps(p: InsertIntervalInput): ProblemState[] {
   const l = new StepLoggerV2();
   const { intervals: initialIntervals, newInterval: initialNewInterval } = p;
   // Make copies to avoid modifying the input directly, especially newInterval
-  let intervals = initialIntervals.map(interval => [...interval]) as Interval[];
+  let intervals = initialIntervals.map((interval) => [
+    ...interval,
+  ]) as Interval[];
   let newInterval = [...initialNewInterval] as Interval;
 
   let result: Interval[] = [];
   let i = 0;
 
-  const inputGroup = groups.find(g => g.name === "input")!.name;
-  const resultArrayGroup = groups.find(g => g.name === "result_array")!.name;
-  const loopMergingGroup = groups.find(g => g.name === "loop_merging")!.name;
+  const inputGroup = groups.find((g) => g.name === "input")!.name;
+  const resultArrayGroup = groups.find((g) => g.name === "result_array")!.name;
+  const loopMergingGroup = groups.find((g) => g.name === "loop_merging")!.name;
 
   // Log initial state (Breakpoint #1 in code.ts corresponds to this)
-  l.json("intervals", intervals, [], inputGroup);
-  l.json("newInterval", newInterval, [], inputGroup);
-  l.json("result", result, [], resultArrayGroup);
+  l.intervals("intervals", intervals, [], inputGroup);
+  l.intervals("newInterval", newInterval, [], inputGroup);
+  l.intervals("result", result, [], resultArrayGroup);
   l.simple({ i }, loopMergingGroup);
   l.breakpoint(1, "Initial state before processing intervals.");
 
@@ -31,12 +33,17 @@ export function generateSteps(p: InsertIntervalInput): ProblemState[] {
     i++;
 
     // Log state inside loop 1
-    l.json("intervals", intervals, [i - 1], inputGroup); // Highlight the interval just added
-    l.json("newInterval", newInterval, [], inputGroup);
-    l.json("result", result, [], resultArrayGroup);
+    l.intervals("intervals", intervals, [i - 1], inputGroup); // Highlight the interval just added
+    l.intervals("newInterval", newInterval, [], inputGroup);
+    l.intervals("result", result, [], resultArrayGroup);
     l.simple({ i }, loopMergingGroup);
-    l.json("currentInterval", currentInterval, [], loopMergingGroup); // Log the interval just processed
-    l.breakpoint(2, `Adding interval [${currentInterval.join(', ')}] as it ends before newInterval starts.`);
+    l.intervals("currentInterval", currentInterval, [], loopMergingGroup); // Log the interval just processed
+    l.breakpoint(
+      2,
+      `Adding interval [${currentInterval.join(
+        ", "
+      )}] as it ends before newInterval starts.`
+    );
   }
 
   // Loop 2: Merge overlapping intervals (Breakpoint #3)
@@ -47,22 +54,31 @@ export function generateSteps(p: InsertIntervalInput): ProblemState[] {
     i++;
 
     // Log state inside loop 2
-    l.json("intervals", intervals, [i - 1], inputGroup); // Highlight the interval just merged
-    l.json("newInterval", newInterval, [], inputGroup); // Show updated newInterval
-    l.json("result", result, [], resultArrayGroup);
+    l.intervals("intervals", intervals, [i - 1], inputGroup); // Highlight the interval just merged
+    l.intervals("newInterval", newInterval, [], inputGroup); // Show updated newInterval
+    l.intervals("result", result, [], resultArrayGroup);
     l.simple({ i }, loopMergingGroup);
-    l.json("currentInterval", currentInterval, [], loopMergingGroup); // Log the interval just processed
-    l.breakpoint(3, `Merging interval [${currentInterval.join(', ')}] into newInterval. Updated newInterval: [${newInterval.join(', ')}].`);
+    l.intervals("currentInterval", currentInterval, [], loopMergingGroup); // Log the interval just processed
+    l.breakpoint(
+      3,
+      `Merging interval [${currentInterval.join(
+        ", "
+      )}] into newInterval. Updated newInterval: [${newInterval.join(", ")}].`
+    );
   }
 
   // Insert the merged newInterval (Breakpoint #4)
   result.push(newInterval);
-  l.json("intervals", intervals, [], inputGroup);
-  l.json("newInterval", newInterval, [], inputGroup); // Show final merged/original newInterval
-  l.json("result", result, [], resultArrayGroup); // Show result with newInterval added
+  l.intervals("intervals", intervals, [], inputGroup);
+  l.intervals("newInterval", newInterval, [], inputGroup); // Show final merged/original newInterval
+  l.intervals("result", result, [], resultArrayGroup); // Show result with newInterval added
   l.simple({ i }, loopMergingGroup);
-  l.breakpoint(4, `Inserting the final merged/original newInterval [${newInterval.join(', ')}].`);
-
+  l.breakpoint(
+    4,
+    `Inserting the final merged/original newInterval [${newInterval.join(
+      ", "
+    )}].`
+  );
 
   // Loop 3: Add remaining intervals (Breakpoint #5)
   while (i < intervals.length) {
@@ -76,7 +92,10 @@ export function generateSteps(p: InsertIntervalInput): ProblemState[] {
     l.json("result", result, [], resultArrayGroup);
     l.simple({ i }, loopMergingGroup);
     l.json("currentInterval", currentInterval, [], loopMergingGroup); // Log the interval just processed
-    l.breakpoint(5, `Adding remaining interval [${currentInterval.join(', ')}].`);
+    l.breakpoint(
+      5,
+      `Adding remaining interval [${currentInterval.join(", ")}].`
+    );
   }
 
   // Final state log (Breakpoint #6)
@@ -85,7 +104,6 @@ export function generateSteps(p: InsertIntervalInput): ProblemState[] {
   l.json("result", result, [], resultArrayGroup); // Final result array
   l.simple({ i }, loopMergingGroup);
   l.breakpoint(6, "Finished processing all intervals. Returning final result.");
-
 
   return l.getSteps();
 }
