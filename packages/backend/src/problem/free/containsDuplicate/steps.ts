@@ -10,6 +10,7 @@ import { ContainsDuplicateInput } from "./types";
 export function generateSteps(nums: number[]): ProblemState[] {
   // Renamed export to function
   const steps: ProblemState[] = [];
+  let result = false; // Initialize result to false
   const hashSet: Set<number> = new Set();
 
   // Helper function to create and log each step's computational state
@@ -33,7 +34,18 @@ export function generateSteps(nums: number[]): ProblemState[] {
   for (let i = 0; i < nums.length; i++) {
     log(2, i);
     if (hashSet.has(nums[i])) {
+      result = true; // Set result to true if duplicate found
       log(3, i, true);
+      // Add final step logging result before returning
+      steps.push({
+        variables: [
+          asArray("nums", nums, i),
+          asHashset("hashSet", hashSet, { value: nums[i], color: "error" }),
+          asBooleanGroup("exist check", { existsInSet: true }),
+          asBooleanGroup("result", { result }), // Log final result
+        ],
+        breakpoint: 5, // Use a distinct breakpoint for the final result log
+      });
       return steps;
     } else {
       hashSet.add(nums[i]);
@@ -41,8 +53,19 @@ export function generateSteps(nums: number[]): ProblemState[] {
     }
   }
 
-  // Logs the final state
-  log(5);
+  // Logs the final state before returning when no duplicate is found
+  log(5); // Log the state after the loop completes
+
+  // Add final step logging result before returning
+  steps.push({
+    variables: [
+      asArray("nums", nums), // No specific index highlighted here
+      asHashset("hashSet", hashSet), // Show final hashSet state
+      // Optionally include exist check if needed, or omit if loop finished without finding duplicate
+      asBooleanGroup("result", { result }), // Log final result
+    ],
+    breakpoint: 5, // Use the same final breakpoint
+  });
 
   return steps;
 }
