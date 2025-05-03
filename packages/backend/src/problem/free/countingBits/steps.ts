@@ -19,7 +19,7 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
     l.breakpoint(2, `Start processing number ${i}. Initialize count to 0.`);
     l.array("result", result, i -1); // Highlight previous result entry if exists
     l.group("loop", { i }, { min: 0, max: n });
-    l.binary("binaryRepresentation", { num }, { highlightLast: true });
+    l.binary({ num }, { highlightLast: true });
     l.group("count", { count }, { min: 0, max: n }); // Max count can be n's bit length technically, but n is safe upper bound vis-wise
 
     let inner_num = i; // Use a separate variable for the inner loop calculation
@@ -28,7 +28,7 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
       l.breakpoint(3, "Check the least significant bit.");
       l.array("result", result, i - 1);
       l.group("loop", { i }, { min: 0, max: n });
-      l.binary("binaryRepresentation", { num: inner_num }, { highlightLast: true });
+      l.binary({ num: inner_num }, { highlightLast: true });
       l.group("count", { count }, { min: 0, max: n });
 
       //#3 Use a bitwise AND operation to check the least significant bit
@@ -37,7 +37,7 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
         l.breakpoint(4, "LSB is 1. Increment count.");
         l.array("result", result, i - 1);
         l.group("loop", { i }, { min: 0, max: n });
-        l.binary("binaryRepresentation", { num: inner_num }, { highlightLast: true });
+        l.binary({ num: inner_num }, { highlightLast: true });
         l.group("count", { count }, { min: 0, max: n });
 
         count++;
@@ -46,19 +46,19 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
         l.breakpoint(5, "Count incremented.");
         l.array("result", result, i - 1);
         l.group("loop", { i }, { min: 0, max: n });
-        l.binary("binaryRepresentation", { num: inner_num }, { highlightLast: true });
+        l.binary({ num: inner_num }, { highlightLast: true });
         l.group("count", { count }, { min: 0, max: n });
       } else {
            l.breakpoint(4, "LSB is 0. No count increment."); // Add breakpoint for else case
            l.array("result", result, i - 1);
            l.group("loop", { i }, { min: 0, max: n });
-           l.binary("binaryRepresentation", { num: inner_num }, { highlightLast: true });
+           l.binary({ num: inner_num }, { highlightLast: true });
            l.group("count", { count }, { min: 0, max: n });
 
            l.breakpoint(5, "Skipping count increment."); // Add breakpoint for else case
            l.array("result", result, i - 1);
            l.group("loop", { i }, { min: 0, max: n });
-           l.binary("binaryRepresentation", { num: inner_num }, { highlightLast: true });
+           l.binary({ num: inner_num }, { highlightLast: true });
            l.group("count", { count }, { min: 0, max: n });
       }
 
@@ -67,7 +67,7 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
       l.breakpoint(6, "Right-shift the number to process next bit.");
       l.array("result", result, i - 1);
       l.group("loop", { i }, { min: 0, max: n });
-       l.binary("binaryRepresentation", { num: inner_num }, { highlightLast: true }); // Show shifted number
+       l.binary({ num: inner_num }, { highlightLast: true }); // Show shifted number
       l.group("count", { count }, { min: 0, max: n });
     }
 
@@ -75,7 +75,7 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
     l.breakpoint(7, `Finished counting bits for ${i}. Storing count ${count} in result[${i}].`);
     l.array("result", result, i - 1); // Show previous state
     l.group("loop", { i }, { min: 0, max: n });
-    l.binary("binaryRepresentation", { num }, { highlightLast: false }); // Show original 'i' value
+    l.binary({ num }, { highlightLast: false }); // Show original 'i' value
     l.group("count", { count }, { min: 0, max: n });
 
     result[i] = count;
@@ -84,7 +84,7 @@ export function generateSteps(p: CountBitsInput): ProblemState[] {
     l.breakpoint(7, `Stored count ${count} in result[${i}].`); // Re-use breakpoint 7 or use a new one if needed
     l.array("result", result, i); // Highlight the newly added result
     l.group("loop", { i }, { min: 0, max: n });
-    l.binary("binaryRepresentation", { num }, { highlightLast: false });
+    l.binary({ num }, { highlightLast: false });
     l.group("count", { count }, { min: 0, max: n });
 
 
