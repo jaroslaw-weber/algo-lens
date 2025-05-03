@@ -25,7 +25,7 @@ export function runTests(problem: Problem<any, ProblemState>) {
   for (const testcase of problem.testcases) {
     const input = cloneDeep(testcase.input);
     const expected = cloneDeep(testcase.expected);
-    const states = problem.func(...input);
+    const states = problem.func(input);
     const state = last(states);
     const variables = state!.variables;
     const result = variables.find((x) => x.label === "result");
