@@ -6,13 +6,13 @@ import { groups } from "./groups";
 import { ThreeSumInput } from "./types";
 import { testcases } from "./testcase";
 
-export const problem: Problem<ThreeSumInput, ProblemState> = {
+export const problem: Problem<number[], ProblemState> = {
   title: "Three Sum",
   emoji: "🔢",
   func: generateSteps,
-  testcases: testcases, // Add the test cases here
+  testcases: testcases,
   id: "3sum",
-  tags: ["array", "hash set", "two pointers"], // Keep updated tags
+  tags: ["array", "hash set", "two pointers"],
   metadata: {
     variables: variableMetadata,
     groups: groups,

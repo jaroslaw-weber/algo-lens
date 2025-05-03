@@ -1,19 +1,20 @@
 import { ArrayVariable, ProblemState, TestCase } from "algo-lens-core";
 import { ThreeSumInput } from "./types";
 
-export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [
+export const testcases: TestCase<number[], number[]>[] = [
   {
-    input: { nums: [-1, 0, 1, 2, -1, -4] },
+    input: [-1, 0, 1, 2, -1, -4],
     expected: {
       variables: [
         {
           label: "result",
           type: "array",
-          value: [[-1, -1, 2], [-1, 0, 1]],
-          
-        } as ArrayVariable
+          value: [
+            [-1, -1, 2],
+            [-1, 0, 1],
+          ],
+        } as ArrayVariable,
       ],
-      
     },
   },
   {

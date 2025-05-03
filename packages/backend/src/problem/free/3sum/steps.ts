@@ -6,17 +6,16 @@ import { groups } from "./groups";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 import _ = require("lodash");
 
-export function generateSteps(p: ThreeSumInput): ProblemState[] {
+export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2();
 
-  const nums = [...p.nums];  
   const min = _.min(nums);
   const max = _.max(nums);
   l.groupOptions.set("triplet", {
     min,
     max,
     reverse: false,
-  })
+  });
   l.groupOptions.set("result", {
     min,
     max,

@@ -4,16 +4,16 @@ import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { code } from "./code/typescript";
 import { CoinChangeInput } from "./types";
-import { coinChangeTestCases } from './testcase';
+import { testcases } from "./testcase";
 
 const title = "Coin Change";
 
-export const problem: Problem<CoinChangeInput, ProblemState> = {
+export const problem: Problem<[number[], number], ProblemState> = {
   title: title,
-  emoji: '🪙',
+  emoji: "🪙",
   code: code,
-  func: generateSteps, // Use generateSteps from steps.ts
-  testcases: coinChangeTestCases,
+  func: (input: [number[], number]) => generateSteps(input[0], input[1]),
+  testcases,
   id: "coin-change",
   tags: ["dynamic programming"],
   metadata: {
