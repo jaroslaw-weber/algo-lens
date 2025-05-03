@@ -36,8 +36,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.breakpoint(3);
   l.array("nums", nums); // Log final array state
   l.group("sum", { expectedSum, actualSum, result }); // Log final sums and result
-  // Optionally log result as simple value if not included in 'sum' group
-  l.simple({ result });
+  // Log the result variable explicitly
+  l.variable("result", result);
 
   return l.getSteps(); // Return the generated steps
 }
