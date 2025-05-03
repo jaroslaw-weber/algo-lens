@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "nums",
     description: "The input array of numbers.",
@@ -33,12 +33,14 @@ export const variableMetadata: VariableMetadata[] = [
   },
   {
     name: "sum",
-    description: "The sum of the current triplet (nums[i] + nums[left] + nums[right]).",
+    description:
+      "The sum of the current triplet (nums[i] + nums[left] + nums[right]).",
     emoji: "➕",
   },
   {
     name: "triplet",
-    description: "The current triplet being examined ([nums[i], nums[left], nums[right]]).",
+    description:
+      "The current triplet being examined ([nums[i], nums[left], nums[right]]).",
     emoji: "📦",
   },
 ];

@@ -1,9 +1,7 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-
-import { ThreeSumInput } from "./types";
 import { testcases } from "./testcase";
 
 export const problem: Problem<number[], ProblemState> = {
@@ -14,7 +12,7 @@ export const problem: Problem<number[], ProblemState> = {
   id: "3sum",
   tags: ["array", "hash set", "two pointers"],
   metadata: {
-    variables: variableMetadata,
-    groups: groups,
+    variables,
+    groups,
   },
 };
