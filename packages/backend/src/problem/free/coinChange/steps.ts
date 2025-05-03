@@ -11,9 +11,9 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
   dp[0] = 0; // Base case
 
   // Log initial state (Breakpoint #1)
-  l.simple({ target }, groups.find((g) => g.name === "input")!.name);
-  l.array("coins", coins, [], groups.find((g) => g.name === "input")!.name);
-  l.array("dp", dp, [0], groups.find((g) => g.name === "dp_table")!.name);
+  l.simple({ target });
+  l.array("coins", coins);
+  l.array("dp", dp, ...[0]);
   l.breakpoint(1, "Initialize dp table with base case dp[0] = 0");
 
   // Outer loop: Iterate through coins
@@ -29,53 +29,30 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
       const exclude = dp[amount];
 
       // Log state before update check (Breakpoint #2)
-      l.simple({ target }, groups.find((g) => g.name === "input")!.name);
-      l.array(
-        "coins",
-        coins,
-        [i],
-        groups.find((g) => g.name === "input")!.name
-      );
-      l.array(
-        "dp",
-        dp,
-        [amount, left],
-        groups.find((g) => g.name === "dp_table")!.name
-      );
+      l.simple({ target });
+      l.array("coins", coins, ...[i]);
+      l.array("dp", dp, ...[amount, left]);
       // Log loop variables and calculations
-      l.simple({ coin: coin }, groups.find((g) => g.name === "loops")!.name); // Log current coin value
-      l.simple({ amount }, groups.find((g) => g.name === "loops")!.name);
-      l.simple({ left }, groups.find((g) => g.name === "loops")!.name);
-      l.simple({ include }, groups.find((g) => g.name === "loops")!.name);
-      l.simple({ exclude }, groups.find((g) => g.name === "loops")!.name);
+      l.simple({ coin: coin }); // Log current coin value
+      l.simple({ amount });
+      l.simple({ left });
+      l.simple({ include });
+      l.simple({ exclude });
       l.breakpoint(2, `Evaluating amount ${amount} with coin ${coin}`);
 
       if (include < exclude) {
         dp[amount] = include;
 
         // Log state after update (Breakpoint #3 in original code's comment, corresponds to #3 in logic)
-        l.simple({ target }, groups.find((g) => g.name === "input")!.name);
-        l.array(
-          "coins",
-          coins,
-          [i],
-          groups.find((g) => g.name === "input")!.name
-        );
-        l.array(
-          "dp",
-          dp,
-          [amount, left],
-          groups.find((g) => g.name === "dp_table")!.name
-        ); // dp[amount] is now updated
+        l.simple({ target });
+        l.array("coins", coins, ...[i]);
+        l.array("dp", dp, ...[amount, left]); // dp[amount] is now updated
         // Log loop variables and calculations again
-        l.simple({ coin: coin }, groups.find((g) => g.name === "loops")!.name);
-        l.simple({ amount }, groups.find((g) => g.name === "loops")!.name);
-        l.simple({ left }, groups.find((g) => g.name === "loops")!.name);
-        l.simple({ include }, groups.find((g) => g.name === "loops")!.name);
-        l.simple(
-          { exclude: dp[amount] },
-          groups.find((g) => g.name === "loops")!.name
-        ); // exclude is now equal to the new dp[amount]
+        l.simple({ coin: coin });
+        l.simple({ amount });
+        l.simple({ left });
+        l.simple({ include });
+        l.simple({ exclude: dp[amount] }); // exclude is now equal to the new dp[amount]
         l.breakpoint(3, `Updated dp[${amount}] using coin ${coin}`);
       }
     }
@@ -83,10 +60,10 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
 
   // Log final result (Breakpoint #4 in original code's comment, corresponds to #3 in original ProblemState logic)
   const result = dp[target] === Infinity ? -1 : dp[target];
-  l.simple({ target }, groups.find((g) => g.name === "input")!.name);
-  l.array("coins", coins, [], groups.find((g) => g.name === "input")!.name);
-  l.array("dp", dp, [target], groups.find((g) => g.name === "dp_table")!.name); // Highlight final dp[target]
-  l.simple({ result }, groups.find((g) => g.name === "result")!.name);
+  l.simple({ target });
+  l.array("coins", coins, ...[]);
+  l.array("dp", dp, ...[target]); // Highlight final dp[target]
+  l.simple({ result });
   l.breakpoint(4, "Determine final result from dp[target]"); // Adjusted breakpoint number to match code comment
 
   return l.getSteps();
