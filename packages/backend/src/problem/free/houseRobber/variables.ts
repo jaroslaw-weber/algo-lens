@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core"; // Corrected import
 
-export const variableMetadata: VariableMetadata[] = [ // Changed to array
+export const variables: VariableMetadata[] = [ // Changed to array
   {
     name: "nums", // Key became name
     label: "nums", // Label added (same as name)
