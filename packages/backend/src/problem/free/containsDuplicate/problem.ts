@@ -12,7 +12,6 @@ const title = "Contains Duplicate";
 export const problem: Problem<ContainsDuplicateInput, ProblemState> = {
   title,
   emoji: "👯",
-  code, // Use imported code
   func: generateSteps, // Use local function
   testcases,
   id: "contains-duplicate", // Keep original ID for now, might need adjustment later

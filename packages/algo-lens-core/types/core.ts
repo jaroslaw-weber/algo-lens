@@ -10,7 +10,7 @@ export interface TestCase<Input, State> {
 
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
 export interface Problem<Input, State> {
-  id?: string;
+  id: string;
 
   testcases: TestCase<Input, any>[];
 
@@ -20,15 +20,12 @@ export interface Problem<Input, State> {
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
 
-  /** Optional emoji to display with the problem title. */
-  emoji?: string;
+  /** emoji to display with the problem title. */
+  emoji: string;
 
-  /** Optional URL for reference or problem description. */
-  url?: string;
+  tags: string[];
 
-  tags?: string[];
-
-  difficulty?: Difficulty;
+  difficulty: Difficulty;
 
   metadata: ProblemMetadata;
 }
