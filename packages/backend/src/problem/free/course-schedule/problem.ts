@@ -1,39 +1,22 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { courseSchedule, code } from "./code/typescript"; // Import the algorithm function and code string
-import { CourseScheduleInput } from "./types"; // Import the input type
-import { courseScheduleGroups } from "./groups"; // Import group definitions
-import { variableMetadata } from "./variables"; // Import variable definitions
+import { generateSteps } from "./steps";
+import { CourseScheduleInput } from "./types";
+import { groups } from "./groups";
+import { variables } from "./variables";
+import { testcases } from "./testcase";
 
 const title = "Course Schedule";
-
-// Define the input generation function
-const getInput = (): CourseScheduleInput => ({
-  numCourses: 10,
-  prerequisites: [
-    [1, 0],
-    [2, 0],
-    [3, 1],
-    [3, 2],
-    [4, 2],
-    [5, 3],
-    [5, 4],
-    [6, 0],
-    [7, 6],
-    [8, 7],
-    [9, 8],
-  ],
-});
 
 // Define the problem structure
 export const problem: Problem<CourseScheduleInput, ProblemState> = {
   title: title,
   emoji: "📚",
-  code: code, // Use the imported code string
-  func: courseSchedule, // Use the imported algorithm function
+  func: generateSteps,
+  testcases,
   id: "course-schedule",
-  tags: ["graph", "bfs", "topological-sort"],
+  tags: ["graph", "topological sort", "dfs", "bfs"],
   metadata: {
-    groups: courseScheduleGroups,
-    variables: variableMetadata, // Add variable definitions
+    variables,
+    groups,
   },
 };

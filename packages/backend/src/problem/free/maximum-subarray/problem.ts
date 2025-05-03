@@ -1,26 +1,21 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code";
 import { MaximumSubarrayInput } from "./types";
+import { testcases } from "./testcase";
 
 const title = "Maximum Subarray";
-const getInput = () => ({
-  // Original input: [-2, 1, -3, 4, -1, 2, 1, -5, 4], Output: 6
-  // More complex input from original file:
-  nums: [-2, 2, 1, -9, 4, -7, 2, 1, 1, 5, -5, 4], // Output: 10
-});
 
 export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   title: title,
-  emoji: '➕',
-  code: code,
+  emoji: '📊', // Updated emoji
   func: generateSteps, // Use generateSteps from steps.ts
+  testcases, // Added testcases
   id: "maximum-subarray",
-  tags: ["dynamic programming", "array", "kadane's algorithm"], // Added relevant tags
+  tags: ["dynamic programming", "array", "divide and conquer"], // Updated tags
   metadata: {
-    variables: variableMetadata,
+    variables,
     groups: groups,
   },
 };

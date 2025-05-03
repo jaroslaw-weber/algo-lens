@@ -11,9 +11,9 @@ export const problem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
   emoji: "📈",
   func: generateSteps,
-  id: "best-time-to-buy-and-sell-stock",
+  id: "bestTimeToBuyAndSellStocks",
   testcases,
-  tags: ["dynamic programming"],
+  tags: ["array"],
   metadata: {
     variables,
     groups,

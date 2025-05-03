@@ -1,23 +1,21 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code/typescript";
 import { ClimbingStairsInput } from "./types";
-import { climbingStairsTestCases } from './testcase';
+import { testcases } from './testcase';
 
 const title = "Climbing Stairs";
 
 export const problem: Problem<ClimbingStairsInput, ProblemState> = {
   title: title,
   emoji: '🪜',
-  code: code,
   func: generateSteps, // Use generateSteps from steps.ts
-  testcases: climbingStairsTestCases,
-  id: "climbing-stairs",
+  testcases: testcases,
+  id: "climbingStairs",
   tags: ["dynamic programming"],
   metadata: {
-    variables: variableMetadata,
-    groups: groups,
+    variables,
+    groups,
   },
 };
