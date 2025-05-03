@@ -4,7 +4,7 @@ import { ProductExceptSelfInput } from "./types";
 export const testcases: TestCase<ProductExceptSelfInput, any>[] = [
   {
     input: [1, 2, 3, 4, 5],
-    expected: 120,
+    expected: [ 120, 60, 40, 30, 24 ],
   },
   // Add more test cases here if needed
   {
