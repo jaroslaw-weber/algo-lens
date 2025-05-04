@@ -1,8 +1,4 @@
-import {
-  VariableMetadata,
-  ArrayVariable,
-  NumberVariable,
-} from "algo-lens-core";
+import { VariableMetadata } from "algo-lens-core";
 
 export const variables: VariableMetadata[] = [
   {
@@ -31,5 +27,4 @@ export const variables: VariableMetadata[] = [
 
     emoji: "➡️",
   },
-  
-};
+];

@@ -2,10 +2,7 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { from2dArrayToMap } from "../../core/utils"; // Keep necessary import
 
 // The core algorithm logic
-export function generateSteps(
-  numCourses: number,
-  prerequisites: number[][]
-) {
+export function generateSteps(numCourses: number, prerequisites: number[][]) {
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   // Set group options for value/boolean groups
@@ -179,6 +176,7 @@ export function generateSteps(
   l.simple({ numCourses });
   l.group("courses finished", { count });
   l.group("result", { allCoursesTaken }); // Log the final boolean result
+  l.simple({ result: allCoursesTaken });
   l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
   l.hashmap("graph", from2dArrayToMap(graph));
   l.array("inDegree", inDegree); // Final state of inDegree

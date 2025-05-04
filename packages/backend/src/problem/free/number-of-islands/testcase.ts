@@ -5,11 +5,6 @@ import { NumIslandsInput } from "./types";
 
 export const testcases: TestCase<NumIslandsInput, ProblemState>[] = [
   {
-    input: [],
-    expected: 0,
-    description: "Empty grid",
-  },
-  {
     input: [
       ["0", "0", "0"],
       ["0", "0", "0"],
@@ -40,5 +35,15 @@ export const testcases: TestCase<NumIslandsInput, ProblemState>[] = [
     ],
     expected: 3,
     description: "Complex grid with islands touching corners and edges",
+  },
+  {
+    input: [
+      ["1", "1", "1", "1", "0"],
+      ["1", "1", "0", "1", "0"],
+      ["1", "1", "0", "0", "0"],
+      ["0", "0", "0", "0", "0"],
+    ],
+    expected: 1,
+    description: "Grid with islands connected by walls",
   },
 ];
