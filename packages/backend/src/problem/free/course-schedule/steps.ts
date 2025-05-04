@@ -101,7 +101,7 @@ export function logStep(
 // The core algorithm logic
 export function generateSteps(
   numCourses: number,
-  prerequisites: number[]
+  prerequisites: number[][]
 ): ProblemState[] {
   const steps: ProblemState[] = [];
   const graph: number[][] = new Array(numCourses).fill(0).map(() => []);

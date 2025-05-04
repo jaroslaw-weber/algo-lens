@@ -11,6 +11,7 @@ const title = "Course Schedule";
 export const problem: Problem<CourseScheduleInput, ProblemState> = {
   title: title,
   emoji: "📚",
+  difficulty: "medium",
   func: (i) => generateSteps(...i),
   testcases,
   id: "course-schedule",

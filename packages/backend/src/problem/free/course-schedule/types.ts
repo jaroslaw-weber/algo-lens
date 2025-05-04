@@ -1,4 +1,4 @@
-export type CourseScheduleInput = [number, number[]];
+export type CourseScheduleInput = [number, number[][]];
 
 export interface LogExtraInfo {
   current?: number;
