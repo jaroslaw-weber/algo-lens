@@ -99,8 +99,12 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
             key={colIndex}
             className={`px-2 py-1 flex-1 relative ${style}`} // Ensure 'relative' is here for absolute positioning
           >
-            {pointerLabel && <Tooltip label={pointerLabel} />}
-            <div className="text-center">
+            <div
+              className={`text-center ${
+                pointerLabel ? "tooltip tooltip-top tooltip-open" : ""
+              }`}
+              data-tip={pointerLabel ?? undefined}
+            >
               {typeof item === "object"
                 ? JSON.stringify(item)
                 : formatValue(item)}
