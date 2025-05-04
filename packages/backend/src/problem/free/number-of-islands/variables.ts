@@ -1,4 +1,8 @@
-import { VariableMetadata } from "algo-lens-core";
+import {
+  VariableMetadata,
+  ArrayVariable,
+  NumberVariable,
+} from "algo-lens-core";
 
 export const variables: VariableMetadata[] = [
   {
@@ -24,30 +28,8 @@ export const variables: VariableMetadata[] = [
     name: "row",
     label: "row",
     description: "The current row index during the main grid traversal.",
+
     emoji: "➡️",
   },
-  {
-    name: "col",
-    label: "col",
-    description: "The current column index during the main grid traversal.",
-    emoji: "⬇️",
-  },
-  {
-    name: "islandCount",
-    label: "islandCount",
-    description: "The total number of islands found.",
-    emoji: "🏝️", // Island emoji
-  },
-  {
-    name: "dfs_row", // Specific to DFS/BFS helper function if visualized
-    label: "dfs_row",
-    description: "The row index currently being explored in DFS/BFS.",
-    emoji: "🔍",
-  },
-  {
-    name: "dfs_col", // Specific to DFS/BFS helper function if visualized
-    label: "dfs_col",
-    description: "The column index currently being explored in DFS/BFS.",
-    emoji: "🔎",
-  },
-];
+  
+};

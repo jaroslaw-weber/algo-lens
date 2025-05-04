@@ -1,9 +1,9 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { NumIslandsInput } from "./types"; // Import input type from types.ts
-import { variables } from "./variables"; // Import variables from variables.ts
-import { groups } from "./groups"; // Import groups from groups.ts
-import { testcases } from "./testcase"; // Import test cases from testcases.ts
+import { variables } from "./variables";
+import { groups } from "./groups";
+import { testcases } from "./testcase";
 
 // Description for a larger, more complex input set to test and visualize the algorithm
 
@@ -16,8 +16,6 @@ export const problem: Problem<NumIslandsInput, ProblemState> = {
   difficulty: "medium",
   testcases,
   tags: ["graph"],
-  metadata: {
-    variables,
-    groups,
-  },
+  metadata: { variables, groups },
+  testcases: testcases,
 };
