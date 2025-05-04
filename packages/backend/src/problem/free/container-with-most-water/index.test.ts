@@ -1,8 +1,8 @@
 import { runTests } from "../../core/test";
 import { problem } from "./problem";
-import { test } from "bun:test";
+import { it } from "bun:test";
 
 // Placeholder for Jest tests, if needed in the future.
-test(problem.id, () => {
+it(problem.id, () => {
   runTests(problem);
 });
