@@ -20,7 +20,15 @@ const getInput = () => ({
 export const problem: Problem<PacificAtlanticInput, ProblemState> = {
   title,
   emoji: '🌊',
+  metadata: {
+    title: "Pacific Atlantic Water Flow",
+    description: "Given an m x n matrix of non-negative integers representing the height of each unit cell in a continent, the 'Pacific ocean' touches the left and top edges of the matrix and the 'Atlantic ocean' touches the right and bottom edges. Find the list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.",
+    source: "https://leetcode.com/problems/pacific-atlantic-water-flow/",
+    tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"],
+    difficulty: "Medium",
+    id: "pacific-atlantic-water-flow" // Ensure this matches the existing id
+  },
   code,
   func: generateSteps, // Use the renamed function
-  id: "pacific-atlantic-water-flow",
+  id: "pacific-atlantic-water-flow", // Keep existing id outside metadata
 };

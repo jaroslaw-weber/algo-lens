@@ -8,7 +8,7 @@ export const testcases: TestCase<number[], ProblemState>[] = [
   },
   {
     input: [0, 1, 0, 3, 2, 3],
-    expected: 2,
+    expected: 4,
   },
   {
     input: [1, 2, 3, 4, 5],

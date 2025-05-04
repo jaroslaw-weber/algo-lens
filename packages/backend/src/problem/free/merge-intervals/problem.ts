@@ -2,6 +2,8 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { code } from "./code/typescript";
 import { MergeIntervalsInput } from "./types"; // Import input type from types.ts
+import { variables } from "./variables";
+import { groups } from "./groups";
 
 const title = "Merge Intervals";
 const getInput = () => ({
@@ -27,5 +29,9 @@ export const problem: Problem<
   code,
   func: generateSteps, // Use the renamed function
   id: "merge-intervals",
-  tags: ["interval"]
+  tags: ["interval"],
+  metadata: {
+    variables,
+    groups,
+  },
 };
