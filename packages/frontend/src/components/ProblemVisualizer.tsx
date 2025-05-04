@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react"; // Ensure useState is imported
 import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
 import CodePreview from "./CodePreview";
 import Slider from "./Slider";
-import { useAtom } from "jotai";
-import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
+import { useAtom, useSetAtom } from "jotai"; // Import useSetAtom
+import { errorAtom, maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom"; // Import errorAtom
 import { getProblem, getProblemSize } from "../api";
 
 function ProblemVisualizer() {
@@ -14,10 +14,20 @@ function ProblemVisualizer() {
 
   const [step, setStep] = useAtom(stepAtom);
   const [maxStep, setMaxStep] = useAtom(maxStepAtom);
+  const setErrorAtom = useSetAtom(errorAtom); // Get global error setter
 
-  if (!state || !problem) {
-    return null;
+  // Early return if essential data is missing
+  // Note: Error handling for problem loading happens in ProblemView
+  if (!problem) {
+     return <div className="text-center p-4">Loading problem details...</div>; // Or some placeholder
   }
+  // State might be null initially or if getStateError occurred in ProblemView
+  // Components like DisplayState should handle null state gracefully
+  // A check for state could be added here if needed, but DisplayState handles it.
+  // if (!state) {
+  //   return <div className="text-center p-4">Loading visualization state...</div>;
+  // }
+
   const { title, code, id } = problem;
 
   const breakpointToLineMap = new Map<number, number>();
@@ -32,8 +42,9 @@ function ProblemVisualizer() {
       }
     }
   }
-  const breakpoint = state.breakpoint;
-  const line = breakpointToLineMap.get(breakpoint);
+  // Calculate breakpoint line (ensure state exists before accessing breakpoint)
+  const breakpoint = state?.breakpoint; // Use optional chaining
+  const line = breakpoint !== undefined ? breakpointToLineMap.get(breakpoint) : undefined; // Check if breakpoint exists
 
   const handleSliderChange = (value: number) => {
     setStep(value);
@@ -45,8 +56,21 @@ function ProblemVisualizer() {
   };
 
   useEffect(() => {
-    getProblemSize(problem.id!).then((size) => setMaxStep(size));
-  }, [problem]);
+    const fetchSize = async () => {
+      if (!problem?.id) return; // Don't fetch if problem or id is missing
+      setErrorAtom(null); // Reset global error before fetching
+      try {
+        const size = await getProblemSize(problem.id);
+        setMaxStep(size);
+      } catch (err) {
+        console.error("Failed to fetch problem size:", err);
+        setErrorAtom("Failed to load visualization size."); // Set global error
+      }
+    };
+    fetchSize();
+    // Cleanup function
+    return () => setErrorAtom(null);
+  }, [problem?.id, setMaxStep, setErrorAtom]); // Add setErrorAtom to dependency array
 
   return (
     <div className="mx-8 my-8 flex-1">
@@ -87,7 +111,9 @@ function ProblemVisualizer() {
                 onChange={handleSliderChange}
               />
             </div>
+            {/* Removed local error display for getSizeError */}
             <div>
+              {/* Pass state, which might be null if initial load or error */}
               <DisplayState state={state} problem={problem} />
             </div>
           </div>

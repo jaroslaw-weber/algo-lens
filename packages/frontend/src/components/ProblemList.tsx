@@ -1,22 +1,43 @@
-import { useAtom } from "jotai";
-import { problemsAtom } from "../atom";
-import { useEffect } from "react";
+import { useAtom, useSetAtom } from "jotai"; // Import useSetAtom
+import { problemsAtom, errorAtom } from "../atom"; // Import errorAtom
+import { useEffect, useState } from "react";
 import { getProblemList } from "../api";
 
 function ProblemsList() {
   const [problems, setProblems] = useAtom(problemsAtom);
+  const [loading, setLoading] = useState<boolean>(true);
+  const setErrorAtom = useSetAtom(errorAtom); // Get global error setter
 
   async function init() {
+    setLoading(true); // Set loading true at the start
+    setErrorAtom(null); // Reset global error before fetching
     console.log("init problem list");
-    const ps = await getProblemList();
-    console.log("init problem list done", ps);
-    setProblems(ps);
+    try {
+      const ps = await getProblemList();
+      console.log("init problem list done", ps);
+      setProblems(ps);
+    } catch (err) {
+      console.error("Failed to fetch problems:", err); // Log the actual error
+      setErrorAtom("Failed to load problems list. Please try again later."); // Set global error
+    } finally {
+      setLoading(false); // Set loading false when done (success or error)
+    }
   }
 
   useEffect(() => {
     init();
-  }, []);
+    // Clear error on unmount
+    return () => setErrorAtom(null);
+  }, [setErrorAtom]); // Add setErrorAtom to dependency array
 
+  // Display loading state
+  if (loading) {
+    return <div className="text-center p-6">Loading problems...</div>;
+  }
+
+  // Error display is now handled by the global ErrorPopup component
+
+  // Display problem list when loaded
   return (
        <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Algorithm Visualization Tool</h1>
