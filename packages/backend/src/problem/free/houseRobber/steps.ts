@@ -61,7 +61,7 @@ export function generateSteps(nums: number[]) {
   l.breakpoint(4, "Final result is dp[n]");
   l.array("nums", nums);
   l.array("dp", dp, n); // Highlight final result in dp array
-  l.simple(resultGroup, "result", result); // Log result in its group
+  l.simple({ result }); // Log result in its group
 
   return l.getSteps(); // Return steps from StepLoggerV2
 }
