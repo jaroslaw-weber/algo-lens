@@ -4,7 +4,7 @@ import { code } from "./code/typescript";
 import { MinPathSumInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
 import { groups } from "./groups";
-import { testcases } from "./testcases";
+import { testcases } from "./testcase";
 
 const title = "Minimum Path Sum";
 
