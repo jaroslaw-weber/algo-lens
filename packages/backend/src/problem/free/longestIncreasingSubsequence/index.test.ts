@@ -1,7 +1,7 @@
-import { it } from "bun:test";
+import { test } from "bun:test";
 import { problem } from "./problem";
 import { runTests } from "../../core/test";
 
-it(problem.id, () => {
+test(problem.id, () => {
   runTests(problem);
-});
+})

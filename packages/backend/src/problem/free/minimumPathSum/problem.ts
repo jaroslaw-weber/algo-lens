@@ -1,6 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core"; // Assuming ProblemState is the correct state type
 import { generateSteps } from "./steps"; // Will import the renamed function
-import { code } from "./code";
+import { code } from "./code/typescript";
 import { MinPathSumInput } from "./types"; // Import input type from types.ts
 
 const title = "Minimum Path Sum";

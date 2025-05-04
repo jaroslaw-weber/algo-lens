@@ -8,14 +8,15 @@ import { testcases } from "./testcase";
 const title = "Longest Increasing Subsequence";
 
 export const problem: Problem<LISInput, ProblemState> = {
-    title: title,
-    emoji: '📈',
-    func: generateSteps,
-    testcases,
-    id: "longestIncreasingSubsequence",
-    tags: ["dynamic programming", "array", "binary search"],
-    metadata: {
-        variables,
-        groups,
-    },
+  title: title,
+  emoji: "📈",
+  func: generateSteps,
+  testcases,
+  id: "longestIncreasingSubsequence",
+  difficulty: "easy",
+  tags: ["dynamic programming", "array", "binary search"],
+  metadata: {
+    variables,
+    groups,
+  },
 };
