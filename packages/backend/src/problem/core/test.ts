@@ -11,8 +11,6 @@ export function runTests(problem: Problem<any, ProblemState>) {
   // Check for TypeScript compilation errors
   const tsFilePath = path.join(
     process.cwd(), // Assuming the test runs from the repo root
-    "packages",
-    "backend",
     "src",
     "problem",
     "free",
@@ -45,9 +43,9 @@ export function runTests(problem: Problem<any, ProblemState>) {
               diagnostic.messageText,
               "\n"
             );
-            return `TypeScript Error: ${diagnostic.file.fileName} (${line + 1},${
-              character + 1
-            }): ${message}`;
+            return `TypeScript Error: ${diagnostic.file.fileName} (${
+              line + 1
+            },${character + 1}): ${message}`;
           } else {
             return `TypeScript Error: ${ts.flattenDiagnosticMessageText(
               diagnostic.messageText,
@@ -64,7 +62,6 @@ export function runTests(problem: Problem<any, ProblemState>) {
       `Warning: TypeScript file not found for problem ${problem.id} at ${tsFilePath}`
     );
   }
-
 
   //has metadata check
   if (!metadata) {
