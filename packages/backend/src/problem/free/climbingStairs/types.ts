@@ -1,3 +1,1 @@
-export interface ClimbingStairsInput {
-  n: number;
-}
+export type ClimbingStairsInput = number;

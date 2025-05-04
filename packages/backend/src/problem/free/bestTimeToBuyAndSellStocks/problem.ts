@@ -1,24 +1,21 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code";
 import { MaxProfitInput } from "./types";
-import { maxProfitTestCases } from './testcase';
-
+import { testcases } from "./testcase";
 
 const title = "Best Time to Buy and Sell Stock";
 
 export const problem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
-  emoji: '📈',
-  code: code,
+  emoji: "📈",
   func: generateSteps,
-  id: "best-time-to-buy-and-sell-stock",
-  testcases: maxProfitTestCases,
-  tags: ["dynamic programming"],
+  id: "bestTimeToBuyAndSellStocks",
+  testcases,
+  tags: ["array"],
   metadata: {
-    variables: variableMetadata,
-    groups: groups,
+    variables,
+    groups,
   },
 };

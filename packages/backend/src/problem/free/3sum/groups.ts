@@ -4,7 +4,8 @@ export const groups: GroupMetadata[] = [
   {
     name: "tripletInfo",
     label: "Triplet Info",
-    description: "Details about the current triplet being examined and its sum.",
+    description:
+      "Details about the current triplet being examined and its sum.",
     emoji: "🔢",
   },
   {

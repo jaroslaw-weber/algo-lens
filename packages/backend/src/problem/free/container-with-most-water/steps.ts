@@ -8,18 +8,15 @@ import {
 import { ContainerInput } from "./types"; // Import from ./types
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
-// Export ContainerInput as per instruction (even though it's imported)
-export type { ContainerInput };
-
 /**
  * Implements the algorithm to find the maximum area of water that can be trapped between two lines.
  * @param p - The input parameters including an array of heights.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function generateSteps(p: ContainerInput): ProblemState[] { // Renamed and Exported
+export function generateSteps(height: number[]): ProblemState[] {
+  // Renamed and Exported
 
   const l = new StepLoggerV2();
-  const { height } = p;
   let left = 0;
   let right = height.length - 1;
   let maxArea = 0;
@@ -28,13 +25,14 @@ export function generateSteps(p: ContainerInput): ProblemState[] { // Renamed an
   // Helper function to create and log each step's computational state
   function log(point: number, area?: number) {
     l.array("height", height, left, right);
-    l.simple({  maxArea });
-    if(area!==undefined){
+    l.simple({ maxArea });
+    if (area !== undefined) {
       l.simple({ area });
-    }
-    else{
+    } else {
       l.hide("area");
     }
+    const result = maxArea;
+    l.simple({ result });
     l.breakpoint(point);
   }
 

@@ -92,9 +92,7 @@ export const problem: Problem<WordBreakInput, ProblemState> = {
   title: title,
   emoji: '📖',
   code: code,
-  getInput: getInput,
   func: wordBreak,
   id: "word-break",
-  tested: true,
   tags: ["dynamic programming", "string"],
 };

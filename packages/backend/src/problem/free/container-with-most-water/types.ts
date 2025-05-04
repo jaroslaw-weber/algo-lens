@@ -1,3 +1,1 @@
-export interface ContainerInput {
-  height: number[];
-}
+export type ContainerInput = number[];

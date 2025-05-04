@@ -1,10 +1,11 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "grid",
     label: "grid",
-    description: "Input 2D grid representing the costs. Also used as the DP table storing minimum path sums.",
+    description:
+      "Input 2D grid representing the costs. Also used as the DP table storing minimum path sums.",
     emoji: "🔢", // Using grid emoji
   },
   {
@@ -34,7 +35,8 @@ export const variableMetadata: VariableMetadata[] = [
   {
     name: "result",
     label: "result",
-    description: "The minimum path sum from the top-left to the bottom-right corner (grid[rows-1][cols-1]).",
+    description:
+      "The minimum path sum from the top-left to the bottom-right corner (grid[rows-1][cols-1]).",
     emoji: "🏁",
   },
 ];

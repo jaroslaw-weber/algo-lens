@@ -1,31 +1,28 @@
 import { ArrayVariable, ProblemState, TestCase } from "algo-lens-core";
 import { ThreeSumInput } from "./types";
 
-export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [
+export const testcases: TestCase<number[], number[][]>[] = [
   {
-    input: { nums: [-1, 0, 1, 2, -1, -4] },
-    expected: {
-      variables: [
-        {
-          label: "result",
-          type: "array",
-          value: [[-1, -1, 2], [-1, 0, 1]],
-          
-        } as ArrayVariable
-      ],
-      
-    },
+    input: [-1, 0, 1, 2, -1, -4],
+    expected: [
+      [-1, -1, 2],
+      [-1, 0, 1],
+    ],
   },
   {
-    input: { nums: [0, 1, 1] },
-    expected: {
-      variables: [],
-    },
+    input: [0, 1, 1],
+    expected: [],
   },
   {
-    input: { nums: [0, 0, 0] },
-    expected: {
-      variables: [],
-    },
+    input: [0, 0, 0],
+    expected: [[0, 0, 0]],
+  },
+  {
+    input: [-2, 0, 1, 1, 2],
+    expected: [
+      [-2, 0, 2],
+      [-2, 1, 1],
+    ],
+    description: "Array with multiple triplets and duplicates" // Optional description
   },
 ];

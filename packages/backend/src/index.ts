@@ -79,8 +79,15 @@ class ProblemStateCache {
   }
 
   private cacheProblem(problem: Problem<any, any>) {
-    const testcase = problem.testcases[0].input
-    console.log("testcase: ", testcase)
+    const { testcases } = problem;
+    if (!testcases) {
+      throw new Error("no testcases found for problem: " + problem.id!);
+    }
+    if (testcases.length === 0) {
+      throw new Error("no testcases found for problem: " + problem.id!);
+    }
+    const testcase = testcases[0].input;
+    console.log("testcase: ", testcase);
     const states = problem.func(testcase);
     for (let i = 0; i < states.length; i++) {
       const state = states[i];

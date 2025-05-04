@@ -1,21 +1,20 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code";
-import { ThreeSumInput } from "./types";
 import { testcases } from "./testcase";
+import { ThreeSumInput } from "./types";
 
 export const problem: Problem<ThreeSumInput, ProblemState> = {
   title: "Three Sum",
-  emoji: '🔢',
-  code: code,
+  emoji: "🔢",
   func: generateSteps,
-  testcases: testcases, // Add the test cases here
+  testcases: testcases,
+  difficulty: "medium",
   id: "3sum",
-  tags: ["array", "hash set", "two pointers"], // Keep updated tags
+  tags: ["array", "hash set", "two pointers"],
   metadata: {
-    variables: variableMetadata,
-    groups: groups,
+    variables,
+    groups,
   },
 };

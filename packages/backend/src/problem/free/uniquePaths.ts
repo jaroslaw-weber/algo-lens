@@ -87,7 +87,6 @@ export const problem: Problem<UniquePathsInput, UniquePathsState> = {
   title: title,
   emoji: '🤖',
   code: code,
-  getInput: getInput,
   func: uniquePaths,
   id: "unique-paths",
   tags: ["2d dynamic programming"]

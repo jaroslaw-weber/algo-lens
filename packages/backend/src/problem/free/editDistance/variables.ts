@@ -1,6 +1,7 @@
 import { VariableMetadata } from "algo-lens-core"; // Updated import
 
-export const variableMetadata: VariableMetadata[] = [ // Changed to array
+export const variables: VariableMetadata[] = [
+  // Changed to array
   {
     name: "dp", // Key became name
     label: "dp", // Label added (same as name)
@@ -34,7 +35,8 @@ export const variableMetadata: VariableMetadata[] = [ // Changed to array
   {
     name: "op",
     label: "op",
-    description: "Cost of the current operation (match or mismatch/insertion/deletion)",
+    description:
+      "Cost of the current operation (match or mismatch/insertion/deletion)",
     emoji: "💲",
   },
   {

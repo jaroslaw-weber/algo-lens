@@ -114,7 +114,6 @@ export const problem: Problem<SumOfTwoIntegersInput, number> = {
   title: "Sum of Two Integers",
   emoji: '➕',
   code,
-  getInput: () => ({ a: 3, b: 5 }),
   func: sumOfTwoIntegers,
   id: "sum-of-two-integers",
   tags: ["bit manipulation"],

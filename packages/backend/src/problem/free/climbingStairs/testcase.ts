@@ -1,10 +1,18 @@
+import { TestCase } from "algo-lens-core";
 
-import { ProblemState, TestCase } from 'algo-lens-core';
-import { ClimbingStairsInput } from './types'; // Assuming ClimbingStairsInput is defined in types.ts
-export const climbingStairsTestCases: TestCase<ClimbingStairsInput, {result:number}>[] = [
-  { input: { n: 5 }, expected: { result: 8 } },
-  { input: { n: 1 }, expected: { result: 1 } },
-  { input: { n: 2 }, expected: { result: 2 } },
-  { input: { n: 3 }, expected: { result: 3 } },
-  { input: { n: 8 }, expected: { result: 34 } },
+// Input type is number (n stairs), output type is number (number of ways)
+export const testcases: TestCase<number, number>[] = [
+  // Existing cases
+  { input: 1, expected: 1 },
+  { input: 2, expected: 2 },
+  { input: 3, expected: 3 },
+  { input: 5, expected: 8 },
+  { input: 8, expected: 34 },
+
+  // Added cases
+  { input: 4, expected: 5 },
+  { input: 6, expected: 13 },
+  { input: 7, expected: 21 },
+  { input: 10, expected: 89 },
+  { input: 45, expected: 1836311903 }, // Based on typical LeetCode constraints and Fibonacci value F(46)
 ];

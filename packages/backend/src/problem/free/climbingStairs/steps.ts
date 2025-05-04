@@ -4,9 +4,8 @@ import { ClimbingStairsInput } from "./types";
 import { groups } from "./groups"; // Import groups
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
-export function generateSteps(p: ClimbingStairsInput): ProblemState[] {
+export function generateSteps(n: number): ProblemState[] {
   const l = new StepLoggerV2();
-  const { n } = p;
 
   // Initialize dp array
   const dp: number[] = new Array(n + 1).fill(0);
@@ -27,13 +26,13 @@ export function generateSteps(p: ClimbingStairsInput): ProblemState[] {
     l.array("dp", dp, i, i - 1, i - 2);
     l.group("loop", { i }, { min: 2, max: n }); // i belongs to 'computation' group
     l.breakpoint(2, `Calculate ways for step ${i}`);
-    l.hide("loop")
+    l.hide("loop");
   }
 
   // Log final result
   const result = dp[n];
   l.array("dp", dp, n);
-  l.simple({ result }) // result belongs to 'computation' group
+  l.simple({ result }); // result belongs to 'computation' group
   l.breakpoint(3, "Store the final result");
 
   return l.getSteps();

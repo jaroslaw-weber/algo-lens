@@ -1,36 +1,32 @@
 import { GroupMetadata } from "algo-lens-core";
 
 // Define groups for visualizing the Course Schedule problem state
-export const courseScheduleGroups: GroupMetadata[] = [
+export const groups: GroupMetadata[] = [
   {
-    id: "input",
-    title: "Input",
-    variables: ["numCourses", "prerequisites"],
+    name: "input",
+    label: "Input",
     emoji: "📥",
   },
   {
-    id: "state",
-    title: "Algorithm State",
-    variables: ["graph", "inDegree", "queue", "count"],
+    name: "state",
+    label: "Algorithm State",
     emoji: "📊",
   },
   {
-    id: "processing",
-    title: "Current Processing",
-    variables: ["current", "neighbor", "prev"], // Added 'prev' based on logStep usage
+    name: "processing",
+    label: "Current Processing",
+    // variables: ["current", "neighbor", "prev"], // Added 'prev' based on logStep usage
     emoji: "⚙️",
   },
   {
-    id: "result",
-    title: "Result",
-    variables: ["allCoursesTaken"],
+    name: "result",
+    label: "Result",
     emoji: "🏁",
   },
   // Add other potential simple value variables used in logging
   {
-      id: "tempValues",
-      title: "Temporary Values",
-      variables: ["course", "prereq", "deg"],
-      emoji: "🧪",
-  }
+    name: "tempValues",
+    label: "Temporary Values",
+    emoji: "🧪",
+  },
 ];

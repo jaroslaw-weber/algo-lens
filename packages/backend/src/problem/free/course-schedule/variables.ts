@@ -1,7 +1,8 @@
 import { VariableMetadata } from "algo-lens-core"; // Updated import
 
 // Define the core variables used in the Course Schedule algorithm
-export const variableMetadata: VariableMetadata[] = [ // Renamed export
+export const variables: VariableMetadata[] = [
+  // Renamed export
   {
     name: "Number of Courses", // Kept name
     label: "Number of Courses", // Added label
@@ -17,7 +18,8 @@ export const variableMetadata: VariableMetadata[] = [ // Renamed export
   {
     name: "Adjacency List",
     label: "Adjacency List",
-    description: "Graph representation where key is prerequisite and value is list of courses.",
+    description:
+      "Graph representation where key is prerequisite and value is list of courses.",
     emoji: "🗺️", // Added emoji (example)
   },
   {
@@ -29,7 +31,8 @@ export const variableMetadata: VariableMetadata[] = [ // Renamed export
   {
     name: "Queue",
     label: "Queue",
-    description: "Queue storing courses with zero in-degree, ready to be processed.",
+    description:
+      "Queue storing courses with zero in-degree, ready to be processed.",
     emoji: "➡️", // Added emoji (example)
   },
   {
@@ -44,7 +47,7 @@ export const variableMetadata: VariableMetadata[] = [ // Renamed export
     description: "The course currently being processed from the queue.",
     emoji: "🎓", // Added emoji (example)
   },
-   {
+  {
     name: "Neighbors",
     label: "Neighbors",
     description: "Neighbors of the current course being processed.",
@@ -62,7 +65,7 @@ export const variableMetadata: VariableMetadata[] = [ // Renamed export
     description: "Indicates if all courses can be finished.",
     emoji: "🏁", // Added emoji (example)
   },
-   {
+  {
     name: "Course (from Prereq)",
     label: "Course (from Prereq)",
     description: "Course being processed during graph initialization.",
@@ -79,7 +82,7 @@ export const variableMetadata: VariableMetadata[] = [ // Renamed export
     label: "Degree (In-Degree Check)",
     description: "In-degree value being checked during queue initialization.",
     emoji: "🔢", // Added emoji (example)
-  }
+  },
   // Note: Visualization details like pointers (inDegreeIndex, prevIndex, etc.)
   // are handled dynamically in logStep, not defined statically here.
   // Removed id and type properties

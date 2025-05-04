@@ -1,18 +1,18 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { cloneDeep } from "lodash";
 import { ProblemState, Variable } from "algo-lens-core"; // Removed Problem
+import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { as2dArray, asValueGroup, deepClone2DArray } from "../../core/utils";
 import { NumIslandsInput } from "./types"; // Import NumIslandsInput
 
 // Removed duplicate NumIslandsInput interface definition
 
-export function generateSteps(p: NumIslandsInput): ProblemState[] { // Renamed and Exported
-  const { grid } = p;
-  const clonedGrid = deepClone2DArray(grid); // Use the deep clone for operations
-  const steps: ProblemState[] = [];
+export function generateSteps(grid: string[][]): ProblemState[] {
+  // Renamed and Exported
+  const l = new StepLoggerV2();
   let numIslands = 0;
-  const rowCount = clonedGrid.length;
-  const colCount = clonedGrid[0].length;
+  const rowCount = grid.length;
+  const colCount = grid[0].length;
   const directions = [
     [-1, 0],
     [1, 0],
@@ -20,25 +20,32 @@ export function generateSteps(p: NumIslandsInput): ProblemState[] { // Renamed a
     [0, 1],
   ];
 
-  function log(point: number, i?: number, j?: number) {
-    console.log("log", point, JSON.stringify(clonedGrid));
-    const v: Variable[] = [];
-    const step: ProblemState = {
-      variables: v,
-      breakpoint: point,
-    };
-    v.push(as2dArray("grid", (clonedGrid), [{ r: i, c: j }]));
-    v.push(asValueGroup("counter", { numIslands }, { max: (rowCount * colCount) / 2, min: 0 }));
-    steps.push(step);
-  }
-  log(1);
+  l.breakpoint(1);
+  l.grid("grid", grid);
+  l.group(
+    "counter",
+    { numIslands },
+    { max: (rowCount * colCount) / 2, min: 0 }
+  );
 
   function dfs(i: number, j: number) {
-    log(2, i, j);
-    if (i < 0 || i >= rowCount || j < 0 || j >= colCount || clonedGrid[i][j] !== '1') {
+    l.grid("grid", grid, ...[{ r: i, c: j }]);
+    l.group(
+      "counter",
+      { numIslands },
+      { max: (rowCount * colCount) / 2, min: 0 }
+    );
+    l.breakpoint(2);
+    if (
+      i < 0 ||
+      i >= rowCount ||
+      j < 0 ||
+      j >= colCount ||
+      grid[i][j] !== "1"
+    ) {
       return;
     }
-    clonedGrid[i][j] = '2'; // Mark the cell as visited
+    grid[i][j] = "2"; // Mark the cell as visited
     for (const [dx, dy] of directions) {
       dfs(i + dx, j + dy);
     }
@@ -46,17 +53,31 @@ export function generateSteps(p: NumIslandsInput): ProblemState[] { // Renamed a
 
   for (let i = 0; i < rowCount; i++) {
     for (let j = 0; j < colCount; j++) {
-      log(8,i,j);
-      if (clonedGrid[i][j] === '1') {
-        log(9,i,j);
+      l.grid("grid", grid, ...[{ r: i, c: j }]);
+      l.group(
+        "counter",
+        { numIslands },
+        { max: (rowCount * colCount) / 2, min: 0 }
+      );
+      l.breakpoint(8);
+      if (grid[i][j] === "1") {
+        l.grid("grid", grid, ...[{ r: i, c: j }]);
+        l.group(
+          "counter",
+          { numIslands },
+          { max: (rowCount * colCount) / 2, min: 0 }
+        );
+        l.breakpoint(9);
         numIslands++;
         dfs(i, j);
       }
     }
   }
 
-  console.log("steps", steps);
-  return steps;
+  const result = numIslands;
+  l.simple({ result });
+  l.breakpoint(10);
+  return l.getSteps();
 }
 
 // Removed code, title, getInput, Problem export

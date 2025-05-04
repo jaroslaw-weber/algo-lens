@@ -5,14 +5,13 @@ export interface ProblemMetadata {
 
 export interface TestCase<Input, State> {
   input: Input;
-  expected: Partial<State>;
+  expected: any;
+  description?: string;
 }
 
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
 export interface Problem<Input, State> {
-  id?: string;
-  /** Contains the source code for the problem-solving function. */
-  code: string;
+  id: string;
 
   testcases: TestCase<Input, any>[];
 
@@ -22,15 +21,12 @@ export interface Problem<Input, State> {
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
 
-  /** Optional emoji to display with the problem title. */
-  emoji?: string;
+  /** emoji to display with the problem title. */
+  emoji: string;
 
-  /** Optional URL for reference or problem description. */
-  url?: string;
+  tags: string[];
 
-  tags?: string[];
-
-  difficulty?: Difficulty;
+  difficulty: Difficulty;
 
   metadata: ProblemMetadata;
 }
@@ -48,7 +44,7 @@ export interface Variable {
   label: string;
 
   /** if true, make it gray or less visible */
-  hide?:boolean;
+  hide?: boolean;
 
   /** Type of the variable, determining whether it's a single number or an array. */
   type:

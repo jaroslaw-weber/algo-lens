@@ -1,0 +1,85 @@
+import {
+  HighlightColor,
+  BinaryTreeNode,
+  Variable, // Kept Variable as StepLoggerV2 might implicitly use it via utils
+  ProblemState, // Need ProblemState for the return type
+} from "algo-lens-core";
+import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+import { SameTreeInput } from "./types"; // Keep input type for context
+
+// The main function that generates the steps for the visualization
+export function sameTree(
+  p: BinaryTreeNode | null,
+  q: BinaryTreeNode | null
+): ProblemState[] {
+  const l = new StepLoggerV2();
+
+  function checkNodes(
+    pNode: BinaryTreeNode | null,
+    qNode: BinaryTreeNode | null
+  ): boolean {
+    l.tree("pTree", p, [{ node: pNode, color: "neutral" as HighlightColor }]);
+    l.tree("qTree", q, [{ node: qNode, color: "neutral" as HighlightColor }]);
+    l.breakpoint(1); // Log initial call
+
+    if (!pNode && !qNode) {
+      l.tree("pTree", p, [{ node: pNode, color: "good" as HighlightColor }]);
+      l.tree("qTree", q, [{ node: qNode, color: "good" as HighlightColor }]);
+      l.simple({ "is node same?": true });
+      l.breakpoint(2); // Log base case: both null
+      return true;
+    }
+    if (!pNode || !qNode) {
+      l.tree("pTree", p, [{ node: pNode, color: "bad" as HighlightColor }]);
+      l.tree("qTree", q, [{ node: qNode, color: "bad" as HighlightColor }]);
+      l.simple({ "is node same?": false });
+      l.breakpoint(3); // Log base case: one null
+      return false;
+    }
+    // Highlight current nodes before value comparison
+    l.tree("pTree", p, [{ node: pNode, color: "neutral" as HighlightColor }]);
+    l.tree("qTree", q, [{ node: qNode, color: "neutral" as HighlightColor }]);
+    if (pNode.val !== qNode.val) {
+      l.tree("pTree", p, [{ node: pNode, color: "bad" as HighlightColor }]);
+      l.tree("qTree", q, [{ node: qNode, color: "bad" as HighlightColor }]);
+      l.simple({ "is node same?": false });
+      l.breakpoint(4); // Log values differ
+      return false;
+    }
+    // Highlight current nodes as matching before recursion
+    l.tree("pTree", p, [{ node: pNode, color: "good" as HighlightColor }]);
+    l.tree("qTree", q, [{ node: qNode, color: "good" as HighlightColor }]);
+    l.simple({ "is node same?": true }); // Log values are same before recursing
+
+    // Recursively check left and right subtrees
+    const leftSame = checkNodes(pNode.left, qNode.left);
+    // Short-circuit if left is not the same - log overall result for this node
+    if (!leftSame) {
+      l.tree("pTree", p, [{ node: pNode, color: "bad" as HighlightColor }]);
+      l.tree("qTree", q, [{ node: qNode, color: "bad" as HighlightColor }]);
+      l.simple({ "overall result": false });
+      l.breakpoint(5);
+      return false;
+    }
+    const rightSame = checkNodes(pNode.right, qNode.right);
+    const result = leftSame && rightSame;
+
+    // Log overall result for this node
+    l.tree("pTree", p, [
+      { node: pNode, color: (result ? "good" : "bad") as HighlightColor },
+    ]);
+    l.tree("qTree", q, [
+      { node: qNode, color: (result ? "good" : "bad") as HighlightColor },
+    ]);
+    l.simple({ "overall result": result });
+    l.breakpoint(5);
+    return result;
+  }
+
+  // Start the recursive checking process
+  const result = checkNodes(p, q);
+  l.simple({ result });
+  l.breakpoint(6); // Log overall result for the entire tree
+
+  return l.getSteps();
+}

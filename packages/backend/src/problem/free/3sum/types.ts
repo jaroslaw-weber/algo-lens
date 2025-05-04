@@ -1,3 +1,1 @@
-export interface ThreeSumInput {
-  nums: number[];
-}
+export type ThreeSumInput = number[];

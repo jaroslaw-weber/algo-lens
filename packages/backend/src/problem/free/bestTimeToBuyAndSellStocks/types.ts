@@ -1,4 +1,1 @@
-
-export interface MaxProfitInput {
-	prices: number[];
-  }
+export type MaxProfitInput = number[];

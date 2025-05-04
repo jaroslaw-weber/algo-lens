@@ -1,27 +1,22 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import { variableMetadata } from "./variables";
+import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code";
-import { InsertIntervalInput, Interval } from "./types"; // Import Interval as well
+import { InsertIntervalInput } from "./types";
+import { testcases } from "./testcase";
 
 const title = "Insert Interval";
-const getInput = () => ({
-  intervals: [[1, 3], [6, 9]] as Interval[], // Add type assertion for clarity
-  newInterval: [2, 5] as Interval, // Add type assertion for clarity
-});
 
 export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
-  emoji: '➕',
-  code: code,
-  getInput: getInput,
-  func: generateSteps, // Use generateSteps from steps.ts
+  emoji: "➕",
+  func: (i) => generateSteps(...i), // Use generateSteps from steps.ts
+  testcases,
+  difficulty: "medium",
   id: "insert-interval",
-  tags: ["intervals", "array", "merging"], // Added relevant tags
-  tested: true, // Assuming it was tested, keep as true
+  tags: ["array", "intervals"], // Updated tags
   metadata: {
-    variables: variableMetadata,
+    variables,
     groups: groups,
   },
 };
