@@ -26,5 +26,33 @@ export const problem: Problem<
   code,
   func: generateSteps, // Use the renamed function
   id: "non-overlapping-intervals",
-  tags: ["interval"]
+  tags: ["interval"],
+  metadata: { // Added metadata field
+    variables: [
+      {
+        name: "intervals",
+        label: "Intervals",
+        emoji: "📊",
+        description: "Input array of intervals"
+      }
+    ]
+  },
+  testcases: [ // Added testcases field
+    {
+      input: { // Result from calling getInput()
+        intervals: [
+          [17, 20],
+          [2, 6],
+          [8, 10],
+          [12, 15],
+          [5, 9],
+          [1, 3],
+          [14, 18],
+          [19, 22],
+        ],
+      },
+      expected: null // Placeholder value
+    }
+  ],
+  difficulty: "medium" // Added difficulty field
 };
