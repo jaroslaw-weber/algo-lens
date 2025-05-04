@@ -9,4 +9,7 @@ export const stepAtom = atom<number>(1);
 
 export const maxStepAtom = atom<number>(100)
 
-export const problemStateAtom = atom<ProblemState | null>(null);``
+export const problemStateAtom = atom<ProblemState | null>(null);
+
+// Global error state atom
+export const errorAtom = atom<string | null>(null);
