@@ -1,3 +1,1 @@
-export interface LISInput {
-    nums: number[];
-}
+export type LISInput = number[];
