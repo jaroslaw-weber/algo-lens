@@ -20,6 +20,12 @@ const isNodeSame = {
   data: [{ label: "return", value: false }],
 };
 
+const RESULT_METADATA = {
+  label: "result",
+  type: "boolean",
+  value: false,
+};
+
 export const variables: VariableMetadata[] = [
   {
     ...pTree,
@@ -38,5 +44,12 @@ export const variables: VariableMetadata[] = [
     name: "is node same?",
     description: "Placeholder description for isNodeSame",
     emoji: "❓",
+  },
+  {
+    ...RESULT_METADATA,
+    name: "Result",
+    description:
+      "The final result of comparing the two trees (true if identical, false otherwise).",
+    emoji: "✅",
   },
 ];
