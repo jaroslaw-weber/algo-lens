@@ -19,6 +19,7 @@ export function runTests(problem: Problem<any, ProblemState>) {
   if (!variables.length) {
     throw new Error("No variables found in metadata");
   }
+
   if (testcases.length < 4) {
     throw new Error("Test cases count should be at least 4");
   }

@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "nums",
     label: "nums",
@@ -28,7 +28,8 @@ export const variableMetadata: VariableMetadata[] = [
   {
     name: "maxLength",
     label: "maxLength",
-    description: "The overall maximum length of the longest increasing subsequence found.",
+    description:
+      "The overall maximum length of the longest increasing subsequence found.",
     emoji: "🏆",
   },
 ];
