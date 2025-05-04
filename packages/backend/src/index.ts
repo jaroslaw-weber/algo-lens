@@ -20,7 +20,7 @@ app.get("/health", (c) => {
 
 app.get("/problem", async (c) => {
   const all = await getAllProblems();
-  const list = all.map((x) => pick(x, ["id", "title", "difficulty"]));
+  const list = all.map((x) => pick(x, ["id", "title", "difficulty", "emoji"]));
   return c.json(list);
 });
 
