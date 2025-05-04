@@ -1,7 +1,7 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { HammingWeightInput } from "./types"; // Import input type from types.ts
-import { variables } from "./variables";
+import { variableMetadata } from "./variables";
 import { groups } from "./groups";
 import { testcases } from "./testcase";
 
@@ -17,7 +17,7 @@ export const problem: Problem<HammingWeightInput, ProblemState> = {
   id: "hamming-weight", // Note: id in original file was hamming-weight, but file is number-of-1-bits. Using original id.
   tags: ["bit manipulation"],
   metadata: {
-    variables,
+    variables: variableMetadata,
     groups,
   },
 };
