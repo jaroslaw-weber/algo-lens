@@ -14,8 +14,7 @@ export const problem: Problem<NumIslandsInput, ProblemState> = {
   func: generateSteps, // Use the renamed function
   id: "number-of-islands",
   difficulty: "medium",
-  testcases,
   tags: ["graph"],
   metadata: { variables, groups },
-  testcases: testcases,
+  testcases,
 };

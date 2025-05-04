@@ -79,6 +79,7 @@ export function sameTree(
   // Start the recursive checking process
   const result = checkNodes(p, q);
   l.simple({ result });
+  l.breakpoint(6); // Log overall result for the entire tree
 
   return l.getSteps();
 }
