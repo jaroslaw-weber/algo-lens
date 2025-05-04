@@ -10,10 +10,9 @@ import { NumIslandsInput } from "./types"; // Import NumIslandsInput
 export function generateSteps(grid: string[][]): ProblemState[] {
   // Renamed and Exported
   const l = new StepLoggerV2();
-  const clonedGrid = deepClone2DArray(grid); // Use the deep clone for operations
   let numIslands = 0;
-  const rowCount = clonedGrid.length;
-  const colCount = clonedGrid[0].length;
+  const rowCount = grid.length;
+  const colCount = grid[0].length;
   const directions = [
     [-1, 0],
     [1, 0],
@@ -22,31 +21,31 @@ export function generateSteps(grid: string[][]): ProblemState[] {
   ];
 
   l.breakpoint(1);
-  l.grid("grid", clonedGrid);
-  l.variables(
+  l.grid("grid", grid);
+  l.group(
     "counter",
     { numIslands },
     { max: (rowCount * colCount) / 2, min: 0 }
   );
 
   function dfs(i: number, j: number) {
-    l.breakpoint(2);
-    l.grid("grid", clonedGrid, [{ r: i, c: j }]);
-    l.variables(
+    l.grid("grid", grid, ...[{ r: i, c: j }]);
+    l.group(
       "counter",
       { numIslands },
       { max: (rowCount * colCount) / 2, min: 0 }
     );
+    l.breakpoint(2);
     if (
       i < 0 ||
       i >= rowCount ||
       j < 0 ||
       j >= colCount ||
-      clonedGrid[i][j] !== "1"
+      grid[i][j] !== "1"
     ) {
       return;
     }
-    clonedGrid[i][j] = "2"; // Mark the cell as visited
+    grid[i][j] = "2"; // Mark the cell as visited
     for (const [dx, dy] of directions) {
       dfs(i + dx, j + dy);
     }
@@ -54,27 +53,29 @@ export function generateSteps(grid: string[][]): ProblemState[] {
 
   for (let i = 0; i < rowCount; i++) {
     for (let j = 0; j < colCount; j++) {
-      l.breakpoint(8);
-      l.grid("grid", clonedGrid, [{ r: i, c: j }]);
-      l.variables(
+      l.grid("grid", grid, ...[{ r: i, c: j }]);
+      l.group(
         "counter",
         { numIslands },
         { max: (rowCount * colCount) / 2, min: 0 }
       );
-      if (clonedGrid[i][j] === "1") {
-        l.breakpoint(9);
-        l.grid("grid", clonedGrid, [{ r: i, c: j }]);
-        l.variables(
+      l.breakpoint(8);
+      if (grid[i][j] === "1") {
+        l.grid("grid", grid, ...[{ r: i, c: j }]);
+        l.group(
           "counter",
           { numIslands },
           { max: (rowCount * colCount) / 2, min: 0 }
         );
+        l.breakpoint(9);
         numIslands++;
         dfs(i, j);
       }
     }
   }
 
+  const result = numIslands;
+  l.simple({ result });
   return l.getSteps();
 }
 

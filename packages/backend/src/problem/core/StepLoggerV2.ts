@@ -181,8 +181,24 @@ export class StepLoggerV2 {
    * @param pointer1 - Optional 2D coordinate for the first pointer.
    * @param pointer2 - Optional 2D coordinate for the second pointer.
    * @param pointer3 - Optional 2D coordinate for the third pointer.
+   * @deprecated use .grid instead
    */
   public array2d(
+    name: string,
+    values: any[][],
+    pointer1?: Pointer2D,
+    pointer2?: Pointer2D,
+    pointer3?: Pointer2D
+  ) {
+    const variable = as2dArray(
+      name,
+      values,
+      [pointer1, pointer2, pointer3].filter((x) => !!x)
+    );
+    this.upsert(variable);
+  }
+
+  public grid(
     name: string,
     values: any[][],
     pointer1?: Pointer2D,
