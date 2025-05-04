@@ -1,6 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
-import { code } from "./code";
+import { code } from "./code/typescript";
 import { PacificAtlanticInput } from "./types"; // Import input type from types.ts
 
 // Description for a larger, more complex input set to test and visualize the algorithm
