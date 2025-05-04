@@ -19,4 +19,10 @@ export const variables: VariableMetadata[] = [
     description: "The current value of the number being processed in the loop.",
     emoji: "🔍",
   },
+  {
+    name: "count", // The actual variable name holding the result
+    label: "result", // The label expected by the test framework
+    description: "The final count of set bits.",
+    emoji: "✅",
+  },
 ];
