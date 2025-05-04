@@ -51,7 +51,6 @@ export function sameTree(
     l.tree("qTree", q, [{ node: qNode, color: "good" as HighlightColor }]);
     l.simple({ "is node same?": true }); // Log values are same before recursing
 
-
     // Recursively check left and right subtrees
     const leftSame = checkNodes(pNode.left, qNode.left);
     // Short-circuit if left is not the same - log overall result for this node
@@ -78,7 +77,8 @@ export function sameTree(
   }
 
   // Start the recursive checking process
-  checkNodes(p, q);
+  const result = checkNodes(p, q);
+  l.simple({ result });
 
   return l.getSteps();
 }
