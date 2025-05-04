@@ -44,7 +44,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
     dp[i] = Math.max(prev, diff);
 
-    l.array("prices", prices, i);
+    l.arrayV2({ prices }, { i });
     l.array("dp", dp, i, i - 1);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
