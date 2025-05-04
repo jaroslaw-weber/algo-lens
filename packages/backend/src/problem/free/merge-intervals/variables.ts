@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "intervals",
     label: "intervals",
@@ -28,7 +28,8 @@ export const variableMetadata: VariableMetadata[] = [
   {
     name: "lastMerged",
     label: "lastMerged",
-    description: "The last interval added or updated in the 'merged' result array.",
+    description:
+      "The last interval added or updated in the 'merged' result array.",
     emoji: "🔚", // Emoji indicating the last/end item
   },
 ];
