@@ -1,8 +1,9 @@
-import { clone } from "lodash";
-import { Problem, ProblemState, Variable } from "algo-lens-core";
-import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../core/utils";
+import { clone } from "lodash"; // Keep this if needed, seems unused now but maybe later?
+import { ProblemState } from "algo-lens-core"; // Import ProblemState
+import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../../core/utils";
+import { WordBreakInput } from "../types"; // Import from ../types
 
-function wordBreak(p: WordBreakInput): ProblemState[] {
+export function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
   const { s: str, wordDict } = p;
   const n = str.length;
@@ -55,44 +56,3 @@ function wordBreak(p: WordBreakInput): ProblemState[] {
   }); //#4
   return s;
 }
-
-interface WordBreakInput {
-  s: string;
-  wordDict: string[];
-}
-
-const code = `function wordBreak(s, wordDict) {
-  const n = s.length;
-  const dp = new Array(n + 1).fill(false);
-  dp[0] = true; 
-  //#1
-  for (let i = 1; i <= n; i++) {
-    for (let j = 0; j < i; j++) {
-      const word = s.substring(j, i)
-      //#2
-      if (dp[j] && wordDict.includes(word)) {
-        dp[i] = true; 
-        //#3
-        break;
-      }
-    }
-  }
-  const result = dp[n]; 
-  //#4
-  return result;
-}`;
-
-const title = "Word Break";
-const getInput = () => ({
-  s: "catsandog",
-  wordDict: ["cats", "dog", "sand", "and", "cat"],
-});
-
-export const problem: Problem<WordBreakInput, ProblemState> = {
-  title: title,
-  emoji: '📖',
-  code: code,
-  func: wordBreak,
-  id: "word-break",
-  tags: ["dynamic programming", "string"],
-};
