@@ -31,4 +31,9 @@ export const problem: Problem<ReverseListInput, ProblemState> = {
   id: "reverse-list",
   tags: ["linked-list"],
   getInput: getInput, // Add getInput here
+  metadata: {
+    id: "reverse-list",
+    title: title,
+    difficulty: "easy",
+  },
 };
