@@ -19,7 +19,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
   const dp: number[] = new Array(prices.length).fill(0);
   let minPrice = prices[0];
 
-  l.array("prices", prices, 0);
+  l.arrayV2({ prices }, { i: 0 });
   l.array("dp", dp);
   l.simple({ minPrice });
   l.breakpoint(

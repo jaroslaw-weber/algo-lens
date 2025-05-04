@@ -75,6 +75,8 @@ export interface Pointer {
 
   /** Color of the pointer. */
   color?: 1 | 2 | 3;
+
+  label?: string;
 }
 
 /** Represents a 2D pointer for navigating through two-dimensional arrays. */
