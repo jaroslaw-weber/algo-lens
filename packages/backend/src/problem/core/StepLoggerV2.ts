@@ -172,14 +172,11 @@ export class StepLoggerV2 {
     const fixedPointers: Pointer[] = [];
     let i = 0;
     if (pointers) {
-      for (let key in pointers) {
+      for (let [key, value] of Object.entries(pointers)) {
         i++;
-        const value = pointers[key];
         fixedPointers.push({
-          dimension: "row",
+          dimension: "column",
           value,
-          //@ts-ignore
-          color: i,
           label: key,
         });
       }
@@ -194,8 +191,7 @@ export class StepLoggerV2 {
       pointers: fixedPointers,
     };
     console.log("array v2", v);
-    const cloned = _.cloneDeep(v);
-    this.upsert(cloned);
+    this.upsert(v);
   }
 
   /**
