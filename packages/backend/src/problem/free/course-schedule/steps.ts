@@ -17,8 +17,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   l.simple({ numCourses });
   l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
   l.hashmap("graph", from2dArrayToMap(graph));
-  l.array("inDegree", inDegree);
-  l.array("queue", queue);
+  l.arrayV2("inDegree", inDegree);
+  l.arrayV2("queue", queue);
   l.breakpoint(1);
 
   // Initialize the graph and in-degree array
@@ -30,8 +30,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       color: "primary",
     });
     l.hashmap("graph", from2dArrayToMap(graph));
-    l.array("inDegree", inDegree, course); // Highlight inDegree[course] before change
-    l.array("queue", queue);
+    l.arrayV2("inDegree", inDegree, course); // Highlight inDegree[course] before change
+    l.arrayV2("queue", queue);
     l.breakpoint(2);
 
     graph[prereq].push(course);
@@ -44,8 +44,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       color: "primary",
     });
     l.hashmap("graph", from2dArrayToMap(graph)); // Graph now updated
-    l.array("inDegree", inDegree, course); // Highlight inDegree[course] after change
-    l.array("queue", queue);
+    l.arrayV2("inDegree", inDegree, course); // Highlight inDegree[course] after change
+    l.arrayV2("queue", queue);
     l.breakpoint(3);
   });
 
@@ -53,8 +53,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   l.simple({ numCourses });
   l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
   l.hashmap("graph", from2dArrayToMap(graph));
-  l.array("inDegree", inDegree);
-  l.array("queue", queue);
+  l.arrayV2("inDegree", inDegree);
+  l.arrayV2("queue", queue);
   l.breakpoint(4);
 
   // Add courses with no prerequisites to the queue
@@ -63,8 +63,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     l.simple({ numCourses, deg });
     l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
     l.hashmap("graph", from2dArrayToMap(graph));
-    l.array("inDegree", inDegree, index); // Highlight current degree being checked
-    l.array("queue", queue);
+    l.arrayV2("inDegree", inDegree, index); // Highlight current degree being checked
+    l.arrayV2("queue", queue);
     l.breakpoint(5);
 
     if (deg === 0) {
@@ -72,8 +72,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       l.simple({ numCourses, deg });
       l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
       l.hashmap("graph", from2dArrayToMap(graph));
-      l.array("inDegree", inDegree, index);
-      l.array("queue", queue);
+      l.arrayV2("inDegree", inDegree, index);
+      l.arrayV2("queue", queue);
       l.breakpoint(6);
       queue.push(index);
       // Note: No log immediately after queue.push as the next iteration or step 7 will show it
@@ -84,8 +84,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   l.simple({ numCourses });
   l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
   l.hashmap("graph", from2dArrayToMap(graph));
-  l.array("inDegree", inDegree);
-  l.array("queue", queue); // Queue might be populated now
+  l.arrayV2("inDegree", inDegree);
+  l.arrayV2("queue", queue); // Queue might be populated now
   l.breakpoint(7);
 
   let count = 0;
@@ -95,8 +95,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     l.group("courses finished", { count });
     l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
     l.hashmap("graph", from2dArrayToMap(graph));
-    l.array("inDegree", inDegree);
-    l.array("queue", queue);
+    l.arrayV2("inDegree", inDegree);
+    l.arrayV2("queue", queue);
     l.breakpoint(8);
 
     const current = queue.shift()!;
@@ -107,8 +107,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     l.group("courses finished", { count });
     l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
     l.hashmap("graph", from2dArrayToMap(graph));
-    l.array("inDegree", inDegree);
-    l.array("queue", queue); // Queue after shift
+    l.arrayV2("inDegree", inDegree);
+    l.arrayV2("queue", queue); // Queue after shift
     l.breakpoint(9);
 
     const neighbors = graph[current];
@@ -123,9 +123,9 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
         value: current, // Highlight the current course row in the graph
         color: "primary",
       });
-      l.array("neighbors", neighbors, i); // Log neighbors array, highlight current neighbor
-      l.array("inDegree", inDegree, neighbor); // Highlight neighbor's inDegree before change
-      l.array("queue", queue);
+      l.arrayV2("neighbors", neighbors, i); // Log neighbors array, highlight current neighbor
+      l.arrayV2("inDegree", inDegree, neighbor); // Highlight neighbor's inDegree before change
+      l.arrayV2("queue", queue);
       l.breakpoint(10);
 
       inDegree[neighbor]--;
@@ -138,9 +138,9 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
         value: current,
         color: "primary",
       });
-      l.array("neighbors", neighbors, i);
-      l.array("inDegree", inDegree, neighbor); // Highlight neighbor's inDegree after change
-      l.array("queue", queue);
+      l.arrayV2("neighbors", neighbors, i);
+      l.arrayV2("inDegree", inDegree, neighbor); // Highlight neighbor's inDegree after change
+      l.arrayV2("queue", queue);
       l.breakpoint(11);
 
       if (inDegree[neighbor] === 0) {
@@ -152,9 +152,9 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
           value: current,
           color: "primary",
         });
-        l.array("neighbors", neighbors, i);
-        l.array("inDegree", inDegree, neighbor);
-        l.array("queue", queue); // Queue before push
+        l.arrayV2("neighbors", neighbors, i);
+        l.arrayV2("inDegree", inDegree, neighbor);
+        l.arrayV2("queue", queue); // Queue before push
         l.breakpoint(12);
         queue.push(neighbor);
         // Note: No log immediately after queue.push, next iteration or step 13 will show it
@@ -166,8 +166,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     l.group("courses finished", { count });
     l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
     l.hashmap("graph", from2dArrayToMap(graph));
-    l.array("inDegree", inDegree);
-    l.array("queue", queue); // Queue might have new elements
+    l.arrayV2("inDegree", inDegree);
+    l.arrayV2("queue", queue); // Queue might have new elements
     l.breakpoint(13);
   }
 
@@ -179,8 +179,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   l.simple({ result: allCoursesTaken });
   l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
   l.hashmap("graph", from2dArrayToMap(graph));
-  l.array("inDegree", inDegree); // Final state of inDegree
-  l.array("queue", queue); // Queue should be empty if successful
+  l.arrayV2("inDegree", inDegree); // Final state of inDegree
+  l.arrayV2("queue", queue); // Queue should be empty if successful
   l.breakpoint(14);
 
   // Return the collected steps

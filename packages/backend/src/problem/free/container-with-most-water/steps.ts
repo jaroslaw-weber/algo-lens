@@ -24,7 +24,7 @@ export function generateSteps(height: number[]): ProblemState[] {
 
   // Helper function to create and log each step's computational state
   function log(point: number, area?: number) {
-    l.array("height", height, left, right);
+    l.arrayV2("height", height, left, right);
     l.simple({ maxArea });
     if (area !== undefined) {
       l.simple({ area });

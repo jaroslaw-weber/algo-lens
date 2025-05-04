@@ -14,7 +14,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   let actualSum = 0;
 
   // Breakpoint 1: Initial state
-  l.array("nums", nums); // Log initial array
+  l.arrayV2("nums", nums); // Log initial array
   l.group("sum", { expectedSum, actualSum }); // Log initial sums
 
   l.breakpoint(1);
@@ -23,7 +23,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     actualSum += nums[i];
 
     // Breakpoint 2: Inside loop state
-    l.array("nums", nums, i); // Log array, highlighting index i
+    l.arrayV2("nums", nums, i); // Log array, highlighting index i
     l.group("sum", { expectedSum, actualSum }); // Log current sums
     l.group("loop", { i }); // Log loop variable i
     l.breakpoint(2);
@@ -33,7 +33,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const result = expectedSum - actualSum;
 
   // Breakpoint 3: Final state
-  l.array("nums", nums); // Log final array state
+  l.arrayV2("nums", nums); // Log final array state
   l.group("sum", { expectedSum, actualSum, result }); // Log final sums and result
   // Optionally log result as simple value if not included in 'sum' group
   l.simple({ result });

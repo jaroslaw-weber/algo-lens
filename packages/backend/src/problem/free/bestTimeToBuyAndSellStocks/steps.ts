@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLogger } from "../../core/StepLogger";
+// Removed: import { StepLogger } from "../../core/StepLogger";
 import { MaxProfitInput } from "./types";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 

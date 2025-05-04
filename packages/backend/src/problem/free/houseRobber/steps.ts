@@ -22,14 +22,14 @@ export function generateSteps(nums: number[]) {
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
 
-  l.array("nums", nums);
-  l.array("dp", dp, 0); // Highlight dp[0]
+  l.arrayV2("nums", nums);
+  l.arrayV2("dp", dp, 0); // Highlight dp[0]
   l.breakpoint(1, "Initialize dp array with base case dp[0]");
 
   dp[1] = nums[0];
 
-  l.array("nums", nums, 0); // Highlight nums[0]
-  l.array("dp", dp, 1); // Highlight dp[1]
+  l.arrayV2("nums", nums, 0); // Highlight nums[0]
+  l.arrayV2("dp", dp, 1); // Highlight dp[1]
   l.breakpoint(2, "Set base case dp[1]");
 
   for (let i = 2; i <= n; i++) {
@@ -39,8 +39,8 @@ export function generateSteps(nums: number[]) {
     const includeCurrent = twoHousesBefore + currentHouse;
     dp[i] = Math.max(skipCurrent, includeCurrent);
 
-    l.array("nums", nums, i - 1); // Highlight current house
-    l.array("dp", dp, i, i - 1, i - 2); // Highlight relevant dp values
+    l.arrayV2("nums", nums, i - 1); // Highlight current house
+    l.arrayV2("dp", dp, i, i - 1, i - 2); // Highlight relevant dp values
     l.groupOptions.set(dpCalculationGroup, { min: 0 }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
     l.group(dpCalculationGroup, {
       // Use defined group name
@@ -58,8 +58,8 @@ export function generateSteps(nums: number[]) {
 
   const result = dp[n];
 
-  l.array("nums", nums);
-  l.array("dp", dp, n); // Highlight final result in dp array
+  l.arrayV2("nums", nums);
+  l.arrayV2("dp", dp, n); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
   l.breakpoint(4, "Final result is dp[n]");
 

@@ -1,4 +1,3 @@
-
 import { ProblemState } from "algo-lens-core"; // Keep ProblemState for return type hint
 import { asArray, asHashset } from "../../core/utils"; // Keep utils used by logger internally
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
@@ -9,47 +8,47 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2";
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
 export function generateSteps(nums: number[]): ProblemState[] {
-  const logger = new StepLoggerV2();
+  const l = new StepLoggerV2(); // Changed logger to l
   let result = false; // Initialize result to false
   const hashSet: Set<number> = new Set();
 
   // Initial state log before the loop starts
-  logger.array("nums", nums);
-  logger.hashset("hashSet", hashSet, {}); // Initial empty hashset state
-  logger.simple({ result }); // Initial result state
-  logger.breakpoint(1);
+  l.arrayV2("nums", nums); // Changed logger.array to l.arrayV2
+  l.hashset("hashSet", hashSet, {}); // Changed logger to l
+  l.simple({ result }); // Changed logger to l // Initial result state
+  l.breakpoint(1); // Changed logger to l
 
   // Main loop to check for duplicates
   for (let i = 0; i < nums.length; i++) {
     // Log state before checking hashSet
-    logger.array("nums", nums, i);
-    logger.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Highlight value being checked
-    logger.simple({ result });
-    logger.breakpoint(2);
+    l.arrayV2("nums", nums, i); // Changed logger.array to l.arrayV2
+    l.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Changed logger to l // Highlight value being checked
+    l.simple({ result }); // Changed logger to l
+    l.breakpoint(2); // Changed logger to l
 
     if (hashSet.has(nums[i])) {
       result = true; // Set result to true if duplicate found
       // Log duplicate found state
-      logger.array("nums", nums, i);
-      logger.hashset("hashSet", hashSet, { value: nums[i], color: "error" }); // Highlight duplicate
-      logger.simple({ result }); // Log final true result
-      logger.breakpoint(3);
-      return logger.getSteps(); // Return early
+      l.arrayV2("nums", nums, i); // Changed logger.array to l.arrayV2
+      l.hashset("hashSet", hashSet, { value: nums[i], color: "error" }); // Changed logger to l // Highlight duplicate
+      l.simple({ result }); // Changed logger to l // Log final true result
+      l.breakpoint(3); // Changed logger to l
+      return l.getSteps(); // Changed logger to l // Return early
     } else {
       hashSet.add(nums[i]);
       // Log state after adding to hashSet
-      logger.array("nums", nums, i);
-      logger.hashset("hashSet", hashSet, { value: nums[i], color: "success" }); // Highlight added value
-      logger.simple({ result });
-      logger.breakpoint(4);
+      l.arrayV2("nums", nums, i); // Changed logger.array to l.arrayV2
+      l.hashset("hashSet", hashSet, { value: nums[i], color: "success" }); // Changed logger to l // Highlight added value
+      l.simple({ result }); // Changed logger to l
+      l.breakpoint(4); // Changed logger to l
     }
   }
 
   // Logs the final state when no duplicate is found
-  logger.array("nums", nums); // Final array state
-  logger.hashset("hashSet", hashSet, {}); // Final hashset state
-  logger.simple({ result }); // Log final false result
-  logger.breakpoint(5);
+  l.arrayV2("nums", nums); // Changed logger.array to l.arrayV2 // Final array state
+  l.hashset("hashSet", hashSet, {}); // Changed logger to l // Final hashset state
+  l.simple({ result }); // Changed logger to l // Log final false result
+  l.breakpoint(5); // Changed logger to l
 
-  return logger.getSteps();
+  return l.getSteps(); // Changed logger to l
 }
