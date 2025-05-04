@@ -1,3 +1,4 @@
+
 import { defineVariable } from "@problem/types/variable"; // Assuming this path is correct based on previous tasks
 
 // Variables used in the Reverse Linked List algorithm visualization
