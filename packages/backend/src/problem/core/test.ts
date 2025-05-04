@@ -58,7 +58,7 @@ export function runTests(problem: Problem<any, ProblemState>) {
     }
   } else {
     // Optional: Log a warning or throw an error if the file is expected
-    console.warn(
+    throw new Error(
       `Warning: TypeScript file not found for problem ${problem.id} at ${tsFilePath}`
     );
   }
