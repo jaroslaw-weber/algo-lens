@@ -16,7 +16,7 @@ export const problem: Problem<MinPathSumInput, ProblemState> = {
   testcases,
   difficulty: "medium",
   func: generateSteps, // Use the renamed function
-  id: "minimum-path-sum",
+  id: "minimumPathSum",
   tags: ["2d dynamic programming"],
   metadata: {
     variables,
