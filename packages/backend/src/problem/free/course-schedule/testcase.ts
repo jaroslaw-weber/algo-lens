@@ -45,4 +45,19 @@ export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
     description:
       "Test case 3: The prerequisites are correctly represented and all courses can be taken.",
   },
+
+  // Test case 4
+  {
+    input: [
+      4,
+      [
+        [1, 0],
+        [2, 1],
+        [3, 2],
+      ],
+    ],
+    expected: true,
+    description:
+      "Test case 4: Linear dependency chain, all courses can be taken.",
+  },
 ];
