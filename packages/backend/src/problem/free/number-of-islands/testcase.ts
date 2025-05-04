@@ -3,4 +3,42 @@
 import { ProblemState, TestCase } from "algo-lens-core";
 import { NumIslandsInput } from "./types";
 
-export const testcases: TestCase<NumIslandsInput, ProblemState>[] = [];
+export const testcases: TestCase<NumIslandsInput, ProblemState>[] = [
+  {
+    input: [],
+    expected: 0,
+    description: "Empty grid",
+  },
+  {
+    input: [
+      ["0", "0", "0"],
+      ["0", "0", "0"],
+    ],
+    expected: 0,
+    description: "Grid with no islands",
+  },
+  {
+    input: [["1"]],
+    expected: 1,
+    description: "Single island",
+  },
+  {
+    input: [
+      ["1", "0", "0"],
+      ["0", "0", "0"],
+      ["0", "0", "1"],
+    ],
+    expected: 2,
+    description: "Multiple separate islands",
+  },
+  {
+    input: [
+      ["1", "1", "0", "0", "0"],
+      ["1", "1", "0", "0", "0"],
+      ["0", "0", "1", "0", "0"],
+      ["0", "0", "0", "1", "1"],
+    ],
+    expected: 3,
+    description: "Complex grid with islands touching corners and edges",
+  },
+];
