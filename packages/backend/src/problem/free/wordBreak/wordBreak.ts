@@ -1,6 +1,6 @@
 import { clone } from "lodash";
 import { Problem, ProblemState, Variable } from "algo-lens-core";
-import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../core/utils";
+import { asArray, asValueGroup, asSimpleValue, asStringArray } from "../../core/utils";
 
 function wordBreak(p: WordBreakInput): ProblemState[] {
   const s: ProblemState[] = [];
