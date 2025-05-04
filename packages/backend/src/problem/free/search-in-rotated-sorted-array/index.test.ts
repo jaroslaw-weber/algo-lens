@@ -1,5 +1,5 @@
 import { it } from "bun:test";
-import { problem } from "./search-in-rotated-sorted-array"; // Import from the sibling .ts file
+import { problem } from "./problem"; // Import from problem.ts
 import { runTests } from "../core/test"; // Adjust path relative to the new test file
 
 it(problem.id, () => {
