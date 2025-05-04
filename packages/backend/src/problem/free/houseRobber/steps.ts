@@ -22,15 +22,15 @@ export function generateSteps(nums: number[]) {
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
 
-  l.breakpoint(1, "Initialize dp array with base case dp[0]");
   l.array("nums", nums);
   l.array("dp", dp, 0); // Highlight dp[0]
+  l.breakpoint(1, "Initialize dp array with base case dp[0]");
 
   dp[1] = nums[0];
 
-  l.breakpoint(2, "Set base case dp[1]");
   l.array("nums", nums, 0); // Highlight nums[0]
   l.array("dp", dp, 1); // Highlight dp[1]
+  l.breakpoint(2, "Set base case dp[1]");
 
   for (let i = 2; i <= n; i++) {
     const skipCurrent = dp[i - 1];
@@ -39,10 +39,6 @@ export function generateSteps(nums: number[]) {
     const includeCurrent = twoHousesBefore + currentHouse;
     dp[i] = Math.max(skipCurrent, includeCurrent);
 
-    l.breakpoint(
-      3,
-      "Calculate dp[i] based on max of skipping or including current house"
-    );
     l.array("nums", nums, i - 1); // Highlight current house
     l.array("dp", dp, i, i - 1, i - 2); // Highlight relevant dp values
     l.groupOptions.set(dpCalculationGroup, { min: 0 }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
@@ -54,14 +50,18 @@ export function generateSteps(nums: number[]) {
       currentHouse,
     });
     l.group(loopInfoGroup, { i }); // Use defined group name
+    l.breakpoint(
+      3,
+      "Calculate dp[i] based on max of skipping or including current house"
+    );
   }
 
   const result = dp[n];
 
-  l.breakpoint(4, "Final result is dp[n]");
   l.array("nums", nums);
   l.array("dp", dp, n); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
+  l.breakpoint(4, "Final result is dp[n]");
 
   return l.getSteps(); // Return steps from StepLoggerV2
 }
