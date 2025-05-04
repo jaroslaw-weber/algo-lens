@@ -1,4 +1,1 @@
-export interface TwoSumInput {
-  nums: number[];
-  target: number;
-}
+export type TwoSumInput = [number[], number];

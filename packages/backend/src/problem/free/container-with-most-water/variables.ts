@@ -1,10 +1,11 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "height",
     label: "height",
-    description: "The input array representing the heights of the vertical lines.",
+    description:
+      "The input array representing the heights of the vertical lines.",
     emoji: "📊",
   },
   {
@@ -28,19 +29,22 @@ export const variableMetadata: VariableMetadata[] = [
   {
     name: "width",
     label: "width",
-    description: "The current width between the left and right pointers (right - left).",
+    description:
+      "The current width between the left and right pointers (right - left).",
     emoji: "↔️",
   },
   {
     name: "currentHeight",
     label: "currentHeight",
-    description: "The height of the shorter line between the left and right pointers.",
+    description:
+      "The height of the shorter line between the left and right pointers.",
     emoji: "📏",
   },
   {
     name: "area",
     label: "area",
-    description: "The area calculated for the current pair of lines (width * currentHeight).",
+    description:
+      "The area calculated for the current pair of lines (width * currentHeight).",
     emoji: "🌊",
   },
 ];

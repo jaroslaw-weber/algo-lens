@@ -16,6 +16,7 @@ import {
   BinaryTreeNode,
   TreeVariable,
   ListNode,
+  Problem,
 } from "algo-lens-core";
 import { getAllProblems } from "./list";
 
@@ -27,7 +28,16 @@ export async function getRandomProblem() {
 export async function getProblemById(id: string) {
   console.log("getProblemById", id);
   const all = await getAllProblems();
-  return all.find((p) => p.id === id);
+  const problem = all.find((p) => p.id === id);
+  validate(problem);
+  return problem;
+}
+
+function validate(problem?: Problem<any, any>) {
+  if (!problem) throw new Error("Problem not found");
+  //@ts-expect-error
+  if (!problem.code)
+    throw new Error("Problem code not found in problem: " + problem.id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {

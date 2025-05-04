@@ -9,9 +9,10 @@ const title = "Maximum Subarray";
 
 export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   title: title,
-  emoji: '📊', // Updated emoji
+  emoji: "📊", // Updated emoji
   func: generateSteps, // Use generateSteps from steps.ts
   testcases, // Added testcases
+  difficulty: "medium", // Updated difficulty level
   id: "maximum-subarray",
   tags: ["dynamic programming", "array", "divide and conquer"], // Updated tags
   metadata: {

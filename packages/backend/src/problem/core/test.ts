@@ -3,7 +3,23 @@ import { cloneDeep, last } from "lodash";
 import { describe, it, expect } from "bun:test";
 
 export function runTests(problem: Problem<any, ProblemState>) {
-  const { testcases } = problem;
+  const { testcases, metadata } = problem;
+
+  //has metadata check
+  if (!metadata) {
+    throw new Error("No metadata found in problem. ");
+  }
+  const { groups, variables } = metadata;
+  if (!groups) {
+    throw new Error("No groups found in metadata");
+  }
+  if (!variables) {
+    throw new Error("No variables found in metadata");
+  }
+  if (!variables.length) {
+    throw new Error("No variables found in metadata");
+  }
+
   if (testcases.length < 4) {
     throw new Error("Test cases count should be at least 4");
   }
@@ -18,10 +34,12 @@ export function runTests(problem: Problem<any, ProblemState>) {
       throw new Error("No result found in last state");
     }
     //@ts-expect-error
-    const value = result.value;
+    const value = result.value ?? result.values;
     expect(value).toEqual(expected);
+    /** 
     console.log(
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(value)}`
     );
+    **/
   }
 }

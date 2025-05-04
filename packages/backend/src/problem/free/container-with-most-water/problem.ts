@@ -8,8 +8,9 @@ import { testcases } from "./testcase";
 const title = "Container With Most Water";
 export const problem: Problem<ContainerInput, ProblemState> = {
   title,
-  emoji: '🌊',
-  testcases:testcases,
+  emoji: "🌊",
+  testcases,
+  difficulty: "easy",
   func: generateSteps, // Use the renamed function
   id: "container-with-most-water",
   tags: ["array", "two pointers"],

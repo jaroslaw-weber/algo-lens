@@ -10,7 +10,8 @@ const title = "Coin Change";
 export const problem: Problem<CoinChangeInput, ProblemState> = {
   title: title,
   emoji: "🪙",
-  func: generateSteps,
+  func: (input) => generateSteps(...input),
+  difficulty: "medium",
   testcases,
   id: "coinChange",
   tags: ["dynamic programming", "array"],

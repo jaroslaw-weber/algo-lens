@@ -1,30 +1,23 @@
-import { Problem, ProblemState } from "algo-lens-core";
-import { generateSteps } from "./steps"; // Will import the renamed function
-import { code } from "./code";
+import { Problem, ProblemState } from "algo-lens-core"; // Added ProblemMetadata
+import { generateSteps } from "./steps";
+import { code } from "./code/typescript";
 import { EraseOverlapIntervalsInput } from "./types"; // Import input type from types.ts
+import { variables } from "./variables";
+import { groups } from "./groups"; // Add placeholder groups
+import { testcases } from "./testcase"; // Add placeholder testcases
 
 const title = "Non-overlapping Intervals";
-const getInput = () => ({
-  intervals: [
-    [17, 20],
-    [2, 6],
-    [8, 10],
-    [12, 15],
-    [5, 9],
-    [1, 3],
-    [14, 18],
-    [19, 22],
-  ],
-});
 
-export const problem: Problem<
-  EraseOverlapIntervalsInput,
-  ProblemState
-> = {
+export const problem: Problem<EraseOverlapIntervalsInput, ProblemState> = {
   title,
-  emoji: '✂️',
-  code,
-  func: generateSteps, // Use the renamed function
+  emoji: "✂️",
+  func: generateSteps,
   id: "non-overlapping-intervals",
-  tags: ["interval"]
+  tags: ["interval"],
+  metadata: {
+    variables,
+    groups,
+  }, // Add the metadata property here
+  testcases, // Add placeholder testcases
+  difficulty: "easy", // Add placeholder difficulty
 };

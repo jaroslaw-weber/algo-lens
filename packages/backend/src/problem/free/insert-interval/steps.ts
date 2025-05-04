@@ -3,15 +3,12 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
 import { InsertIntervalInput, Interval } from "./types";
 import { groups } from "./groups"; // Import groups
 
-export function generateSteps(p: InsertIntervalInput): ProblemState[] {
+export function generateSteps(
+  intervals: Interval[],
+  newInterval: Interval
+): ProblemState[] {
   const l = new StepLoggerV2();
-  const { intervals: initialIntervals, newInterval: initialNewInterval } = p;
-  // Make copies to avoid modifying the input directly, especially newInterval
-  let intervals = initialIntervals.map((interval) => [
-    ...interval,
-  ]) as Interval[];
-  let newInterval = [...initialNewInterval] as Interval;
-
+  
   let result: Interval[] = [];
   let i = 0;
 

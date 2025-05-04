@@ -1,6 +1,3 @@
 import { BinaryTreeNode } from "algo-lens-core";
 
-export interface SameTreeInput {
-  p: BinaryTreeNode | null;
-  q: BinaryTreeNode | null;
-}
+export type SameTreeInput = [BinaryTreeNode | null, BinaryTreeNode | null];

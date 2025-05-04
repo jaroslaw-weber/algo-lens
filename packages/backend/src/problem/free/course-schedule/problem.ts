@@ -11,7 +11,8 @@ const title = "Course Schedule";
 export const problem: Problem<CourseScheduleInput, ProblemState> = {
   title: title,
   emoji: "📚",
-  func: generateSteps,
+  difficulty: "medium",
+  func: (i) => generateSteps(...i),
   testcases,
   id: "course-schedule",
   tags: ["graph", "topological sort", "dfs", "bfs"],

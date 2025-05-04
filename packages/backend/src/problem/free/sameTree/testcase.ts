@@ -1,72 +1,59 @@
-import { BinaryTreeNode } from "algo-lens-core";
+import { ProblemState, TestCase, BinaryTreeNode } from "algo-lens-core";
 import { SameTreeInput } from "./types";
 
-// Helper to create a simple node
-const N = (val: number, left: BinaryTreeNode | null = null, right: BinaryTreeNode | null = null): BinaryTreeNode => ({ val, left, right });
+function createBinaryTreeNode(value: number | null): BinaryTreeNode {
+  return {
+    val: value!,
+    left: null,
+    right: null,
+  };
+}
 
-// 1. Identical Simple Trees
-export const getIdenticalSimpleTrees = (): SameTreeInput => ({
-  p: N(1, N(2), N(3)),
-  q: N(1, N(2), N(3)),
-});
+function arrayToTree(arr: (number | null)[] | null): BinaryTreeNode | null {
+  if (arr === null || arr.length === 0) {
+    return null;
+  }
 
-// 2. Same Structure, Different Values
-export const getDifferentValuesTrees = (): SameTreeInput => ({
-  p: N(1, N(2), N(3)),
-  q: N(1, N(99), N(3)), // Different value at node 2
-});
+  const root = createBinaryTreeNode(arr[0]);
+  const queue: (BinaryTreeNode | null)[] = [root];
+  let i = 1;
 
-// 3. Different Structures
-export const getDifferentStructureTrees = (): SameTreeInput => ({
-  p: N(1, N(2), null),       // p has left child only
-  q: N(1, null, N(3)),       // q has right child only
-});
+  while (queue.length > 0 && i < arr.length) {
+    const current = queue.shift();
 
-// 4. Both Null
-export const getBothNullTrees = (): SameTreeInput => ({
-  p: null,
-  q: null,
-});
+    if (current != null) {
+      if (arr[i] !== null) {
+        current.left = createBinaryTreeNode(arr[i]);
+        queue.push(current.left);
+      }
+      i++;
 
-// 5. One Null (p is null)
-export const getOneNullPTrees = (): SameTreeInput => ({
-  p: null,
-  q: N(1, N(2), N(3)),
-});
+      if (i < arr.length && arr[i] !== null) {
+        current.right = createBinaryTreeNode(arr[i]);
+        queue.push(current.right);
+      }
+      i++;
+    }
+  }
 
-// 5. One Null (q is null)
-export const getOneNullQTrees = (): SameTreeInput => ({
-  p: N(1, N(2), N(3)),
-  q: null,
-});
+  return root;
+}
 
-// 6. Identical Complex Trees
-export const getIdenticalComplexTrees = (): SameTreeInput => {
-  const p: BinaryTreeNode = N(1,
-    N(2, N(4), N(5)),
-    N(3, N(6), N(7))
-  );
-  const q: BinaryTreeNode = N(1,
-    N(2, N(4), N(5)),
-    N(3, N(6), N(7))
-  );
-  return { p, q };
-};
-
-// 7. Different Complex Trees (Original getInput renamed)
-export const getDifferentComplexTrees = (): SameTreeInput => {
- const p: BinaryTreeNode = N(1,
-    N(2, N(4), N(5)),
-    N(3, N(6), N(7))
-  );
-  const q: BinaryTreeNode = N(1,
-    N(2, N(4), N(5)),
-    N(3, N(6), N(8)) // Difference here
-  );
-  return { p, q };
-};
-
-// Keep the original getInput function name for backward compatibility or default test?
-// Or rename it to avoid confusion. Let's rename it (done above).
-// You can add a default export or a specific function if one case is primary.
-export const defaultInput = getDifferentComplexTrees;
+export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
+  {
+    input: [arrayToTree([1, 2, 3]), arrayToTree([1, 2, 3])],
+    expected: true,
+  },
+  {
+    input: [arrayToTree([1, 2, 3]), arrayToTree([1, 3, 2])],
+    expected: false,
+  },
+  {
+    input: [arrayToTree([1, 2]), arrayToTree([1, null, 2])],
+    expected: false,
+  },
+  {
+    input: [arrayToTree([1, 2]), arrayToTree([1, 2, null])],
+    expected: true,
+  },
+];

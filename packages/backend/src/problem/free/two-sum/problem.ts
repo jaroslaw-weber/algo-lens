@@ -2,16 +2,17 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { TwoSumInput } from "./types";
-import { groups } from "./groups"; 
-import { testcases } from "./testcase"; 
+import { groups } from "./groups";
+import { testcases } from "./testcase";
 
 export const problem: Problem<TwoSumInput, ProblemState> = {
   title: "Two Sum",
-  emoji: '🎯',
-  func: generateSteps, // Use the imported step generation function
+  emoji: "🎯",
+  func: (i) => generateSteps(...i), // Use the imported step generation function
   id: "two-sum",
+  difficulty: "easy",
   tags: ["array", "hash set"],
-  metadata: { 
+  metadata: {
     variables, // Use the imported variables
     groups, // Use the imported groups
   },
