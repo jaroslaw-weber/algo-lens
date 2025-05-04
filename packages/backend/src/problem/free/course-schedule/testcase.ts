@@ -13,7 +13,7 @@ export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
         [0, 1],
       ],
     ],
-    expected: true,
+    expected: false,
     description: "Test case 1: The prerequisites are correctly represented.",
   },
 
