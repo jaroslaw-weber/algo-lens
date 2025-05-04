@@ -20,7 +20,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
   let minPrice = prices[0];
 
   l.arrayV2({ prices }, { i: 0 });
-  l.array("dp", dp);
+  l.arrayV2({ dp });
   l.simple({ minPrice });
   l.breakpoint(
     1,
@@ -32,8 +32,8 @@ export function generateSteps(prices: number[]): ProblemState[] {
     const diff = price - minPrice;
     const prev = dp[i - 1];
 
-    l.array("prices", prices, i);
-    l.array("dp", dp, i, i - 1);
+    l.arrayV2({ prices }, { i });
+    l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
     l.group("loop", { i }, { min: 0, max: prices.length });
@@ -45,7 +45,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
     dp[i] = Math.max(prev, diff);
 
     l.arrayV2({ prices }, { i });
-    l.array("dp", dp, i, i - 1);
+    l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
     l.group("loop", { i }, { min: 0, max: prices.length });
@@ -56,8 +56,8 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
     minPrice = Math.min(minPrice, price);
 
-    l.array("prices", prices, i);
-    l.array("dp", dp, i, i - 1);
+    l.arrayV2({ prices }, { i });
+    l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
     l.group("loop", { i }, { min: 0, max: prices.length });
@@ -72,7 +72,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
   const result = dp[prices.length - 1];
 
-  l.array("prices", prices, prices.length - 1);
+  l.arrayV2({ prices }, { result: prices.length - 1 });
   l.simple({ result });
   l.breakpoint(
     5,

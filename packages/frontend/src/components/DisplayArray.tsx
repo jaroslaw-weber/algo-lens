@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import type { ArrayVariable, Pointer } from "algo-lens-core";
+import Tooltip from "./Tooltip"; // Import the Tooltip component
 
 const colors = ["primary", "secondary"];
 
@@ -18,6 +19,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const getCellPointerInfo = useMemo(() => {
     return (rowIndex: number, colIndex: number) => {
       if (!pointers || pointers.length === 0) {
+        console.log("No pointers available");
         return { style: "", pointerLabel: null };
       }
 
@@ -38,6 +40,8 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
             (p) => p.dimension === "column" && p.value === colIndex
           ) ?? null;
       }
+
+      console.log("rowPointer:", rowPointer, "colPointer:", colPointer);
 
       // Determine the primary pointer for styling and labeling
       const primaryPointer = colPointer ?? rowPointer; // Prioritize column pointer
@@ -64,6 +68,8 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
       const style = `bg-${bgColor} text-${bgColor}-content`;
       const pointerLabel = primaryPointer.label; // Label from the prioritized pointer
 
+      console.log("pointerLabel:", pointerLabel);
+
       return { style, pointerLabel };
     };
   }, [pointers, is2D]);
@@ -85,23 +91,16 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
     <tr key={rowIndex} className="flex text-xs relative">
-      {" "}
-      {/* Added relative positioning */}
       {items.map((item, colIndex) => {
         const { style, pointerLabel } = getCellPointerInfo(rowIndex, colIndex);
+        console.log("the label: ", pointerLabel);
         return (
           <td
             key={colIndex}
-            className={`px-2 py-1 flex-1 relative ${style}`} // Added relative for absolute positioning of label
+            className={`px-2 py-1 flex-1 relative ${style}`} // Ensure 'relative' is here for absolute positioning
           >
-            {pointerLabel && (
-              <span className="absolute top-0 left-0 text-xs font-bold opacity-75 px-1">
-                {pointerLabel}
-              </span>
-            )}
+            {pointerLabel && <Tooltip label={pointerLabel} />}
             <div className="text-center">
-              {" "}
-              {/* Center the value */}
               {typeof item === "object"
                 ? JSON.stringify(item)
                 : formatValue(item)}
