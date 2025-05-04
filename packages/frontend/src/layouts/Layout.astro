@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import ErrorPopup from '../components/ErrorPopup.tsx'; // Import the ErrorPopup component
 ---
 
 <!doctype html>
@@ -19,7 +18,6 @@ import ErrorPopup from '../components/ErrorPopup.tsx'; // Import the ErrorPopup 
   </head>
   <body>
     <slot />
-    <ErrorPopup client:load /> {/* Render the ErrorPopup component */}
   </body>
 </html>
 
