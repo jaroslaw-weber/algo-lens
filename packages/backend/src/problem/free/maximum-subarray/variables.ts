@@ -35,5 +35,12 @@ export const variableMetadata: VariableMetadata[] = [
     description: "The current number being processed from the input array.",
     emoji: "#️⃣",
     group: "loop", // Correct group
+  },
+  {
+    name: "result",
+    label: "result",
+    description: "The final maximum subarray sum.",
+    emoji: "🏁", // Or another suitable emoji
+    group: "kadane_vars", // Or a more appropriate group if available, like 'output' or 'result'
   }
 ];

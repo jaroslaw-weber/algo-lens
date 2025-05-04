@@ -7,15 +7,15 @@ export const testcases: TestCase<ProductExceptSelfInput, any>[] = [
     expected: [120, 60, 40, 30, 24],
   },
   {
-    input: [-1, 1, 0, -3, 3],
-    expected: [0, 0, 1, 0, 0],
-  },
-  {
     input: [1, 2],
     expected: [2, 1],
   },
   {
     input: [4, 3, 2, 1],
-    expected: [24, 12, 8, 6],
+    expected: [6, 8, 12, 24],
+  },
+  {
+    input: [0, 1, 2, 3, 4],
+    expected: [24, 0, 0, 0, 0],
   },
 ];

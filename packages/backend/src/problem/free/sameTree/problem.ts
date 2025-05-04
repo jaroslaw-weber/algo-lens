@@ -10,7 +10,7 @@ const title = "Same Tree Check";
 export const problem: Problem<SameTreeInput, ProblemState> = {
   title,
   emoji: "🌲",
-  func: sameTree, // This function generates the steps
+  func: (i) => sameTree(...i), // This function generates the steps
   testcases,
   id: "same-tree",
   difficulty: "easy",

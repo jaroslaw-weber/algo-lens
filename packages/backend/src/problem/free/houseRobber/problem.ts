@@ -9,12 +9,14 @@ const title = "House Robber";
 
 export const problem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
-  emoji: '🏠', // Updated emoji
+  emoji: "🏠", // Updated emoji
   func: generateSteps, // Use imported generateSteps function
+  difficulty: "medium",
   testcases, // Added testcases
   id: "houseRobber", // Updated id
   tags: ["dynamic programming", "array"], // Updated tags
-  metadata: { // Add metadata
+  metadata: {
+    // Add metadata
     variables,
     groups: groups,
   },

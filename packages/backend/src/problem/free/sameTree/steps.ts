@@ -9,8 +9,10 @@ import { SameTreeInput } from "./types"; // Import the input type
 import { isSameTree } from "./code/typescript"; // Import the core logic function
 
 // The main function that generates the steps for the visualization
-export function sameTree(input: SameTreeInput): ProblemState[] {
-  const { p, q } = input;
+export function sameTree(
+  p: BinaryTreeNode | null,
+  q: BinaryTreeNode | null
+): ProblemState[] {
   const steps: ProblemState[] = [];
 
   // Log function to capture state at each breakpoint
@@ -32,7 +34,7 @@ export function sameTree(input: SameTreeInput): ProblemState[] {
       asTree("qTree", q, [{ node: qNode, color }]), // Use asTree from core/utils
     ];
     if (result !== undefined) {
-      variables.push(asBooleanGroup("is node same?", { "return":result })); // Use asBooleanGroup
+      variables.push(asBooleanGroup("is node same?", { return: result })); // Use asBooleanGroup
     }
     steps.push({ variables, breakpoint: point });
   }
