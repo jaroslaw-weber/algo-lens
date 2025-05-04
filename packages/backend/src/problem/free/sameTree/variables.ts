@@ -39,4 +39,11 @@ export const variables: VariableMetadata[] = [
     description: "Placeholder description for isNodeSame",
     emoji: "❓",
   },
+  {
+    name: "result",
+    label: "result",
+    type: "boolean",
+    description: "The final result of the tree comparison",
+    emoji: "🏁",
+  },
 ];

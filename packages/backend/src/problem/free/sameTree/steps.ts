@@ -40,7 +40,22 @@ export function sameTree(
   }
 
   // Call the core logic function, passing the log function for step recording
-  isSameTree(p, q, log); // Pass log function to isSameTree
+  const result = isSameTree(p, q, log); // Pass log function to isSameTree
+
+  // Create the result variable
+  const resultVariable: Variable = {
+    label: "result",
+    type: "boolean",
+    value: result,
+  };
+
+  // Add the result variable to the last step or create a new step
+  if (steps.length > 0) {
+    steps[steps.length - 1].variables.push(resultVariable);
+  } else {
+    // If steps is empty (e.g., both trees are initially null), create a new step
+    steps.push({ variables: [resultVariable], breakpoint: 0 }); // Use breakpoint 0 or decide on a suitable value
+  }
 
   return steps;
 }
