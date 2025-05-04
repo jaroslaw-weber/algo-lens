@@ -1,6 +1,6 @@
 import { VariableMetadata } from "algo-lens-core";
 
-export const variableMetadata: VariableMetadata[] = [
+export const variables: VariableMetadata[] = [
   {
     name: "intervals",
     label: "intervals",
@@ -28,7 +28,8 @@ export const variableMetadata: VariableMetadata[] = [
   {
     name: "currentInterval",
     label: "currentInterval",
-    description: "The current interval being considered for keeping or removing.",
+    description:
+      "The current interval being considered for keeping or removing.",
     emoji: "👀",
   },
 ];

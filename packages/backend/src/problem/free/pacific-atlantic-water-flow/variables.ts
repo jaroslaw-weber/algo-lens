@@ -1,1 +1,3 @@
-// Placeholder for variable definitions, if needed in the future.
+import { VariableMetadata } from "algo-lens-core";
+
+export const variables: VariableMetadata[] = [];
