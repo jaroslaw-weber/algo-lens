@@ -1,1 +1,3 @@
-// Placeholder for test case definitions, if needed in the future.
+import { ProblemState, TestCase } from "algo-lens-core";
+
+export const testcases: TestCase<number, ProblemState> = [];
