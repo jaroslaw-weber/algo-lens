@@ -27,4 +27,10 @@ export const variables: VariableMetadata[] = [
 
     emoji: "➡️",
   },
+  {
+    name: "result",
+    label: "result",
+    description: "The final count of islands.",
+    emoji: "🏝️", // Island emoji
+  },
 ];

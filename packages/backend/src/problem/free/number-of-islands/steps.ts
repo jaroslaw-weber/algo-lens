@@ -76,6 +76,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
 
   const result = numIslands;
   l.simple({ result });
+  l.breakpoint();
   return l.getSteps();
 }
 
