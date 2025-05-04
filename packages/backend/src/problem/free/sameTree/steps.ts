@@ -9,7 +9,10 @@ import { SameTreeInput } from "./types"; // Import the input type
 import { isSameTree } from "./code/typescript"; // Import the core logic function
 
 // The main function that generates the steps for the visualization
-export function sameTree(p: BinaryTreeNode, q: BinaryTreeNode): ProblemState[] {
+export function sameTree(
+  p: BinaryTreeNode | null,
+  q: BinaryTreeNode | null
+): ProblemState[] {
   const steps: ProblemState[] = [];
 
   // Log function to capture state at each breakpoint
