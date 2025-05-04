@@ -26,7 +26,8 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
     source: "https://leetcode.com/problems/pacific-atlantic-water-flow/",
     tags: ["Array", "Depth-First Search", "Breadth-First Search", "Matrix"],
     difficulty: "Medium",
-    id: "pacific-atlantic-water-flow" // Ensure this matches the existing id
+    id: "pacific-atlantic-water-flow", // Ensure this matches the existing id
+    groups: []
   },
   code,
   func: generateSteps, // Use the renamed function
