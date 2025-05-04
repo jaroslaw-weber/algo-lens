@@ -14,51 +14,101 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
     [array]
   );
 
-  // Memoize style calculation for cells
-  const getCellStyle = useMemo(() => {
-    return (rowIndex, colIndex) => {
-      if (!pointers) return "";
+  // Memoized helper to get pointer info (style and label) for a cell
+  const getCellPointerInfo = useMemo(() => {
+    return (rowIndex: number, colIndex: number) => {
+      if (!pointers || pointers.length === 0) {
+        return { style: "", pointerLabel: null };
+      }
 
-      let rowPointer = null,
-        colPointer = null;
+      let rowPointer: Pointer | null = null;
+      let colPointer: Pointer | null = null;
+
       if (is2D) {
-        rowPointer = pointers.find(
-          (pointer) => pointer.dimension === "row" && rowIndex === pointer.value
-        );
-        colPointer = pointers.find(
-          (pointer) =>
-            pointer.dimension === "column" && colIndex === pointer.value
-        );
+        rowPointer =
+          pointers.find((p) => p.dimension === "row" && p.value === rowIndex) ??
+          null;
+        colPointer =
+          pointers.find(
+            (p) => p.dimension === "column" && p.value === colIndex
+          ) ?? null;
       } else {
-        colPointer = pointers.find(
-          (pointer) =>
-            pointer.dimension === "column" && colIndex === pointer.value
-        );
+        colPointer =
+          pointers.find(
+            (p) => p.dimension === "column" && p.value === colIndex
+          ) ?? null;
       }
 
-      const bgColor =
-        colors[pointers.indexOf(rowPointer ?? colPointer) % colors.length];
+      // Determine the primary pointer for styling and labeling
+      const primaryPointer = colPointer ?? rowPointer; // Prioritize column pointer
 
-      if (is2D && rowPointer && colPointer) {
-        return `bg-${bgColor} text-${bgColor}-content`;
-      } else if (!is2D && colPointer) {
-        return `bg-${bgColor} text-${bgColor}-content`;
+      if (!primaryPointer) {
+        return { style: "", pointerLabel: null };
       }
-      return "";
+
+      // Check if the cell is targeted by the primary pointer (or both in 2D)
+      const isTargeted = is2D
+        ? (rowPointer && colPointer) ||
+          (!rowPointer &&
+            colPointer &&
+            primaryPointer.dimension === "column") ||
+          (!colPointer && rowPointer && primaryPointer.dimension === "row")
+        : colPointer; // Only colPointer matters for 1D
+
+      if (!isTargeted) {
+        return { style: "", pointerLabel: null };
+      }
+
+      const pointerIndex = pointers.indexOf(primaryPointer);
+      const bgColor = colors[pointerIndex % colors.length];
+      const style = `bg-${bgColor} text-${bgColor}-content`;
+      const pointerLabel = primaryPointer.label; // Label from the prioritized pointer
+
+      return { style, pointerLabel };
     };
   }, [pointers, is2D]);
 
+  // Calculate number of columns
+  const numCols = useMemo(() => {
+    if (is2D) {
+      // For 2D arrays, find the max length of subarrays
+      return Math.max(
+        0,
+        ...array.map((sub) => (Array.isArray(sub) ? sub.length : 0))
+      );
+    } else {
+      // For 1D arrays, it's just the array length
+      return array.length;
+    }
+  }, [array, is2D]);
+
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
-    <tr key={rowIndex} className="flex text-xs">
-      {items.map((item, colIndex) => (
-        <td
-          key={colIndex}
-          className={`px-2 py-1 flex-1 ${getCellStyle(rowIndex, colIndex)}`}
-        >
-          {typeof item === "object" ? JSON.stringify(item) : formatValue(item)}
-        </td>
-      ))}
+    <tr key={rowIndex} className="flex text-xs relative">
+      {" "}
+      {/* Added relative positioning */}
+      {items.map((item, colIndex) => {
+        const { style, pointerLabel } = getCellPointerInfo(rowIndex, colIndex);
+        return (
+          <td
+            key={colIndex}
+            className={`px-2 py-1 flex-1 relative ${style}`} // Added relative for absolute positioning of label
+          >
+            {pointerLabel && (
+              <span className="absolute top-0 left-0 text-xs font-bold opacity-75 px-1">
+                {pointerLabel}
+              </span>
+            )}
+            <div className="text-center">
+              {" "}
+              {/* Center the value */}
+              {typeof item === "object"
+                ? JSON.stringify(item)
+                : formatValue(item)}
+            </div>
+          </td>
+        );
+      })}
     </tr>
   );
 
@@ -66,11 +116,10 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
     <div className="overflow-x-auto">
       <table className="w-full table-auto border-collapse border border-gray-200 ">
         <tbody>
-          {is2D ? (
-            array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
-          ) : (
-            <tr>{renderRow(array, 0)}</tr>
-          )}
+          {is2D
+            ? array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
+            : // Directly render the row for 1D arrays, as renderRow returns a <tr>
+              renderRow(array, 0)}
         </tbody>
       </table>
     </div>

@@ -1,8 +1,10 @@
 import {
+  ArrayVariable,
   BinaryTreeNode,
   HashHighlight,
   ListNode,
   NodeHighlight,
+  Pointer,
   Pointer2D,
   ProblemState,
   Variable,
@@ -149,6 +151,8 @@ export class StepLoggerV2 {
    * @param pointer1 - Optional index for the first pointer.
    * @param pointer2 - Optional index for the second pointer.
    * @param pointer3 - Optional index for the third pointer.
+   *
+   * @deprecated use arrayV2 instead.
    */
   public array(
     name: string,
@@ -159,6 +163,36 @@ export class StepLoggerV2 {
   ) {
     const variable = asArray(name, values, pointer1, pointer2, pointer3);
     this.upsert(variable);
+  }
+
+  public arrayV2(
+    arrayContaner: Record<string, any[]>,
+    pointers?: Record<string, number>
+  ) {
+    const fixedPointers: Pointer[] = [];
+    let i = 0;
+    if (pointers) {
+      for (let key in pointers) {
+        i++;
+        fixedPointers.push({
+          dimension: "row",
+          value: parseInt(key),
+          //@ts-ignore
+          color: pointers[i],
+          label: key,
+        });
+      }
+    }
+
+    const arrayKey = Object.keys(arrayContaner)[0];
+    const values = arrayContaner[arrayKey];
+    const v: ArrayVariable = {
+      label: arrayKey,
+      type: "array",
+      value: values,
+      pointers: fixedPointers,
+    };
+    this.upsert(v);
   }
 
   /**
