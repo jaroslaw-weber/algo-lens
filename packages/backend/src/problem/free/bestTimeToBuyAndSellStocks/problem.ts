@@ -12,6 +12,7 @@ export const problem: Problem<MaxProfitInput, ProblemState> = {
   emoji: "📈",
   func: generateSteps,
   id: "bestTimeToBuyAndSellStocks",
+  difficulty: "easy",
   testcases,
   tags: ["array"],
   metadata: {
