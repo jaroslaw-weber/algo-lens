@@ -11,6 +11,8 @@ export function runTests(problem: Problem<any, ProblemState>) {
   // Check for TypeScript compilation errors
   const tsFilePath = path.join(
     process.cwd(), // Assuming the test runs from the repo root
+    "packages",
+    "backend",
     "src",
     "problem",
     "free",
