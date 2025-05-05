@@ -1,4 +1,9 @@
-import { Problem, ProblemState, Variable, BinaryVariable } from "algo-lens-core";
+import {
+  Problem,
+  ProblemState,
+  Variable,
+  BinaryVariable,
+} from "algo-lens-core";
 
 // Defines the interface for the input expected by the sumOfTwoIntegers function
 interface SumOfTwoIntegersInput {
@@ -112,8 +117,7 @@ const code = `function sumOfTwoIntegers(a: number, b: number): number {
 // Export the complete problem setup including the input function, the computational function, and other metadata
 export const problem: Problem<SumOfTwoIntegersInput, number> = {
   title: "Sum of Two Integers",
-  emoji: '➕',
-  code,
+  emoji: "➕",
   func: sumOfTwoIntegers,
   id: "sum-of-two-integers",
   tags: ["bit manipulation"],
