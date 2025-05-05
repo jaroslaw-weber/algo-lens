@@ -16,6 +16,10 @@ export function generateSteps( // Renamed and Exported
   let removalCount = 0; //#1 Initialize removal count
   const remainingIntervals: number[][] = [];
 
+  // Define variable scopes and types for the logger
+  const { min, max } = getIntervalBounds(intervals);
+
+
   // Initial state log before the loop starts
   logger.array2d("intervals", intervals); // Assuming intervals is number[][]
   logger.array2d("remainingIntervals", remainingIntervals); // Assuming remainingIntervals is number[][]
@@ -61,6 +65,7 @@ export function generateSteps( // Renamed and Exported
   logger.array2d("remainingIntervals", remainingIntervals);
   logger.simple({ removalCount });
   logger.breakpoint(6, "Final log after all calculations"); // Added description
+
 
   return logger.getSteps(); // Return steps from the logger
 }

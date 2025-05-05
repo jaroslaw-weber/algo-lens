@@ -2,7 +2,7 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
-import { code } from "./code/typescript";
+import { productExceptSelf as code } from "./code/typescript";
 import { ProductExceptSelfInput } from "./types";
 import { testcases } from "./testcase";
 
