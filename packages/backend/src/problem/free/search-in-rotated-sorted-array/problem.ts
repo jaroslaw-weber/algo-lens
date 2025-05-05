@@ -8,7 +8,7 @@ import { testcases } from "./testcase";
 export const problem: Problem<SearchInput, ProblemState> = {
   title: "Search in Rotated Sorted Array",
   emoji: "🔍",
-  func: generateSteps, // Use the step generation function
+  func: (i) => generateSteps(...i), // Use the step generation function
   id: "search-in-rotated-sorted-array",
   tags: ["array", "binary-search"],
   testcases, // Use the imported test cases

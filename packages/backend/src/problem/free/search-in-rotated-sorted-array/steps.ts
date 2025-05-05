@@ -11,9 +11,8 @@ import { groups } from "./groups";
  * @param p - The input parameters including an array of numbers and a target number.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function generateSteps(p: SearchInput): ProblemState[] {
-  const { nums, target } = p;
-  const l = new StepLoggerV2(variables, groups);
+export function generateSteps(nums: number[], target: number): ProblemState[] {
+  const l = new StepLoggerV2();
   let left = 0;
   let right = nums.length - 1;
   let result = -1;

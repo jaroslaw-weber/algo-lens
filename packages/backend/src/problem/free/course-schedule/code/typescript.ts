@@ -30,7 +30,7 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
     const current = queue.shift(); // Dequeue a course, preparing to process it
     count++; // Increase the processed course count
 
-    const neighbors = graph[current];
+    const neighbors = graph[current!];
     //#9
     // Decrease in-degree for all neighbors and enqueue any that now have zero in-degree
     for (const neighbor of neighbors) {
