@@ -62,24 +62,31 @@ export async function runTests(problem: Problem<any, ProblemState>) {
   if (testcases.length < 4) {
     throw new Error("Test cases count should be at least 4");
   }
-  for (const testcase of problem.testcases) {
-    const input = cloneDeep(testcase.input);
-    const expected = cloneDeep(testcase.expected);
-    for (const func of [problem.func]) {
-      const states = func(input);
 
-      const state = last(states);
-      const variables = state!.variables;
-      const result = variables.find((x) => x.label === "result");
-      if (!result) {
-        throw new Error("No result found in last state");
+  problem.testcases.forEach((testcase, index) => {
+    it(`Test case ${index + 1}`, () => {
+      const input = cloneDeep(testcase.input);
+      const expected = cloneDeep(testcase.expected);
+      for (const func of [problem.func]) {
+        const states = func(input);
+
+        const state = last(states);
+        const variables = state!.variables;
+        const result = variables.find((x) => x.label === "result");
+        if (!result) {
+          throw new Error("No result found in last state");
+        }
+        //@ts-expect-error
+        const value = result.value ?? result.values;
+        expect(value).toEqual(expected);
+        /**
+          console.log(
+            `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
+        */
       }
-      //@ts-expect-error
-      const value = result.value ?? result.values;
-      expect(value).toEqual(expected);
-      /**
-    console.log(
-      `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
+    });
+  });
+}
         value
       )}`
     );
