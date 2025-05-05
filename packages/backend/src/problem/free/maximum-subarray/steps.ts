@@ -16,9 +16,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const loopGroup = groups.find((g) => g.name === "loop")!.name;
 
   // Log initial state (Before loop, corresponds to original log(1))
-  l.arrayV2({ nums: nums }, {}, inputGroup);
-  l.simple({ maxEndingHere }, kadaneGroup);
-  l.simple({ maxSoFar }, kadaneGroup);
+  l.arrayV2({ nums: nums }, {});
+  l.simple({ maxEndingHere });
+  l.simple({ maxSoFar });
   l.breakpoint(
     1,
     "Initialization: maxEndingHere and maxSoFar set to the first element."
@@ -29,11 +29,11 @@ export function generateSteps(nums: number[]): ProblemState[] {
     const num = nums[i]; // Current number
 
     // Log state at the beginning of the loop (Corresponds to original log(2, i))
-    l.arrayV2({ nums: nums }, { i: i }, inputGroup); // Highlight current number
-    l.simple({ maxEndingHere }, kadaneGroup);
-    l.simple({ maxSoFar }, kadaneGroup);
-    l.simple({ i }, loopGroup);
-    l.simple({ num }, loopGroup);
+    l.arrayV2({ nums: nums }, { i: i }); // Highlight current number
+    l.simple({ maxEndingHere });
+    l.simple({ maxSoFar });
+    l.simple({ i });
+    l.simple({ num });
     l.breakpoint(2, `Processing element at index ${i}: ${num}.`);
 
     // Kadane's logic: Decide whether to extend or start new subarray
@@ -44,17 +44,14 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
     if (startNew > extendSum) {
       // Log state *before* updating maxEndingHere (Corresponds roughly to original log(3, i))
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup);
-      l.simple({ maxSoFar }, kadaneGroup);
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
-      l.simple(
-        {
-          comparison: `${startNew} (num) > ${extendSum} (maxEndingHere + num)`,
-        },
-        loopGroup
-      );
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere });
+      l.simple({ maxSoFar });
+      l.simple({ i });
+      l.simple({ num });
+      l.simple({
+        comparison: `${startNew} (num) > ${extendSum} (maxEndingHere + num)`,
+      });
       l.breakpoint(
         3,
         `Starting new subarray as ${num} is greater than ${maxEndingHere} + ${num}.`
@@ -63,25 +60,22 @@ export function generateSteps(nums: number[]): ProblemState[] {
       maxEndingHere = startNew;
 
       // Log state *after* updating maxEndingHere (Corresponds roughly to original log(4, i))
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup); // Updated
-      l.simple({ maxSoFar }, kadaneGroup);
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere }); // Updated
+      l.simple({ maxSoFar });
+      l.simple({ i });
+      l.simple({ num });
       l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3 as per code.ts
     } else {
       // Log state *before* updating maxEndingHere (Corresponds roughly to original log(5, i))
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup);
-      l.simple({ maxSoFar }, kadaneGroup);
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
-      l.simple(
-        {
-          comparison: `${startNew} (num) <= ${extendSum} (maxEndingHere + num)`,
-        },
-        loopGroup
-      );
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere });
+      l.simple({ maxSoFar });
+      l.simple({ i });
+      l.simple({ num });
+      l.simple({
+        comparison: `${startNew} (num) <= ${extendSum} (maxEndingHere + num)`,
+      });
       l.breakpoint(
         3,
         `Extending current subarray as ${maxEndingHere} + ${num} is greater than or equal to ${num}.`
@@ -90,21 +84,21 @@ export function generateSteps(nums: number[]): ProblemState[] {
       maxEndingHere = extendSum;
 
       // Log state *after* updating maxEndingHere (Corresponds roughly to original log(6, i))
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup); // Updated
-      l.simple({ maxSoFar }, kadaneGroup);
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere }); // Updated
+      l.simple({ maxSoFar });
+      l.simple({ i });
+      l.simple({ num });
       l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3
     }
 
     // Update maxSoFar (Corresponds to original log(7, i) to log(9, i) block)
     // Log state *before* updating maxSoFar
-    l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-    l.simple({ maxEndingHere }, kadaneGroup);
-    l.simple({ maxSoFar }, kadaneGroup);
-    l.simple({ i }, loopGroup);
-    l.simple({ num }, loopGroup);
+    l.arrayV2({ nums: nums }, { i: i });
+    l.simple({ maxEndingHere });
+    l.simple({ maxSoFar });
+    l.simple({ i });
+    l.simple({ num });
     l.breakpoint(
       4,
       `Comparing maxEndingHere (${maxEndingHere}) with maxSoFar (${maxSoFar}).`
@@ -112,41 +106,41 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
     if (maxEndingHere > maxSoFar) {
       // Log state *before* updating maxSoFar (Corresponds roughly to original log(8, i))
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup);
-      l.simple({ maxSoFar }, kadaneGroup);
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
-      l.simple({ comparison: `${maxEndingHere} > ${maxSoFar}` }, loopGroup);
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere });
+      l.simple({ maxSoFar });
+      l.simple({ i });
+      l.simple({ num });
+      l.simple({ comparison: `${maxEndingHere} > ${maxSoFar}` });
       l.breakpoint(5, `maxEndingHere is greater than maxSoFar.`); // Use breakpoint 5 as per code.ts
 
       maxSoFar = maxEndingHere;
 
       // Log state *after* updating maxSoFar (Corresponds roughly to original log(9, i))
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup);
-      l.simple({ maxSoFar }, kadaneGroup); // Updated
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere });
+      l.simple({ maxSoFar }); // Updated
+      l.simple({ i });
+      l.simple({ num });
       l.breakpoint(5, `Updated maxSoFar to ${maxSoFar}.`); // Reuse breakpoint 5
     } else {
       // Log state if maxSoFar is not updated
-      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
-      l.simple({ maxEndingHere }, kadaneGroup);
-      l.simple({ maxSoFar }, kadaneGroup);
-      l.simple({ i }, loopGroup);
-      l.simple({ num }, loopGroup);
-      l.simple({ comparison: `${maxEndingHere} <= ${maxSoFar}` }, loopGroup);
+      l.arrayV2({ nums: nums }, { i: i });
+      l.simple({ maxEndingHere });
+      l.simple({ maxSoFar });
+      l.simple({ i });
+      l.simple({ num });
+      l.simple({ comparison: `${maxEndingHere} <= ${maxSoFar}` });
       l.breakpoint(5, `maxSoFar (${maxSoFar}) remains the maximum.`); // Reuse breakpoint 5
     }
     // End of loop iteration (Corresponds to original log(10, i))
   }
 
   // Final state log (Corresponds to original log(11))
-  l.arrayV2({ nums: nums }, {}, inputGroup);
-  l.simple({ maxEndingHere }, kadaneGroup);
-  l.simple({ maxSoFar }, kadaneGroup); // Final result
-  l.simple({ result: maxSoFar }, kadaneGroup); // Add this line to log 'result'
+  l.arrayV2({ nums: nums }, {});
+  l.simple({ maxEndingHere });
+  l.simple({ maxSoFar }); // Final result
+  l.simple({ result: maxSoFar }); // Add this line to log 'result'
   l.breakpoint(6, `Loop finished. Final maximum subarray sum is ${maxSoFar}.`); // Breakpoint 6 as per code.ts
 
   return l.getSteps();

@@ -1,18 +1,8 @@
+
 import { ListNode, TestCase } from "algo-lens-core";
+
 import { ReverseListInput } from "./types";
 
-// Helper to create list nodes easily - will be defined in algo-lens-core or similar
-// For now, assuming listNodeFromLink exists or manually creating nodes
-// const listNodeFromLink = (arr: number[]): ListNode | null => { // Removed helper function
-//   if (arr.length === 0) return null;
-//   let head = new ListNode(arr[0]);
-//   let current = head;
-//   for (let i = 1; i < arr.length; i++) {
-//     current.next = new ListNode(arr[i]);
-//     current = current.next;
-//   }
-//   return head;
-// };
 
 
 export const testcases: TestCase<ReverseListInput, ListNode | null>[] = [ // Use imported TestCase

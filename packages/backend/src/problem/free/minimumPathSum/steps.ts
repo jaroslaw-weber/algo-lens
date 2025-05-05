@@ -7,7 +7,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   if (!grid || grid.length === 0 || grid[0].length === 0) {
-    l.array2d("grid", [], undefined, { group: "input" });
+    l.grid("grid", []); // Use grid, remove undefined pointer and options
     l.simple("result", 0, { group: "result" });
     l.breakpoint(5); // Directly to final state
     return l.getSteps();
@@ -22,7 +22,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   l.simple("cols", cols, { group: "dimensions" });
 
   // Initial state: Log the grid (DP table). grid[0][0] is the base case, no calculation needed.
-  l.array2d("grid", dpGrid, [{ r: 0, c: 0 }], { group: "state", label: "DP Table (grid)" });
+  l.grid("grid", dpGrid, { r: 0, c: 0 }); // Use grid, pass pointer directly
   l.breakpoint(1);
 
   // Initialize the first row (using 'col' index as per variables.ts)
@@ -31,7 +31,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
     const prevValue = dpGrid[0][col - 1];
     const currentValue = dpGrid[0][col]; // Original value from grid
     dpGrid[0][col] = prevValue + currentValue; // Update in place
-    l.array2d("grid", dpGrid, [{ r: 0, c: col }, { r: 0, c: col - 1 }], { group: "state", label: "DP Table (grid)" });
+    l.grid("grid", dpGrid, { r: 0, c: col }, { r: 0, c: col - 1 }); // Use grid, pass pointers directly
     l.breakpoint(2);
   }
   l.simple("col", undefined, { group: "loop" }); // Reset col index
@@ -42,7 +42,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
     const prevValue = dpGrid[row - 1][0];
     const currentValue = dpGrid[row][0]; // Original value from grid
     dpGrid[row][0] = prevValue + currentValue; // Update in place
-    l.array2d("grid", dpGrid, [{ r: row, c: 0 }, { r: row - 1, c: 0 }], { group: "state", label: "DP Table (grid)" });
+    l.grid("grid", dpGrid, { r: row, c: 0 }, { r: row - 1, c: 0 }); // Use grid, pass pointers directly
     l.breakpoint(3);
   }
   l.simple("row", undefined, { group: "loop" }); // Reset row index
@@ -56,7 +56,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
       const valueLeft = dpGrid[row][col - 1];
       const originalValue = grid[row][col]; // Use original grid value for the addition part
       dpGrid[row][col] = Math.min(valueAbove, valueLeft) + originalValue; // Update in place
-      l.array2d("grid", dpGrid, [{ r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }], { group: "state", label: "DP Table (grid)" });
+      l.grid("grid", dpGrid, { r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }); // Use grid, pass pointers directly
       l.breakpoint(4);
     }
     l.simple("col", undefined, { group: "loop" }); // Reset col index for inner loop
@@ -66,7 +66,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   // Final result
   const result = dpGrid[rows - 1][cols - 1]; // Use variable name from variables.ts
   l.simple("result", result, { group: "result" });
-  l.array2d("grid", dpGrid, [{ r: rows - 1, c: cols - 1 }], { group: "state", label: "DP Table (grid)" }); // Highlight final cell
+  l.grid("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use grid, pass pointer directly
   l.breakpoint(5);
 
   return l.getSteps(); // Return the collected steps
