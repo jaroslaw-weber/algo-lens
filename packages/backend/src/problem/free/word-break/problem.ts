@@ -2,7 +2,7 @@ import { Problem } from "algo-lens-core";
 import { WordBreakInput, WordBreakProblemState } from "./types"; // Assuming ProblemState might be specific later
 import { wordBreak } from "./code";
 import { code } from "./code/solution";
-import { testcases } from "./testcases";
+import { testcases } from "./testcase"; // Corrected import path
 import { variables } from "./variables";
 import { groups } from "./groups";
 

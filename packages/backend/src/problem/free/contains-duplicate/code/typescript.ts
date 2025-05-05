@@ -1,4 +1,4 @@
-function containsDuplicate(nums: number[]): boolean {
+export default function containsDuplicate(nums: number[]): boolean {
   //Create a hash set to store unique numbers
   const hashSet = new Set<number>();
 

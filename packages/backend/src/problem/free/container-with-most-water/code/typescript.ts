@@ -1,4 +1,4 @@
-export const code = `function maxArea(height: number[]): number {
+export default function maxArea(height: number[]): number {
   let left = 0;
   let right = height.length - 1;
   let maxArea = 0;
@@ -27,4 +27,4 @@ export const code = `function maxArea(height: number[]): number {
 
   //#6 Return the maximum area
   return maxArea;
-}`;
+}
