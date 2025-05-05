@@ -1,21 +1,34 @@
-// Note: The original code variable was incomplete ('// ...').
-// Providing a placeholder or a more complete BFS/DFS implementation might be necessary
-// depending on how this 'code' variable is used. For now, using the placeholder.
-export const code = `function pacificAtlanticWaterFlow(heights: number[][]): number[][] {
+export function pacificAtlanticWaterFlow(heights: number[][]): number[][] {
   const rows = heights.length;
   const cols = heights[0].length;
-  const pacificReachable = new Array(rows).fill(0).map(() => new Array(cols).fill(false));
-  const atlanticReachable = new Array(rows).fill(0).map(() => new Array(cols).fill(false));
+  const pacificReachable = new Array(rows)
+    .fill(0)
+    .map(() => new Array(cols).fill(false));
+  const atlanticReachable = new Array(rows)
+    .fill(0)
+    .map(() => new Array(cols).fill(false));
   const result: number[][] = [];
 
   function bfs(queue: number[][], reachable: boolean[][]) {
-    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    const directions = [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+    ];
     while (queue.length > 0) {
       const [r, c] = queue.shift()!;
       for (const [dr, dc] of directions) {
         const nr = r + dr;
         const nc = c + dc;
-        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !reachable[nr][nc] && heights[nr][nc] >= heights[r][c]) {
+        if (
+          nr >= 0 &&
+          nr < rows &&
+          nc >= 0 &&
+          nc < cols &&
+          !reachable[nr][nc] &&
+          heights[nr][nc] >= heights[r][c]
+        ) {
           reachable[nr][nc] = true;
           queue.push([nr, nc]);
         }
@@ -51,4 +64,4 @@ export const code = `function pacificAtlanticWaterFlow(heights: number[][]): num
   }
 
   return result;
-}`;
+}

@@ -1,4 +1,4 @@
-function missingNumber(nums: number[]): number {
+export function missingNumber(nums: number[]): number {
   let n = nums.length;
   // Calculate the expected sum of numbers from 0 to n (inclusive)
   let expectedSum = (n * (n + 1)) / 2;

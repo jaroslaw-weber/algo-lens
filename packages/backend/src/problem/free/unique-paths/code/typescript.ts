@@ -1,4 +1,4 @@
-export const code = `function uniquePaths(m: number, n: number): number {
+export function uniquePaths(m: number, n: number): number {
   const dp = Array.from({ length: m }, () => Array(n).fill(0));
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
@@ -14,7 +14,7 @@ export const code = `function uniquePaths(m: number, n: number): number {
       //#3
     }
   }
-  
+
   //#4
   return dp[m - 1][n - 1];
-}`;
+}

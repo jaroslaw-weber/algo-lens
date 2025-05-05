@@ -1,4 +1,7 @@
-function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+export function canFinish(
+  numCourses: number,
+  prerequisites: number[][]
+): boolean {
   // Initialize graph and in-degree arrays
   const graph: number[][] = new Array(numCourses).fill(0).map(() => []);
   const inDegree: number[] = new Array(numCourses).fill(0);
