@@ -1,4 +1,4 @@
-export function uniquePaths(m: number, n: number): number {
+export default function uniquePaths(m: number, n: number): number {
   const dp = Array.from({ length: m }, () => Array(n).fill(0));
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;

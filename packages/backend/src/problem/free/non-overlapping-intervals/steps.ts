@@ -56,7 +56,8 @@ export function generateSteps( // Renamed and Exported
     }
   }
 
-  log(6); //#6 Final log after all calculations
+  log(6); //#6 Final log after all calculations - Restored
+
 
   return steps;
 }
