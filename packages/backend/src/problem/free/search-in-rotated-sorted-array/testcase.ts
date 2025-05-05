@@ -1,33 +1,26 @@
 import { ProblemState, TestCase } from "algo-lens-core";
 import { SearchInput } from "./types";
 
-export const testcases: TestCase<SearchInput, ProblemState> = [
+export const testcases: TestCase<SearchInput, ProblemState>[] = [
   {
-    nums: [13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-    target: 1,
+    input: [[4, 5, 6, 7, 0, 1, 2], 0],
+    expected: 4,
+    description: "Search for the target in a rotated sorted array",
   },
   {
-    nums: [4, 5, 6, 7, 0, 1, 2],
-    target: 0,
+    input: [[4, 5, 6, 7, 0, 1, 2], 3],
+    expected: -1,
+    description: "Search for a non-existent target in a rotated sorted array",
   },
   {
-    nums: [4, 5, 6, 7, 0, 1, 2],
-    target: 3, // Target not found
+    input: [[3, 5, 1, 2, 4], 1],
+    expected: 2,
+    description:
+      "Search for the target in a rotated sorted array with duplicate elements",
   },
   {
-    nums: [1],
-    target: 0, // Target not found in single element array
-  },
-  {
-    nums: [1],
-    target: 1, // Target found in single element array
-  },
-  {
-    nums: [5, 1, 3],
-    target: 5, // Target is the first element
-  },
-  {
-    nums: [5, 1, 3],
-    target: 3, // Target in the right part
+    input: [[1, 3], 2],
+    expected: -1,
+    description: "Search for a non-existent target in a sorted array",
   },
 ];

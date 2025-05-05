@@ -11,6 +11,7 @@ export const problem: Problem<SearchInput, ProblemState> = {
   func: (i) => generateSteps(...i), // Use the step generation function
   id: "search-in-rotated-sorted-array",
   tags: ["array", "binary-search"],
+  difficulty: "medium",
   testcases, // Use the imported test cases
   metadata: {
     variables, // Use the imported variable metadata
