@@ -52,8 +52,8 @@ export function generateSteps(nums: number[]) {
 
   const result = dp[n];
 
-  l.array("nums", nums);
-  l.array("dp", dp, n); // Highlight final result in dp array
+  l.arrayV2({ nums: nums }, {});
+  l.arrayV2({ dp: dp }, { n: n }); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
   l.breakpoint(4, "Final result is dp[n]");
 

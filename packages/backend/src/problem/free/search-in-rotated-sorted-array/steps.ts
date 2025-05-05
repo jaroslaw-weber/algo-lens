@@ -46,30 +46,30 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         //#5 If the target is in the left half, move the right pointer
         right = mid - 1;
         l.simple({ right });
-        l.array("nums", nums, { left, right });
+        l.arrayV2({ nums: nums }, { left: left, right: right });
         l.breakpoint(5);
       } else {
         //#6 If the target is not in the left half, move the left pointer
         left = mid + 1;
         l.simple("left", left);
-        l.array("nums", nums, { left, right });
+        l.arrayV2({ nums: nums }, { left: left, right: right });
         l.breakpoint(6);
       }
     } else {
-      l.array("nums", nums, { left, right, mid });
+      l.arrayV2({ nums: nums }, { left: left, right: right, mid: mid });
       l.breakpoint(7);
       //#7 Check if the right half is sorted
       if (nums[mid] < target && target <= nums[right]) {
         //#8 If the target is in the right half, move the left pointer
         left = mid + 1;
         l.simple("left", left);
-        l.array("nums", nums, { left, right });
+        l.arrayV2({ nums: nums }, { left: left, right: right });
         l.breakpoint(8);
       } else {
         //#9 If the target is not in the right half, move the right pointer
         right = mid - 1;
         l.simple("right", right);
-        l.array("nums", nums, { left, right });
+        l.arrayV2({ nums: nums }, { left: left, right: right });
         l.breakpoint(9);
       }
     }
@@ -80,7 +80,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   // Logs the final state if the target is not found
   result = -1; // Explicitly set result to -1 if loop finishes without finding target
   l.simple({ result });
-  l.array("nums", nums, { left, right });
+  l.arrayV2({ nums: nums }, { left: left, right: right });
   l.breakpoint(10);
 
   return l.getSteps();
