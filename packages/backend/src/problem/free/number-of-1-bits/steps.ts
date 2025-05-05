@@ -11,12 +11,10 @@ export function generateSteps(p: HammingWeightInput): ProblemState[] {
   let i = 0;
 
   // Initial state log
-  // Set default options for groups if needed, or pass them directly
-  // Example: l.groupOptions.set('count', { min: 0, max: 32 });
-  l.group("input", { n }, { min: 0, max: n }); // Log initial input 'n' with options
+  l.group("input", { n }); // Log initial input 'n'
   l.binary("n", n, { pointersRight: [i] }); // Log 'n' in binary with pointer
   l.binary("maskingBit", maskingBit, { pointersLeft: [0] }); // Log 'maskingBit' in binary with pointer
-  l.group("count", { count }, { min: 0, max: 32 }); // Log initial 'count' with options
+  l.group("count", { count }); // Log initial 'count'
   l.breakpoint(1);
 
   //#2 Start the loop to count the number of 1-bits
@@ -26,7 +24,7 @@ export function generateSteps(p: HammingWeightInput): ProblemState[] {
     //#3 Check if the least significant bit is 1
     if (n & maskingBit) {
       count++;
-      l.group("count", { count }, { min: 0, max: 32 }); // Update count display with options
+      l.group("count", { count }); // Update count display
       l.breakpoint(3);
     }
 
