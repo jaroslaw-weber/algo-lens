@@ -1,4 +1,3 @@
-
 // Imports specific utility functions and type definitions from the relative paths
 import { ProblemState } from "algo-lens-core"; // Removed Problem
 import {
@@ -15,25 +14,36 @@ import { PacificAtlanticInput } from "./types"; // Import PacificAtlanticInput
  * @param p - The input parameters including a 2D array of heights.
  * @returns An array of ProblemState capturing each step of the computation for visualization.
  */
-export function generateSteps(p: PacificAtlanticInput): ProblemState[] { // Renamed and Exported
-  const { heights } = p;
+export function generateSteps(heights: number[][]): ProblemState[] {
+  // Renamed and Exported
   const rows = heights.length;
   const cols = heights[0].length;
   const pacificQueue: [number, number][] = [];
   const atlanticQueue: [number, number][] = [];
-  const pacificVisited: boolean[][] = Array.from({ length: rows }, () => new Array(cols).fill(false));
-  const atlanticVisited: boolean[][] = Array.from({ length: rows }, () => new Array(cols).fill(false));
+  const pacificVisited: boolean[][] = Array.from({ length: rows }, () =>
+    new Array(cols).fill(false)
+  );
+  const atlanticVisited: boolean[][] = Array.from({ length: rows }, () =>
+    new Array(cols).fill(false)
+  );
   const result: [number, number][] = [];
 
   const steps: ProblemState[] = [];
   let step = 0;
 
   // Helper function to create and log each step's computational state
-  function log(point: number, queue: [number, number][] = [], visited: boolean[][] = []) {
+  function log(
+    point: number,
+    queue: [number, number][] = [],
+    visited: boolean[][] = []
+  ) {
     const step: ProblemState = {
       variables: [
         as2dArray("heights", heights, []),
-        asArray("queue", queue.map(([r, c]) => `${r},${c}`)),
+        asArray(
+          "queue",
+          queue.map(([r, c]) => `${r},${c}`)
+        ),
         as2dArray("visited", visited, []),
       ],
       breakpoint: point,
@@ -59,10 +69,22 @@ export function generateSteps(p: PacificAtlanticInput): ProblemState[] { // Rena
   // Perform BFS from the Pacific coast
   while (pacificQueue.length > 0) {
     const [r, c] = pacificQueue.shift();
-    for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+    for (const [dr, dc] of [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+    ]) {
       const nr = r + dr;
       const nc = c + dc;
-      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !pacificVisited[nr][nc] && heights[nr][nc] >= heights[r][c]) {
+      if (
+        nr >= 0 &&
+        nr < rows &&
+        nc >= 0 &&
+        nc < cols &&
+        !pacificVisited[nr][nc] &&
+        heights[nr][nc] >= heights[r][c]
+      ) {
         pacificVisited[nr][nc] = true;
         pacificQueue.push([nr, nc]);
       }
@@ -85,10 +107,22 @@ export function generateSteps(p: PacificAtlanticInput): ProblemState[] { // Rena
   // Perform BFS from the Atlantic coast
   while (atlanticQueue.length > 0) {
     const [r, c] = atlanticQueue.shift();
-    for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+    for (const [dr, dc] of [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+    ]) {
       const nr = r + dr;
       const nc = c + dc;
-      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !atlanticVisited[nr][nc] && heights[nr][nc] >= heights[r][c]) {
+      if (
+        nr >= 0 &&
+        nr < rows &&
+        nc >= 0 &&
+        nc < cols &&
+        !atlanticVisited[nr][nc] &&
+        heights[nr][nc] >= heights[r][c]
+      ) {
         atlanticVisited[nr][nc] = true;
         atlanticQueue.push([nr, nc]);
       }

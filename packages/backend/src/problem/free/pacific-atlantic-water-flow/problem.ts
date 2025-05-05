@@ -18,8 +18,9 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
     variables,
     groups,
   },
+  tags: ["grid", "dfs"],
   testcases,
   difficulty: "medium",
-  func: generateSteps, // Use the renamed function
+  func: (i) => generateSteps(i), // Use the renamed function
   id: "pacific-atlantic-water-flow", // Keep existing id outside metadata
 };
