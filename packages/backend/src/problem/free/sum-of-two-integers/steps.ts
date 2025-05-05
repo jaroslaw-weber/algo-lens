@@ -41,7 +41,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   }
 
   // Final state (Breakpoint 5)
-  l.binary({ a }); // Final result is in a
+  l.binary({ result: a }); // Log 'a' with the label 'result'
   l.binary({ b }); // b should be 0 here
   // Optionally log the final carry if it was defined in the last iteration
   if (carry !== undefined) {
