@@ -1,5 +1,5 @@
 // Placeholder implementation for Two Sum
-export default function twoSum(nums: number[], target: number): number[] {
+export  function twoSum(nums: number[], target: number): number[] {
   // TODO: Implement the actual logic
   const map = new Map<number, number>();
   for (let i = 0; i < nums.length; i++) {

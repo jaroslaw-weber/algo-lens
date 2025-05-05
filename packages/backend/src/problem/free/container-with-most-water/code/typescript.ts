@@ -1,4 +1,4 @@
-export default function maxArea(height: number[]): number {
+export  function maxArea(height: number[]): number {
   let left = 0;
   let right = height.length - 1;
   let maxArea = 0;
