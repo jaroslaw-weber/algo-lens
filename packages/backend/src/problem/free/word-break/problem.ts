@@ -13,8 +13,7 @@ const getInput = () => ({
 
 export const problem: Problem<WordBreakInput, WordBreakProblemState> = {
   title: title,
-  emoji: '📖',
-  code: code, // Import from code/solution.ts
+  emoji: "📖",
   func: wordBreak, // Import from code/index.ts
   id: "word-break",
   tags: ["dynamic programming", "string"],
