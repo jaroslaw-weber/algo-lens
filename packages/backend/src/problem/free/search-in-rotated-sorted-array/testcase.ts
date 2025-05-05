@@ -1,6 +1,7 @@
+import { ProblemState, TestCase } from "algo-lens-core";
 import { SearchInput } from "./types";
 
-export const testcases: SearchInput[] = [
+export const testcases: TestCase<SearchInput, ProblemState> = [
   {
     nums: [13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     target: 1,
