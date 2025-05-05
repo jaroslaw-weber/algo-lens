@@ -8,7 +8,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   const seen = new Map<number, number>();
 
   l.simple("target", target);
-  l.array("nums", nums);
+  l.arrayV2({ nums: nums }, {});
   l.hashmap("seen", seen);
   l.breakpoint(1); // Corresponds to #1 in original code
 
@@ -17,7 +17,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     const complement = target - num;
 
     // Highlight current element and show complement needed
-    l.array("nums", nums, { [i]: "primary" });
+    l.arrayV2({ nums: nums }, { i: i }); // Use inferred label "i"
     l.simple("complement", complement);
     l.breakpoint(2); // Corresponds to #2
 
@@ -32,9 +32,9 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
     if (existsInSet) {
       // Highlight the found pair in nums array
-      l.array("nums", nums, { [i]: "success", [complementIndex]: "success" });
+      l.arrayV2({ nums: nums }, { i: i, complementIndex: complementIndex }); // Use inferred labels "i" and "complementIndex"
       // Show the final result
-      l.array("result", [complementIndex, i]);
+      l.arrayV2({ result: [complementIndex, i] }, {});
       l.breakpoint(3); // Corresponds to #3
       return l.getSteps();
     }
@@ -45,7 +45,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     // No explicit breakpoint 4 in the original structure, but logging the map update is useful
   }
 
-  l.array("result", []); // No solution found
+  l.arrayV2({ result: [] }, {}); // No solution found
 
   // Original code didn't have a specific step for not found,
   // but we can add one if needed, mirroring the original return pattern.

@@ -14,7 +14,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const hashSet: Set<number> = new Set();
 
   // Initial state log before the loop starts
-  logger.array("nums", nums);
+  logger.arrayV2({ nums: nums }, {});
   logger.hashset("hashSet", hashSet, {}); // Initial empty hashset state
   logger.simple({ result }); // Initial result state
   logger.breakpoint(1);
@@ -22,7 +22,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Main loop to check for duplicates
   for (let i = 0; i < nums.length; i++) {
     // Log state before checking hashSet
-    logger.array("nums", nums, i);
+    logger.arrayV2({ nums: nums }, { i: i });
     logger.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Highlight value being checked
     logger.simple({ result });
     logger.breakpoint(2);
@@ -30,7 +30,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     if (hashSet.has(nums[i])) {
       result = true; // Set result to true if duplicate found
       // Log duplicate found state
-      logger.array("nums", nums, i);
+      logger.arrayV2({ nums: nums }, { i: i });
       logger.hashset("hashSet", hashSet, { value: nums[i], color: "error" }); // Highlight duplicate
       logger.simple({ result }); // Log final true result
       logger.breakpoint(3);
@@ -38,7 +38,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     } else {
       hashSet.add(nums[i]);
       // Log state after adding to hashSet
-      logger.array("nums", nums, i);
+      logger.arrayV2({ nums: nums }, { i: i });
       logger.hashset("hashSet", hashSet, { value: nums[i], color: "success" }); // Highlight added value
       logger.simple({ result });
       logger.breakpoint(4);
@@ -46,7 +46,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   }
 
   // Logs the final state when no duplicate is found
-  logger.array("nums", nums); // Final array state
+  logger.arrayV2({ nums: nums }, {}); // Final array state
   logger.hashset("hashSet", hashSet, {}); // Final hashset state
   logger.simple({ result }); // Log final false result
   logger.breakpoint(5);

@@ -16,7 +16,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const loopGroup = groups.find((g) => g.name === "loop")!.name;
 
   // Log initial state (Before loop, corresponds to original log(1))
-  l.array("nums", nums, [], inputGroup);
+  l.arrayV2({ nums: nums }, {}, inputGroup);
   l.simple({ maxEndingHere }, kadaneGroup);
   l.simple({ maxSoFar }, kadaneGroup);
   l.breakpoint(
@@ -29,7 +29,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     const num = nums[i]; // Current number
 
     // Log state at the beginning of the loop (Corresponds to original log(2, i))
-    l.array("nums", nums, [i], inputGroup); // Highlight current number
+    l.arrayV2({ nums: nums }, { i: i }, inputGroup); // Highlight current number
     l.simple({ maxEndingHere }, kadaneGroup);
     l.simple({ maxSoFar }, kadaneGroup);
     l.simple({ i }, loopGroup);
@@ -44,7 +44,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
     if (startNew > extendSum) {
       // Log state *before* updating maxEndingHere (Corresponds roughly to original log(3, i))
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup);
       l.simple({ maxSoFar }, kadaneGroup);
       l.simple({ i }, loopGroup);
@@ -63,7 +63,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       maxEndingHere = startNew;
 
       // Log state *after* updating maxEndingHere (Corresponds roughly to original log(4, i))
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup); // Updated
       l.simple({ maxSoFar }, kadaneGroup);
       l.simple({ i }, loopGroup);
@@ -71,7 +71,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3 as per code.ts
     } else {
       // Log state *before* updating maxEndingHere (Corresponds roughly to original log(5, i))
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup);
       l.simple({ maxSoFar }, kadaneGroup);
       l.simple({ i }, loopGroup);
@@ -90,7 +90,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       maxEndingHere = extendSum;
 
       // Log state *after* updating maxEndingHere (Corresponds roughly to original log(6, i))
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup); // Updated
       l.simple({ maxSoFar }, kadaneGroup);
       l.simple({ i }, loopGroup);
@@ -100,7 +100,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
     // Update maxSoFar (Corresponds to original log(7, i) to log(9, i) block)
     // Log state *before* updating maxSoFar
-    l.array("nums", nums, [i], inputGroup);
+    l.arrayV2({ nums: nums }, { i: i }, inputGroup);
     l.simple({ maxEndingHere }, kadaneGroup);
     l.simple({ maxSoFar }, kadaneGroup);
     l.simple({ i }, loopGroup);
@@ -112,7 +112,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
     if (maxEndingHere > maxSoFar) {
       // Log state *before* updating maxSoFar (Corresponds roughly to original log(8, i))
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup);
       l.simple({ maxSoFar }, kadaneGroup);
       l.simple({ i }, loopGroup);
@@ -123,7 +123,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       maxSoFar = maxEndingHere;
 
       // Log state *after* updating maxSoFar (Corresponds roughly to original log(9, i))
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup);
       l.simple({ maxSoFar }, kadaneGroup); // Updated
       l.simple({ i }, loopGroup);
@@ -131,7 +131,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.breakpoint(5, `Updated maxSoFar to ${maxSoFar}.`); // Reuse breakpoint 5
     } else {
       // Log state if maxSoFar is not updated
-      l.array("nums", nums, [i], inputGroup);
+      l.arrayV2({ nums: nums }, { i: i }, inputGroup);
       l.simple({ maxEndingHere }, kadaneGroup);
       l.simple({ maxSoFar }, kadaneGroup);
       l.simple({ i }, loopGroup);
@@ -143,7 +143,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   }
 
   // Final state log (Corresponds to original log(11))
-  l.array("nums", nums, [], inputGroup);
+  l.arrayV2({ nums: nums }, {}, inputGroup);
   l.simple({ maxEndingHere }, kadaneGroup);
   l.simple({ maxSoFar }, kadaneGroup); // Final result
   l.simple({ result: maxSoFar }, kadaneGroup); // Add this line to log 'result'

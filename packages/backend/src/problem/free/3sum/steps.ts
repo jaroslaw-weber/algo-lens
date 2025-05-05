@@ -26,7 +26,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const seen = new Set<string>(); // To track unique triplets
 
   // Initial state before sorting
-  l.array("nums", nums);
+  l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
   l.breakpoint(1, "Initial state before sorting");
@@ -34,19 +34,19 @@ export function generateSteps(nums: number[]): ProblemState[] {
   nums.sort((a, b) => a - b); // Sort the array
 
   // State after sorting
-  l.array("nums", nums);
+  l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
   l.breakpoint(2, "Array sorted");
 
   for (let i = 0; i < nums.length - 2; i++) {
-    l.array("nums", nums, i);
+    l.arrayV2({ nums: nums }, { i: i });
     l.simple({ target });
     l.array2d("result", result);
     l.breakpoint(3, `Outer loop: Start iteration with i = ${i}`);
 
     if (i > 0 && nums[i] === nums[i - 1]) {
-      l.array("nums", nums, i);
+      l.arrayV2({ nums: nums }, { i: i });
       l.simple({ target });
       l.array2d("result", result);
       l.breakpoint(4, `Outer loop: Skip duplicate i = ${i}`);
@@ -57,7 +57,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     let left = i + 1;
     let right = nums.length - 1;
 
-    l.array("nums", nums, i, left, right);
+    l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
     l.simple({ target });
     l.array2d("result", result);
     l.breakpoint(5, `Inner loop: Initialize left = ${left}, right = ${right}`);
@@ -66,7 +66,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       const sum = nums[i] + nums[left] + nums[right];
       const triplet = [nums[i], nums[left], nums[right]];
 
-      l.array("nums", nums, i, left, right);
+      l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
       l.simple({ target });
       l.group("triplet", triplet);
       l.simple({ sum });
@@ -79,7 +79,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       if (sum === target) {
         const tripletKey = triplet.join(",");
 
-        l.array("nums", nums, i, left, right);
+        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
         l.group("triplet", triplet);
         l.simple({ sum });
@@ -97,7 +97,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           seen.add(tripletKey);
           result.push(triplet);
 
-          l.array("nums", nums, i, left, right);
+          l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
           l.group("triplet", triplet);
           l.simple({ sum });
@@ -115,7 +115,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           skippedLeft = true;
         }
         if (skippedLeft) {
-          l.array("nums", nums, i, left, right);
+          l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
           l.group("triplet", triplet);
           l.simple({ sum });
@@ -133,7 +133,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           skippedRight = true;
         }
         if (skippedRight) {
-          l.array("nums", nums, i, left, right);
+          l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
           l.group("triplet", triplet);
           l.simple({ sum });
@@ -144,7 +144,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           );
         }
 
-        l.array("nums", nums, i, left, right);
+        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
         l.group("triplet", triplet);
         l.simple({ sum });
@@ -157,7 +157,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         left++;
         right--;
 
-        l.array("nums", nums, i, left, right);
+        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
         l.group("triplet", triplet);
         l.simple({ sum });
@@ -169,7 +169,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           `Inner loop: Moved pointers, new left = ${left}, new right = ${right}`
         );
       } else if (sum < target) {
-        l.array("nums", nums, i, left, right);
+        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
         l.group("triplet", triplet);
         l.simple({ sum });
@@ -182,7 +182,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       } else {
         // sum > target
 
-        l.array("nums", nums, i, left, right);
+        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
         l.group("triplet", triplet);
         l.simple({ sum });
@@ -195,13 +195,13 @@ export function generateSteps(nums: number[]): ProblemState[] {
       }
     }
     // Log state at the end of the inner loop for the current 'i'
-    l.array("nums", nums, i, left, right);
+    l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
     l.simple({ target });
     l.array2d("result", result);
     l.breakpoint(14.5, `Inner loop finished for i = ${i}`); // Added intermediate breakpoint
   }
 
-  l.array("nums", nums);
+  l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
   l.breakpoint(15, "Finished searching for triplets");
