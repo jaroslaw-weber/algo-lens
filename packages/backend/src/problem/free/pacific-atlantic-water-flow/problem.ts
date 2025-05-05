@@ -1,6 +1,5 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
-import { code } from "./code/typescript";
 import { PacificAtlanticInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables"; // Import variables from variables.ts
 import { groups } from "./groups"; // Import groups from groups.ts
