@@ -24,14 +24,14 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
   // Determine if the first column has any zeros
   for (let i = 0; i < rows; i++) {
-    l.array2d("matrix", matrix, ...[{ r: i, c: 0 }]);
+    l.array2d("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
     l.simple({ rows, cols, i });
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
     l.breakpoint(2, `Check first column, row i=${i}`);
 
     if (matrix[i][0] === 0) {
       firstColHasZero = true;
-      l.array2d("matrix", matrix, [{ r: i, c: 0 }]);
+      l.array2d("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
       l.simple({ rows, cols, i });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.breakpoint(
@@ -46,14 +46,14 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
   // Determine if the first row has any zeros
   for (let j = 0; j < cols; j++) {
-    l.array2d("matrix", matrix, [{ r: 0, c: j }]);
+    l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
     l.simple({ rows, cols, j });
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
     l.breakpoint(4, `Check first row, column j=${j}`);
 
     if (matrix[0][j] === 0) {
       firstRowHasZero = true;
-      l.array2d("matrix", matrix, [{ r: 0, c: j }]);
+      l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
       l.simple({ rows, cols, j });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.breakpoint(
@@ -69,7 +69,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   // Use first row and column as markers
   for (let i = 1; i < rows; i++) {
     for (let j = 1; j < cols; j++) {
-      l.array2d("matrix", matrix, [{ r: i, c: j }]);
+      l.array2d("matrix", matrix, { r: i, c: j }); // Changed from array to object
       l.simple({ rows, cols, i, j });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.breakpoint(6, `Mark zeroes: Check cell (${i}, ${j})`);
@@ -145,7 +145,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
     l.breakpoint(11, "Zero out first row because firstRowHasZero is true");
     for (let j = 0; j < cols; j++) {
       matrix[0][j] = 0;
-      l.array2d("matrix", matrix, [{ r: 0, c: j }]);
+      l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
       l.simple({ rows, cols, j });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.breakpoint(12, `Zero out first row: Set cell (0, ${j}) to zero`);
@@ -167,7 +167,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
     l.breakpoint(14, "Zero out first column because firstColHasZero is true");
     for (let i = 0; i < rows; i++) {
       matrix[i][0] = 0;
-      l.array2d("matrix", matrix, [{ r: i, c: 0 }]);
+      l.array2d("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
       l.simple({ rows, cols, i });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.breakpoint(15, `Zero out first column: Set cell (${i}, 0) to zero`);
