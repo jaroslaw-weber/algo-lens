@@ -11,7 +11,7 @@ export function generateSteps( // Renamed and Exported
   p: EraseOverlapIntervalsInput
 ): ProblemState[] {
   const { intervals } = p;
-  const logger = new StepLoggerV2(["intervals", "remainingIntervals", "removalCount", "i"]); // Instantiate StepLoggerV2
+  const logger = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   let removalCount = 0; //#1 Initialize removal count
   const remainingIntervals: number[][] = [];
@@ -21,30 +21,51 @@ export function generateSteps( // Renamed and Exported
 
 
   // Initial state log before the loop starts
-  logger.log(1, { intervals, remainingIntervals, removalCount }); //#1 Log initial state
+  logger.array2d("intervals", intervals); // Assuming intervals is number[][]
+  logger.array2d("remainingIntervals", remainingIntervals); // Assuming remainingIntervals is number[][]
+  logger.simple({ removalCount });
+  logger.breakpoint(1, "Log initial state"); // Added description
 
   intervals.sort((a, b) => a[1] - b[1]); //#2 Sort the intervals by end points
-  logger.log(2, { intervals, remainingIntervals, removalCount }); //#2 Log after sort
+  logger.array2d("intervals", intervals);
+  logger.array2d("remainingIntervals", remainingIntervals);
+  logger.simple({ removalCount });
+  logger.breakpoint(2, "Log after sort"); // Added description
 
   let lastEnd = Number.MIN_SAFE_INTEGER;
   for (let i = 0; i < intervals.length; i++) {
     const currentStart = intervals[i][0];
     const currentEnd = intervals[i][1];
-    logger.log(3, { intervals, remainingIntervals, removalCount, i }); //#3 Iterate through the intervals
+    logger.array2d("intervals", intervals);
+    logger.array2d("remainingIntervals", remainingIntervals);
+    logger.simple({ removalCount });
+    logger.simple({ i }); // Log index i
+    logger.breakpoint(3, "Iterate through the intervals"); // Added description
     if (currentStart < lastEnd) {
       // Increment removal count if there is an overlap
       removalCount++;
-      logger.log(4, { intervals, remainingIntervals, removalCount, i }); //#4 Log overlapping case
+      logger.array2d("intervals", intervals);
+      logger.array2d("remainingIntervals", remainingIntervals);
+      logger.simple({ removalCount });
+      logger.simple({ i });
+      logger.breakpoint(4, "Log overlapping case"); // Added description
     } else {
       // Update the end point and record the interval
       lastEnd = currentEnd;
       remainingIntervals.push(intervals[i]);
-      logger.log(5, { intervals, remainingIntervals, removalCount, i }); //#5 Update non-overlapping intervals
+      logger.array2d("intervals", intervals);
+      logger.array2d("remainingIntervals", remainingIntervals);
+      logger.simple({ removalCount });
+      logger.simple({ i });
+      logger.breakpoint(5, "Update non-overlapping intervals"); // Added description
     }
   }
 
-  logger.log(6, { intervals, remainingIntervals, removalCount }); //#6 Final log after all calculations
-  logger.simple({ result: removalCount }); // Explicitly log the final result count
+  logger.array2d("intervals", intervals);
+  logger.array2d("remainingIntervals", remainingIntervals);
+  logger.simple({ removalCount });
+  logger.breakpoint(6, "Final log after all calculations"); // Added description
+
 
   return logger.getSteps(); // Return steps from the logger
 }
