@@ -12,24 +12,19 @@ export function generateSteps(nums: number[]) {
   // Safely find group names
   const dpCalculationGroup =
     groups.find((g) => g.name === "dpCalculation")?.name || "dpCalculation";
-  const loopInfoGroup =
-    groups.find((g) => g.name === "loopInfo")?.name || "loopInfo";
-  const resultGroup = groups.find((g) => g.name === "result")?.name || "result";
-
-  l.groupOptions.set("loopInfo", { min: 0, max: 1000 }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
 
   const n = nums.length;
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
 
-  l.array("nums", nums);
-  l.array("dp", dp, 0); // Highlight dp[0]
+  l.arrayV2({ nums });
+  l.arrayV2({ dp }, { here: 0 }); // Highlight dp[0]
   l.breakpoint(1, "Initialize dp array with base case dp[0]");
 
   dp[1] = nums[0];
 
-  l.array("nums", nums, 0); // Highlight nums[0]
-  l.array("dp", dp, 1); // Highlight dp[1]
+  l.arrayV2({ nums }, { here: 0 }); // Highlight nums[0]
+  l.arrayV2({ dp }, { here: 1 }); // Highlight dp[1]
   l.breakpoint(2, "Set base case dp[1]");
 
   for (let i = 2; i <= n; i++) {
@@ -39,9 +34,9 @@ export function generateSteps(nums: number[]) {
     const includeCurrent = twoHousesBefore + currentHouse;
     dp[i] = Math.max(skipCurrent, includeCurrent);
 
-    l.array("nums", nums, i - 1); // Highlight current house
-    l.array("dp", dp, i, i - 1, i - 2); // Highlight relevant dp values
-    l.groupOptions.set(dpCalculationGroup, { min: 0 }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
+    l.arrayV2({ nums }, { "i - 1": i - 1 }); // Highlight current house
+    l.arrayV2({ dp }, { i, "i - 1": i - 1, "i - 2": i - 2 }); // Highlight relevant dp values
+    l.groupOptions.set(dpCalculationGroup, { min: 0, max: sum(nums) }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
     l.group(dpCalculationGroup, {
       // Use defined group name
       skipCurrent,
@@ -49,7 +44,6 @@ export function generateSteps(nums: number[]) {
       twoHousesBefore,
       currentHouse,
     });
-    l.group(loopInfoGroup, { i }); // Use defined group name
     l.breakpoint(
       3,
       "Calculate dp[i] based on max of skipping or including current house"
