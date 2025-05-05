@@ -5,13 +5,6 @@ import { MinPathSumInput } from "./types"; // Import MinPathSumInput
 export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Return type inferred
   const { grid } = p; // Assuming grid is number[][]
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-// Removed ProblemState, as2dArray, asArray, asSimpleValue
-import { MinPathSumInput } from "./types"; // Import MinPathSumInput
-
-export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Return type inferred
-  const { grid } = p; // Assuming grid is number[][]
-  const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   if (!grid || grid.length === 0 || grid[0].length === 0) {
     l.array2d("grid", []);
