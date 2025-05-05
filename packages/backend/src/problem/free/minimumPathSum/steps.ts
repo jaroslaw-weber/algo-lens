@@ -1,76 +1,75 @@
-import { ProblemState } from "algo-lens-core"; // Removed Problem
-import { as2dArray, asArray, asSimpleValue } from "../../core/utils";
+import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+// Removed ProblemState, as2dArray, asArray, asSimpleValue
 import { MinPathSumInput } from "./types"; // Import MinPathSumInput
 
-export function generateSteps(p: MinPathSumInput): ProblemState[] { // Renamed and Exported
-  const { grid } = p;
-  const steps: ProblemState[] = [];
-  const m = grid.length;
-  const n = grid[0].length;
-  const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
-  dp[0][0] = grid[0][0];
+export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Return type inferred
+  const { grid } = p; // Assuming grid is number[][]
+  const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
-  // Initial step
-  steps.push({
-    variables: [as2dArray("grid", grid, [{r:0,c:0}]), as2dArray("dp", dp, [{r:0,c:0}])],
-    breakpoint: 1,
-  });
-
-  // Initialize the first row
-  for (let j = 1; j < n; j++) {
-    dp[0][j] = dp[0][j - 1] + grid[0][j];
-    steps.push({
-      variables: [
-        as2dArray("grid", grid, [{ r: 0, c: j }]),
-        as2dArray("dp", dp, [
-          { r: 0, c: j },
-          { r: 0, c: j - 1 },
-        ]),
-      ],
-      breakpoint: 2,
-    });
+  if (!grid || grid.length === 0 || grid[0].length === 0) {
+    l.array2d("grid", [], undefined, { group: "input" });
+    l.simple("result", 0, { group: "result" });
+    l.breakpoint(5); // Directly to final state
+    return l.getSteps();
   }
 
-  // Initialize the first column
-  for (let i = 1; i < m; i++) {
-    dp[i][0] = dp[i - 1][0] + grid[i][0];
-    steps.push({
-      variables: [
-        as2dArray("grid", grid, [{ r: i, c: 0 }]),
-        as2dArray("dp", dp, [
-          { r: i, c: 0 },
-          { r: i - 1, c: 0 },
-        ]),
-      ],
-      breakpoint: 3,
-    });
-  }
+  // Make a deep copy to avoid modifying the original input grid if it's passed by reference elsewhere
+  const dpGrid = grid.map(row => [...row]); // Use dpGrid for in-place DP calculations
 
-  // Fill the rest of the dp array
-  for (let i = 1; i < m; i++) {
-    for (let j = 1; j < n; j++) {
-      dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
-      steps.push({
-        variables: [
-          as2dArray("grid", grid, [{ r: i, c: j }]),
-          as2dArray("dp", dp, [{ r: i, c: j },{ r: i-1, c: j },{ r: i, c: j-1 }]),
-        ],
-        breakpoint: 4,
-      });
+  const rows = dpGrid.length; // Use variable name from variables.ts
+  const cols = dpGrid[0].length; // Use variable name from variables.ts
+  l.simple("rows", rows, { group: "dimensions" });
+  l.simple("cols", cols, { group: "dimensions" });
+
+  // Initial state: Log the grid (DP table). grid[0][0] is the base case, no calculation needed.
+  l.array2d("grid", dpGrid, [{ r: 0, c: 0 }], { group: "state", label: "DP Table (grid)" });
+  l.breakpoint(1);
+
+  // Initialize the first row (using 'col' index as per variables.ts)
+  for (let col = 1; col < cols; col++) {
+    l.simple("col", col, { group: "loop" }); // Log current col index
+    const prevValue = dpGrid[0][col - 1];
+    const currentValue = dpGrid[0][col]; // Original value from grid
+    dpGrid[0][col] = prevValue + currentValue; // Update in place
+    l.array2d("grid", dpGrid, [{ r: 0, c: col }, { r: 0, c: col - 1 }], { group: "state", label: "DP Table (grid)" });
+    l.breakpoint(2);
+  }
+  l.simple("col", undefined, { group: "loop" }); // Reset col index
+
+  // Initialize the first column (using 'row' index as per variables.ts)
+  for (let row = 1; row < rows; row++) {
+    l.simple("row", row, { group: "loop" }); // Log current row index
+    const prevValue = dpGrid[row - 1][0];
+    const currentValue = dpGrid[row][0]; // Original value from grid
+    dpGrid[row][0] = prevValue + currentValue; // Update in place
+    l.array2d("grid", dpGrid, [{ r: row, c: 0 }, { r: row - 1, c: 0 }], { group: "state", label: "DP Table (grid)" });
+    l.breakpoint(3);
+  }
+  l.simple("row", undefined, { group: "loop" }); // Reset row index
+
+  // Fill the rest of the dp table (using 'row' and 'col')
+  for (let row = 1; row < rows; row++) {
+    l.simple("row", row, { group: "loop" });
+    for (let col = 1; col < cols; col++) {
+      l.simple("col", col, { group: "loop" });
+      const valueAbove = dpGrid[row - 1][col];
+      const valueLeft = dpGrid[row][col - 1];
+      const originalValue = grid[row][col]; // Use original grid value for the addition part
+      dpGrid[row][col] = Math.min(valueAbove, valueLeft) + originalValue; // Update in place
+      l.array2d("grid", dpGrid, [{ r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }], { group: "state", label: "DP Table (grid)" });
+      l.breakpoint(4);
     }
+    l.simple("col", undefined, { group: "loop" }); // Reset col index for inner loop
   }
+  l.simple("row", undefined, { group: "loop" }); // Reset row index for outer loop
 
-  const result = dp[m - 1][n - 1];
-  steps.push({
-    variables: [
-      asArray("grid", grid),
-      asArray("dp", dp),
-      ...asSimpleValue({ result: result }),
-    ],
-    breakpoint: 5,
-  });
+  // Final result
+  const result = dpGrid[rows - 1][cols - 1]; // Use variable name from variables.ts
+  l.simple("result", result, { group: "result" });
+  l.array2d("grid", dpGrid, [{ r: rows - 1, c: cols - 1 }], { group: "state", label: "DP Table (grid)" }); // Highlight final cell
+  l.breakpoint(5);
 
-  return steps;
+  return l.getSteps(); // Return the collected steps
 }
 
-// Removed MinPathSumState interface, MinPathSumInput interface, code, title, getInput, Problem export
+// Removed MinPathSumState interface, MinPathSumInput interface, code, title, getInput, Problem export comment might be outdated.
