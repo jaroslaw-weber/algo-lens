@@ -4,7 +4,7 @@ import { generateSteps } from "./steps";
 import { variables } from "./variables";
 import { groups } from "./groups";
 import { testcases } from "./testcase";
-import { solutionCode } from "./code/solution"; // Adjusted import path for solutionCode
+import { solutionCode } from "./code/typescript"; // Adjusted import path for solutionCode
 
 // Define the problem configuration
 export const problem: Problem<SearchInput, ProblemState> = {

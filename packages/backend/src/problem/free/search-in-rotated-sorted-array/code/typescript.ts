@@ -1,5 +1,4 @@
-// Example implementation of the search function for demonstration and testing
-export const solutionCode = `function search(nums: number[], target: number): number {
+function search(nums: number[], target: number): number {
   let left = 0;
   let right = nums.length - 1;
 
@@ -36,4 +35,4 @@ export const solutionCode = `function search(nums: number[], target: number): nu
 
   //#10 If the target is not found, return -1
   return -1;
-}`;
+}
