@@ -1,4 +1,4 @@
-function maxProfit(prices: number[]) {
+export function maxProfit(prices: number[]) {
   if (prices.length === 0) return 0;
 
   const dp: number[] = new Array(prices.length).fill(0);

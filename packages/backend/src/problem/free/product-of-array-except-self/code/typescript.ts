@@ -1,5 +1,4 @@
-// Example implementation of the productExceptSelf function for demonstration and testing
-export const code = `function productExceptSelf(nums: number[]): number[] {
+export function productExceptSelf(nums: number[]): number[] {
   const length = nums.length;
   const output = new Array(length).fill(1);
   const productsLeft = new Array(length).fill(1);
@@ -23,4 +22,4 @@ export const code = `function productExceptSelf(nums: number[]): number[] {
 
   //#5
   return output;
-}`;
+}

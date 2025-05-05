@@ -5,6 +5,10 @@ import { HammingWeightInput } from "./types";
 export function generateSteps(p: HammingWeightInput): ProblemState[] {
   const { n } = p;
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
+  l.groupOptions.set("input", {
+    min: 0,
+    max: n,
+  });
 
   let count = 0;
   let maskingBit = 1;
@@ -12,8 +16,8 @@ export function generateSteps(p: HammingWeightInput): ProblemState[] {
 
   // Initial state log
   l.group("input", { n }); // Log initial input 'n'
-  l.binary("n", n, { pointersRight: [i] }); // Log 'n' in binary with pointer
-  l.binary("maskingBit", maskingBit, { pointersLeft: [0] }); // Log 'maskingBit' in binary with pointer
+  l.binary({ n }, { pointersRight: [i] }); // Log 'n' in binary with pointer
+  l.binary({ maskingBit }, { pointersLeft: [0] }); // Log 'maskingBit' in binary with pointer
   l.group("count", { count }); // Log initial 'count'
   l.breakpoint(1);
 
@@ -31,8 +35,8 @@ export function generateSteps(p: HammingWeightInput): ProblemState[] {
     //#4 Shift the masking bit to the left (corrected from right in comments)
     maskingBit <<= 1;
     i++;
-    l.binary("n", n, { pointersRight: [i] }); // Update 'n' pointer
-    l.binary("maskingBit", maskingBit, { pointersLeft: [0] }); // Update 'maskingBit' value and pointer
+    l.binary({ n }, { pointersRight: [i] }); // Update 'n' pointer
+    l.binary({ maskingBit }, { pointersLeft: [0] }); // Update 'maskingBit' value and pointer
     l.breakpoint(4);
   }
 

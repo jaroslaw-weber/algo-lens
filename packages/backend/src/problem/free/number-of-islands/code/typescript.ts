@@ -1,4 +1,4 @@
-function numIslands(grid: string[][]): number {
+export function numIslands(grid: string[][]): number {
   const directions = [
     [-1, 0],
     [1, 0],
