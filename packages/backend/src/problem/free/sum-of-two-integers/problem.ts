@@ -1,5 +1,7 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps";
+import { groups } from "./groups";
+import { variables } from "./variables";
 
 // Defines the interface for the input expected by the generateSteps function
 interface SumOfTwoIntegersInput {
@@ -22,4 +24,8 @@ export const problem: Problem<SumOfTwoIntegersInput, ProblemState[]> = {
   func: (p: SumOfTwoIntegersInput) => generateSteps(p.a, p.b),
   id: "sum-of-two-integers",
   tags: ["bit manipulation"],
+  metadata: {
+    groups: groups,
+    variables: variables,
+  },
 };

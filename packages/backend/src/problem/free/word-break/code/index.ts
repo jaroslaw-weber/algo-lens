@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core"; // Import ProblemState
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "../../../core/StepLoggerV2"; // Import StepLoggerV2
 import { WordBreakInput } from "../types"; // Import from ../types
 
 export function wordBreak(p: WordBreakInput): ProblemState[] {
