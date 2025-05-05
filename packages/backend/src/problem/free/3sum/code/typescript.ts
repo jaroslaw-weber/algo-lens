@@ -1,4 +1,4 @@
-function threeSum(nums: number[]): number[][] {
+export function threeSum(nums: number[]): number[][] {
   //#1
   const target = 0;
   nums.sort((a, b) => a - b); // Sort the array
