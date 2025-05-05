@@ -1,4 +1,4 @@
-export const code = `function maxSubArray(nums: number[]): number {
+export function maxSubArray(nums: number[]): number {
   // Initialize maxEndingHere and maxSoFar with the first element
   let maxEndingHere = nums[0];
   let maxSoFar = nums[0];
@@ -18,4 +18,4 @@ export const code = `function maxSubArray(nums: number[]): number {
 
   //#6 Return the maximum subarray sum found
   return maxSoFar;
-}`;
+}

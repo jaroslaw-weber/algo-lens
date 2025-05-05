@@ -1,4 +1,4 @@
-function hammingWeight(n: number): number {
+export function hammingWeight(n: number): number {
   let count = 0;
   let maskingBit = 1;
 

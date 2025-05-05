@@ -1,4 +1,4 @@
-export const code = `function coinChange(coins, target) {
+export function coinChange(coins: number[], target: number) {
   // Create an array to store the minimum number of coins required for each amount up to the target
   const dp = new Array(target + 1).fill(Infinity);
   dp[0] = 0; // Base case: no coins needed for amount 0
@@ -8,7 +8,7 @@ export const code = `function coinChange(coins, target) {
     // Evaluate every possible amount from this coin's value up to the target amount
     for (let amount = coin; amount <= target; amount++) {
       // Calculate the minimum number of coins needed if this coin is included
-      const left = amount - coin
+      const left = amount - coin;
       const include = dp[left] + 1;
       const exclude = dp[amount];
       //#2
@@ -27,4 +27,4 @@ export const code = `function coinChange(coins, target) {
 
   //#4 Return the final calculated result
   return result;
-}`;
+}

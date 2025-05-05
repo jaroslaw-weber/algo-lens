@@ -1,4 +1,4 @@
-export const code = `function climbStairs(n) {
+export function climbStairs(n) {
   // Initialize a dynamic programming array with n + 1 elements to hold the number of ways to reach each step
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 1; // Base case: one way to stand on the ground (step 0)
@@ -17,4 +17,4 @@ export const code = `function climbStairs(n) {
 
   //#3 Return the total ways to reach the nth step
   return result;
-}`;
+}

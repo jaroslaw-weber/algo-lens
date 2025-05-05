@@ -21,6 +21,8 @@ export interface Problem<Input, State> {
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
 
+  func2?: (t: Input) => ProblemState[];
+
   /** emoji to display with the problem title. */
   emoji: string;
 

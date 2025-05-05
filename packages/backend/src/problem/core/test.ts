@@ -5,10 +5,10 @@ import { describe, it, expect } from "bun:test";
 import * as fs from "fs";
 import * as path from "path";
 
-export function runTests(problem: Problem<any, ProblemState>) {
+export async function runTests(problem: Problem<any, ProblemState>) {
   const { testcases, metadata } = problem;
 
-  // Check for TypeScript compilation errors
+  // Check for TypeScript file existence
   const tsFilePath = path.join(
     process.cwd(), // Assuming the test runs from the repo root
     "src",
@@ -20,44 +20,25 @@ export function runTests(problem: Problem<any, ProblemState>) {
   );
 
   if (fs.existsSync(tsFilePath)) {
-    const program = ts.createProgram([tsFilePath], {
-      noEmit: true, // We only want to check for errors, not emit JS
-      target: ts.ScriptTarget.ESNext, // Or your desired target
-      module: ts.ModuleKind.CommonJS, // Or your desired module system
-      strict: true, // Enable strict checks
-    });
-
-    const allDiagnostics = ts
-      .getPreEmitDiagnostics(program)
-      .filter((diag) => diag.category === ts.DiagnosticCategory.Error); // Filter for errors only
-
-    if (allDiagnostics.length > 0) {
-      const errorMessage = allDiagnostics
-        .map((diagnostic) => {
-          if (diagnostic.file) {
-            const { line, character } = ts.getLineAndCharacterOfPosition(
-              diagnostic.file,
-              diagnostic.start!
-            );
-            const message = ts.flattenDiagnosticMessageText(
-              diagnostic.messageText,
-              "\n"
-            );
-            return `TypeScript Error: ${diagnostic.file.fileName} (${
-              line + 1
-            },${character + 1}): ${message}`;
-          } else {
-            return `TypeScript Error: ${ts.flattenDiagnosticMessageText(
-              diagnostic.messageText,
-              "\n"
-            )}`;
-          }
-        })
-        .join("\n");
-      throw new Error(`TypeScript compilation failed:\n${errorMessage}`);
+    // Dynamically import the JavaScript file
+    const jsFilePath = tsFilePath;
+    if (!fs.existsSync(jsFilePath)) {
+      throw new Error(
+        `JavaScript file not found for problem ${problem.id} at ${jsFilePath}`
+      );
     }
+
+    const module = await import(jsFilePath);
+    const exportedFunctions = Object.values(module);
+    if (
+      exportedFunctions.length !== 1 ||
+      typeof exportedFunctions[0] !== "function"
+    ) {
+      throw new Error(`Expected a single function export in ${jsFilePath}`);
+    }
+    //@ts-expect-error
+    problem.func2 = exportedFunctions[0];
   } else {
-    // Optional: Log a warning or throw an error if the file is expected
     throw new Error(
       `Warning: TypeScript file not found for problem ${problem.id} at ${tsFilePath}`
     );
@@ -84,22 +65,25 @@ export function runTests(problem: Problem<any, ProblemState>) {
   for (const testcase of problem.testcases) {
     const input = cloneDeep(testcase.input);
     const expected = cloneDeep(testcase.expected);
-    const states = problem.func(input);
-    const state = last(states);
-    const variables = state!.variables;
-    const result = variables.find((x) => x.label === "result");
-    if (!result) {
-      throw new Error("No result found in last state");
-    }
-    //@ts-expect-error
-    const value = result.value ?? result.values;
-    expect(value).toEqual(expected);
-    /**
+    for (const func of [problem.func, problem.func2!]) {
+      const states = func(input);
+
+      const state = last(states);
+      const variables = state!.variables;
+      const result = variables.find((x) => x.label === "result");
+      if (!result) {
+        throw new Error("No result found in last state");
+      }
+      //@ts-expect-error
+      const value = result.value ?? result.values;
+      expect(value).toEqual(expected);
+      /**
     console.log(
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
         value
       )}`
     );
     **/
+    }
   }
 }
