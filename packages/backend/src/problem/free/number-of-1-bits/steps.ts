@@ -1,10 +1,18 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { HammingWeightInput } from "./types";
+import { problem } from "./problem";
 
 export function generateSteps(p: HammingWeightInput): ProblemState[] {
   const { n } = p;
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
+
+  // Initialize group options from problem metadata
+  if (problem.metadata?.groups) {
+    for (const group of problem.metadata.groups) {
+      l.groupOptions.set(group.id, group);
+    }
+  }
 
   let count = 0;
   let maskingBit = 1;
