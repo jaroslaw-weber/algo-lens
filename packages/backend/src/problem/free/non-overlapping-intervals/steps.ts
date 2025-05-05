@@ -18,14 +18,6 @@ export function generateSteps( // Renamed and Exported
 
   // Define variable scopes and types for the logger
   const { min, max } = getIntervalBounds(intervals);
-  logger.setVariableProps("intervals", { type: "intervals", min, max });
-  logger.setVariableProps("remainingIntervals", { type: "intervals", min, max });
-  logger.setVariableProps("removalCount", {
-    type: "valueGroup",
-    min: 0,
-    max: intervals.length,
-  });
-  logger.setVariableProps("i", { type: "index", range: [0, intervals.length -1] });
 
 
   // Initial state log before the loop starts
@@ -52,6 +44,7 @@ export function generateSteps( // Renamed and Exported
   }
 
   logger.log(6, { intervals, remainingIntervals, removalCount }); //#6 Final log after all calculations
+  logger.simple({ result: removalCount }); // Explicitly log the final result count
 
   return logger.getSteps(); // Return steps from the logger
 }

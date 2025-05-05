@@ -85,7 +85,7 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
 
   // Log final state
   l.intervals("intervals", intervals, undefined, { group: "input", label: "intervals (sorted)" });
-  l.intervals("merged", merged, undefined, { group: "result" });
+  l.intervals("result", merged, undefined, { group: "result" }); // Changed "merged" to "result"
   l.breakpoint(6);
 
   return l.getSteps(); // Return the collected steps
