@@ -9,6 +9,10 @@ export function generateSteps(p: HammingWeightInput): ProblemState[] {
     min: 0,
     max: n,
   });
+  l.groupOptions.set("count", {
+    min: 0,
+    max: n,
+  });
 
   let count = 0;
   let maskingBit = 1;
