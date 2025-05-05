@@ -1,11 +1,4 @@
-import { ProblemState } from "algo-lens-core";
-import { CourseScheduleInput, LogExtraInfo } from "./types"; // Import types
-import { logStep } from "./steps"; // Import logStep
-
-
-
-// The core logic of checking if courses can be finished (used for display/problem definition)
-export const code = `function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+function canFinish(numCourses: number, prerequisites: number[][]): boolean {
   // Initialize graph and in-degree arrays
   const graph: number[][] = new Array(numCourses).fill(0).map(() => []);
   const inDegree: number[] = new Array(numCourses).fill(0);
@@ -40,7 +33,8 @@ export const code = `function canFinish(numCourses: number, prerequisites: numbe
     const neighbors = graph[current];
     //#9
     // Decrease in-degree for all neighbors and enqueue any that now have zero in-degree
-    for (const neighbor of neighbors) { // Changed from 'prev' to 'neighbors' for clarity
+    for (const neighbor of neighbors) {
+      // Changed from 'prev' to 'neighbors' for clarity
       //#10
       inDegree[neighbor]--;
       //#11
@@ -56,4 +50,4 @@ export const code = `function canFinish(numCourses: number, prerequisites: numbe
   const allCoursesTaken = count === numCourses;
   //#14 Check if all courses were processed successfully
   return allCoursesTaken;
-}`;
+}
