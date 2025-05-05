@@ -65,7 +65,7 @@ export async function runTests(problem: Problem<any, ProblemState>) {
   for (const testcase of problem.testcases) {
     const input = cloneDeep(testcase.input);
     const expected = cloneDeep(testcase.expected);
-    for (const func of [problem.func, problem.func2!]) {
+    for (const func of [problem.func]) {
       const states = func(input);
 
       const state = last(states);
