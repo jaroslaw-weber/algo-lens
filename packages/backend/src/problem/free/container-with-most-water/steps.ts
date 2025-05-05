@@ -24,15 +24,13 @@ export function generateSteps(height: number[]): ProblemState[] {
 
   // Helper function to create and log each step's computational state
   function log(point: number, area?: number) {
-    l.array("height", height, left, right);
+    l.arrayV2({ height }, { left, right });
     l.simple({ maxArea });
     if (area !== undefined) {
       l.simple({ area });
     } else {
       l.hide("area");
     }
-    const result = maxArea;
-    l.simple({ result });
     l.breakpoint(point);
   }
 
@@ -60,6 +58,8 @@ export function generateSteps(height: number[]): ProblemState[] {
     }
   }
 
+  const result = maxArea;
+  l.simple({ result });
   // Logs the final state with the maximum area
   log(6, undefined);
 
