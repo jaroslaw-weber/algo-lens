@@ -1,6 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps"; // Will import the renamed function
-import { code } from "./code/typescript";
+import { merge as code } from "./code/typescript"; // Import the actual solution function
 import { MergeIntervalsInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
 import { groups } from "./groups";
@@ -11,9 +11,10 @@ export const problem: Problem<MergeIntervalsInput, ProblemState> = {
   emoji: "🤝",
   testcases,
   difficulty: "medium",
-  func: generateSteps, // Use the renamed function
+  func: code, // Use the actual solution function 'code' (aliased from merge)
   id: "merge-intervals",
   tags: ["interval"],
+  visualizer: generateSteps, // Use generateSteps for visualization
   metadata: {
     variables,
     groups,

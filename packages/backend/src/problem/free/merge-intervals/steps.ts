@@ -1,5 +1,5 @@
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-// Removed ProblemState, Variable, asIntervals, getIntervalBounds
+import { getIntervalBounds } from "../../core/utils"; // Import getIntervalBounds
 import { MergeIntervalsInput } from "./types"; // Import MergeIntervalsInput
 
 export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported, Return type inferred
@@ -8,23 +8,30 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
 
   // Handle empty or single interval case
   if (!intervals || intervals.length === 0) {
-      l.intervals("intervals", [], undefined, { group: "input" });
-      l.intervals("merged", [], undefined, { group: "result" });
+      const { min: intervalsMin, max: intervalsMax } = getIntervalBounds([]);
+      l.intervals("intervals", [], undefined, intervalsMin, intervalsMax);
+      const { min: mergedMin, max: mergedMax } = getIntervalBounds([]);
+      l.intervals("merged", [], undefined, mergedMin, mergedMax);
       l.breakpoint(6); // Directly to final state
       return l.getSteps();
   }
 
   // Log initial state (before sort)
-  l.intervals("intervals", intervals.map(arr => [...arr]), undefined, { group: "input", label: "intervals (unsorted)" }); // Log copy before sort
-  l.intervals("merged", [], undefined, { group: "result" });
+  const initialIntervals = intervals.map(arr => [...arr]);
+  const { min: initialIntervalsMin, max: initialIntervalsMax } = getIntervalBounds(initialIntervals);
+  l.intervals("intervals", initialIntervals, undefined, initialIntervalsMin, initialIntervalsMax); // Log copy before sort
+  const { min: initialMergedMin, max: initialMergedMax } = getIntervalBounds([]);
+  l.intervals("merged", [], undefined, initialMergedMin, initialMergedMax);
   l.breakpoint(1);
 
   // Sort the intervals based on the start time
   intervals.sort((a, b) => a[0] - b[0]);
 
   // Log state after sort
-  l.intervals("intervals", intervals, undefined, { group: "input", label: "intervals (sorted)" });
-  l.intervals("merged", [], undefined, { group: "result" });
+  const { min: sortedIntervalsMin, max: sortedIntervalsMax } = getIntervalBounds(intervals);
+  l.intervals("intervals", intervals, undefined, sortedIntervalsMin, sortedIntervalsMax);
+  const { min: sortedMergedMin, max: sortedMergedMax } = getIntervalBounds([]);
+  l.intervals("merged", [], undefined, sortedMergedMin, sortedMergedMax);
   l.breakpoint(2);
 
   // Initialize the variable for merged intervals using the correct variable name 'merged'
@@ -32,8 +39,10 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
   merged.push([...intervals[0]]); // Push a copy to avoid mutation issues if original interval obj is reused
 
   // Log state after adding the first interval
-  l.intervals("intervals", intervals, [0], { group: "input", label: "intervals (sorted)" }); // Highlight first interval
-  l.intervals("merged", merged, [0], { group: "result" }); // Highlight the newly added interval
+  const { min: firstIntervalsMin, max: firstIntervalsMax } = getIntervalBounds(intervals);
+  l.intervals("intervals", intervals, [0], firstIntervalsMin, firstIntervalsMax); // Highlight first interval
+  const { min: firstMergedMin, max: firstMergedMax } = getIntervalBounds(merged);
+  l.intervals("merged", merged, [0], firstMergedMin, firstMergedMax); // Highlight the newly added interval
   l.breakpoint(2); // Maybe a new breakpoint 2.5 or adjust existing ones? Let's reuse 2 for now or add a specific one later if needed.
 
   for (let i = 1; i < intervals.length; i++) {
@@ -41,11 +50,15 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
     const lastMerged = merged[merged.length - 1]; // Use variable name from variables.ts
 
     // Log state at the beginning of the loop iteration (before check)
-    l.simple("i", i, { group: "loop" });
-    l.intervals("currentInterval", [currentInterval], undefined, { group: "loop" });
-    l.intervals("lastMerged", [lastMerged], undefined, { group: "loop" });
-    l.intervals("intervals", intervals, [i], { group: "input", label: "intervals (sorted)" }); // Highlight current interval being checked
-    l.intervals("merged", merged, [merged.length - 1], { group: "result" }); // Highlight the last merged interval
+    l.simple({ i });
+    const { min: currentIntervalMin, max: currentIntervalMax } = getIntervalBounds([currentInterval]);
+    l.intervals("currentInterval", [currentInterval], undefined, currentIntervalMin, currentIntervalMax);
+    const { min: lastMergedMin, max: lastMergedMax } = getIntervalBounds([lastMerged]);
+    l.intervals("lastMerged", [lastMerged], undefined, lastMergedMin, lastMergedMax);
+    const { min: loopIntervalsMin, max: loopIntervalsMax } = getIntervalBounds(intervals);
+    l.intervals("intervals", intervals, [i], loopIntervalsMin, loopIntervalsMax); // Highlight current interval being checked
+    const { min: loopMergedMin, max: loopMergedMax } = getIntervalBounds(merged);
+    l.intervals("merged", merged, [merged.length - 1], loopMergedMin, loopMergedMax); // Highlight the last merged interval
     l.breakpoint(3);
 
     const currentStart = currentInterval[0];
@@ -58,34 +71,46 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
       lastMerged[1] = Math.max(lastEnd, currentEnd);
 
       // Log state after merging
-      l.simple("i", i, { group: "loop" });
-      l.intervals("currentInterval", [currentInterval], undefined, { group: "loop" });
-      l.intervals("lastMerged", [lastMerged], undefined, { group: "loop", label: "lastMerged (updated)" }); // Indicate update
-      l.intervals("intervals", intervals, [i], { group: "input", label: "intervals (sorted)" });
-      l.intervals("merged", merged, [merged.length - 1], { group: "result", previousValue: [lastMerged[0], previousLastMergedEnd] }); // Highlight updated merged interval and show previous end
+      l.simple({ i });
+      const { min: currentIntervalMinMerge, max: currentIntervalMaxMerge } = getIntervalBounds([currentInterval]);
+      l.intervals("currentInterval", [currentInterval], undefined, currentIntervalMinMerge, currentIntervalMaxMerge);
+      const { min: lastMergedMinMerge, max: lastMergedMaxMerge } = getIntervalBounds([lastMerged]);
+      l.intervals("lastMerged", [lastMerged], undefined, lastMergedMinMerge, lastMergedMaxMerge); // Indicate update
+      const { min: intervalsMinMerge, max: intervalsMaxMerge } = getIntervalBounds(intervals);
+      l.intervals("intervals", intervals, [i], intervalsMinMerge, intervalsMaxMerge);
+      const { min: mergedMinMerge, max: mergedMaxMerge } = getIntervalBounds(merged);
+      l.intervals("merged", merged, [merged.length - 1], mergedMinMerge, mergedMaxMerge); // Highlight updated merged interval and show previous end
       l.breakpoint(4);
     } else {
       // No overlap: Add the current interval to 'merged'
       merged.push([...currentInterval]); // Push a copy
 
       // Log state after adding a new interval
-      l.simple("i", i, { group: "loop" });
-      l.intervals("currentInterval", [currentInterval], undefined, { group: "loop" });
-      l.intervals("lastMerged", [lastMerged], undefined, { group: "loop", label: "lastMerged (previous)" }); // Show the one before the new one
-      l.intervals("intervals", intervals, [i], { group: "input", label: "intervals (sorted)" });
-      l.intervals("merged", merged, [merged.length - 1], { group: "result" }); // Highlight the newly added interval
+      l.simple({ i });
+      const { min: currentIntervalMinAdd, max: currentIntervalMaxAdd } = getIntervalBounds([currentInterval]);
+      l.intervals("currentInterval", [currentInterval], undefined, currentIntervalMinAdd, currentIntervalMaxAdd);
+      const { min: lastMergedMinAdd, max: lastMergedMaxAdd } = getIntervalBounds([lastMerged]);
+      l.intervals("lastMerged", [lastMerged], undefined, lastMergedMinAdd, lastMergedMaxAdd); // Show the one before the new one
+      const { min: intervalsMinAdd, max: intervalsMaxAdd } = getIntervalBounds(intervals);
+      l.intervals("intervals", intervals, [i], intervalsMinAdd, intervalsMaxAdd);
+      const { min: mergedMinAdd, max: mergedMaxAdd } = getIntervalBounds(merged);
+      l.intervals("merged", merged, [merged.length - 1], mergedMinAdd, mergedMaxAdd); // Highlight the newly added interval
       l.breakpoint(5);
     }
      // Reset loop specific variables? Optional.
-     // l.simple("i", undefined, { group: "loop" });
-     // l.intervals("currentInterval", [], undefined, { group: "loop" });
-     // l.intervals("lastMerged", [], undefined, { group: "loop" });
+     // l.simple({ i: undefined });
+     // const { min: resetCurrentMin, max: resetCurrentMax } = getIntervalBounds([]);
+     // l.intervals("currentInterval", [], undefined, resetCurrentMin, resetCurrentMax);
+     // const { min: resetLastMin, max: resetLastMax } = getIntervalBounds([]);
+     // l.intervals("lastMerged", [], undefined, resetLastMin, resetLastMax);
   }
-   l.simple("i", undefined, { group: "loop" }); // Indicate loop finished
+   l.simple({ i: undefined }); // Indicate loop finished
 
   // Log final state
-  l.intervals("intervals", intervals, undefined, { group: "input", label: "intervals (sorted)" });
-  l.intervals("merged", merged, undefined, { group: "result" });
+  const { min: finalIntervalsMin, max: finalIntervalsMax } = getIntervalBounds(intervals);
+  l.intervals("intervals", intervals, undefined, finalIntervalsMin, finalIntervalsMax);
+  const { min: finalResultMin, max: finalResultMax } = getIntervalBounds(merged);
+  l.intervals("result", merged, undefined, finalResultMin, finalResultMax); // Changed "merged" to "result"
   l.breakpoint(6);
 
   return l.getSteps(); // Return the collected steps

@@ -3,15 +3,15 @@ import { EraseOverlapIntervalsInput } from './types'; // Assuming types file exi
 
 export const testcases: TestCase<EraseOverlapIntervalsInput, number>[] = [
   // Basic overlap combined with touching intervals
-  { input: { intervals: [[1,2], [2,3], [3,4], [1,3]] }, output: 1 },
+  { input: { intervals: [[1,2], [2,3], [3,4], [1,3]] }, expected: 1 },
   // No overlap
-  { input: { intervals: [[1,2], [3,4], [5,6]] }, output: 0 },
+  { input: { intervals: [[1,2], [3,4], [5,6]] }, expected: 0 },
   // Edge case: Empty input array
-  { input: { intervals: [] }, output: 0 },
+  { input: { intervals: [] }, expected: 0 },
   // Edge case: Single interval
-  { input: { intervals: [[1,10]] }, output: 0 },
+  { input: { intervals: [[1,10]] }, expected: 0 },
   // More complex overlap scenario
-  { input: { intervals: [[1,100], [11,22], [1,11], [2,12]] }, output: 2 },
+  { input: { intervals: [[1,100], [11,22], [1,11], [2,12]] }, expected: 2 },
   // Added one more touching case for good measure
-  { input: { intervals: [[1, 2], [2, 3], [3, 4]] }, output: 0 },
+  { input: { intervals: [[1, 2], [2, 3], [3, 4]] }, expected: 0 },
 ];

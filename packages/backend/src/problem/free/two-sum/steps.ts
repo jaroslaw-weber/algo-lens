@@ -9,7 +9,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
   l.simple({ target });
   l.arrayV2({ nums: nums }, {});
-  l.hashmap("seen", seen, { value: '', color: 'neutral' });
+  l.hashmap("seen", seen, { value: '', color: 'neutral' }); // Added default highlight
   l.breakpoint(1); // Corresponds to #1 in original code
 
   for (let i = 0; i < nums.length; i++) {

@@ -1,5 +1,6 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
+import { getIntervalBounds } from "../../core/utils"; // Import getIntervalBounds
 import { InsertIntervalInput, Interval } from "./types";
 import { groups } from "./groups"; // Import groups
 
@@ -17,9 +18,12 @@ export function generateSteps(
   const loopMergingGroup = groups.find((g) => g.name === "loop_merging")!.name;
 
   // Log initial state (Breakpoint #1 in code.ts corresponds to this)
-  l.intervals("intervals", intervals, [], inputGroup, 100);
-  l.intervals("newInterval", newInterval, [], inputGroup, 100);
-  l.intervals("result", result, [], resultArrayGroup, 100);
+  const { min: intervalsMinInit, max: intervalsMaxInit } = getIntervalBounds(intervals);
+  l.intervals("intervals", intervals, [], intervalsMinInit, intervalsMaxInit);
+  const { min: newIntervalMinInit, max: newIntervalMaxInit } = getIntervalBounds([newInterval]); // Wrap single interval
+  l.intervals("newInterval", [newInterval], [], newIntervalMinInit, newIntervalMaxInit);
+  const { min: resultMinInit, max: resultMaxInit } = getIntervalBounds(result);
+  l.intervals("result", result, [], resultMinInit, resultMaxInit);
   l.simple({ i });
   l.breakpoint(1, "Initial state before processing intervals.");
 
@@ -30,11 +34,15 @@ export function generateSteps(
     i++;
 
     // Log state inside loop 1
-    l.intervals("intervals", intervals, [i - 1], inputGroup, 100); // Highlight the interval just added
-    l.intervals("newInterval", newInterval, [], inputGroup, 100);
-    l.intervals("result", result, [], resultArrayGroup, 100);
+    const { min: intervalsMinL1, max: intervalsMaxL1 } = getIntervalBounds(intervals);
+    l.intervals("intervals", intervals, [i - 1], intervalsMinL1, intervalsMaxL1); // Highlight the interval just added
+    const { min: newIntervalMinL1, max: newIntervalMaxL1 } = getIntervalBounds([newInterval]);
+    l.intervals("newInterval", [newInterval], [], newIntervalMinL1, newIntervalMaxL1);
+    const { min: resultMinL1, max: resultMaxL1 } = getIntervalBounds(result);
+    l.intervals("result", result, [], resultMinL1, resultMaxL1);
     l.simple({ i });
-    l.intervals("currentInterval", currentInterval, [], loopMergingGroup, 100); // Log the interval just processed
+    const { min: currentIntervalMinL1, max: currentIntervalMaxL1 } = getIntervalBounds([currentInterval]);
+    l.intervals("currentInterval", [currentInterval], [], currentIntervalMinL1, currentIntervalMaxL1); // Log the interval just processed
     l.breakpoint(
       2,
       `Adding interval [${currentInterval.join(
@@ -51,11 +59,15 @@ export function generateSteps(
     i++;
 
     // Log state inside loop 2
-    l.intervals("intervals", intervals, [i - 1], inputGroup, 100); // Highlight the interval just merged
-    l.intervals("newInterval", newInterval, [], inputGroup, 100); // Show updated newInterval
-    l.intervals("result", result, [], resultArrayGroup, 100);
+    const { min: intervalsMinL2, max: intervalsMaxL2 } = getIntervalBounds(intervals);
+    l.intervals("intervals", intervals, [i - 1], intervalsMinL2, intervalsMaxL2); // Highlight the interval just merged
+    const { min: newIntervalMinL2, max: newIntervalMaxL2 } = getIntervalBounds([newInterval]);
+    l.intervals("newInterval", [newInterval], [], newIntervalMinL2, newIntervalMaxL2); // Show updated newInterval
+    const { min: resultMinL2, max: resultMaxL2 } = getIntervalBounds(result);
+    l.intervals("result", result, [], resultMinL2, resultMaxL2);
     l.simple({ i });
-    l.intervals("currentInterval", currentInterval, [], loopMergingGroup, 100); // Log the interval just processed
+    const { min: currentIntervalMinL2, max: currentIntervalMaxL2 } = getIntervalBounds([currentInterval]);
+    l.intervals("currentInterval", [currentInterval], [], currentIntervalMinL2, currentIntervalMaxL2); // Log the interval just processed
     l.breakpoint(
       3,
       `Merging interval [${currentInterval.join(
@@ -66,9 +78,12 @@ export function generateSteps(
 
   // Insert the merged newInterval (Breakpoint #4)
   result.push(newInterval);
-  l.intervals("intervals", intervals, [], inputGroup, 100);
-  l.intervals("newInterval", newInterval, [], inputGroup, 100); // Show final merged/original newInterval
-  l.intervals("result", result, [], resultArrayGroup, 100); // Show result with newInterval added
+  const { min: intervalsMinIns, max: intervalsMaxIns } = getIntervalBounds(intervals);
+  l.intervals("intervals", intervals, [], intervalsMinIns, intervalsMaxIns);
+  const { min: newIntervalMinIns, max: newIntervalMaxIns } = getIntervalBounds([newInterval]);
+  l.intervals("newInterval", [newInterval], [], newIntervalMinIns, newIntervalMaxIns); // Show final merged/original newInterval
+  const { min: resultMinIns, max: resultMaxIns } = getIntervalBounds(result);
+  l.intervals("result", result, [], resultMinIns, resultMaxIns); // Show result with newInterval added
   l.simple({ i });
   l.breakpoint(
     4,
@@ -84,11 +99,15 @@ export function generateSteps(
     i++;
 
     // Log state inside loop 3
-    l.intervals("intervals", intervals, [i - 1], inputGroup, 100); // Highlight the interval just added
-    l.intervals("newInterval", newInterval, [], inputGroup, 100);
-    l.intervals("result", result, [], resultArrayGroup, 100);
+    const { min: intervalsMinL3, max: intervalsMaxL3 } = getIntervalBounds(intervals);
+    l.intervals("intervals", intervals, [i - 1], intervalsMinL3, intervalsMaxL3); // Highlight the interval just added
+    const { min: newIntervalMinL3, max: newIntervalMaxL3 } = getIntervalBounds([newInterval]);
+    l.intervals("newInterval", [newInterval], [], newIntervalMinL3, newIntervalMaxL3);
+    const { min: resultMinL3, max: resultMaxL3 } = getIntervalBounds(result);
+    l.intervals("result", result, [], resultMinL3, resultMaxL3);
     l.simple({ i });
-    l.intervals("currentInterval", currentInterval, [], loopMergingGroup, 100); // Log the interval just processed
+    const { min: currentIntervalMinL3, max: currentIntervalMaxL3 } = getIntervalBounds([currentInterval]);
+    l.intervals("currentInterval", [currentInterval], [], currentIntervalMinL3, currentIntervalMaxL3); // Log the interval just processed
     l.breakpoint(
       5,
       `Adding remaining interval [${currentInterval.join(", ")}].`
@@ -96,9 +115,12 @@ export function generateSteps(
   }
 
   // Final state log (Breakpoint #6)
-  l.intervals("intervals", intervals, [], inputGroup, 100);
-  l.intervals("newInterval", newInterval, [], inputGroup, 100);
-  l.intervals("result", result, [], resultArrayGroup, 100); // Final result array
+  const { min: intervalsMinFin, max: intervalsMaxFin } = getIntervalBounds(intervals);
+  l.intervals("intervals", intervals, [], intervalsMinFin, intervalsMaxFin);
+  const { min: newIntervalMinFin, max: newIntervalMaxFin } = getIntervalBounds([newInterval]);
+  l.intervals("newInterval", [newInterval], [], newIntervalMinFin, newIntervalMaxFin);
+  const { min: resultMinFin, max: resultMaxFin } = getIntervalBounds(result);
+  l.intervals("result", result, [], resultMinFin, resultMaxFin); // Final result array
   l.simple({ i });
   l.breakpoint(6, "Finished processing all intervals. Returning final result.");
 

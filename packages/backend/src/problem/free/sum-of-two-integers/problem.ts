@@ -2,6 +2,7 @@ import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { variables } from "./variables";
+import { testcases } from "./testcase"; // Import test cases
 
 // Defines the interface for the input expected by the generateSteps function
 interface SumOfTwoIntegersInput {
@@ -28,4 +29,5 @@ export const problem: Problem<SumOfTwoIntegersInput, ProblemState[]> = {
     groups: groups,
     variables: variables,
   },
+  testcases, // Add test cases
 };

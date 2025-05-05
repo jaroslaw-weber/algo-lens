@@ -19,13 +19,13 @@ export function generateSteps(p: UniquePathsInput) { // Renamed function, added 
   l.simple({ n });
 
   const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
-  l.array2d("dp", dp); // Log initial empty DP table
+  l.grid("dp", dp); // Log initial empty DP table using grid
 
   // Initialize the first column with 1
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
     l.simple({ i });
-    l.array2d("dp", dp, { r: i, c: 0 });
+    l.grid("dp", dp, { r: i, c: 0 }); // Use grid, pass pointer directly
     l.breakpoint(1);
   }
    l.simple({ i: undefined }); // Reset i
@@ -36,7 +36,7 @@ export function generateSteps(p: UniquePathsInput) { // Renamed function, added 
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
     l.simple({ j });
-    l.array2d("dp", dp, { r: 0, c: j });
+    l.grid("dp", dp, { r: 0, c: j }); // Use grid, pass pointer directly
     l.breakpoint(2);
   }
   l.simple({ j: undefined }); // Reset j
@@ -50,8 +50,8 @@ export function generateSteps(p: UniquePathsInput) { // Renamed function, added 
       const valueAbove = dp[i - 1][j];
       const valueLeft = dp[i][j - 1];
       dp[i][j] = valueAbove + valueLeft;
-      // Log state after calculation
-      l.array2d("dp", dp, { r: i, c: j }, { r: i - 1, c: j }, { r: i, c: j - 1 });
+      // Log state after calculation using grid
+      l.grid("dp", dp, { r: i, c: j }, { r: i - 1, c: j }, { r: i, c: j - 1 }); // Pass pointers directly
       l.breakpoint(3);
     }
      l.simple({ j: undefined }); // Reset inner loop index
@@ -62,7 +62,7 @@ export function generateSteps(p: UniquePathsInput) { // Renamed function, added 
   // Final result
   const result = dp[m - 1][n - 1];
   l.simple({ result });
-  l.array2d("dp", dp, { r: m - 1, c: n - 1 }); // Highlight final result cell
+  l.grid("dp", dp, { r: m - 1, c: n - 1 }); // Use grid, pass pointer directly
   l.breakpoint(4);
 
   return l.getSteps(); // Return the collected steps

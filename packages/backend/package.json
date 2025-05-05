@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "PORT=4005 bun run --hot src/index.ts",
     "test:watch": "bun test --watch",
-    "test": "bun test"
+    "test": "bun test",
+    "build:check": "tsc --noEmit"
   },
   "dependencies": {
     "hono": "^4.7.6",

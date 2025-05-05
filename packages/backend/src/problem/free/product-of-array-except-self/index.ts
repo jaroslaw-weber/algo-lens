@@ -1,9 +1,9 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { Problem, ProblemState, Variable } from "algo-lens-core";
-import { asArray, asSimpleValue, asValueGroup } from "../core/utils"; // This path might need adjustment depending on core/utils location relative to the new index.ts
+import { asArray, asSimpleValue, asValueGroup } from "../../core/utils"; // This path might need adjustment depending on core/utils location relative to the new index.ts
 import { generateSteps } from "./steps"; // This path should be correct
 import { ProductExceptSelfInput } from "./types"; // This path should be correct
-import { code } from "./code/typescript"; // This path should be correct
+import { productExceptSelf as code } from "./code/typescript"; // This path should be correct
 
 // This file might be used for other exports or logic related to the problem in the future,
 // but the main problem definition is now in problem.ts

@@ -12,9 +12,10 @@ export function generateSteps(nums: number[]) { // Return type inferred
 
   const dp: number[] = new Array(n).fill(1);
 
-  // Log initial state
-  l.array("nums", nums); // Removed group
-  l.array("dp", dp); // Removed group
+  // Log initial state using arrayV2
+  l.arrayV2({ nums: nums }); // No pointers needed
+  l.arrayV2({ dp: dp }); // No pointers needed
+
   l.breakpoint(1); //#1
 
   for (let i = 1; i < n; i++) {
@@ -22,9 +23,10 @@ export function generateSteps(nums: number[]) { // Return type inferred
     for (let j = 0; j < i; j++) {
       l.simple({ j }); // Log j at start of inner loop, removed group
 
-      // Log state before comparison
-      l.array("nums", nums, i, j); // Highlight nums[i] and nums[j] - Use i and j as pointers
-      l.array("dp", dp, i, j); // Highlight dp[i] and dp[j] - Use i and j as pointers
+      // Log state before comparison using arrayV2
+      l.arrayV2({ nums: nums }, { i: i, j: j }); // Pass pointers i and j
+      l.arrayV2({ dp: dp }, { i: i, j: j }); // Pass pointers i and j
+
       l.breakpoint(2); //#2
 
       if (nums[i] > nums[j]) {
@@ -33,9 +35,10 @@ export function generateSteps(nums: number[]) { // Return type inferred
         const newDpI = dp[j] + 1;
         dp[i] = Math.max(currentDpI, newDpI);
 
-        // Log state after potential update
-        l.array("nums", nums, i, j); // Keep highlighting - Use i and j as pointers
-        l.array("dp", dp, i); // Highlight updated dp[i] - Use i as pointer, removed group and previousValue (not supported)
+        // Log state after potential update using arrayV2
+        l.arrayV2({ nums: nums }, { i: i, j: j }); // Pass pointers i and j
+        l.arrayV2({ dp: dp }, { i: i }); // Pass pointer i (previousValue option removed)
+
         // Optionally log j again if needed
         // l.simple({ j }); // Removed group
         l.breakpoint(3); //#3
@@ -50,9 +53,11 @@ export function generateSteps(nums: number[]) { // Return type inferred
 
   // Calculate and log final result
   const maxLength = n > 0 ? Math.max(...dp) : 0; // Use maxLength based on variables.ts, handle empty array case
-  l.simple({ maxLength }); // Removed group
-  l.array("dp", dp); // Show final dp array, removed group
-  l.array("nums", nums); // Show final nums array, removed group
+
+  l.simple("result", maxLength, { group: "result" }); // Changed label to "result"
+  l.arrayV2({ dp: dp }); // Use arrayV2, no pointers needed
+  l.arrayV2({ nums: nums }); // Use arrayV2, no pointers needed
+
   l.breakpoint(4); //#4
 
   return l.getSteps(); // Return the collected steps

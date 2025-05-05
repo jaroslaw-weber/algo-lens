@@ -1,6 +1,6 @@
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-// Removed ProblemState, ListNode, Variable, asList, cloneList
-import { ReverseListInput, ListNode } from "./types"; // Keep ReverseListInput, Import ListNode if needed for type hints
+import { ReverseListInput } from "./types"; // Keep ReverseListInput
+import { ListNode, NodeHighlight, HighlightColor } from "algo-lens-core"; // Import ListNode, NodeHighlight and HighlightColor
 
 // Note: Since cloneList is removed, the visualization might show the original list structure
 // being modified, which reflects the in-place nature of the algorithm.
@@ -16,58 +16,74 @@ export function generateSteps(input: ReverseListInput) { // Renamed function, Re
   let next: ListNode | null = null;
 
   // Log initial state (#1)
-  l.list("head", head, { group: "list" }); // Log original head
-  l.list("current", current, { group: "pointers" });
-  l.list("prev", prev, { group: "pointers" });
-  l.list("next", next, { group: "pointers" });
+  if (head) l.list("head", head, []); // Log original head, no highlight
+  else l.simple({ head: null });
+  if (current) l.list("current", current, [{ node: current, color: HighlightColor.Neutral }]); // Highlight current
+  else l.simple({ current: null });
+  // prev and next are null initially
+  l.simple({ prev: null });
+  l.simple({ next: null });
   l.breakpoint(1);
 
   while (current != null) {
     // Save next node
     next = current.next;
     // Log state before reversing pointer (#2)
-    l.list("head", head, { group: "list" }); // head reference doesn't change
-    l.list("current", current, { group: "pointers" });
-    l.list("prev", prev, { group: "pointers" });
-    l.list("next", next, { group: "pointers" }); // next is now assigned
+    if (head) l.list("head", head, []); // No highlight
+    else l.simple({ head: null });
+    l.list("current", current, [{ node: current, color: HighlightColor.Neutral }]); // Highlight current
+    if (prev) l.list("prev", prev, [{ node: prev, color: HighlightColor.Neutral }]); // Highlight prev
+    else l.simple({ prev: null });
+    if (next) l.list("next", next, [{ node: next, color: HighlightColor.Neutral }]); // Highlight next
+    else l.simple({ next: null });
     l.breakpoint(2);
 
     // Reverse current node's pointer
     current.next = prev;
     // Log state after reversing pointer (#3)
-    // The list structure starting from 'head' might look disconnected here in visualization
-    l.list("head", head, { group: "list" }); // This view might be confusing as 'head's structure is being broken
-    l.list("current", current, { group: "pointers" }); // current.next points to prev
-    l.list("prev", prev, { group: "pointers" });
-    l.list("next", next, { group: "pointers" });
+    if (head) l.list("head", head, []); // No highlight
+    else l.simple({ head: null });
+    l.list("current", current, [{ node: current, color: HighlightColor.Neutral }]); // Highlight current (its .next changed)
+    if (prev) l.list("prev", prev, [{ node: prev, color: HighlightColor.Neutral }]); // Highlight prev
+    else l.simple({ prev: null });
+    if (next) l.list("next", next, [{ node: next, color: HighlightColor.Neutral }]); // Highlight next
+    else l.simple({ next: null });
     l.breakpoint(3);
 
     // Move prev pointer one step forward
     prev = current;
     // Log state after moving prev (#4)
-    l.list("head", head, { group: "list" });
-    l.list("current", current, { group: "pointers" }); // current remains the same here
-    l.list("prev", prev, { group: "pointers" }); // prev now points to current
-    l.list("next", next, { group: "pointers" });
+    if (head) l.list("head", head, []); // No highlight
+    else l.simple({ head: null });
+    l.list("current", current, [{ node: current, color: HighlightColor.Neutral }]); // Highlight current
+    l.list("prev", prev, [{ node: prev, color: HighlightColor.Neutral }]); // Highlight new prev
+    if (next) l.list("next", next, [{ node: next, color: HighlightColor.Neutral }]); // Highlight next
+    else l.simple({ next: null });
     l.breakpoint(4);
 
     // Move current pointer one step forward
     current = next;
     // Log state after moving current (#5: start of next iteration or end)
-    l.list("head", head, { group: "list" });
-    l.list("current", current, { group: "pointers" }); // current moves to next
-    l.list("prev", prev, { group: "pointers" });
-    l.list("next", next, { group: "pointers" }); // next remains the same here
+    if (head) l.list("head", head, []); // No highlight
+    else l.simple({ head: null });
+    if (current) l.list("current", current, [{ node: current, color: HighlightColor.Neutral }]); // Highlight new current
+    else l.simple({ current: null });
+    l.list("prev", prev, [{ node: prev, color: HighlightColor.Neutral }]); // Highlight prev
+    if (next) l.list("next", next, [{ node: next, color: HighlightColor.Neutral }]); // Highlight next (doesn't change here, but log for consistency)
+    else l.simple({ next: null });
     l.breakpoint(5);
   }
 
   // Log final state (#6)
   // 'current' and 'next' are null, 'prev' is the new head
-  l.list("head", head, { group: "list" }); // Original head reference (points to the original first node, now the last)
-  l.list("current", current, { group: "pointers" }); // null
-  l.list("prev", prev, { group: "pointers", label:"prev (new head)"}); // prev is the actual head of the reversed list
-  l.list("next", next, { group: "pointers" }); // null
-  l.list("result", prev, { group: "result" }); // Log 'prev' as the result head
+  if (head) l.list("head", head, []); // Original head reference, no highlight
+  else l.simple({ head: null });
+  l.simple({ current: null }); // current is null
+  if (prev) l.list("prev", prev, [{ node: prev, color: HighlightColor.Good }]); // Highlight prev as new head
+  else l.simple({ prev: null });
+  l.simple({ next: null }); // next is null
+  if (prev) l.list("result", prev, [{ node: prev, color: HighlightColor.Good }]); // Highlight result (same as prev)
+  else l.simple({ result: null });
   l.breakpoint(6);
 
   return l.getSteps(); // Return the collected steps
