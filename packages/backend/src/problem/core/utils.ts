@@ -199,9 +199,6 @@ export function asArray(
   column2?: number,
   column3?: number
 ): ArrayVariable {
-    pointers: [],
-  };
-
   if (column1 !== undefined) {
     result.pointers.push({
       value: column1,
@@ -291,8 +288,6 @@ export function asStringArray(
   column2?: number,
   column3?: number
 ): ArrayVariable {
-    pointers: [],
-  };
   if (column1 !== undefined) {
     result.pointers.push({
       value: column1,
