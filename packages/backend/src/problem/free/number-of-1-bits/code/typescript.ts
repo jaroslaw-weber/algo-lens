@@ -1,4 +1,4 @@
-export const code = `function hammingWeight(n: number): number {
+function hammingWeight(n: number): number {
   let count = 0;
   let maskingBit = 1;
 
@@ -16,5 +16,3 @@ export const code = `function hammingWeight(n: number): number {
   //#5 Return the count of 1-bits
   return count;
 }
-
-}`;
