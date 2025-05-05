@@ -2,19 +2,27 @@ import { VariableMetadata } from "algo-lens-core";
 
 export const variables: VariableMetadata[] = [
   {
-    name: "nums",
-    label: "Input Array (nums)",
+    id: "nums",
+    description: "Input array",
+    type: "number[]",
+    emoji: "🔢",
   },
   {
-    name: "productsLeft",
-    label: "Prefix Products (productsLeft)",
+    id: "productsLeft",
+    description: "Prefix products",
+    type: "number[]",
+    emoji: "⬅️",
   },
   {
-    name: "productsRight",
-    label: "Suffix Products (productsRight)",
+    id: "productsRight",
+    description: "Suffix products",
+    type: "number[]",
+    emoji: "➡️",
   },
   {
-    name: "output",
-    label: "Output Array (output)",
+    id: "output",
+    description: "Output array",
+    type: "number[]",
+    emoji: "✅",
   },
 ];

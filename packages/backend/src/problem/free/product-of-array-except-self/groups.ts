@@ -1,6 +1,6 @@
-import { VariableGroup } from 'algo-lens-core';
+import { GroupMetadata } from "algo-lens-core";
 
-export const groups: VariableGroup[] = [
+export const groups: GroupMetadata[] = [
   {
     id: 'input',
     label: 'Input',
