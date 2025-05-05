@@ -1,16 +1,34 @@
-// Placeholder implementation for Two Sum
-export  function twoSum(nums: number[], target: number): number[] {
-  // TODO: Implement the actual logic
+// Finds two numbers in the array that add up to the target sum.
+export function twoSum(nums: number[], target: number): number[] {
+  // Use a Map to store numbers encountered so far and their indices.
   const map = new Map<number, number>();
+  //#1 Initialize map
+
+  // Iterate through the input array.
   for (let i = 0; i < nums.length; i++) {
+    //#2 Start loop iteration
+    // Calculate the complement needed to reach the target.
     const complement = target - nums[i];
+    //#3 Calculate complement
+
+    // Check if the complement exists in the map.
     if (map.has(complement)) {
-      // @ts-expect-error map.get(complement) cannot be undefined here
-      return [map.get(complement), i];
+      // If complement exists, we found the pair.
+      // Return the index of the complement (from the map) and the current index.
+      // @ts-expect-error map.get(complement) cannot be undefined here because we checked map.has(complement).
+      const complementIndex = map.get(complement);
+      //#4 Found complement in map
+      return [complementIndex, i];
     }
+    //#5 Complement not found yet
+
+    // If complement not found, add the current number and its index to the map.
     map.set(nums[i], i);
+    //#6 Add current number and index to map
   }
-  // Return an empty array or throw an error if no solution is found,
-  // depending on problem constraints. Let's return empty for now.
+  //#7 Loop finished
+
+  // Return an empty array if no solution is found after checking all elements.
+  //#8 No solution found
   return [];
 }
