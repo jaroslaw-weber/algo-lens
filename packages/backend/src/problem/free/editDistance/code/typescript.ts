@@ -1,4 +1,4 @@
-export const code = `function editDistance(s1: string, s2: string): number {
+export function editDistance(s1: string, s2: string): number {
   const m = s1.length, n = s2.length;
   const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
 
@@ -24,4 +24,4 @@ export const code = `function editDistance(s1: string, s2: string): number {
 
   //#4
   return dp[m][n];
-}`;
+}

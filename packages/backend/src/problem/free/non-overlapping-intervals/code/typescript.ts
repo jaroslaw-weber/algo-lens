@@ -1,4 +1,4 @@
-export const code = `function eraseOverlapIntervals(intervals: number[][]): number {
+export function eraseOverlapIntervals(intervals: number[][]): number {
   //#1 Sort intervals by their end points
   intervals.sort((a, b) => a[1] - b[1]);
   let lastEnd = Number.MIN_SAFE_INTEGER;
@@ -20,4 +20,4 @@ export const code = `function eraseOverlapIntervals(intervals: number[][]): numb
 
   //#6 Return the count of removed intervals
   return removalCount;
-}`;
+}

@@ -1,4 +1,4 @@
-function search(nums: number[], target: number): number {
+export function search(nums: number[], target: number): number {
   let left = 0;
   let right = nums.length - 1;
 
