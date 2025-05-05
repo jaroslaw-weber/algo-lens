@@ -8,7 +8,7 @@ import { testcases } from "./testcase";
 
 const title = "Product of Array Except Self";
 const emoji = "✖️";
-const id = "product-of-array-except-self";
+const id = "238";
 const tags = ["array", "prefix sum"];
 
 export const problem: Problem<ProductExceptSelfInput, ProblemState> = {

@@ -12,7 +12,7 @@ const title = "Missing Number";
 export const problem: Problem<MissingNumberInput, ProblemState> = {
   title,
   emoji: "❓",
-  id: "missing-number",
+  id: "268",
   tags: ["math", "array"],
   func: generateSteps, // Imported from ./steps
   testcases,

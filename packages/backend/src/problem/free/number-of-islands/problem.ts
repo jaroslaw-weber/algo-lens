@@ -12,7 +12,7 @@ export const problem: Problem<NumIslandsInput, ProblemState> = {
   title: "Number of Islands",
   emoji: "🏝️",
   func: generateSteps, // Use the renamed function
-  id: "number-of-islands",
+  id: "200",
   difficulty: "medium",
   tags: ["graph"],
   metadata: { variables, groups },

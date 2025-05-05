@@ -10,7 +10,7 @@ const title = "Edit Distance";
 export const problem: Problem<EditDistanceInput, ProblemState> = {
   title,
   emoji: "✍️", // Updated emoji
-  id: "editDistance", // Updated id
+  id: "72", // Updated id
   tags: ["dynamic programming", "string"],
   func: (input) => generateSteps(...input), // Corrected function assignment
   testcases, // Added testcases property

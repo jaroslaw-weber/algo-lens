@@ -14,7 +14,7 @@ export const problem: Problem<HammingWeightInput, ProblemState> = {
   testcases,
   difficulty: "easy",
   func: generateSteps, // Use the renamed function
-  id: "hamming-weight", // Note: id in original file was hamming-weight, but file is number-of-1-bits. Using original id.
+  id: "191", // Note: id in original file was hamming-weight, but file is number-of-1-bits. Using original id.
   tags: ["bit manipulation"],
   metadata: {
     variables,

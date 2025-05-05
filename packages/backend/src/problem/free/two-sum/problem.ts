@@ -9,7 +9,7 @@ export const problem: Problem<TwoSumInput, ProblemState> = {
   title: "Two Sum",
   emoji: "🎯",
   func: (i) => generateSteps(...i), // Use the imported step generation function
-  id: "two-sum",
+  id: "1",
   difficulty: "easy",
   tags: ["array", "hash set"],
   metadata: {

@@ -9,7 +9,7 @@ import { testcases } from "./testcase";   // Import actual testcases
 export const problem: Problem<UniquePathsInput, ProblemState> = { // Using ProblemState as the second generic type as generateSteps returns ProblemState[]
   title: "Unique Paths",
   emoji: '🤖',
-  id: "unique-paths",
+  id: "62",
   tags: ["2d dynamic programming"],
   func: generateSteps,
   testcases: testcases, // Use imported testcases

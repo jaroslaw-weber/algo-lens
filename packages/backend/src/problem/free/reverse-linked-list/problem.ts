@@ -12,7 +12,7 @@ export const problem: Problem<ReverseListInput, ProblemState> = {
   title,
   emoji: "↩️",
   func: reverseList,
-  id: "reverse-list",
+  id: "206",
   tags: ["linked-list"],
   difficulty: "medium",
   metadata: {

@@ -12,7 +12,7 @@ export const problem: Problem<SameTreeInput, ProblemState> = {
   emoji: "🌲",
   func: (i) => sameTree(...i), // This function generates the steps
   testcases,
-  id: "same-tree",
+  id: "100",
   difficulty: "easy",
   tags: ["tree"],
   metadata: {

@@ -21,5 +21,5 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
   testcases,
   difficulty: "medium",
   func: generateSteps, // Use the renamed function
-  id: "pacific-atlantic-water-flow", // Keep existing id outside metadata
+  id: "417", // Keep existing id outside metadata
 };

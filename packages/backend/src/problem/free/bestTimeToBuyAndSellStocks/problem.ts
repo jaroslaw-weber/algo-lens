@@ -11,7 +11,7 @@ export const problem: Problem<MaxProfitInput, ProblemState> = {
   title: title,
   emoji: "📈",
   func: generateSteps,
-  id: "bestTimeToBuyAndSellStocks",
+  id: "121",
   testcases,
   tags: ["array"],
   metadata: {

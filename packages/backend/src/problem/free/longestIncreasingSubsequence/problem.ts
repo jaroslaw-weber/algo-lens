@@ -12,7 +12,7 @@ export const problem: Problem<LISInput, ProblemState> = {
   emoji: "📈",
   func: generateSteps,
   testcases,
-  id: "longestIncreasingSubsequence",
+  id: "300",
   difficulty: "easy",
   tags: ["dynamic programming", "array", "binary search"],
   metadata: {

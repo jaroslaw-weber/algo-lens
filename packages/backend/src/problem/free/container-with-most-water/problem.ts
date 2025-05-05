@@ -12,7 +12,7 @@ export const problem: Problem<ContainerInput, ProblemState> = {
   testcases,
   difficulty: "easy",
   func: generateSteps, // Use the renamed function
-  id: "container-with-most-water",
+  id: "11",
   tags: ["array", "two pointers"],
   metadata: {
     variables,

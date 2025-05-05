@@ -12,7 +12,7 @@ export const problem: Problem<MergeIntervalsInput, ProblemState> = {
   testcases,
   difficulty: "medium",
   func: generateSteps, // Use the renamed function
-  id: "merge-intervals",
+  id: "56",
   tags: ["interval"],
   metadata: {
     variables,

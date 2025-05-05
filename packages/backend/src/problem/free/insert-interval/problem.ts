@@ -13,7 +13,7 @@ export const problem: Problem<InsertIntervalInput, ProblemState> = {
   func: (i) => generateSteps(...i), // Use generateSteps from steps.ts
   testcases,
   difficulty: "medium",
-  id: "insert-interval",
+  id: "57",
   tags: ["array", "intervals"], // Updated tags
   metadata: {
     variables,

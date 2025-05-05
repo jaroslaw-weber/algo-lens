@@ -12,7 +12,7 @@ export const problem: Problem<CountBitsInput, ProblemState> = {
   emoji: "🧮",
   func: generateSteps,
   testcases,
-  id: "countingBits",
+  id: "338",
   tags: ["dynamic programming", "bit manipulation"],
   difficulty: "easy",
   metadata: {

@@ -14,7 +14,7 @@ export const problem: Problem<ContainsDuplicateInput, ProblemState> = {
   emoji: "👯",
   func: generateSteps, // Use local function
   testcases,
-  id: "contains-duplicate", // Keep original ID for now, might need adjustment later
+  id: "217", // Keep original ID for now, might need adjustment later
   tags: ["hashset"],
   difficulty: "medium",
   metadata: {

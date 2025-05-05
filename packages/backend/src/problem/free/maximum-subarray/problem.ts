@@ -13,7 +13,7 @@ export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   func: generateSteps, // Use generateSteps from steps.ts
   testcases, // Added testcases
   difficulty: "medium", // Updated difficulty level
-  id: "maximum-subarray",
+  id: "53",
   tags: ["dynamic programming", "array", "divide and conquer"], // Updated tags
   metadata: {
     variables: variableMetadata, // Updated usage

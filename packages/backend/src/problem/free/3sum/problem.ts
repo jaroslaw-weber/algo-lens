@@ -11,7 +11,7 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
   func: generateSteps,
   testcases: testcases,
   difficulty: "medium",
-  id: "3sum",
+  id: "15",
   tags: ["array", "hash set", "two pointers"],
   metadata: {
     variables,

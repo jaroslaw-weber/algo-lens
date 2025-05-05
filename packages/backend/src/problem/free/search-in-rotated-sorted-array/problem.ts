@@ -11,7 +11,7 @@ export const problem: Problem<SearchInput, ProblemState> = {
   title: "Search in Rotated Sorted Array",
   emoji: '🔍',
   func: generateSteps, // Use the step generation function
-  id: "search-in-rotated-sorted-array",
+  id: "33",
   tags: ["array", "binary-search"],
   testcases, // Use the imported test cases
   metadata: {

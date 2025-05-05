@@ -14,7 +14,7 @@ export const problem: Problem<CourseScheduleInput, ProblemState> = {
   difficulty: "medium",
   func: (i) => generateSteps(...i),
   testcases,
-  id: "course-schedule",
+  id: "207",
   tags: ["graph", "topological sort", "dfs", "bfs"],
   metadata: {
     variables,

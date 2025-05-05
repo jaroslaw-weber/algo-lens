@@ -12,7 +12,7 @@ export const problem: Problem<ClimbingStairsInput, ProblemState> = {
   emoji: "🪜",
   func: generateSteps, // Use generateSteps from steps.ts
   testcases,
-  id: "climbingStairs",
+  id: "70",
   tags: ["dynamic programming"],
   difficulty: "easy",
   metadata: {

@@ -13,7 +13,7 @@ export const problem: Problem<HouseRobberInput, ProblemState> = {
   func: generateSteps, // Use imported generateSteps function
   difficulty: "medium",
   testcases, // Added testcases
-  id: "houseRobber", // Updated id
+  id: "198", // Updated id
   tags: ["dynamic programming", "array"], // Updated tags
   metadata: {
     // Add metadata

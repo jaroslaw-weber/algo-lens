@@ -12,7 +12,7 @@ export const problem: Problem<EraseOverlapIntervalsInput, ProblemState> = {
   title,
   emoji: "✂️",
   func: generateSteps,
-  id: "non-overlapping-intervals",
+  id: "435",
   tags: ["interval"],
   metadata: {
     variables,

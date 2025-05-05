@@ -13,7 +13,7 @@ export const problem: Problem<CoinChangeInput, ProblemState> = {
   func: (input) => generateSteps(...input),
   difficulty: "medium",
   testcases,
-  id: "coinChange",
+  id: "322",
   tags: ["dynamic programming", "array"],
   metadata: {
     variables,

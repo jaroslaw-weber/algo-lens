@@ -16,7 +16,7 @@ export const problem: Problem<WordBreakInput, WordBreakProblemState> = {
   emoji: '📖',
   code: code, // Import from code/solution.ts
   func: wordBreak, // Import from code/index.ts
-  id: "word-break",
+  id: "139",
   tags: ["dynamic programming", "string"],
   getInput: getInput, // Add the getInput function here
 };
