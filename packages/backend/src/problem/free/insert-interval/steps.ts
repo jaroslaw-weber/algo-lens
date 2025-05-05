@@ -17,9 +17,9 @@ export function generateSteps(
   const loopMergingGroup = groups.find((g) => g.name === "loop_merging")!.name;
 
   // Log initial state (Breakpoint #1 in code.ts corresponds to this)
-  l.intervals("intervals", intervals, [], inputGroup, 100);
-  l.intervals("newInterval", newInterval, [], inputGroup, 100);
-  l.intervals("result", result, [], resultArrayGroup, 100);
+  l.intervals("intervals", intervals, [], 0, 100);
+  l.intervals("newInterval", [newInterval], [], 0, 100);
+  l.intervals("result", result, [], 0, 100);
   l.simple({ i });
   l.breakpoint(1, "Initial state before processing intervals.");
 
@@ -30,11 +30,11 @@ export function generateSteps(
     i++;
 
     // Log state inside loop 1
-    l.intervals("intervals", intervals, [i - 1], inputGroup, 100); // Highlight the interval just added
-    l.intervals("newInterval", newInterval, [], inputGroup, 100);
-    l.intervals("result", result, [], resultArrayGroup, 100);
+    l.intervals("intervals", intervals, [i - 1], 0, 100); // Highlight the interval just added
+    l.intervals("newInterval", [newInterval], [], 0, 100);
+    l.intervals("result", result, [], 0, 100);
     l.simple({ i });
-    l.intervals("currentInterval", currentInterval, [], loopMergingGroup, 100); // Log the interval just processed
+    l.intervals("currentInterval", [currentInterval], [], 0, 100); // Log the interval just processed
     l.breakpoint(
       2,
       `Adding interval [${currentInterval.join(
@@ -51,11 +51,11 @@ export function generateSteps(
     i++;
 
     // Log state inside loop 2
-    l.intervals("intervals", intervals, [i - 1], inputGroup, 100); // Highlight the interval just merged
-    l.intervals("newInterval", newInterval, [], inputGroup, 100); // Show updated newInterval
-    l.intervals("result", result, [], resultArrayGroup, 100);
+    l.intervals("intervals", intervals, [i - 1], 0, 100); // Highlight the interval just merged
+    l.intervals("newInterval", [newInterval], [], 0, 100); // Show updated newInterval
+    l.intervals("result", result, [], 0, 100);
     l.simple({ i });
-    l.intervals("currentInterval", currentInterval, [], loopMergingGroup, 100); // Log the interval just processed
+    l.intervals("currentInterval", [currentInterval], [], 0, 100); // Log the interval just processed
     l.breakpoint(
       3,
       `Merging interval [${currentInterval.join(
@@ -66,9 +66,9 @@ export function generateSteps(
 
   // Insert the merged newInterval (Breakpoint #4)
   result.push(newInterval);
-  l.intervals("intervals", intervals, [], inputGroup, 100);
-  l.intervals("newInterval", newInterval, [], inputGroup, 100); // Show final merged/original newInterval
-  l.intervals("result", result, [], resultArrayGroup, 100); // Show result with newInterval added
+  l.intervals("intervals", intervals, [], 0, 100);
+  l.intervals("newInterval", [newInterval], [], 0, 100); // Show final merged/original newInterval
+  l.intervals("result", result, [], 0, 100); // Show result with newInterval added
   l.simple({ i });
   l.breakpoint(
     4,
@@ -84,11 +84,11 @@ export function generateSteps(
     i++;
 
     // Log state inside loop 3
-    l.intervals("intervals", intervals, [i - 1], inputGroup, 100); // Highlight the interval just added
-    l.intervals("newInterval", newInterval, [], inputGroup, 100);
-    l.intervals("result", result, [], resultArrayGroup, 100);
+    l.intervals("intervals", intervals, [i - 1], 0, 100); // Highlight the interval just added
+    l.intervals("newInterval", [newInterval], [], 0, 100);
+    l.intervals("result", result, [], 0, 100);
     l.simple({ i });
-    l.intervals("currentInterval", currentInterval, [], loopMergingGroup, 100); // Log the interval just processed
+    l.intervals("currentInterval", [currentInterval], [], 0, 100); // Log the interval just processed
     l.breakpoint(
       5,
       `Adding remaining interval [${currentInterval.join(", ")}].`
@@ -96,9 +96,9 @@ export function generateSteps(
   }
 
   // Final state log (Breakpoint #6)
-  l.intervals("intervals", intervals, [], inputGroup, 100);
-  l.intervals("newInterval", newInterval, [], inputGroup, 100);
-  l.intervals("result", result, [], resultArrayGroup, 100); // Final result array
+  l.intervals("intervals", intervals, [], 0, 100);
+  l.intervals("newInterval", [newInterval], [], 0, 100);
+  l.intervals("result", result, [], 0, 100); // Final result array
   l.simple({ i });
   l.breakpoint(6, "Finished processing all intervals. Returning final result.");
 

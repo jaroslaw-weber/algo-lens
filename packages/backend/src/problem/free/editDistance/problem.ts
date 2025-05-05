@@ -11,6 +11,7 @@ export const problem: Problem<EditDistanceInput, ProblemState> = {
   title,
   emoji: "✍️", // Updated emoji
   id: "editDistance", // Updated id
+  difficulty: "medium",
   tags: ["dynamic programming", "string"],
   func: (input) => generateSteps(...input), // Corrected function assignment
   testcases, // Added testcases property

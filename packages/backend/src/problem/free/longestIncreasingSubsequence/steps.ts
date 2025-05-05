@@ -54,7 +54,7 @@ export function generateSteps(nums: number[]) { // Return type inferred
   // Calculate and log final result
   const maxLength = n > 0 ? Math.max(...dp) : 0; // Use maxLength based on variables.ts, handle empty array case
 
-  l.simple("result", maxLength, { group: "result" }); // Changed label to "result"
+  l.simple({ result: maxLength }); // Changed label to "result"
   l.arrayV2({ dp: dp }); // Use arrayV2, no pointers needed
   l.arrayV2({ nums: nums }); // Use arrayV2, no pointers needed
 
