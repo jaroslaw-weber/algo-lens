@@ -2,14 +2,11 @@ import { Problem } from "algo-lens-core";
 import { WordBreakInput, WordBreakProblemState } from "./types"; // Assuming ProblemState might be specific later
 import { wordBreak } from "./code";
 import { code } from "./code/solution";
+import { testcases } from "./testcases";
+import { variables } from "./variables";
+import { groups } from "./groups";
 
 const title = "Word Break";
-
-// Note: getInput might need adjustment if its dependencies change
-const getInput = () => ({
-  s: "catsandog",
-  wordDict: ["cats", "dog", "sand", "and", "cat"],
-});
 
 export const problem: Problem<WordBreakInput, WordBreakProblemState> = {
   title: title,
@@ -17,5 +14,10 @@ export const problem: Problem<WordBreakInput, WordBreakProblemState> = {
   func: wordBreak, // Import from code/index.ts
   id: "word-break",
   tags: ["dynamic programming", "string"],
-  getInput: getInput, // Add the getInput function here
+  difficulty: "medium",
+  testcases,
+  metadata: {
+    variables,
+    groups,
+  },
 };
