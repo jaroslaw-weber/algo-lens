@@ -56,19 +56,7 @@ export function generateSteps( // Renamed and Exported
     }
   }
 
-  // log(6); //#6 Final log after all calculations - Removed
-
-  // Add the final state explicitly with the result variable correctly labeled
-  const finalBounds = getIntervalBounds(intervals); // Calculate bounds once
-  const finalState: ProblemState = {
-    variables: [
-       asIntervals("intervals", intervals, [], finalBounds.min, finalBounds.max), // Show original intervals
-       asIntervals("remainingIntervals", remainingIntervals, [], finalBounds.min, finalBounds.max), // Show final remaining
-       asValueGroup("result", { result: removalCount }, { min: 0, max: intervals.length }) // Label result correctly
-    ],
-    breakpoint: 6, // Keep the breakpoint marker
-  };
-  steps.push(finalState);
+  log(6); //#6 Final log after all calculations - Restored
 
 
   return steps;
