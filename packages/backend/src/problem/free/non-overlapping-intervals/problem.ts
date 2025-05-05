@@ -1,6 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core"; // Added ProblemMetadata
 import { generateSteps } from "./steps";
-import { code } from "./code/typescript";
+import { eraseOverlapIntervals } from "./code/typescript";
 import { EraseOverlapIntervalsInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
 import { groups } from "./groups"; // Add placeholder groups
