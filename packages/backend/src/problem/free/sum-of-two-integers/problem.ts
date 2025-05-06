@@ -25,6 +25,7 @@ export const problem: Problem<SumOfTwoIntegersInput, ProblemState[]> = {
   func: (p: SumOfTwoIntegersInput) => generateSteps(p.a, p.b),
   id: "sum-of-two-integers",
   tags: ["bit manipulation"],
+  difficulty: "easy",
   metadata: {
     groups: groups,
     variables: variables,

@@ -122,13 +122,13 @@ export function asList(
 ): ListVariable {
   // Add random IDs starting from 1
   //clone list
-  const list = value?cloneList(value):null
+  const list = value ? cloneList(value) : null;
   addRandomIdsToList(list, 1);
   return {
     type: "list",
     label,
     value: list,
-    highlight: highlight?.filter((x) => x.node)?[],
+    highlight: highlight?.filter((x) => x.node) ?? [],
   };
 }
 
