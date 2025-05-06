@@ -13,19 +13,19 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
 
   // Log initial state
   logger.simple({ s: s });
-  logger.array("wordDict", wordDict);
+  logger.arrayV2("wordDict", wordDict);
   logger.breakpoint(currentBreakpoint++); // Breakpoint 0: Initial state
 
   // Create a Set from the dictionary for efficient word lookup
   const wordSet = new Set(wordDict);
-  logger.simple({ wordSet: Array.from(wordSet) }); // Log the set (as an array for visualization)
+  logger.hashset("wordSet", wordSet, {}); // Log the set
 
   // dp[i] will be true if the first i characters of s (s[0...i-1]) can be segmented.
   const n = s.length;
   const dp = new Array(n + 1).fill(false);
   // Base case: An empty string can always be segmented.
   dp[0] = true;
-  logger.array("dp", dp);
+  logger.arrayV2("dp", dp);
   logger.breakpoint(currentBreakpoint++); // Breakpoint 1: DP initialized
 
   // Iterate through the string from length 1 up to n.
@@ -55,7 +55,7 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
         // If both conditions are true, then the prefix s[0...i-1] can be segmented.
         dp[i] = true;
         logger.simple({ "dp[i] updated": true }); // Log that dp[i] is updated
-        logger.array("dp", dp); // Log the updated dp array
+         logger.arrayV2("dp", dp); // Log the updated dp array
         logger.breakpoint(currentBreakpoint++); // Breakpoint: Found valid segmentation, dp[i] updated
         // Break the inner loop since we've found a way to segment s[0...i-1].
         break;
@@ -67,7 +67,7 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
      // Reset j after inner loop finishes or breaks
      logger.simple({ j: undefined });
      logger.simple({ suffix: undefined });
-     logger.array("dp", dp); // Log dp state at the end of outer loop iteration i
+     logger.arrayV2("dp", dp); // Log dp state at the end of outer loop iteration i
      logger.breakpoint(currentBreakpoint++); // Breakpoint: End of outer loop iteration i
   }
 
@@ -77,7 +77,7 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
   // The final result is dp[n]
   const result = dp[n];
   logger.simple({ result: result }); // Log the final result
-  logger.array("dp", dp); // Log the final dp array state
+  logger.arrayV2("dp", dp); // Log the final dp array state
   logger.breakpoint(currentBreakpoint++); // Breakpoint: Final result
 
   return logger.getSteps();
