@@ -17,7 +17,7 @@ function isProblem(obj: any): obj is Problem<any, any> {
 
 export async function getAllProblemGroups(): Promise<ProblemGroup[]> {
   const freeDirPath = path.join(__dirname, "../free");
-  console.log("loading problems from", freeDirPath);
+  //console.log("loading problems from", freeDirPath);
   const dirEntries = fs.readdirSync(freeDirPath, { withFileTypes: true });
   //console.log(dirEntries);
 

@@ -1,11 +1,16 @@
 import { Hono } from "hono";
 import { getAllProblems } from "./problem/core/list";
-import { pick } from "lodash";
+import { cloneDeep, pick } from "lodash";
 
 const port = process.env.PORT || 3000;
 const app = new Hono();
 import { cors } from "hono/cors";
-import { Problem, ProblemState } from "algo-lens-core";
+import {
+  HashmapVariable,
+  HashsetVariable,
+  Problem,
+  ProblemState,
+} from "algo-lens-core";
 import { getProblemById } from "./problem/core/utils";
 
 app.use(cors());
@@ -118,8 +123,27 @@ app.get("/problem/:problemId/state/:step", async (c) => {
 
   const state = stateCache.get(problem!, step);
 
-  return c.json(state);
+  const preserialized = preserialize(state!);
+  return c.json(preserialized);
 });
+
+function preserialize(state: ProblemState): any {
+  const result = cloneDeep(state);
+  for (const v of result.variables) {
+    //convert Map variable to Record
+    const hm = v as HashmapVariable;
+    if (hm.value instanceof Map) {
+      hm.value = Array.from(hm.value.entries());
+    }
+    //convert Set variable to Array
+    const set = v as HashsetVariable;
+    if (set.value instanceof Set) {
+      set.value = Array.from(set?.value);
+    }
+  }
+
+  return result;
+}
 
 app.get("/problem/:problemId/size", async (c) => {
   const problemId = c.req.param("problemId");

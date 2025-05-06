@@ -142,14 +142,14 @@ export interface IntervalVariable extends Variable {
 export interface HashsetVariable extends Variable {
   type: "hashset";
   label: string;
-  value: Set<any>;
+  value: Set<any> | any[];
   highlight: HashHighlight;
 }
 
 export interface HashmapVariable extends Variable {
   type: "hashmap";
   label: string;
-  value: Map<any, any>;
+  value: Map<any, any> | Record<string, any>;
   highlight?: HashHighlight;
 }
 

@@ -3,6 +3,12 @@ import type { HashmapVariable, Pointer } from "algo-lens-core";
 
 const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
   const { value, label, highlight } = data;
+  if (!value) {
+    throw new Error("No data provided for the hashmap display");
+  }
+
+  //get entries from value
+  const entries = Object.entries(value);
 
   return (
     <div className="overflow-x-auto">
@@ -15,11 +21,13 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
           </tr>
         </thead>
         <tbody>
-          {Array.from(value.entries()).map(([key, val], index) => (
+          {Array.from(entries).map(([key, val], index) => (
             <tr
               key={index}
               className={
-                highlight.value === key ? `bg-${highlight.color} text-${highlight.color}-content` : ""
+                highlight.value === key
+                  ? `bg-${highlight.color} text-${highlight.color}-content`
+                  : ""
               }
             >
               <td>{key}</td>
