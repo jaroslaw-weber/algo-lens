@@ -20,13 +20,13 @@ export function generateSteps(grid: string[][]): ProblemState[] {
     [0, 1],
   ];
 
-  l.breakpoint(1);
   l.grid("grid", grid);
   l.group(
     "counter",
     { numIslands },
     { max: (rowCount * colCount) / 2, min: 0 }
   );
+  l.breakpoint(1);
 
   function dfs(i: number, j: number) {
     l.grid("grid", grid, ...[{ r: i, c: j }]);
