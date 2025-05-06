@@ -12,7 +12,7 @@ export const groups: GroupMetadata[] = [
     variables: ["left", "right", "mid"],
   },
   {
-    name: "output",
+    id: "output",
     title: "Output",
     variables: ["result"],
   },

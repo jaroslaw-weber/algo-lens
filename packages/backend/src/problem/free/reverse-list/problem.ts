@@ -12,7 +12,6 @@ const title = "Reverse Linked List";
 export const problem: Problem<ReverseListInput, ProblemState> = {
   title,
   emoji: "↩️",
-  // func: code, // Remove direct assignment of original code
   func: generateSteps, // Use generateSteps to get the detailed steps
   id: "reverse-list",
   tags: ["linked-list"],

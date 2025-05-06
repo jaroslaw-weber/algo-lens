@@ -61,26 +61,25 @@ export function generateSteps(input: ReverseListInput): ProblemState[] { // Adde
     // Move current pointer one step forward
     current = next;
     // Log state after moving current (#5: start of next iteration or end)
-    l.list("head", head, []);
-    if (current) l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral (new current)
+    if (head) l.list("head", head, []); // No highlight
+    else l.simple({ head: null });
+    if (current) l.list("current", current, [{ node: current, color: "blue" }]); // Highlight new current
     else l.simple({ current: null });
-    if (prev) l.list("prev", prev, [{ node: prev, color: "neutral" }]); // Color: neutral
-    else l.simple({ prev: null });
-    // 'next' pointer might or might not be null here, log its state
-    if (next) l.list("next", next, [{ node: next, color: "neutral" }]); // Color: neutral
+    l.list("prev", prev, [{ node: prev, color: "orange" }]); // Highlight prev
+    if (next) l.list("next", next, [{ node: next, color: "red" }]); // Highlight next (doesn't change here, but log for consistency)
     else l.simple({ next: null });
     l.breakpoint(5);
   }
 
   // Log final state (#6)
   // 'current' and 'next' are null, 'prev' is the new head
-  l.list("head", head, []); // Original head reference
-  l.simple({ current: null });
-  if (prev) l.list("prev", prev, [{ node: prev, color: 'good' }]); // Color: good (final head)
+  if (head) l.list("head", head, []); // Original head reference, no highlight
+  else l.simple({ head: null });
+  l.simple({ current: null }); // current is null
+  if (prev) l.list("prev", prev, [{ node: prev, color: 'green' }]); // Highlight prev as new head
   else l.simple({ prev: null });
-  l.simple({ next: null });
-  // Add a 'result' variable pointing to the final head (prev)
-  if (prev) l.list("result", prev, [{ node: prev, color: 'good' }]); // Color: good
+  l.simple({ next: null }); // next is null
+  if (prev) l.list("result", prev, [{ node: prev, color: 'purple' }]); // Highlight result (same as prev)
   else l.simple({ result: null });
   l.breakpoint(6);
 
