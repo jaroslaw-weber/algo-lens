@@ -4,10 +4,7 @@ import { HammingWeightInput } from "./types";
 
 export function generateSteps(n: number): ProblemState[] {
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
-  l.groupOptions.set("input", {
-    min: 0,
-    max: n,
-  });
+
   l.groupOptions.set("count", {
     min: 0,
     max: n,
@@ -17,8 +14,6 @@ export function generateSteps(n: number): ProblemState[] {
   let maskingBit = 1;
   let i = 0;
 
-  // Initial state log
-  l.group("input", { n }); // Log initial input 'n'
   l.binary({ n }, { pointersRight: [i] }); // Log 'n' in binary with pointer
   l.binary({ maskingBit }, { pointersLeft: [0] }); // Log 'maskingBit' in binary with pointer
   l.group("count", { count }); // Log initial 'count'

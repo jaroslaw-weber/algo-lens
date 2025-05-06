@@ -55,7 +55,7 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
     if (intervalCount <= 1) {
       return 4;
     }
-    if (intervalCount <= 3) {
+    if (intervalCount <= 2) {
       return 3;
     }
     return 2; // Adjust this value based on the number of intervals you want to display in a single row
