@@ -64,20 +64,15 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
         logger.breakpoint(currentBreakpoint++); // Breakpoint: Segmentation using split point j didn't work
       }
     }
-    // Reset j after inner loop finishes or breaks
-    logger.simple({ j: undefined });
     logger.simple({ suffix: undefined });
-    logger.arrayV2("dp", dp); // Log dp state at the end of outer loop iteration i
+    logger.arrayV2({ dp }, { i }); // Log dp state at the end of outer loop iteration i
     logger.breakpoint(currentBreakpoint++); // Breakpoint: End of outer loop iteration i
   }
-
-  // Reset i after outer loop finishes
-  logger.simple({ i: undefined });
 
   // The final result is dp[n]
   const result = dp[n];
   logger.simple({ result: result }); // Log the final result
-  logger.arrayV2("dp", dp); // Log the final dp array state
+  logger.arrayV2({ dp }, { n }); // Log the final dp array state
   logger.breakpoint(currentBreakpoint++); // Breakpoint: Final result
 
   return logger.getSteps();
