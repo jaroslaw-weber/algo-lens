@@ -3,8 +3,7 @@ import { TestCase } from "algo-lens-core";
 // Define test cases for countingBits (LeetCode #338)
 // Input: n (number)
 // Output: number[] where output[i] is the number of 1's in the binary representation of i.
-export const testcases: TestCase<number, number[]>[] = [
-  // Existing cases
+export const testcases = [
   {
     input: 2,
     expected: [0, 1, 1],
@@ -21,12 +20,11 @@ export const testcases: TestCase<number, number[]>[] = [
     input: 1,
     expected: [0, 1],
   },
-
-  // Added generated cases
   {
     input: 3,
     expected: [0, 1, 1, 2],
-  },
+  ,
+    isDefault: true},
   {
     input: 4,
     expected: [0, 1, 1, 2, 1],
@@ -42,5 +40,5 @@ export const testcases: TestCase<number, number[]>[] = [
   {
     input: 10,
     expected: [0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2],
-  },
+  }
 ];

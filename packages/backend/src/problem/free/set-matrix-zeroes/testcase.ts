@@ -4,10 +4,7 @@ import { SetMatrixZeroesInput } from "./types";
 // Define the expected output type - in this case, it's the modified matrix itself.
 type SetMatrixZeroesOutput = number[][];
 
-export const testcases: TestCase<
-  SetMatrixZeroesInput,
-  SetMatrixZeroesOutput
->[] = [
+export const testcases = [
   {
     input: [
       [1, 1, 1],
@@ -64,7 +61,8 @@ export const testcases: TestCase<
       [1, 1],
     ],
     description: "Matrix with no zeroes",
-  },
+  ,
+    isDefault: true},
   {
     input: [[0]],
     expected: [[0]],
@@ -75,5 +73,5 @@ export const testcases: TestCase<
 
     expected: [[1]],
     description: "Single cell matrix without zero",
-  },
+  }
 ];

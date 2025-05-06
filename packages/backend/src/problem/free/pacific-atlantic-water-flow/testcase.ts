@@ -2,7 +2,7 @@ import { TestCase } from "algo-lens-core";
 import { PacificAtlanticInput } from "./types"; // Corrected import name
 
 // Corrected TestCase parameterization: Input type and Expected output type
-export const testcases: TestCase<PacificAtlanticInput, number[][]>[] = [
+export const testcases = [
   {
     // Input is now directly the number[][] array
     input: [
@@ -44,7 +44,8 @@ export const testcases: TestCase<PacificAtlanticInput, number[][]>[] = [
       [2, 1],
     ],
     description: "All cells reachable",
-  },
+  ,
+    isDefault: true},
   {
     input: [ // Corrected input structure
       [1, 2],
@@ -56,5 +57,5 @@ export const testcases: TestCase<PacificAtlanticInput, number[][]>[] = [
       [1, 1],
     ],
     description: "Small 2x2 grid",
-  },
+  }
 ];

@@ -3,8 +3,7 @@ import { CourseScheduleInput } from "./types";
 // Removed import for CourseScheduleInput - Keeping this comment as it was in the original
 
 // Reverted TestCase signature to use tuple input type - Keeping this comment as it was in the original
-export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
-  // === Existing Test Cases (Descriptions updated for clarity) ===
+export const testcases = [
   {
     input: [
       2,
@@ -51,10 +50,6 @@ export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
     expected: true,
     description: "Test Case 4: Linear dependency chain (0 -> 1 -> 2 -> 3)",
   },
-
-  // === New Test Cases ===
-
-  // Edge Cases
   {
     input: [0, []],
     expected: true,
@@ -69,9 +64,8 @@ export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
     input: [3, []],
     expected: true,
     description: "Test Case 7: No prerequisites",
-  },
-
-  // Disconnected Components
+  ,
+    isDefault: true},
   {
     input: [
       5,
@@ -84,8 +78,6 @@ export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
     expected: true,
     description: "Test Case 8: Disconnected components",
   },
-
-  // Complex Cycles
   {
     input: [
       3,
@@ -111,8 +103,6 @@ export const testcases: TestCase<CourseScheduleInput, boolean>[] = [
     expected: false,
     description: "Test Case 10: Multiple cycles in disconnected components",
   },
-
-  // Larger Valid DAG
   {
     input: [
       6,
