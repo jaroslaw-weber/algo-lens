@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { getAllProblems } from "./problem/core/list";
-import { cloneDeep, pick } from "lodash";
+import { cloneDeep, pick, sample } from "lodash";
 
 const port = process.env.PORT || 3000;
 const app = new Hono();
@@ -29,11 +29,13 @@ app.get("/problem", async (c) => {
 
   // Filter problems if a tag is provided
   const filteredProblems = tag
-    ? all.filter(p => p.tags && p.tags.includes(tag))
+    ? all.filter((p) => p.tags && p.tags.includes(tag))
     : all;
 
   // Map the filtered list to the desired output format
-  const list = filteredProblems.map((x) => pick(x, ["id", "title", "difficulty", "emoji"]));
+  const list = filteredProblems.map((x) =>
+    pick(x, ["id", "title", "difficulty", "emoji"])
+  );
   return c.json(list);
 });
 
@@ -46,16 +48,21 @@ app.get("/problem/random", async (c) => {
       return c.json({ error: "No problems available" }, 500);
     }
 
-    const randomProblem = all[Math.floor(Math.random() * all.length)];
-    const result = pick(randomProblem, ["id", "title", "difficulty", "emoji"]);
+    const randomProblemId = sample(all)!.id;
 
-    // Ensure we actually found a problem and picked some fields
-    if (!result || !result.id) {
-        console.error("Failed to select a random problem or pick required fields", { randomProblem, result });
-        return c.json({ error: "Failed to retrieve random problem details" }, 500);
-    }
+    const problem = await getProblemById(randomProblemId);
 
-    return c.json(result);
+    const rendered = pick(problem, [
+      "id",
+      "title",
+      "difficulty",
+      "code",
+      "url",
+      "tags",
+      "metadata",
+    ]);
+
+    return c.json(rendered);
   } catch (error) {
     console.error("Error fetching random problem:", error);
     return c.json({ error: "Internal server error" }, 500);

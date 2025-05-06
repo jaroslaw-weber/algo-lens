@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { getRandomProblem, ProblemInfo } from '../api';
+import React, { useState, useEffect } from "react";
+import { getRandomProblem, type ProblemInfo } from "../api";
+import ProblemView from "../pages/problem/ProblemView";
+import { useAtom } from "jotai";
+import { problemAtom } from "../atom";
 
 const RandomProblemCard: React.FC = () => {
-  const [problem, setProblem] = useState<ProblemInfo | null>(null);
+  const [problem, setProblem] = useAtom(problemAtom);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +31,7 @@ const RandomProblemCard: React.FC = () => {
     return (
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body items-center text-center">
-          <h2 className="card-title">Featured Problem</h2>
+          <h2 className="card-title">Random Problem</h2>
           <p>Loading...</p>
           <span className="loading loading-dots loading-md"></span>
         </div>
@@ -37,11 +40,11 @@ const RandomProblemCard: React.FC = () => {
   }
 
   if (error) {
-     return (
+    return (
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body items-center text-center">
-           <h2 className="card-title">Featured Problem</h2>
-           <div className="text-error">{error}</div>
+          <h2 className="card-title">Random Problem</h2>
+          <div className="text-error">{error}</div>
         </div>
       </div>
     );
@@ -54,31 +57,13 @@ const RandomProblemCard: React.FC = () => {
 
   // Determine badge color based on difficulty
   let badgeColor = "badge-info"; // Default
-  if (problem.difficulty?.toLowerCase() === 'easy') badgeColor = "badge-success";
-  if (problem.difficulty?.toLowerCase() === 'medium') badgeColor = "badge-warning";
-  if (problem.difficulty?.toLowerCase() === 'hard') badgeColor = "badge-error";
+  if (problem.difficulty?.toLowerCase() === "easy")
+    badgeColor = "badge-success";
+  if (problem.difficulty?.toLowerCase() === "medium")
+    badgeColor = "badge-warning";
+  if (problem.difficulty?.toLowerCase() === "hard") badgeColor = "badge-error";
 
-
-  return (
-    <div className="card bg-base-100 shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title mb-4">Featured Problem</h2>
-        <div className="flex items-center mb-2">
-            {problem.emoji && <span className="text-2xl mr-3">{problem.emoji}</span>}
-            <a href={`/problem/visualize?id=${problem.id}`} className="text-xl font-semibold hover:underline link link-primary">
-                 {problem.title}
-            </a>
-        </div>
-
-        <div className="card-actions justify-end mt-4">
-           <span className={`badge ${badgeColor} badge-outline`}>{problem.difficulty || 'N/A'}</span>
-           <a href={`/problem/visualize?id=${problem.id}`} className="btn btn-primary btn-sm">
-              Visualize
-           </a>
-        </div>
-      </div>
-    </div>
-  );
+  return <ProblemView />;
 };
 
 export default RandomProblemCard;

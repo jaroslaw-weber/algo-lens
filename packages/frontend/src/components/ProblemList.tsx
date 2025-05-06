@@ -38,13 +38,10 @@ function ProblemsList({ tag, title }: ProblemListProps) {
   }, [tag]); // Re-run effect if tag changes
 
   return (
-    // Removed outer container mx-auto p-6 as it's now in the Astro page
     <div>
-      {/* Use title prop for heading, provide fallback */}
       <h1 className="text-3xl font-bold mb-6 text-center">
         {title || "Problems"}
       </h1>
-      {/* Removed static description paragraph */}
 
       {loading && (
         <div className="text-center p-10">
@@ -73,15 +70,13 @@ function ProblemsList({ tag, title }: ProblemListProps) {
                 <a
                   key={id}
                   href={`/problem/visualize?id=${id}`}
-                  className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 block" // Use 'block' to make the anchor fill the grid cell
+                  className="card border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300 block" // Updated classes for outline style
                 >
                   <div className="card-body">
                     <h2 className="card-title">
-                      {/* Display emoji if it exists, adding some space */}
                       {emoji && <span className="mr-2">{emoji}</span>}
                       {title}
                     </h2>
-                    {/* Removed the separate link as the whole card is now clickable */}
                   </div>
                 </a>
               );

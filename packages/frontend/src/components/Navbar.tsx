@@ -5,19 +5,23 @@ const Navbar = () => {
     <div className="w-full bg-base-100 flex-shrink ">
       <div className="navbar  mx-auto bg-primary text-primary-content shadow">
         <div className="flex-1">
-        <a href="/" className="btn btn-ghost normal-case font-display text-xl">
-  <span className="hidden sm:inline">algo-lens: see algorithms in action!</span>
-  <span className="inline sm:hidden">algo-lens</span>
-</a>
-
+          <a
+            href="/"
+            className="btn btn-ghost normal-case font-display text-xl"
+          >
+            <span className="hidden sm:inline">
+              algo-lens: see algorithms in action!
+            </span>
+            <span className="inline sm:hidden">algo-lens</span>
+          </a>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal p-0">
             <li>
-              <a href="/list/blind75">Blind75</a>
+              <a href="/list?tag=blind75">Blind75</a>
             </li>
             <li>
-              <a href="/list/all">All Problems</a>
+              <a href="/list">All Problems</a>
             </li>
             <li>
               <a href="/settings">Settings</a>

@@ -11,7 +11,6 @@ export type ProblemInfo = {
   emoji?: string; // Emoji might be optional
 };
 
-
 console.log("Backend URL:", BACKEND_URL);
 const be = ky.create({ prefixUrl: BACKEND_URL });
 
@@ -27,7 +26,7 @@ export async function getProblemList(tag?: string): Promise<ProblemInfo[]> {
 }
 
 export async function getProblem(id: string) {
-  const result = await be.get<Problem<any,any>>(`problem/${id}`);
+  const result = await be.get<Problem<any, any>>(`problem/${id}`);
   return result.json();
 }
 
@@ -36,15 +35,15 @@ export async function getProblemState(id: string, step: number) {
   return result.json();
 }
 
-export async function getProblemSize(id:string){
-  const result = await be.get<{size:number}>(`problem/${id}/size`);
+export async function getProblemSize(id: string) {
+  const result = await be.get<{ size: number }>(`problem/${id}/size`);
   const json = await result.json();
   return json.size;
 }
 
-export async function getRandomProblem(): Promise<ProblemInfo> {
+export async function getRandomProblem() {
   // Use the 'be' instance which has the base URL configured
-  const result = await be.get<ProblemInfo>("problem/random");
+  const result = await be.get<Problem<any, any>>("problem/random");
   // ky automatically throws for non-2xx responses, so we just parse
   return result.json();
 }
