@@ -21,12 +21,12 @@ const CodePreview = ({ code, highlightLineIndex }) => {
       <pre
         ref={preRef}
         className="mockup-code rounded-lg text-xs font-code leading-none overflow-auto"
-        style={{ maxHeight: "80vh" }} // Adjust the maxHeight as needed
+        style={{ maxHeight: "70vh" }} // Adjust the maxHeight as needed
       >
         {code.split("\n").map((line, index) => (
           <p
             key={index}
-            className={`px-4 py-2 transition-all duration-100 ${
+            className={`px-4 py-1 transition-all duration-100 ${ // Reduced py padding from 2 to 1
               index === highlightLineIndex
                 ? "text-primary-content bg-primary highlighted"
                 : ""
