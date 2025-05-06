@@ -2,7 +2,7 @@ import { TestCase } from "algo-lens-core";
 import { MergeIntervalsInput } from "./types";
 
 // Added second generic argument for Output type (number[][])
-export const testcases: TestCase<MergeIntervalsInput, number[][]>[] = [
+export const testcases = [
   {
     input: [
       [1, 5],
@@ -30,7 +30,8 @@ export const testcases: TestCase<MergeIntervalsInput, number[][]>[] = [
       [8, 10],
       [15, 18],
     ],
-  },
+  ,
+    isDefault: true},
   {
     input: [
       [1, 2],
@@ -40,5 +41,5 @@ export const testcases: TestCase<MergeIntervalsInput, number[][]>[] = [
       [1, 2],
       [3, 4],
     ],
-  },
+  }
 ];

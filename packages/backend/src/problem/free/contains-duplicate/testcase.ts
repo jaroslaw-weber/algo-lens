@@ -1,8 +1,7 @@
 import { TestCase } from 'algo-lens-core';
 
 // Define test cases for Contains Duplicate (LeetCode #217)
-export const testcases: TestCase<number[], boolean>[] = [
-  // Existing cases
+export const testcases = [
   {
     input: [1, 2, 3, 1], // Contains duplicate
     expected: true
@@ -19,12 +18,11 @@ export const testcases: TestCase<number[], boolean>[] = [
     input: [1, 1, 1, 1], // All duplicates
     expected: true
   },
-
-  // Added generated cases
   {
     input: [1], // Single element array
     expected: false
-  },
+  ,
+    isDefault: true},
   {
     input: [1, 3, 5, 7, 9, 1], // Duplicate at the end
     expected: true

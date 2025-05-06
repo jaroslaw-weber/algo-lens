@@ -1,7 +1,7 @@
 import { TestCase, ProblemState } from "algo-lens-core";
 import { MaximumSubarrayInput } from "./types";
 
-export const testcases: TestCase<MaximumSubarrayInput, ProblemState>[] = [
+export const testcases = [
   {
     input: [-2, 1, -3, 4, -1, 2, 1, -5, 4],
     expected: 6,
@@ -16,10 +16,11 @@ export const testcases: TestCase<MaximumSubarrayInput, ProblemState>[] = [
     input: [-1, -2, -3, -4],
     expected: -1,
     description: "All negative numbers",
-  },
+  ,
+    isDefault: true},
   {
     input: [5],
     expected: 5,
     description: "Single element array",
-  },
+  }
 ];

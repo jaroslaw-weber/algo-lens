@@ -3,8 +3,7 @@ import { InsertIntervalInput } from "./types";
 // Removed ProblemState and InsertIntervalInput imports
 
 // Corrected TestCase signature to use tuple input and number[][] output
-export const testcases: TestCase<InsertIntervalInput, number[][]>[] = [
-  // Added generated cases
+export const testcases = [
   {
     input: [
       [
@@ -42,7 +41,8 @@ export const testcases: TestCase<InsertIntervalInput, number[][]>[] = [
   {
     input: [[[1, 5]], [2, 3]],
     expected: [[1, 5]],
-  },
+  ,
+    isDefault: true},
   {
     input: [[[1, 5]], [6, 8]],
     expected: [
@@ -66,5 +66,5 @@ export const testcases: TestCase<InsertIntervalInput, number[][]>[] = [
       [5, 7],
     ],
     expected: [[1, 9]],
-  },
+  }
 ];
