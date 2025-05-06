@@ -374,7 +374,6 @@ export function asHashmap(
   map: Map<any, any>,
   highlight?: HashHighlight
 ): HashmapVariable {
-  console.log("mmmmap", map);
   return {
     label,
     type: "hashmap",

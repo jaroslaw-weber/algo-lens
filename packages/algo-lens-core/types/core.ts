@@ -23,6 +23,8 @@ export interface Problem<Input, State> {
 
   func2?: (t: Input) => ProblemState[];
 
+  code?: string;
+
   /** emoji to display with the problem title. */
   emoji: string;
 

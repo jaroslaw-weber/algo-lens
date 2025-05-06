@@ -21,12 +21,15 @@ function ProblemVisualizer() {
   const { title, code, id } = problem;
 
   const breakpointToLineMap = new Map<number, number>();
-  const lines = code.split("\n");
+  const lines = code!.split("\n");
   for (let i = 0; i < lines.length; i++) {
     const loc = lines[i];
     if (loc.trimStart().startsWith("//#")) {
       //get number from this line with regex
       const no = new RegExp(/\d+/).exec(loc);
+      if (!no) {
+        throw new Error("no breakpoints found in code");
+      }
       if (no![0]) {
         breakpointToLineMap.set(parseInt(no![0]), i);
       }
@@ -40,7 +43,7 @@ function ProblemVisualizer() {
   };
 
   const handleCopyCode = () => {
-    copy(code);
+    copy(code!);
     alert("Code copied to clipboard!");
   };
 
