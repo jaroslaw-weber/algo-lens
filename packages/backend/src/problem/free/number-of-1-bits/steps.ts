@@ -2,8 +2,7 @@ import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { HammingWeightInput } from "./types";
 
-export function generateSteps(p: HammingWeightInput): ProblemState[] {
-  const { n } = p;
+export function generateSteps(n: number): ProblemState[] {
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
   l.groupOptions.set("input", {
     min: 0,

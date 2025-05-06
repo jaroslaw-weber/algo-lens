@@ -1,3 +1,1 @@
-export interface MergeIntervalsInput {
-  intervals: number[][];
-}
+export type MergeIntervalsInput = number[][];
