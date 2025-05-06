@@ -9,7 +9,7 @@ export const testcases: TestCase<EditDistanceInput, ProblemState>[] = [
   { input: ["", "a"], expected: 1 },
   { input: ["a", ""], expected: 1 },
   { input: ["abc", "abc"], expected: 0 },
-  { input: ["a", "b"], expected: 1, isDefault: true },
+  { input: ["intention", "execution"], expected: 5, isDefault: true }, // Changed from ["a", "b"]
   { input: ["abc", "axc"], expected: 1 },
   { input: ["sea", "eat"], expected: 2 },
   { input: ["plasma", "altruism"], expected: 6 },

@@ -61,10 +61,20 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 6: Edge case - 1 course, no prerequisites",
   },
   {
-    input: [3, []],
+    // Changed from [3, []] to a more complex DAG
+    input: [
+      6,
+      [
+        [1, 0],
+        [2, 0],
+        [3, 1],
+        [4, 1],
+        [5, 2],
+        [5, 4],
+      ],
+    ],
     expected: true,
-    description: "Test Case 7: No prerequisites",
-
+    description: "Test Case 7: Medium valid DAG", // Updated description
     isDefault: true,
   },
   {

@@ -49,9 +49,9 @@ export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
     expected: false,
   },
   {
-    input: [arrayToTree([1, 2]), arrayToTree([1, null, 2])],
+    // Changed from [1, 2] vs [1, null, 2] to slightly larger trees with different structure
+    input: [arrayToTree([1, 2, 3, 4, null]), arrayToTree([1, 2, 3, null, 4])],
     expected: false,
-
     isDefault: true,
   },
   {

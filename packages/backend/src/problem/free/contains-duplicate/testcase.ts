@@ -19,10 +19,10 @@ export const testcases = [
     expected: true
   },
   {
-    input: [1], // Single element array
-    expected: false
-  ,
-    isDefault: true},
+    input: [1, 2, 3, 4, 5, 6, 7, 3, 8, 9], // Changed from [1] to medium size with duplicate
+    expected: true,
+    isDefault: true
+  },
   {
     input: [1, 3, 5, 7, 9, 1], // Duplicate at the end
     expected: true

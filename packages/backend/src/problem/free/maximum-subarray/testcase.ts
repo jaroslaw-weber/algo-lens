@@ -13,10 +13,10 @@ export const testcases = [
     description: "All positive numbers",
   },
   {
-    input: [-1, -2, -3, -4],
-    expected: -1,
-    description: "All negative numbers",
-
+    // Changed from [-1, -2, -3, -4] (all negative edge case)
+    input: [-2, 1, -3, 4, -1, 2, 1, -5, 4],
+    expected: 6,
+    description: "Mixed positive and negative numbers",
     isDefault: true,
   },
   {

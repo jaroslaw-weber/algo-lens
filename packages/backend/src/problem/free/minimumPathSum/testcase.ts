@@ -22,10 +22,16 @@ export const testcases = [
     description: "Single row grid",
   },
   {
-    input: { grid: [[1], [2], [3]] },
-    expected: 6,
-    description: "Single column grid",
-
+    // Changed from 3x1 grid (edge case) to 3x3 grid
+    input: {
+      grid: [
+        [1, 3, 1],
+        [1, 5, 1],
+        [4, 2, 1],
+      ],
+    },
+    expected: 7,
+    description: "Standard 3x3 grid",
     isDefault: true,
   },
   {
