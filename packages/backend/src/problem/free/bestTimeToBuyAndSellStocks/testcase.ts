@@ -22,12 +22,11 @@ export const testcases = [
   {
     input: [2, 4, 1],
     expected: 2,
-
-    isDefault: true,
   },
   {
     input: [3, 2, 6, 5, 0, 3],
     expected: 4,
+    isDefault: true,
   },
   {
     input: [1, 1, 1, 1],

@@ -21,7 +21,6 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
   l.arrayV2({ prices }, { i: 0 });
   l.arrayV2({ dp });
-  l.simple({ minPrice });
   l.breakpoint(
     1,
     "Starting the process with initial values. Logging initial prices and setting the first minimum price."

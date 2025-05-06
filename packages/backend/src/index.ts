@@ -132,9 +132,12 @@ class ProblemStateCache {
     if (testcases.length === 0) {
       throw new Error("no testcases found for problem: " + problem.id!);
     }
-    const testcase = testcases[2].input;
+    const testcase = testcases.find((x) => x.isDefault);
+    if (!testcase) {
+      throw new Error("no default testcase found for problem: " + problem.id!);
+    }
     console.log("testcase: ", testcase);
-    const states = problem.func(testcase);
+    const states = problem.func(testcase.input);
     for (let i = 0; i < states.length; i++) {
       const state = states[i];
       const key2 = this.getKey(problem, i + 1);
