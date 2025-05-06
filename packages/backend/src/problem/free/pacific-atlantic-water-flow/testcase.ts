@@ -30,22 +30,24 @@ export const testcases = [
     description: "Single cell grid",
   },
   {
+    // Changed from 3x2 all-1s grid (edge case) to 5x5 complex grid
     input: [
-      // Corrected input structure
-      [1, 1],
-      [1, 1],
-      [1, 1],
+      [1, 2, 2, 3, 5],
+      [3, 2, 3, 4, 4],
+      [2, 4, 5, 3, 1],
+      [6, 7, 1, 4, 5],
+      [5, 1, 1, 2, 4],
     ],
     expected: [
-      [0, 0],
-      [0, 1],
-      [1, 0],
-      [1, 1],
-      [2, 0],
-      [2, 1],
+      [0, 4],
+      [1, 3],
+      [1, 4],
+      [2, 2],
+      [3, 0],
+      [3, 1],
+      [4, 0],
     ],
-    description: "All cells reachable",
-
+    description: "Standard complex case",
     isDefault: true,
   },
   {

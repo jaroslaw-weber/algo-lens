@@ -51,17 +51,18 @@ export const testcases = [
     description: "Original example matrix from the old file",
   },
   {
+    // Changed from 2x2 no-zero matrix (edge case) to 3x4 matrix with zeroes
     input: [
-      [1, 1],
-      [1, 1],
+      [0, 1, 2, 0],
+      [3, 4, 5, 2],
+      [1, 3, 1, 5],
     ],
-
     expected: [
-      [1, 1],
-      [1, 1],
+      [0, 0, 0, 0],
+      [0, 4, 5, 0],
+      [0, 3, 1, 0],
     ],
-    description: "Matrix with no zeroes",
-
+    description: "Matrix with zeroes in first row and last column",
     isDefault: true,
   },
   {

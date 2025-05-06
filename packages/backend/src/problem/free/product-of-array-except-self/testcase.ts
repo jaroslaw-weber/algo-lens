@@ -11,9 +11,9 @@ export const testcases = [
     expected: [2, 1],
   },
   {
-    input: [4, 3, 2, 1],
-    expected: [6, 8, 12, 24],
-
+    // Changed from [4, 3, 2, 1] (len 4) to [1, 2, 3, 4, 5] (len 5)
+    input: [1, 2, 3, 4, 5],
+    expected: [120, 60, 40, 30, 24],
     isDefault: true,
   },
   {

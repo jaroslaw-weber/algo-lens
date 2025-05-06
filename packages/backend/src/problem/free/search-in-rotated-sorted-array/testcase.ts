@@ -13,11 +13,10 @@ export const testcases: TestCase<SearchInput, ProblemState>[] = [
     description: "Search for a non-existent target in a rotated sorted array",
   },
   {
-    input: [[3, 5, 1, 2, 4], 1],
-    expected: 2,
-    description:
-      "Search for the target in a rotated sorted array with duplicate elements",
-
+    // Changed from [3, 5, 1, 2, 4], target 1 (len 5) to a more standard example
+    input: [[4, 5, 6, 7, 0, 1, 2], 0],
+    expected: 4,
+    description: "Search for the target in a rotated sorted array", // Updated description
     isDefault: true,
   },
   {

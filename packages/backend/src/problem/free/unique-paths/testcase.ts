@@ -14,9 +14,9 @@ export const testcases = [
     expected: 1,
   },
   {
-    input: { m: 2, n: 2 },
-    expected: 2, // C(2+2-2, 2-1) = C(2, 1) = 2
-
+    // Changed from m=2, n=2 (very small) to m=3, n=7
+    input: { m: 3, n: 7 },
+    expected: 28, // Calculated as C(3+7-2, 3-1) = C(8, 2) = 28
     isDefault: true,
   },
   {

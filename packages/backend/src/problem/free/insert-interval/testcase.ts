@@ -39,9 +39,22 @@ export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
     expected: [[5, 7]],
   },
   {
-    input: [[[1, 5]], [2, 3]],
-    expected: [[1, 5]],
-
+    // Changed from [[[1, 5]], [2, 3]] to a more complex case
+    input: [
+      [
+        [1, 2],
+        [3, 5],
+        [6, 7],
+        [8, 10],
+        [12, 16],
+      ],
+      [4, 8],
+    ],
+    expected: [
+      [1, 2],
+      [3, 10],
+      [12, 16],
+    ],
     isDefault: true,
   },
   {

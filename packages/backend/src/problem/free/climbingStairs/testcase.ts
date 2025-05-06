@@ -7,10 +7,10 @@ export const testcases = [
   { input: 3, expected: 3 },
   { input: 5, expected: 8 },
   { input: 8, expected: 34 },
-  { input: 4, expected: 5 ,
+  { input: 7, expected: 21 , // Changed from n=4 to n=7
     isDefault: true},
   { input: 6, expected: 13 },
-  { input: 7, expected: 21 },
+  // { input: 7, expected: 21 }, // Original test case for 7 moved to default
   { input: 10, expected: 89 },
   { input: 45, expected: 1836311903 }
 ];

@@ -18,14 +18,15 @@ export const testcases = [
     description: "Single island",
   },
   {
+    // Changed from 3x3 grid to 4x5 grid
     input: [
-      ["1", "0", "0"],
-      ["0", "0", "0"],
-      ["0", "0", "1"],
+      ["1", "1", "0", "0", "0"],
+      ["1", "1", "0", "0", "0"],
+      ["0", "0", "1", "0", "0"],
+      ["0", "0", "0", "1", "1"],
     ],
-    expected: 2,
-    description: "Multiple separate islands",
-
+    expected: 3,
+    description: "Complex grid with islands touching corners and edges",
     isDefault: true,
   },
   {
