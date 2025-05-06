@@ -69,6 +69,9 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
     <tr key={rowIndex} className="flex text-xs relative">
       {items.map((item, colIndex) => {
         const { style, pointerLabel } = getCellPointerInfo(rowIndex, colIndex);
+        const tooltipStyle = !style?.includes("primary")
+          ? "tooltip-top"
+          : "tooltip-bottom";
         return (
           <td
             key={colIndex}
@@ -77,7 +80,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
             <div
               className={`text-center ${
                 pointerLabel
-                  ? "tooltip tooltip-bottom tooltip-secondary tooltip-open"
+                  ? `tooltip ${tooltipStyle} tooltip-secondary tooltip-open`
                   : ""
               }`}
               data-tip={pointerLabel}
