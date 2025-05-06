@@ -15,7 +15,7 @@ function isProblem(obj: any): obj is Problem<any, any> {
   );
 }
 
-export async function getAllProblemGroups(): Promise<ProblemGroup[]> {
+export async function getAllProblemInternal(): Promise<Problem<any, any>[]> {
   const freeDirPath = path.join(__dirname, "../free");
   //console.log("loading problems from", freeDirPath);
   const dirEntries = fs.readdirSync(freeDirPath, { withFileTypes: true });
@@ -69,15 +69,7 @@ export async function getAllProblemGroups(): Promise<ProblemGroup[]> {
       }
     }
   }
-
-  // Removed console.log for dynamically loaded problems
-
-  const groupedBlind = groupByTags(dynamicallyLoadedProblems); // Use dynamically loaded problems
-
-  return Array.from(groupedBlind.entries()).map(([tag, problems]) => ({
-    label: tag,
-    problems,
-  }));
+  return dynamicallyLoadedProblems;
 }
 
 export const other: ProblemGroup[] = [];
@@ -100,6 +92,5 @@ function groupByTags(problems: Problem<any, any>[]) {
 }
 
 export async function getAllProblems(): Promise<Problem<any, any>[]> {
-  const groups = await getAllProblemGroups();
-  return groups.flatMap((group) => group.problems);
+  return getAllProblemInternal();
 }
