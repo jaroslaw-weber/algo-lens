@@ -30,21 +30,24 @@ const Wrapper = ({
   description,
   emoji,
   children,
-  variable
+  variable,
+  className // Add className prop
 }: {
   label: string;
   description?: string;
   emoji?: string;
   children: React.ReactNode;
   variable: Variable;
+  className?: string; // Make className optional
 }) => (
   <div
+    // Merge className prop with existing classes
     className={`border border-primary shadow rounded-xl p-6 relative ${
       variable.hide ? 'opacity-50' : ''
-    }`}
+    } ${className || ''}`} // Use className or default to empty string
   >
     <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold">
-      {emoji} {label} {variable.hide? '(not in memory)' : ''}
+      {emoji} {label} {variable.hide ? '(not in memory)' : ''}
     </div>
     {description && <p className="text-xs text-gray-500 mb-2">{description}</p>}
     {children}
@@ -66,7 +69,7 @@ function DisplayState({
 
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
-      <div className="mt-4 flex flex-col gap-8 w-full">
+      <div className="grid grid-cols-2 gap-8 w-full">
         {variables.map((variable) => {
           const groupMeta = metadata!.groups?.find(
             (x) => x.name === variable.label
@@ -84,6 +87,7 @@ function DisplayState({
               const numData = variable as SimpleVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-1"
                   label={numData.label}
                   description={description}
                   emoji={emoji}
@@ -97,6 +101,7 @@ function DisplayState({
               const arrData = variable as ArrayVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={arrData.label}
                   description={description}
                   emoji={emoji}
@@ -110,6 +115,7 @@ function DisplayState({
               const groupData = variable as ValueGroupVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={groupData.label}
                   description={description}
                   emoji={emoji}
@@ -123,6 +129,7 @@ function DisplayState({
               const binaryData = variable as BinaryVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={binaryData.label}
                   description={description}
                   emoji={emoji}
@@ -136,6 +143,7 @@ function DisplayState({
               const boolData = variable as BooleanGroupVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={boolData.label}
                   description={description}
                   emoji={emoji}
@@ -149,6 +157,7 @@ function DisplayState({
               const intervalData = variable as IntervalVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={intervalData.label}
                   description={description}
                   emoji={emoji}
@@ -162,6 +171,7 @@ function DisplayState({
               const treeData = variable as TreeVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={treeData.label}
                   description={description}
                   emoji={emoji}
@@ -175,6 +185,7 @@ function DisplayState({
               const hashsetData = variable as HashsetVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={hashsetData.label}
                   description={description}
                   emoji={emoji}
@@ -188,6 +199,7 @@ function DisplayState({
               const hashmapData = variable as HashmapVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={hashmapData.label}
                   description={description}
                   emoji={emoji}
@@ -201,6 +213,7 @@ function DisplayState({
               const listData = variable as ListVariable;
               return (
                 <Wrapper
+                  className="grid-col-span-2"
                   label={listData.label}
                   description={description}
                   emoji={emoji}
