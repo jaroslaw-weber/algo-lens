@@ -41,11 +41,11 @@ const Wrapper = ({
   className?: string;
 }) => (
   <div
-    className={`border border-primary shadow rounded-xl p-6 relative ${
+    className={`border border-primary shadow rounded-lg p-2 relative ${
       variable.hide ? "opacity-50" : ""
     } ${className || ""}`}
   >
-    <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold">
+    <div className="absolute -top-[10px] left-4 bg-white px-1 text-primary-500 font-semibold">
       {emoji} {label} {variable.hide ? "(not in memory)" : ""}
     </div>
     {description && <p className="text-xs text-gray-500 mb-2">{description}</p>}
@@ -72,7 +72,7 @@ function DisplayState({
 
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
-      <div className="grid grid-cols-2 gap-8 w-full">
+      <div className="grid grid-cols-2 gap-2 w-full">
         {variables.map((variable) => {
           const groupMeta = metadata!.groups?.find(
             (x) => x.name === variable.label
