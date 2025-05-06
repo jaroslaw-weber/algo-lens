@@ -26,7 +26,7 @@ export async function getRandomProblem() {
 }
 
 export async function getProblemById(id: string) {
-  console.log("getProblemById", id);
+  //console.log("getProblemById", id);
   const all = await getAllProblems();
   const problem = all.find((p) => p.id === id);
   validate(problem);

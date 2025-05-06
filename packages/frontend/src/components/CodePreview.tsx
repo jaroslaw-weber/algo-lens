@@ -13,24 +13,26 @@ const CodePreview = ({ code, highlightLineIndex }) => {
   }, [highlightLineIndex]);
 
   return (
-    <pre
-      ref={preRef}
-      className="mockup-code rounded-lg text-xs font-code leading-none overflow-auto"
-      style={{ maxHeight: "80vh" }} // Adjust the maxHeight as needed
-    >
-      {code.split("\n").map((line, index) => (
-        <p
-          key={index}
-          className={`px-4 py-2 transition-all duration-100 ${
-            index === highlightLineIndex
-              ? "text-primary-content bg-primary highlighted"
-              : ""
-          }`}
-        >
-          {line}
-        </p>
-      ))}
-    </pre>
+    <div className="overflow-hidden">
+      <pre
+        ref={preRef}
+        className="mockup-code rounded-lg text-xs font-code leading-none overflow-auto"
+        style={{ maxHeight: "80vh" }} // Adjust the maxHeight as needed
+      >
+        {code.split("\n").map((line, index) => (
+          <p
+            key={index}
+            className={`px-4 py-2 transition-all duration-100 ${
+              index === highlightLineIndex
+                ? "text-primary-content bg-primary highlighted"
+                : ""
+            }`}
+          >
+            {line}
+          </p>
+        ))}
+      </pre>
+    </div>
   );
 };
 
