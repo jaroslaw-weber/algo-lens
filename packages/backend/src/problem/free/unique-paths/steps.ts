@@ -7,17 +7,10 @@ export function generateSteps(p: UniquePathsInput) {
 
   // Handle invalid input
   if (m <= 0 || n <= 0) {
-    // Corrected l.simple calls
-    l.simple({ m: m });
-    l.simple({ n: n });
     l.simple({ result: 0 });
     l.breakpoint(4); // Go directly to final state
     return l.getSteps();
   }
-
-  // Corrected l.simple calls
-  l.simple({ m: m });
-  l.simple({ n: n });
 
   const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
   l.grid("dp", dp); // Log initial empty DP table using grid
@@ -28,9 +21,6 @@ export function generateSteps(p: UniquePathsInput) {
     l.grid("dp", dp, { r: i, c: 0 }); // Use grid, pass pointer directly
     l.breakpoint(1);
   }
-  // Corrected l.simple call
-  l.simple({ i: undefined }); // Reset i
-
   // Initialize the first row with 1
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
