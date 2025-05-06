@@ -35,7 +35,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
     const currentValue = dpGrid[0][col]; // Original value from grid
     dpGrid[0][col] = prevValue + currentValue; // Update in place
 
-    l.grid("grid", dpGrid, { r: 0, c: col }, { r: 0, c: col - 1 }); // Use grid, pass pointers directly
+    l.array2d("grid", dpGrid, { r: 0, c: col }, { r: 0, c: col - 1 }); // Use array2d, pass pointers directly
 
     l.breakpoint(2);
   }
@@ -48,7 +48,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
     const currentValue = dpGrid[row][0]; // Original value from grid
     dpGrid[row][0] = prevValue + currentValue; // Update in place
 
-    l.grid("grid", dpGrid, { r: row, c: 0 }, { r: row - 1, c: 0 }); // Use grid, pass pointers directly
+    l.array2d("grid", dpGrid, { r: row, c: 0 }, { r: row - 1, c: 0 }); // Use array2d, pass pointers directly
 
     l.breakpoint(3);
   }
@@ -64,7 +64,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
       const originalValue = grid[row][col]; // Use original grid value for the addition part
       dpGrid[row][col] = Math.min(valueAbove, valueLeft) + originalValue; // Update in place
 
-      l.grid("grid", dpGrid, { r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }); // Use grid, pass pointers directly
+      l.array2d("grid", dpGrid, { r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }); // Use array2d, pass pointers directly
       l.breakpoint(4);
     }
     l.simple({ col: undefined }); // Reset col index for inner loop
@@ -76,7 +76,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
 
   // Corrected l.simple call to match signature: simple(value: Record<string, any>)
   l.simple({ result: result });
-  l.grid("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use grid, pass pointer directly
+  l.array2d("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use array2d, pass pointer directly
 
   l.breakpoint(5);
 

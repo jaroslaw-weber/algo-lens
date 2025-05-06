@@ -30,24 +30,24 @@ export function generateSteps(intervals: number[][]) {
     max // Use calculated max
   ); // Log copy before sort
   l.intervals("merged", [], [], min, max);
-  l.breakpoint(1);
+  // No breakpoint before sort
 
   // Sort the intervals based on the start time
   intervals.sort((a, b) => a[0] - b[0]);
 
-  // Log state after sort
+  // Log state after sort (Breakpoint 1)
   l.intervals("intervals", intervals, [], min, max);
   l.intervals("merged", [], [], min, max);
-  l.breakpoint(2);
+  l.breakpoint(1, "Intervals sorted by start time."); // Matches //#1
 
   // Initialize the variable for merged intervals using the correct variable name 'merged'
   const merged: number[][] = []; // Use 'merged' as variable name based on variables.ts
   merged.push([...intervals[0]]); // Push a copy to avoid mutation issues if original interval obj is reused
 
-  // Log state after adding the first interval
+  // Log state after adding the first interval (Breakpoint 2)
   l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
   l.intervals("merged", merged, [0], min, max); // Highlight the newly added interval
-  l.breakpoint(2); // Maybe a new breakpoint 2.5 or adjust existing ones? Let's reuse 2 for now or add a specific one later if needed.
+  l.breakpoint(2, "Initialized merged with the first sorted interval."); // Matches //#2
 
   for (let i = 1; i < intervals.length; i++) {
     const currentInterval = intervals[i]; // Use variable name from variables.ts
@@ -97,12 +97,12 @@ export function generateSteps(intervals: number[][]) {
     // l.intervals("lastMerged", [], undefined, { group: "loop" });
   }
   // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-  l.hide("i");
+  l.hide("i"); // Optional: Hide loop counter after loop
 
-  // Log final state
+  // Log final state (Breakpoint 6)
   l.intervals("intervals", intervals, [], min, max);
-  l.intervals("result", merged, [], min, max); // Changed "merged" to "result"
-  l.breakpoint(6);
+  l.intervals("merged", merged, [], min, max); // Log final merged array
+  l.breakpoint(6, "Finished merging intervals."); // Matches //#6
 
   return l.getSteps(); // Return the collected steps
 }

@@ -42,36 +42,43 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
     dp[i] = Math.max(prev, diff);
 
+    // Breakpoint 3: After updating dp[i], before updating minPrice
     l.arrayV2({ prices }, { i });
-    l.arrayV2({ dp }, { i, "i - 1": i - 1 });
+    l.arrayV2({ dp }, { i, "i - 1": i - 1 }); // dp[i] is now updated
+    l.simple({ minPrice }); // Log minPrice *before* update
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
     l.breakpoint(
       3,
-      `Day ${i}: Updating the minimum price if today's price is lower.`
+      `Day ${i}: Updated max profit dp[${i}] to ${dp[i]}. Current minPrice is ${minPrice}.`
     );
+    // Hide smaller group after breakpoint 3 as diff/prev comparison is done
+    l.hide("smaller");
 
     minPrice = Math.min(minPrice, price);
 
+    // Breakpoint 4: After updating minPrice
     l.arrayV2({ prices }, { i });
-    l.arrayV2({ dp }, { i, "i - 1": i - 1 });
-    l.group("profit", { price, minPrice, diff });
-    l.group("smaller", { diff, prev });
+    l.arrayV2({ dp }, { i }); // Only need to show updated dp[i]
+    l.simple({ minPrice }); // Log minPrice *after* update
+    l.group("profit", { price, minPrice }); // Show updated minPrice, diff is less relevant now
     l.breakpoint(
       4,
-      `Day ${i}: State after updating minimum price. Preparing for next iteration.`
+      `Day ${i}: Updated minPrice to ${minPrice}. Preparing for next iteration.`
     );
-    l.hide("smaller");
+    // Hide profit group after breakpoint 4 as iteration ends
     l.hide("profit");
   }
 
   const result = dp[prices.length - 1];
 
-  l.arrayV2({ prices }, { result: prices.length - 1 });
+  // Breakpoint 5: After loop, final result obtained
+  l.arrayV2({ prices }); // Show final prices array
+  l.arrayV2({ dp }, { result: prices.length - 1 }); // Highlight final element in dp
   l.simple({ result });
   l.breakpoint(
     5,
-    "Final result calculated. Logging the maximum profit achievable."
+    `Finished loop. Final max profit is dp[${prices.length - 1}] = ${result}.`
   );
 
   return l.getSteps();

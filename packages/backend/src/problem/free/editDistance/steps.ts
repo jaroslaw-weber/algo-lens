@@ -27,7 +27,7 @@ export function generateSteps(s1: string, s2: string) {
   // Initialize the DP table - First Row
   for (let j = 0; j <= n; j++) {
     dp[0][j] = j;
-    l.grid("dp", dp, ...[{ r: 0, c: j }]);
+    l.array2d("dp", dp, ...[{ r: 0, c: j }]); // Use array2d for consistency
     l.breakpoint(2);
   }
 
@@ -46,7 +46,7 @@ export function generateSteps(s1: string, s2: string) {
         dp[i][j] = op;
         // Log state: match case
         l.simple({ op });
-        l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
+        l.array2d("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell // Use array2d for consistency
         l.breakpoint(3); // Breakpoint after calculation
       } else {
         // Characters don't match - find min cost
@@ -62,7 +62,7 @@ export function generateSteps(s1: string, s2: string) {
         // l.simple("substitutionCost", substitutionCost, { group: "loopVariables" });
         l.simple({ insertionCost, deletionCost, substitutionCost });
         l.simple({ op });
-        l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
+        l.array2d("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell // Use array2d for consistency
         l.breakpoint(3); // Breakpoint after calculation
       }
       // Reset op? Maybe not needed if logged correctly above.
@@ -73,7 +73,7 @@ export function generateSteps(s1: string, s2: string) {
   // Final result
   const result = dp[m][n];
   l.simple({ result });
-  l.grid("dp", dp, ...[{ r: m, c: n }]); // Highlight final result cell
+  l.array2d("dp", dp, ...[{ r: m, c: n }]); // Highlight final result cell // Use array2d for consistency
   l.breakpoint(4);
 
   return l.getSteps(); // Return the collected steps

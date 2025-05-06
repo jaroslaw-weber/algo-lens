@@ -26,104 +26,74 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(1, "Initial state before processing intervals.");
+  l.breakpoint(1, "Initial state before processing intervals."); // Matches //#1
 
-  // Loop 1: Add intervals before newInterval (Breakpoint #2)
+  // Loop 1: Add intervals before newInterval
   while (i < intervals.length && intervals[i][1] < newInterval[0]) {
-    const currentInterval = intervals[i];
-    result.push(currentInterval);
+    // No breakpoint inside this loop
+    result.push(intervals[i]);
     i++;
-
-    // Log state inside loop 1
-    l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just added
-    l.intervals("newInterval", [newInterval], [], minValue, maxValue);
-    l.intervals("result", result, [], minValue, maxValue);
-    l.simple({ i });
-    l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(
-      2,
-      `Added interval [${currentInterval.join(
-        ", "
-      )}] to result because it ends before newInterval starts. State after addition:`
-    );
   }
 
-  // Log state before loop 2
-  l.intervals("intervals", intervals, [], minValue, maxValue); // Show intervals before merge loop
-  l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show newInterval before merge loop
-  l.intervals("result", result, [], minValue, maxValue);
-  l.simple({ i });
-  l.breakpoint(
-    3,
-    "Starting merge phase. Checking for overlaps with newInterval."
-  );
-
-  // Loop 2: Merge overlapping intervals (Breakpoint #3)
-  while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
-    const currentInterval = intervals[i];
-    newInterval[0] = Math.min(currentInterval[0], newInterval[0]);
-    newInterval[1] = Math.max(currentInterval[1], newInterval[1]);
-    i++;
-
-    // Log state during merge
-    const message = `Merging interval [${currentInterval.join(
-      ", "
-    )}] into newInterval. Updated newInterval: [${newInterval.join(", ")}].`;
-    l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just merged
-    l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show updated newInterval
-    l.intervals("result", result, [], minValue, maxValue);
-    l.simple({ i });
-    l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(4, message);
-  }
-
-  // Insert the merged newInterval (Breakpoint #4)
-  result.push(newInterval);
+  // Log state after Loop 1 (Breakpoint #2)
   l.intervals("intervals", intervals, [], minValue, maxValue);
-  l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show final merged/original newInterval
-  l.intervals("result", result, [], minValue, maxValue); // Show result with newInterval added
-  l.simple({ i });
-  l.breakpoint(
-    5,
-    `Inserting the final merged/original newInterval [${newInterval.join(
-      ", "
-    )}].`
-  );
-
-  // Log state before loop 3
-  l.intervals("intervals", intervals, [], minValue, maxValue); // Show intervals before loop
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
   l.breakpoint(
-    6,
-    "Starting phase to add remaining intervals after newInterval."
-  );
+    2,
+    "Finished adding intervals that end before newInterval starts."
+  ); // Matches //#2
 
-  // Loop 3: Add remaining intervals (Breakpoint #5)
-  while (i < intervals.length) {
-    const currentInterval = intervals[i];
-    result.push(currentInterval);
+  // Loop 2: Merge overlapping intervals
+  while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
+    // No breakpoint inside this loop
+    newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
+    newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
     i++;
-
-    // Log state adding remaining interval
-    const message = `Adding remaining interval [${currentInterval.join(
-      ", "
-    )}] to result.`;
-    l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just added
-    l.intervals("newInterval", [newInterval], [], minValue, maxValue);
-    l.intervals("result", result, [], minValue, maxValue);
-    l.simple({ i });
-    l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(7, message); // Use l.log for inner loop steps
   }
+
+  // Log state after Loop 2 (Breakpoint #3)
+  l.intervals("intervals", intervals, [], minValue, maxValue);
+  l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show potentially merged newInterval
+  l.intervals("result", result, [], minValue, maxValue);
+  l.simple({ i });
+  l.breakpoint(3, "Finished merging overlapping intervals."); // Matches //#3
+
+  // Log state before inserting merged/original newInterval (Breakpoint #4)
+  l.intervals("intervals", intervals, [], minValue, maxValue);
+  l.intervals("newInterval", [newInterval], [], minValue, maxValue);
+  l.intervals("result", result, [], minValue, maxValue);
+  l.simple({ i });
+  l.breakpoint(
+    4,
+    `Ready to insert the merged/original newInterval [${newInterval.join(
+      ", "
+    )}].`
+  ); // Matches //#4
+
+  result.push(newInterval);
+
+  // Loop 3: Add remaining intervals
+  while (i < intervals.length) {
+    // No breakpoint inside this loop
+    result.push(intervals[i]);
+    i++;
+  }
+
+  // Log state after Loop 3 (Breakpoint #5)
+  l.intervals("intervals", intervals, [], minValue, maxValue);
+  l.intervals("newInterval", [newInterval], [], minValue, maxValue);
+  l.intervals("result", result, [], minValue, maxValue); // Result includes newInterval and potentially remaining intervals
+  l.simple({ i });
+  l.breakpoint(5, "Finished adding remaining intervals."); // Matches //#5
 
   // Final state log (Breakpoint #6)
   l.intervals("intervals", intervals, [], minValue, maxValue);
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue); // Final result array
   l.simple({ i });
-  l.breakpoint(6, "Finished processing all intervals. Returning final result.");
+  l.breakpoint(6, "Finished processing all intervals. Returning final result."); // Matches //#6
 
   return l.getSteps();
 }

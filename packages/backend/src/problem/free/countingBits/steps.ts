@@ -43,17 +43,8 @@ export function generateSteps(n: number): ProblemState[] {
         l.binary({ num: inner_num }, { highlightLast: true });
         l.group("count", { count }, { min: 0, max: n });
         l.breakpoint(5, "Count incremented.");
-      } else {
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.breakpoint(4, "LSB is 0. No count increment."); // Add breakpoint for else case
-
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.breakpoint(5, "Skipping count increment."); // Add breakpoint for else case
       }
+      // No explicit breakpoints needed for the 'else' case as markers #4 and #5 relate to the increment.
 
       //#6 Shift the number to the right to move to the next bit
       inner_num >>= 1;
@@ -73,15 +64,11 @@ export function generateSteps(n: number): ProblemState[] {
     );
 
     result[i] = count;
-
-    // Log state after storing result
-    l.arrayV2({ result: result }, { i: i }); // Highlight the newly added result
-    l.binary({ num }, { highlightLast: false });
-    l.group("count", { count }, { min: 0, max: n });
-    l.breakpoint(7, `Stored count ${count} in result[${i}].`); // Re-use breakpoint 7 or use a new one if needed
+    // Logging after storing result[i] is not needed as breakpoint #7 is before this line.
   }
+
+  //#8 Log final state after outer loop
   l.arrayV2({ result }); // Show final result array
-  //#8 Log final state
   l.breakpoint(8, "Finished processing all numbers. Returning result.");
 
   return l.getSteps();

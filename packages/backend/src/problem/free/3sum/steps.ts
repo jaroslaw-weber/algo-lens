@@ -95,7 +95,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           result.push(triplet);
 
           l.hashset("seen", seen, undefined!);
-          l.grid("result", result);
+          l.array2d("result", result); // Use array2d for consistency
           l.breakpoint(
             8,
             `Inner loop: Added unique triplet [${triplet.join(",")}] to result`
@@ -103,71 +103,70 @@ export function generateSteps(nums: number[]): ProblemState[] {
         }
 
         // Skip duplicates for left pointer
-        let skippedLeft = false;
         while (left < right && nums[left] === nums[left + 1]) {
           left++;
-          skippedLeft = true;
-        }
-        if (skippedLeft) {
+          // Log state *inside* the skip loop, after left++
           l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
-          l.group("triplet", triplet);
+          l.group("triplet", tripletMap); // Use tripletMap
           l.simple({ sum });
           l.array2d("result", result);
+          l.hashset("seen", seen, undefined!);
           l.breakpoint(
             9,
-            `Inner loop: Skipped duplicate left pointers, new left = ${left}`
+            `Inner loop: Skipped duplicate left, new left = ${left}`
           );
         }
 
         // Skip duplicates for right pointer
-        let skippedRight = false;
         while (left < right && nums[right] === nums[right - 1]) {
           right--;
-          skippedRight = true;
-        }
-        if (skippedRight) {
+          // Log state *inside* the skip loop, after right--
           l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
-          l.group("triplet", triplet);
+          l.group("triplet", tripletMap); // Use tripletMap
           l.simple({ sum });
           l.array2d("result", result);
+          l.hashset("seen", seen, undefined!);
           l.breakpoint(
             10,
-            `Inner loop: Skipped duplicate right pointers, new right = ${right}`
+            `Inner loop: Skipped duplicate right, new right = ${right}`
           );
         }
 
+        // Log state *before* moving pointers (matches #11)
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
+        l.group("triplet", tripletMap); // Use tripletMap
         l.simple({ sum });
         l.array2d("result", result);
+        l.hashset("seen", seen, undefined!);
         l.breakpoint(
           11,
-          `Inner loop: Moving pointers after finding target sum`
+          `Inner loop: About to move pointers after finding target sum`
         );
 
         left++;
         right--;
 
+        // Log state *after* moving pointers (matches #12)
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
-        l.simple({ sum });
-        // Don't log triplet/sum here as they are recalculated at the start of the next iteration
+        // Don't log triplet/sum here as they will be recalculated
         l.array2d("result", result);
-        l.hide("triplet");
+        l.hashset("seen", seen, undefined!);
         l.breakpoint(
           12,
           `Inner loop: Moved pointers, new left = ${left}, new right = ${right}`
         );
       } else if (sum < target) {
+        // Log state *before* moving left pointer (matches #13)
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
+        l.group("triplet", tripletMap); // Use tripletMap
         l.simple({ sum });
         l.array2d("result", result);
+        l.hashset("seen", seen, undefined!);
         l.breakpoint(
           13,
           `Inner loop: Sum ${sum} < target ${target}, incrementing left pointer`
@@ -175,12 +174,13 @@ export function generateSteps(nums: number[]): ProblemState[] {
         left++;
       } else {
         // sum > target
-
+        // Log state *before* moving right pointer (matches #14)
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
+        l.group("triplet", tripletMap); // Use tripletMap
         l.simple({ sum });
         l.array2d("result", result);
+        l.hashset("seen", seen, undefined!);
         l.breakpoint(
           14,
           `Inner loop: Sum ${sum} > target ${target}, decrementing right pointer`
@@ -188,16 +188,15 @@ export function generateSteps(nums: number[]): ProblemState[] {
         right--;
       }
     }
-    // Log state at the end of the inner loop for the current 'i'
-    l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
-    l.simple({ target });
-    l.array2d("result", result);
-    l.breakpoint(14.5, `Inner loop finished for i = ${i}`); // Added intermediate breakpoint
+    // End of inner while loop
   }
+  // After inner loop finishes for a given 'i', before next 'i' iteration or loop end.
 
-  l.arrayV2({ nums: nums }, {});
+  // Log final state (matches #15)
+  l.arrayV2({ nums: nums }, {}); // No specific indices needed here
   l.simple({ target });
   l.array2d("result", result);
+  l.hashset("seen", seen, undefined!);
   l.breakpoint(15, "Finished searching for triplets");
 
   return l.getSteps();
