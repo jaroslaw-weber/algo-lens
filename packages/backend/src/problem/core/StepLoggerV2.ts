@@ -201,7 +201,7 @@ export class StepLoggerV2 {
    * @param node - The head node of the linked list.
    * @param highlight - Optional array of node highlights.
    */
-  public list(name: string, node: ListNode, highlight: NodeHighlight[] = []) {
+  public list(name: string, node?: ListNode, highlight?: NodeHighlight[]) {
     const variable = asList(name, node, highlight);
     this.upsert(variable);
   }
@@ -335,7 +335,7 @@ export class StepLoggerV2 {
    * @param map - The Map object.
    * @param highlight - Optional highlighting information for the hash map.
    */
-  public hashmap(label: string, map: Map<any, any>, highlight: HashHighlight) {
+  public hashmap(label: string, map: Map<any, any>, highlight?: HashHighlight) {
     const variable = asHashmap(label, map, highlight);
     this.upsert(variable);
   }

@@ -117,18 +117,18 @@ function addRandomIdsToList(node: ListNode | null, i: number): number {
 
 export function asList(
   label: string,
-  value: ListNode | null,
-  highlight: NodeHighlight[]
+  value?: ListNode | null,
+  highlight?: NodeHighlight[]
 ): ListVariable {
   // Add random IDs starting from 1
   //clone list
-  const list = cloneList(value);
+  const list = value?cloneList(value):null
   addRandomIdsToList(list, 1);
   return {
     type: "list",
     label,
     value: list,
-    highlight: highlight.filter((x) => x.node),
+    highlight: highlight?.filter((x) => x.node)?[],
   };
 }
 
@@ -372,7 +372,7 @@ export function asHashset<T>(
 export function asHashmap(
   label: string,
   map: Map<any, any>,
-  highlight: HashHighlight
+  highlight?: HashHighlight
 ): HashmapVariable {
   return {
     label,

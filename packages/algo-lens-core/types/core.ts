@@ -150,7 +150,7 @@ export interface HashmapVariable extends Variable {
   type: "hashmap";
   label: string;
   value: Map<any, any>;
-  highlight: HashHighlight;
+  highlight?: HashHighlight;
 }
 
 export interface TreeVariable extends Variable {
