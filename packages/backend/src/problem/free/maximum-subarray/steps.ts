@@ -11,10 +11,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
   let maxEndingHere = nums[0]; // Corresponds to original maxCurrent
   let maxSoFar = nums[0]; // Corresponds to original maxGlobal
 
-  const inputGroup = groups.find((g) => g.name === "input")!.name;
-  const kadaneGroup = groups.find((g) => g.name === "kadane_vars")!.name;
-  const loopGroup = groups.find((g) => g.name === "loop")!.name;
-
   // Log initial state (Before loop, corresponds to original log(1))
   l.arrayV2({ nums: nums }, {});
   l.simple({ maxEndingHere });
@@ -32,7 +28,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV2({ nums: nums }, { i: i }); // Highlight current number
     l.simple({ maxEndingHere });
     l.simple({ maxSoFar });
-    l.simple({ i });
     l.simple({ num });
     l.breakpoint(2, `Processing element at index ${i}: ${num}.`);
 
@@ -47,7 +42,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere });
       l.simple({ maxSoFar });
-      l.simple({ i });
       l.simple({ num });
       l.simple({
         comparison: `${startNew} (num) > ${extendSum} (maxEndingHere + num)`,
@@ -63,7 +57,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere }); // Updated
       l.simple({ maxSoFar });
-      l.simple({ i });
       l.simple({ num });
       l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3 as per code.ts
     } else {
@@ -71,7 +64,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere });
       l.simple({ maxSoFar });
-      l.simple({ i });
       l.simple({ num });
       l.simple({
         comparison: `${startNew} (num) <= ${extendSum} (maxEndingHere + num)`,
@@ -87,7 +79,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere }); // Updated
       l.simple({ maxSoFar });
-      l.simple({ i });
       l.simple({ num });
       l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3
     }
@@ -97,7 +88,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV2({ nums: nums }, { i: i });
     l.simple({ maxEndingHere });
     l.simple({ maxSoFar });
-    l.simple({ i });
     l.simple({ num });
     l.breakpoint(
       4,
@@ -109,7 +99,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere });
       l.simple({ maxSoFar });
-      l.simple({ i });
       l.simple({ num });
       l.simple({ comparison: `${maxEndingHere} > ${maxSoFar}` });
       l.breakpoint(5, `maxEndingHere is greater than maxSoFar.`); // Use breakpoint 5 as per code.ts
@@ -120,7 +109,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere });
       l.simple({ maxSoFar }); // Updated
-      l.simple({ i });
       l.simple({ num });
       l.breakpoint(5, `Updated maxSoFar to ${maxSoFar}.`); // Reuse breakpoint 5
     } else {
@@ -128,7 +116,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ maxEndingHere });
       l.simple({ maxSoFar });
-      l.simple({ i });
       l.simple({ num });
       l.simple({ comparison: `${maxEndingHere} <= ${maxSoFar}` });
       l.breakpoint(5, `maxSoFar (${maxSoFar}) remains the maximum.`); // Reuse breakpoint 5

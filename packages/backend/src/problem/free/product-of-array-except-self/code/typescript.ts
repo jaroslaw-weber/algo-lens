@@ -16,21 +16,21 @@ export function productExceptSelf(nums: number[]): number[] {
     //#2 Updated productsLeft[i]
   }
 
-  //# Calculate products to the right of each element
+  //#3 Calculate products to the right of each element
   // Start from the second to last element (index length - 2).
   for (let i = length - 2; i >= 0; i--) {
     // Product to the right of i is the product to the right of (i+1) multiplied by the element at (i+1).
     productsRight[i] = productsRight[i + 1] * nums[i + 1];
-    //#3 Updated productsRight[i]
+    //#4 Updated productsRight[i]
   }
 
   // Calculate the final output array.
   for (let i = 0; i < length; i++) {
     // The product except self at index i is the product of elements to the left * product of elements to the right.
     output[i] = productsLeft[i] * productsRight[i];
-    //#4 Calculated output[i]
+    //#5 Calculated output[i]
   }
 
-  //#5 Return the final output array
+  //#6 Return the final output array
   return output;
 }
