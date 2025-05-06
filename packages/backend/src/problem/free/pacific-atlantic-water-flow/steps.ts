@@ -212,7 +212,7 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
   l.array2d("heights", heights, resultCellsHighlight[0]); // Pass first result highlight
   l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), resultCellsHighlight[0]);
   l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), resultCellsHighlight[0]);
-  l.array("result", formatQueue(result)); // Use formatQueue for consistency
+  l.array("result", result); // Log the result array directly
   l.breakpoint(currentBreakpoint++); // Final breakpoint
 
   return l.getSteps(); // Return the collected steps

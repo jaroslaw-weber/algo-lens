@@ -66,7 +66,8 @@ export function generateSteps( // Renamed and Exported
   logger.simple({ removalCount });
   logger.breakpoint(6, "Final log after all calculations"); // Added description
 
-
+  // Log the final removal count as 'result'
+  logger.simple({ result: removalCount });
   return logger.getSteps(); // Return steps from the logger
 }
 
