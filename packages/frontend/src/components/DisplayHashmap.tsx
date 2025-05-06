@@ -25,7 +25,7 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
             <tr
               key={index}
               className={
-                highlight.value === key
+                highlight?.value === key
                   ? `bg-${highlight.color} text-${highlight.color}-content`
                   : ""
               }

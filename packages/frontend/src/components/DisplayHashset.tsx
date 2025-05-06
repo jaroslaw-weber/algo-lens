@@ -4,6 +4,8 @@ import type { HashsetVariable, Pointer } from "algo-lens-core";
 const DisplayHashset = ({ data }: { data: HashsetVariable }) => {
   const { value, label, highlight } = data;
 
+  const arr = value as [];
+
   return (
     <div className="overflow-x-auto">
       {label && <h3 className="pl-2 pb-2 text-xl font-semibold">{label}</h3>}
@@ -14,11 +16,13 @@ const DisplayHashset = ({ data }: { data: HashsetVariable }) => {
           </tr>
         </thead>
         <tbody>
-          {Array.from(value).map((item, index) => (
+          {arr.map((item, index) => (
             <tr
               key={index}
               className={
-                highlight.value === item ? `bg-${highlight.color} text-${highlight.color}-content` : ""
+                highlight.value === item
+                  ? `bg-${highlight.color} text-${highlight.color}-content`
+                  : ""
               }
             >
               <td>{item}</td>
