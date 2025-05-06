@@ -25,8 +25,6 @@ export function generateSteps(p: UniquePathsInput) {
   // Initialize the first column with 1
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
-    // Corrected l.simple call to match signature: simple(value: Record<string, any>)
-    l.simple({ i: i });
     l.grid("dp", dp, { r: i, c: 0 }); // Use grid, pass pointer directly
     l.breakpoint(1);
   }
@@ -36,22 +34,13 @@ export function generateSteps(p: UniquePathsInput) {
   // Initialize the first row with 1
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
-    // Corrected l.simple call to match signature: simple(value: Record<string, any>)
-    l.simple({ j: j });
     l.grid("dp", dp, { r: 0, c: j }); // Use grid, pass pointer directly
     l.breakpoint(2);
   }
-  // Corrected l.simple call
-  l.simple({ j: undefined }); // Reset j
-
 
   // Calculate the number of unique paths for each cell
   for (let i = 1; i < m; i++) {
-    // Corrected l.simple call
-    l.simple({ i: i });
     for (let j = 1; j < n; j++) {
-      // Corrected l.simple call
-      l.simple({ j: j });
       const valueAbove = dp[i - 1][j];
       const valueLeft = dp[i][j - 1];
       dp[i][j] = valueAbove + valueLeft;
@@ -59,12 +48,7 @@ export function generateSteps(p: UniquePathsInput) {
       l.grid("dp", dp, { r: i, c: j }, { r: i - 1, c: j }, { r: i, c: j - 1 }); // Pass pointers directly
       l.breakpoint(3);
     }
-    // Corrected l.simple call
-    l.simple({ j: undefined }); // Reset inner loop index
   }
-  // Corrected l.simple call
-  l.simple({ i: undefined }); // Reset outer loop index
-
 
   // Final result
   const result = dp[m - 1][n - 1];
