@@ -1,22 +1,23 @@
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-// Removed ProblemState, as2dArray, asArray, asSimpleValue, asValueGroup
 import { UniquePathsInput } from "./types"; // New import
 
-export function generateSteps(p: UniquePathsInput) { // Renamed function, added export, Return type inferred
+export function generateSteps(p: UniquePathsInput) {
   const { m, n } = p;
-  const l = new StepLoggerV2(); // Instantiate StepLoggerV2
+  const l = new StepLoggerV2();
 
   // Handle invalid input
   if (m <= 0 || n <= 0) {
-    l.simple({ m });
-    l.simple({ n });
+    // Corrected l.simple calls
+    l.simple({ m: m });
+    l.simple({ n: n });
     l.simple({ result: 0 });
     l.breakpoint(4); // Go directly to final state
     return l.getSteps();
   }
 
-  l.simple({ m });
-  l.simple({ n });
+  // Corrected l.simple calls
+  l.simple({ m: m });
+  l.simple({ n: n });
 
   const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
   l.grid("dp", dp); // Log initial empty DP table using grid
@@ -24,29 +25,33 @@ export function generateSteps(p: UniquePathsInput) { // Renamed function, added 
   // Initialize the first column with 1
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
-    l.simple({ i });
+    // Corrected l.simple call
+    l.simple({ i: i });
     l.grid("dp", dp, { r: i, c: 0 }); // Use grid, pass pointer directly
     l.breakpoint(1);
   }
-   l.simple({ i: undefined }); // Reset i
+  // Corrected l.simple call
+  l.simple({ i: undefined }); // Reset i
 
   // Initialize the first row with 1
-  // Note: dp[0][0] is already 1 from the previous loop, start j from 1 if needed
-  // Or let it run from 0, overwriting dp[0][0] with 1 again, which is fine.
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
-    l.simple({ j });
+    // Corrected l.simple call
+    l.simple({ j: j });
     l.grid("dp", dp, { r: 0, c: j }); // Use grid, pass pointer directly
     l.breakpoint(2);
   }
+  // Corrected l.simple call
   l.simple({ j: undefined }); // Reset j
 
 
   // Calculate the number of unique paths for each cell
   for (let i = 1; i < m; i++) {
-     l.simple({ i });
+    // Corrected l.simple call
+    l.simple({ i: i });
     for (let j = 1; j < n; j++) {
-      l.simple({ j });
+      // Corrected l.simple call
+      l.simple({ j: j });
       const valueAbove = dp[i - 1][j];
       const valueLeft = dp[i][j - 1];
       dp[i][j] = valueAbove + valueLeft;
@@ -54,14 +59,17 @@ export function generateSteps(p: UniquePathsInput) { // Renamed function, added 
       l.grid("dp", dp, { r: i, c: j }, { r: i - 1, c: j }, { r: i, c: j - 1 }); // Pass pointers directly
       l.breakpoint(3);
     }
-     l.simple({ j: undefined }); // Reset inner loop index
+    // Corrected l.simple call
+    l.simple({ j: undefined }); // Reset inner loop index
   }
+  // Corrected l.simple call
   l.simple({ i: undefined }); // Reset outer loop index
 
 
   // Final result
   const result = dp[m - 1][n - 1];
-  l.simple({ result });
+  // Corrected l.simple call
+  l.simple({ result: result });
   l.grid("dp", dp, { r: m - 1, c: n - 1 }); // Use grid, pass pointer directly
   l.breakpoint(4);
 

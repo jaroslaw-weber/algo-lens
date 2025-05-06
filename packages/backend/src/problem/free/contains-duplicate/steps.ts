@@ -15,7 +15,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
   // Initial state log before the loop starts
   logger.arrayV2({ nums: nums }, {});
-  logger.hashset("hashSet", hashSet, {}); // Initial empty hashset state
+  logger.hashset("hashSet", hashSet, { value: -1, color: "neutral" }); // Initial empty hashset state
   logger.simple({ result }); // Initial result state
   logger.breakpoint(1);
 
@@ -47,7 +47,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
   // Logs the final state when no duplicate is found
   logger.arrayV2({ nums: nums }, {}); // Final array state
-  logger.hashset("hashSet", hashSet, {}); // Final hashset state
+  logger.hashset("hashSet", hashSet, { value: -1, color: "neutral" }); // Final hashset state
   logger.simple({ result }); // Log final false result
   logger.breakpoint(5);
 

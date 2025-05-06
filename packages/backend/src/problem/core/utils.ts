@@ -35,9 +35,9 @@ export async function getProblemById(id: string) {
 
 function validate(problem?: Problem<any, any>) {
   if (!problem) throw new Error("Problem not found");
-  // Removed @ts-expect-error
-  if (!problem.func) // Check for func instead of code
-    throw new Error("Problem func not found in problem: " + problem.id);
+  //@ts-expect-error
+  if (!problem.code)
+    throw new Error("Problem code not found in problem: " + problem.id);
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {
@@ -85,12 +85,9 @@ export function asBooleanGroup(
   return result;
 }
 
-function addRandomIds(
-  tree: BinaryTreeNode | null,
-  i: number
-): number | undefined {
+function addRandomIds(tree: BinaryTreeNode | null, i: number): number {
   if (!tree) {
-    return undefined;
+    return i;
   }
 
   tree.id = i.toString();
@@ -202,25 +199,25 @@ export function asArray(
   column2?: number,
   column3?: number
 ): ArrayVariable {
-  const result: ArrayVariable = {
-    label,
-    type: "array",
-    value: cloneDeep(arr),
-    pointers: [
-      {
-        value: column1,
-        dimension: "column",
-      },
-      {
-        value: column2,
-        dimension: "column",
-      },
-      {
-        value: column3,
-        dimension: "column",
-      },
-    ],
-  };
+  if (column1 !== undefined) {
+    result.pointers.push({
+      value: column1,
+      dimension: "column",
+    });
+  }
+  if (column2 !== undefined) {
+    result.pointers.push({
+      value: column2,
+      dimension: "column",
+    });
+  }
+  if (column3 !== undefined) {
+    result.pointers.push({
+      value: column3,
+      dimension: "column",
+    });
+  }
+
   return result;
 }
 
@@ -250,7 +247,7 @@ export function asBinary(
   };
   const asBinaryString = value.toString(2);
   if (options?.highlightLast) {
-    //check what is index of last element of binary representation of the value number and set it as pointer
+    // check what is index of last element of binary representation of the value number and set it as pointer
     const lastIndex = asBinaryString.length - 1;
     result.pointers.push({
       value: lastIndex,
@@ -258,17 +255,23 @@ export function asBinary(
     });
   }
   for (const pointer in options?.pointersLeft ?? []) {
-    result.pointers.push({
-      value: options?.pointersLeft[pointer],
-      dimension: "column",
-    });
+    const value = options?.pointersLeft?.[pointer];
+    if (value !== undefined) {
+      result.pointers.push({
+        value,
+        dimension: "column",
+      });
+    }
   }
 
   for (const pointer in options?.pointersRight ?? []) {
-    result.pointers.push({
-      value: asBinaryString.length - 1 - options?.pointersRight[pointer],
-      dimension: "column",
-    });
+    const rightPointerValue = options?.pointersRight?.[pointer];
+    if (rightPointerValue !== undefined) {
+      result.pointers.push({
+        value: asBinaryString.length - 1 - rightPointerValue,
+        dimension: "column",
+      });
+    }
   }
 
   return result;
@@ -285,25 +288,24 @@ export function asStringArray(
   column2?: number,
   column3?: number
 ): ArrayVariable {
-  const result: ArrayVariable = {
-    label,
-    type: "array",
-    value: s.split(""),
-    pointers: [
-      {
-        value: column1,
-        dimension: "column",
-      },
-      {
-        value: column2,
-        dimension: "column",
-      },
-      {
-        value: column3,
-        dimension: "column",
-      },
-    ],
-  };
+  if (column1 !== undefined) {
+    result.pointers.push({
+      value: column1,
+      dimension: "column",
+    });
+  }
+  if (column2 !== undefined) {
+    result.pointers.push({
+      value: column2,
+      dimension: "column",
+    });
+  }
+  if (column3 !== undefined) {
+    result.pointers.push({
+      value: column3,
+      dimension: "column",
+    });
+  }
   return result;
 }
 

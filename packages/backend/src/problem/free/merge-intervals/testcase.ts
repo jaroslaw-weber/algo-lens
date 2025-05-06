@@ -1,7 +1,7 @@
 import { TestCase } from "algo-lens-core";
-import { ExpectedOutputType, MergeIntervalsInput } from "./types";
+import { MergeIntervalsInput } from "./types";
 
-export const testcases: TestCase<MergeIntervalsInput, ExpectedOutputType>[] = [
+export const testcases: TestCase<MergeIntervalsInput>[] = [
   {
     input: { intervals: [] },
     expected: { intervals: [] },

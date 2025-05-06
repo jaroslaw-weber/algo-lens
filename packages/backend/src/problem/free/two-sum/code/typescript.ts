@@ -15,8 +15,9 @@ export function twoSum(nums: number[], target: number): number[] {
     if (map.has(complement)) {
       // If complement exists, we found the pair.
       // Return the index of the complement (from the map) and the current index.
+      const complementIndex = map.get(complement)!; // Added non-null assertion
       //#4 Found complement in map
-      return [map.get(complement)!, i]; // Added non-null assertion
+      return [complementIndex, i];
     }
     //#5 Complement not found yet
 

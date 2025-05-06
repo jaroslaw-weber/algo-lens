@@ -1,10 +1,11 @@
-import { TestCase } from "algo-lens-core";
-import { ExpectedOutputType, WordBreakInput } from "./types"; // Assuming types.ts defines this
+import { TestCase, ProblemState } from "algo-lens-core"; // Added ProblemState import
+import { WordBreakInput } from "./types"; // Keep this import
 
-// Define WordBreakInput if not defined in types.ts
+// Define WordBreakInput if not defined in types.ts - This comment is outdated, types.ts exists
 // interface WordBreakInput { s: string; wordDict: string[]; }
 
-export const testcases: TestCase<WordBreakInput, ExpectedOutputType>[] = [
+// Corrected TestCase type annotation with Input and State types
+export const testcases: TestCase<WordBreakInput, ProblemState>[] = [
   { input: { s: "leetcode", wordDict: ["leet", "code"] }, expected: true },
   { input: { s: "applepenapple", wordDict: ["apple", "pen"] }, expected: true },
   { input: { s: "catsandog", wordDict: ["cats", "dog", "sand", "and", "cat"] }, expected: false },

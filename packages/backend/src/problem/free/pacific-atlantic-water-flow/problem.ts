@@ -20,6 +20,6 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
   tags: ["grid", "dfs"],
   testcases,
   difficulty: "medium",
-  func: (p: PacificAtlanticInput) => generateSteps(p), // Input 'p' is the heights array
+  func: (p: PacificAtlanticInput) => generateSteps(p), // Use p directly as it's number[][]
   id: "pacific-atlantic-water-flow", // Keep existing id outside metadata
 };

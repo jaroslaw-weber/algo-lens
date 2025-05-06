@@ -1,3 +1,4 @@
+import { Pointer2D } from "algo-lens-core"; // Import Pointer2D
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 // Removed ProblemState, asArray, as2dArray
 import { PacificAtlanticInput } from "./types"; // Import PacificAtlanticInput
@@ -9,7 +10,7 @@ const booleanGridToNumber = (grid: boolean[][]): number[][] => {
 
 // Helper function to format queue for visualization
 const formatQueue = (queue: [number, number][]): string[] => {
-  return queue.map(([r, c]) => `${r},${c}`);
+  return queue.map(([r, c]) => `(${r},${c})`); // Format as (r,c) for clarity
 };
 
 /**
@@ -21,8 +22,9 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   if (!heights || heights.length === 0 || heights[0].length === 0) {
-    l.array2d("heights", [], undefined); // Removed options
-    l.array("result", [], undefined, { group: "result" }); // Keep this for now, will fix in l.array step
+    // Corrected: Remove invalid { group: ... }
+    l.array2d("heights", []);
+    l.array("result", []);
     l.breakpoint(0); // Initial/Final state
     return l.getSteps();
   }
@@ -42,17 +44,19 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
   let currentBreakpoint = 0;
 
   // Log initial state
-  l.simple({ rows });
-  l.simple({ cols });
-  l.array2d("heights", heights, undefined); // Removed options
-  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), undefined); // Removed options
-  l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), undefined); // Removed options
-  l.array("pacificQueue", formatQueue(pacificQueue), undefined); // Removed invalid 4th argument
-  l.array("atlanticQueue", formatQueue(atlanticQueue), undefined); // Removed invalid 4th argument
+  // Corrected: Use object format for l.simple and remove invalid group arg
+  l.simple({ rows: rows });
+  l.simple({ cols: cols });
+  // Corrected: Remove invalid { group: ... } and label properties from non-existent options object
+  l.array2d("heights", heights);
+  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited));
+  l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited));
+  l.array("pacificQueue", formatQueue(pacificQueue));
+  l.array("atlanticQueue", formatQueue(atlanticQueue));
   l.breakpoint(currentBreakpoint++); // Breakpoint 0
 
   // Add all cells on the Pacific coast to the queue
-  const initialPacificCells: { r: number, c: number }[] = [];
+  const initialPacificCells: Pointer2D[] = []; // Store as Pointer2D
   for (let r = 0; r < rows; r++) {
     if (!pacificVisited[r][0]) {
         pacificQueue.push([r, 0]);
@@ -69,27 +73,29 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
   }
 
   // Log state after initializing Pacific queue/visited
-  // Passing the first pointer from the array for type correction
-  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), initialPacificCells.length > 0 ? initialPacificCells[0] : undefined); // Fixed pointers, removed options
-  l.array("pacificQueue", formatQueue(pacificQueue), undefined); // Removed invalid 4th argument
-  l.array2d("heights", heights, undefined); // Removed options
+  // Corrected: Pass single Pointer2D or undefined, remove invalid group/label
+  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), initialPacificCells[0]); // Pass first highlight if exists
+  l.array("pacificQueue", formatQueue(pacificQueue));
+  l.array2d("heights", heights); // Optionally show heights again
   l.breakpoint(currentBreakpoint++); // Breakpoint 1
 
   // --- Perform BFS from the Pacific coast ---
-  let pacificStepCounter = 0; // To potentially limit steps inside BFS if needed
+  let pacificStepCounter = 0;
   while (pacificQueue.length > 0) {
-    const [r, c] = pacificQueue.shift()!; // Non-null assertion as we check length > 0
-    l.simple({ r });
-    l.simple({ c });
+    const [r, c] = pacificQueue.shift()!;
+    // Corrected: Use object format for l.simple and remove invalid group arg
+    l.simple({ r: r });
+    l.simple({ c: c });
 
-    const neighborsVisited: { r: number, c: number }[] = [];
-    const currentCellHighlight = [{ r, c }];
+    const neighborsVisited: Pointer2D[] = []; // Store as Pointer2D
+    const currentCellHighlight: Pointer2D = { r, c }; // Single Pointer2D
 
     for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
       const nr = r + dr;
       const nc = c + dc;
-      l.simple({ nr });
-      l.simple({ nc });
+      // Corrected: Use object format for l.simple and remove invalid group arg
+      l.simple({ nr: nr });
+      l.simple({ nc: nc });
 
       if (
         nr >= 0 && nr < rows && nc >= 0 && nc < cols &&
@@ -99,31 +105,28 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
         pacificQueue.push([nr, nc]);
         neighborsVisited.push({ r: nr, c: nc });
       }
-       // Log state change *after* checking each neighbor? Or after processing all neighbors? Let's log after all neighbors.
-       // l.breakpoint(currentBreakpoint++); // Potential breakpoint after each neighbor check
     }
 
     // Log state after processing neighbors for cell [r, c]
-    // Passing the first pointer from the array for type correction
-    const pacificCombinedHighlights = [...currentCellHighlight, ...neighborsVisited];
-    l.array2d("heights", heights, pacificCombinedHighlights.length > 0 ? pacificCombinedHighlights[0] : undefined); // Fixed pointers, removed options
-    l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), pacificCombinedHighlights.length > 0 ? pacificCombinedHighlights[0] : undefined); // Fixed pointers, removed options
-    l.array("pacificQueue", formatQueue(pacificQueue), undefined); // Removed invalid 4th argument
+    // Corrected: Pass single Pointer2D or undefined, remove invalid group/label
+    l.array2d("heights", heights, currentCellHighlight, neighborsVisited[0]); // Pass current and first neighbor highlight
+    l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), currentCellHighlight, neighborsVisited[0]);
+    l.array("pacificQueue", formatQueue(pacificQueue));
     // Reset neighbor indices?
+    // Corrected: Use object format for l.simple and remove invalid group arg
     l.simple({ nr: undefined });
     l.simple({ nc: undefined });
     l.breakpoint(currentBreakpoint++); // Breakpoint inside Pacific BFS loop
 
     pacificStepCounter++;
-    // Optional: Add a check to limit steps if BFS becomes too long for visualization
-    // if (pacificStepCounter > MAX_BFS_STEPS) break;
   }
   // Reset r/c after loop
+  // Corrected: Use object format for l.simple and remove invalid group arg
   l.simple({ r: undefined });
   l.simple({ c: undefined });
 
   // --- Add all cells on the Atlantic coast to the queue ---
-  const initialAtlanticCells: { r: number, c: number }[] = [];
+  const initialAtlanticCells: Pointer2D[] = []; // Store as Pointer2D
    for (let r = 0; r < rows; r++) {
      if (!atlanticVisited[r][cols - 1]) {
         atlanticQueue.push([r, cols - 1]);
@@ -140,27 +143,29 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
    }
 
   // Log state after initializing Atlantic queue/visited
-  // Passing the first pointer from the array for type correction
-  l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), initialAtlanticCells.length > 0 ? initialAtlanticCells[0] : undefined); // Fixed pointers, removed options
-  l.array("atlanticQueue", formatQueue(atlanticQueue), undefined); // Removed invalid 4th argument
-  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), undefined); // Removed options
+  // Corrected: Pass single Pointer2D or undefined, remove invalid group/label
+  l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), initialAtlanticCells[0]); // Pass first highlight
+  l.array("atlanticQueue", formatQueue(atlanticQueue));
+  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited)); // Show final pacific state
   l.breakpoint(currentBreakpoint++);
 
   // --- Perform BFS from the Atlantic coast ---
   let atlanticStepCounter = 0;
   while (atlanticQueue.length > 0) {
     const [r, c] = atlanticQueue.shift()!;
-    l.simple({ r });
-    l.simple({ c });
+    // Corrected: Use object format for l.simple and remove invalid group arg
+    l.simple({ r: r });
+    l.simple({ c: c });
 
-    const neighborsVisited: { r: number, c: number }[] = [];
-    const currentCellHighlight = [{ r, c }];
+    const neighborsVisited: Pointer2D[] = []; // Store as Pointer2D
+    const currentCellHighlight: Pointer2D = { r, c }; // Single Pointer2D
 
     for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
       const nr = r + dr;
       const nc = c + dc;
-      l.simple({ nr });
-      l.simple({ nc });
+      // Corrected: Use object format for l.simple and remove invalid group arg
+      l.simple({ nr: nr });
+      l.simple({ nc: nc });
 
       if (
         nr >= 0 && nr < rows && nc >= 0 && nc < cols &&
@@ -170,34 +175,32 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
         atlanticQueue.push([nr, nc]);
         neighborsVisited.push({ r: nr, c: nc });
       }
-       // l.breakpoint(currentBreakpoint++); // Potential breakpoint after each neighbor check
     }
 
     // Log state after processing neighbors for cell [r, c]
-    // Passing the first pointer from the array for type correction
-    const atlanticCombinedHighlights = [...currentCellHighlight, ...neighborsVisited];
-    l.array2d("heights", heights, atlanticCombinedHighlights.length > 0 ? atlanticCombinedHighlights[0] : undefined); // Fixed pointers, removed options
-    l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), atlanticCombinedHighlights.length > 0 ? atlanticCombinedHighlights[0] : undefined); // Fixed pointers, removed options
-    l.array("atlanticQueue", formatQueue(atlanticQueue), undefined); // Removed invalid 4th argument
+    // Corrected: Pass single Pointer2D or undefined, remove invalid group/label
+    l.array2d("heights", heights, currentCellHighlight, neighborsVisited[0]); // Pass current and first neighbor
+    l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), currentCellHighlight, neighborsVisited[0]);
+    l.array("atlanticQueue", formatQueue(atlanticQueue));
     // Reset neighbor indices?
+    // Corrected: Use object format for l.simple and remove invalid group arg
     l.simple({ nr: undefined });
     l.simple({ nc: undefined });
     l.breakpoint(currentBreakpoint++); // Breakpoint inside Atlantic BFS loop
 
     atlanticStepCounter++;
-    // if (atlanticStepCounter > MAX_BFS_STEPS) break;
   }
    // Reset r/c after loop
+   // Corrected: Use object format for l.simple and remove invalid group arg
    l.simple({ r: undefined });
    l.simple({ c: undefined });
 
 
   // --- Find the cells that can flow to both oceans ---
-  const resultCellsHighlight: { r: number, c: number }[] = [];
+  const resultCellsHighlight: Pointer2D[] = []; // Store as Pointer2D
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      // Check if the cell is reachable from both oceans
-      if (pacificVisited[r][c] && atlanticVisited[r][c]) { // Corrected typo: j -> c
+      if (pacificVisited[r][c] && atlanticVisited[r][c]) {
         result.push([r, c]);
         resultCellsHighlight.push({ r, c });
       }
@@ -205,14 +208,12 @@ export function generateSteps(heights: number[][]) { // Renamed and Exported, Re
   }
 
   // Log final state including the result
-  // Passing the first pointer from the array for type correction
-  l.array2d("heights", heights, resultCellsHighlight.length > 0 ? resultCellsHighlight[0] : undefined); // Fixed pointers, removed options
-  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), resultCellsHighlight.length > 0 ? resultCellsHighlight[0] : undefined); // Fixed pointers, removed options
-  l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), resultCellsHighlight.length > 0 ? resultCellsHighlight[0] : undefined); // Fixed pointers, removed options
-  l.array("result", formatQueue(result), undefined); // Removed invalid 4th argument
+  // Corrected: Pass single Pointer2D or undefined, remove invalid group/label
+  l.array2d("heights", heights, resultCellsHighlight[0]); // Pass first result highlight
+  l.array2d("pacificReachable", booleanGridToNumber(pacificVisited), resultCellsHighlight[0]);
+  l.array2d("atlanticReachable", booleanGridToNumber(atlanticVisited), resultCellsHighlight[0]);
+  l.array("result", formatQueue(result)); // Use formatQueue for consistency
   l.breakpoint(currentBreakpoint++); // Final breakpoint
 
   return l.getSteps(); // Return the collected steps
 }
-
-// Removed code, title, getInput, Problem export comment might be outdated.

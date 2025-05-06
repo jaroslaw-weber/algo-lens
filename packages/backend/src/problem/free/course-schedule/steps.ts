@@ -15,8 +15,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
   // Initial state log (Breakpoint 1)
   l.simple({ numCourses });
-  l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-  l.hashmap("graph", from2dArrayToMap(graph));
+  l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+  l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
   l.arrayV2({ inDegree: inDegree }, {});
   l.arrayV2({ queue: queue }, {});
   l.breakpoint(1);
@@ -29,7 +29,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       value: prerequisitesIndex, // Highlight current prerequisite pair
       color: "primary",
     });
-    l.hashmap("graph", from2dArrayToMap(graph));
+    l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
     l.arrayV2({ inDegree: inDegree }, { course: course }); // Highlight inDegree[course] before change
     l.arrayV2({ queue: queue }, {});
     l.breakpoint(2);
@@ -43,7 +43,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       value: prerequisitesIndex,
       color: "primary",
     });
-    l.hashmap("graph", from2dArrayToMap(graph)); // Graph now updated
+    l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" }); // Graph now updated
     l.arrayV2({ inDegree: inDegree }, { course: course }); // Highlight inDegree[course] after change
     l.arrayV2({ queue: queue }, {});
     l.breakpoint(3);
@@ -51,8 +51,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
   // Log after initialization loop (Breakpoint 4)
   l.simple({ numCourses });
-  l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-  l.hashmap("graph", from2dArrayToMap(graph));
+  l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+  l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
   l.arrayV2({ inDegree: inDegree }, {});
   l.arrayV2({ queue: queue }, {});
   l.breakpoint(4);
@@ -61,8 +61,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   inDegree.forEach((deg, index) => {
     // Log before checking degree (Breakpoint 5)
     l.simple({ numCourses, deg });
-    l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-    l.hashmap("graph", from2dArrayToMap(graph));
+    l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+    l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
     l.arrayV2({ inDegree: inDegree }, { index: index }); // Highlight current degree being checked
     l.arrayV2({ queue: queue }, {});
     l.breakpoint(5);
@@ -70,8 +70,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     if (deg === 0) {
       // Log before adding to queue (Breakpoint 6)
       l.simple({ numCourses, deg });
-      l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-      l.hashmap("graph", from2dArrayToMap(graph));
+      l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+      l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
       l.arrayV2({ inDegree: inDegree }, { index: index });
       l.arrayV2({ queue: queue }, {});
       l.breakpoint(6);
@@ -82,8 +82,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
   // Log initial state of the queue after population (Breakpoint 7)
   l.simple({ numCourses });
-  l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-  l.hashmap("graph", from2dArrayToMap(graph));
+  l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+  l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
   l.arrayV2({ inDegree: inDegree }, {});
   l.arrayV2({ queue: queue }, {}); // Queue might be populated now
   l.breakpoint(7);
@@ -93,8 +93,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     // Log start of while loop iteration (Breakpoint 8)
     l.simple({ numCourses });
     l.group("courses finished", { count });
-    l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-    l.hashmap("graph", from2dArrayToMap(graph));
+    l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+    l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
     l.arrayV2({ inDegree: inDegree }, {});
     l.arrayV2({ queue: queue }, {});
     l.breakpoint(8);
@@ -105,8 +105,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     // Log after dequeuing and incrementing count (Breakpoint 9)
     l.simple({ numCourses, current });
     l.group("courses finished", { count });
-    l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-    l.hashmap("graph", from2dArrayToMap(graph));
+    l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+    l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
     l.arrayV2({ inDegree: inDegree }, {});
     l.arrayV2({ queue: queue }, {}); // Queue after shift
     l.breakpoint(9);
@@ -118,7 +118,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       // Log before decrementing neighbor inDegree (Breakpoint 10)
       l.simple({ numCourses, current, neighbor });
       l.group("courses finished", { count });
-      l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
+      l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
       l.hashmap("graph", from2dArrayToMap(graph), {
         value: current, // Highlight the current course row in the graph
         color: "primary",
@@ -133,7 +133,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       // Log after decrementing neighbor inDegree (Breakpoint 11)
       l.simple({ numCourses, current, neighbor });
       l.group("courses finished", { count });
-      l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
+      l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
       l.hashmap("graph", from2dArrayToMap(graph), {
         value: current,
         color: "primary",
@@ -147,7 +147,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
         // Log before adding neighbor to queue (Breakpoint 12)
         l.simple({ numCourses, current, neighbor });
         l.group("courses finished", { count });
-        l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
+        l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
         l.hashmap("graph", from2dArrayToMap(graph), {
           value: current,
           color: "primary",
@@ -164,8 +164,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     // Log after processing all neighbors of 'current' (Breakpoint 13)
     l.simple({ numCourses, current });
     l.group("courses finished", { count });
-    l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-    l.hashmap("graph", from2dArrayToMap(graph));
+    l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+    l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
      l.arrayV2({ inDegree: inDegree }, {});
      l.arrayV2({ queue: queue }, {}); // Queue might have new elements
     l.breakpoint(13);
@@ -177,8 +177,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   l.group("courses finished", { count });
   l.group("result", { allCoursesTaken }); // Log the final boolean result
   l.simple({ result: allCoursesTaken });
-  l.hashmap("prerequisites", from2dArrayToMap(prerequisites));
-  l.hashmap("graph", from2dArrayToMap(graph));
+  l.hashmap("prerequisites", from2dArrayToMap(prerequisites), { value: -1, color: "neutral" });
+  l.hashmap("graph", from2dArrayToMap(graph), { value: -1, color: "neutral" });
    l.arrayV2({ inDegree: inDegree }, {}); // Final state of inDegree
    l.arrayV2({ queue: queue }, {}); // Queue should be empty if successful
   l.breakpoint(14);

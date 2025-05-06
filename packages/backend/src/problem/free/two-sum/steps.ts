@@ -7,9 +7,9 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   const l = new StepLoggerV2();
   const seen = new Map<number, number>();
 
-  l.simple({ target });
+  l.simple({ target: target }); // Corrected l.simple call
   l.arrayV2({ nums: nums }, {});
-  l.hashmap("seen", seen, { value: '', color: 'neutral' }); // Added default highlight
+  l.hashmap("seen", seen, undefined); // Corrected l.hashmap call, added undefined highlight
   l.breakpoint(1); // Corresponds to #1 in original code
 
   for (let i = 0; i < nums.length; i++) {
@@ -18,7 +18,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
     // Highlight current element and show complement needed
     l.arrayV2({ nums: nums }, { i: i }); // Use inferred label "i"
-    l.simple({ complement });
+    l.simple({ complement: complement }); // Corrected l.simple call
     l.breakpoint(2); // Corresponds to #2
 
     const complementIndex = seen.get(complement);
