@@ -10,7 +10,7 @@ const Navbar = () => {
             className="btn btn-ghost normal-case font-display text-xl"
           >
             <span className="hidden sm:inline">
-              algo-lens: see algorithms in action!
+              algolens: see algorithms in action!
             </span>
             <span className="inline sm:hidden">algo-lens</span>
           </a>

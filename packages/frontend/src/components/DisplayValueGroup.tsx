@@ -108,8 +108,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
       <div className="flex flex-col gap-1 w-full">
         <p className="text-xs text-gray-400">{x.label}</p>
         <div className="flex items-center gap-4">
-          <p className="text-xs">{data.options.min}</p>
-
+          {/* Remove the min value display */}
           <div
             className="flex w-full h-6 bg-gray-200 rounded overflow-hidden dark:bg-neutral-700"
             role="progressbar"
@@ -126,8 +125,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
               {x.value}
             </div>
           </div>
-
-          <p className="text-xs">{data.options.max}</p>
+          {/* Remove the max value display */}
         </div>
       </div>
     );
