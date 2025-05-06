@@ -7,8 +7,10 @@ interface DisplayLinkedListProps {
   data: ListVariable;
 }
 
-
-export const transformListToGraph = (node: ListNode, highlight: Map<string, NodeHighlight>) => {
+export const transformListToGraph = (
+  node: ListNode,
+  highlight: Map<string, NodeHighlight>
+) => {
   const elements: cytoscape.ElementDefinition[] = [];
   const visited = new Set<ListNode>();
   let currentNode = node;
@@ -22,7 +24,7 @@ export const transformListToGraph = (node: ListNode, highlight: Map<string, Node
           source: currentNode.id.toString(),
           target: currentNode.id.toString(),
         },
-        classes: 'cycle',
+        classes: "cycle",
       });
       break;
     }
@@ -78,7 +80,6 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
               "border-color": "black",
               "user-select": "none",
               "user-drag": "none",
-  
             },
           },
           // Retaining the node highlighting styles from previous component
@@ -132,7 +133,6 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
 
   return (
     <div className="w-full">
-      <p>{data.label}</p>
       <div ref={containerRef} className="w-80 h-36" />
     </div>
   );

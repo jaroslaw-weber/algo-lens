@@ -19,8 +19,16 @@ export function sameTree(
     qNode: BinaryTreeNode | null
   ): boolean {
     // Use conditional logic for highlights
-    l.tree("pTree", p, pNode ? [{ node: pNode, color: "neutral" as HighlightColor }] : []);
-    l.tree("qTree", q, qNode ? [{ node: qNode, color: "neutral" as HighlightColor }] : []);
+    l.tree(
+      "pTree",
+      p,
+      pNode ? [{ node: pNode, color: "neutral" as HighlightColor }] : []
+    );
+    l.tree(
+      "qTree",
+      q,
+      qNode ? [{ node: qNode, color: "neutral" as HighlightColor }] : []
+    );
     l.breakpoint(1); // Log initial call
 
     if (!pNode && !qNode) {
@@ -33,8 +41,16 @@ export function sameTree(
     }
     if (!pNode || !qNode) {
       // Use conditional logic for highlights
-      l.tree("pTree", p, pNode ? [{ node: pNode, color: "bad" as HighlightColor }] : []);
-      l.tree("qTree", q, qNode ? [{ node: qNode, color: "bad" as HighlightColor }] : []);
+      l.tree(
+        "pTree",
+        p,
+        pNode ? [{ node: pNode, color: "bad" as HighlightColor }] : []
+      );
+      l.tree(
+        "qTree",
+        q,
+        qNode ? [{ node: qNode, color: "bad" as HighlightColor }] : []
+      );
       l.simple({ "is node same?": false });
       l.breakpoint(3); // Log base case: one null
       return false;

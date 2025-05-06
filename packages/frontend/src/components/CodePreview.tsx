@@ -7,9 +7,11 @@ const CodePreview = ({ code, highlightLineIndex }) => {
     if (preRef.current) {
       const highlightedLine = preRef.current.querySelector(".highlighted");
       if (highlightedLine) {
-        // Ensure only the <pre> element scrolls
-        preRef.current.scrollTop =
-          highlightedLine.offsetTop - preRef.current.offsetTop;
+        // Smooth scrolling within the <pre> element
+        preRef.current.scrollTo({
+          top: highlightedLine.offsetTop - preRef.current.offsetTop,
+          behavior: "smooth",
+        });
       }
     }
   }, [highlightLineIndex]);

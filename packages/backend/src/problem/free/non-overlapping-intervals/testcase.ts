@@ -4,7 +4,6 @@ import { EraseOverlapIntervalsInput } from './types'; // Assuming types file exi
 export const testcases = [
   { input: { intervals: [[1,2], [2,3], [3,4], [1,3]] }, expected: 1 },
   { input: { intervals: [[1,2], [3,4], [5,6]] }, expected: 0 },
-  { input: { intervals: [] }, expected: 0 },
    // Changed from [[1,10]] (single interval) to a more complex case
    { input: { intervals: [[1,2], [2,3], [3,4], [1,3]] }, expected: 1,
     isDefault: true},

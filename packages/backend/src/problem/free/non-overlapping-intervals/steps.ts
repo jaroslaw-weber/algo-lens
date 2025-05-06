@@ -3,9 +3,8 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { asValueGroup, asIntervals, getIntervalBounds } from "../../core/utils";
 import { EraseOverlapIntervalsInput } from "./types"; // Import EraseOverlapIntervalsInput
 
-export function generateSteps(p: EraseOverlapIntervalsInput): ProblemState[] {
+export function generateSteps(intervals: number[][]): ProblemState[] {
   // Renamed and Exported
-  const { intervals } = p;
   const logger = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   let removalCount = 0; //#1 Initialize removal count

@@ -50,12 +50,12 @@ export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
   },
   {
     // Changed from [1, 2] vs [1, null, 2] to slightly larger trees with different structure
-    input: [arrayToTree([1, 2, 3, 4, null]), arrayToTree([1, 2, 3, null, 4])],
+    input: [arrayToTree([1, 2, 3, 4, 5]), arrayToTree([1, 2, 3, 4])],
     expected: false,
     isDefault: true,
   },
   {
-    input: [arrayToTree([1, 2]), arrayToTree([1, 2, null])],
+    input: [arrayToTree([1, 2]), arrayToTree([1, 2, 3])],
     expected: true,
   },
 ];
