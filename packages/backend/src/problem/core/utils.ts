@@ -314,19 +314,19 @@ export function asStringArray(
   };
 
   if (column1 !== undefined) {
-    result.pointers.push({
+    result.pointers!.push({
       value: column1,
       dimension: "column",
     });
   }
   if (column2 !== undefined) {
-    result.pointers.push({
+    result.pointers!.push({
       value: column2,
       dimension: "column",
     });
   }
   if (column3 !== undefined) {
-    result.pointers.push({
+    result.pointers!.push({
       value: column3,
       dimension: "column",
     });
@@ -346,11 +346,11 @@ export function as2dArray(
     pointers: [],
   };
   for (const p of pointers) {
-    result.pointers.push({
+    result.pointers!.push({
       value: p.r,
       dimension: "row",
     });
-    result.pointers.push({
+    result.pointers!.push({
       value: p.c,
       dimension: "column",
     });

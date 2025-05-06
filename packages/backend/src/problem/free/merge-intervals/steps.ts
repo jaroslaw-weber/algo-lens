@@ -52,17 +52,12 @@ export function generateSteps(p: MergeIntervalsInput) {
     const lastMerged = merged[merged.length - 1]; // Use variable name from variables.ts
 
     // Log state at the beginning of the loop iteration (before check)
-    // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+    // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
     l.simple({ i: i });
-    l.intervals("currentInterval", [currentInterval], undefined, {
-      group: "loop",
-    });
-    l.intervals("lastMerged", [lastMerged], undefined, { group: "loop" });
-    l.intervals("intervals", intervals, [i], {
-      group: "input",
-      label: "intervals (sorted)",
-    }); // Highlight current interval being checked
-    l.intervals("merged", merged, [merged.length - 1], { group: "result" }); // Highlight the last merged interval
+    l.intervals("currentInterval", [currentInterval], [], min, max);
+    l.intervals("lastMerged", [lastMerged], [], min, max);
+    l.intervals("intervals", intervals, [i], min, max); // Highlight current interval being checked
+    l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight the last merged interval
     l.breakpoint(3);
 
     const currentStart = currentInterval[0];
@@ -75,35 +70,23 @@ export function generateSteps(p: MergeIntervalsInput) {
       lastMerged[1] = Math.max(lastEnd, currentEnd);
 
       // Log state after merging
-      // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+      // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
       l.simple({ i: i });
-      l.intervals("currentInterval", [currentInterval], undefined, {
-        group: "loop",
-      });
-      l.intervals("lastMerged", [lastMerged], undefined, {
-        group: "loop",
-        label: "lastMerged (updated)",
-      }); // Indicate update
-      l.intervals("intervals", intervals, [i], {
-        group: "input",
-        label: "intervals (sorted)",
-      });
-      l.intervals("merged", merged, [merged.length - 1], {
-        group: "result",
-        previousValue: [lastMerged[0], previousLastMergedEnd],
-      }); // Highlight updated merged interval and show previous end
+      l.intervals("currentInterval", [currentInterval], [], min, max);
+      l.intervals("lastMerged", [lastMerged], [], min, max); // Indicate update
+      l.intervals("intervals", intervals, [i], min, max);
+      l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight updated merged interval and show previous end
       l.breakpoint(4);
     } else {
       // No overlap: Add the current interval to 'merged'
       merged.push([...currentInterval]); // Push a copy
 
       // Log state after adding a new interval
-      // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+      // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
       l.simple({ i: i });
-      l.intervals("currentInterval", [currentInterval], [], min, max);
-      l.intervals("lastMerged", [lastMerged], []); // Show the one before the new one
-      l.intervals("intervals", intervals, [i]);
-      l.intervals("merged", merged, [merged.length - 1], { group: "result" }); // Highlight the newly added interval
+      l.intervals("lastMerged", [lastMerged], [], min, max); // Show the one before the new one
+      l.intervals("intervals", intervals, [i], min, max);
+      l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight the newly added interval
       l.breakpoint(5);
     }
     // Reset loop specific variables? Optional.
@@ -111,7 +94,7 @@ export function generateSteps(p: MergeIntervalsInput) {
     // l.intervals("currentInterval", [], undefined, { group: "loop" });
     // l.intervals("lastMerged", [], undefined, { group: "loop" });
   }
-  // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+  // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
   l.simple({ i: undefined }); // Indicate loop finished
 
   // Log final state
