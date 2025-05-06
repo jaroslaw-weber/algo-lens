@@ -8,13 +8,13 @@ export function generateSteps(p: MergeIntervalsInput) {
   const { intervals } = p;
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
-  const min:number = _.min(intervals.map((arr) => arr[0]))!; // Get minimum start time
-  const max:number = _.max(intervals.map((arr) => arr[1]))!; // Get maximum end time
+  const min: number = _.min(intervals.map((arr) => arr[0]))!; // Get minimum start time
+  const max: number = _.max(intervals.map((arr) => arr[1]))!; // Get maximum end time
 
   // Handle empty or single interval case
   if (!intervals || intervals.length === 0) {
-    l.intervals("intervals", [],[], min, max);
-    l.intervals("merged", [],[], min, max);
+    l.intervals("intervals", [], [], min, max);
+    l.intervals("merged", [], [], min, max);
     l.breakpoint(6); // Directly to final state
     return l.getSteps();
   }
@@ -23,7 +23,9 @@ export function generateSteps(p: MergeIntervalsInput) {
   l.intervals(
     "intervals",
     intervals.map((arr) => [...arr]),
-    [],min,max)
+    [],
+    min,
+    max
   ); // Log copy before sort
   l.intervals("merged", [], [], min, max);
   l.breakpoint(1);
@@ -114,7 +116,7 @@ export function generateSteps(p: MergeIntervalsInput) {
 
   // Log final state
   l.intervals("intervals", intervals, [], min, max);
-  l.intervals("result", merged, [], min, max; // Changed "merged" to "result"
+  l.intervals("result", merged, [], min, max); // Changed "merged" to "result"
   l.breakpoint(6);
 
   return l.getSteps(); // Return the collected steps

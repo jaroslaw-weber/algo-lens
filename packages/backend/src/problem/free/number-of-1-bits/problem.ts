@@ -5,11 +5,8 @@ import { variables } from "./variables";
 import { groups } from "./groups";
 import { testcases } from "./testcase";
 
-const title = "Hamming Weight";
-const getInput = () => ({ n: 9 });
-
 export const problem: Problem<HammingWeightInput, ProblemState> = {
-  title,
+  title: "Hamming Weight",
   emoji: "1️⃣",
   testcases,
   difficulty: "easy",

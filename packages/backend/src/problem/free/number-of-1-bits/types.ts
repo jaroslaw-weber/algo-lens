@@ -1,3 +1,1 @@
-export interface HammingWeightInput {
-  n: number;
-}
+export type HammingWeightInput = number;
