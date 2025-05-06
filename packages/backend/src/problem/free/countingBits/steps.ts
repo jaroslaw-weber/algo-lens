@@ -80,7 +80,7 @@ export function generateSteps(n: number): ProblemState[] {
     l.group("count", { count }, { min: 0, max: n });
     l.breakpoint(7, `Stored count ${count} in result[${i}].`); // Re-use breakpoint 7 or use a new one if needed
   }
-  l.simple({ result }); // Show final result array
+  l.arrayV2({ result }); // Show final result array
   //#8 Log final state
   l.breakpoint(8, "Finished processing all numbers. Returning result.");
 
