@@ -1,55 +1,90 @@
-import { useAtom } from "jotai";
-import { problemsAtom } from "../atom";
-import { useEffect } from "react";
-import { getProblemList } from "../api";
+import React, { useState, useEffect } from "react";
+import { getProblemList, ProblemInfo } from "../api"; // Import ProblemInfo
 
-function ProblemsList() {
-  console.log("ProblemsList rendering"); // Log component rendering
-  const [problems, setProblems] = useAtom(problemsAtom);
+// Define props interface
+interface ProblemListProps {
+  tag?: string;
+  title?: string;
+}
 
-  async function init() {
-    console.log("init problem list");
-    const ps = await getProblemList();
-    console.log("Fetched problems data:", ps); // Log fetched data
-    console.log("Setting problems state with fetched data"); // Log before setting state
-    setProblems(ps);
-    console.log("Problems state update initiated"); // Log after setting state
-  }
+function ProblemsList({ tag, title }: ProblemListProps) {
+  console.log(`ProblemsList rendering for tag: ${tag}, title: ${title}`); // Log component rendering with props
+
+  // Use local state instead of Jotai atom
+  const [problems, setProblems] = useState<ProblemInfo[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    init();
-  }, []);
+    const fetchProblems = async () => {
+      try {
+        console.log(`Fetching problems with tag: ${tag}`);
+        setLoading(true);
+        setError(null);
+        const ps = await getProblemList(tag); // Pass tag to API call
+        console.log("Fetched problems data:", ps); // Log fetched data
+        setProblems(ps);
+      } catch (err) {
+        console.error("Failed to fetch problems:", err);
+        setError("Failed to load problems. Please try refreshing.");
+      } finally {
+        setLoading(false);
+        console.log("Finished fetching problems.");
+      }
+    };
+
+    fetchProblems();
+  }, [tag]); // Re-run effect if tag changes
 
   return (
-    <div className="container mx-auto p-6">
+    // Removed outer container mx-auto p-6 as it's now in the Astro page
+    <div>
+      {/* Use title prop for heading, provide fallback */}
       <h1 className="text-3xl font-bold mb-6 text-center">
-        Algorithm Visualization Tool
+        {title || "Problems"}
       </h1>
-      <p className="mb-8 text-lg text-center text-gray-600">
-        Explore and visualize algorithms step by step.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4  ">
-        {problems.map((p) => {
-          // Destructure emoji along with id and title
-          const { id, title, emoji } = p;
+      {/* Removed static description paragraph */}
+
+      {loading && (
+        <div className="text-center p-10">
+          <span className="loading loading-lg loading-spinner text-primary"></span>
+          <p>Loading problems...</p>
+        </div>
+      )}
+
+      {error && (
+         <div className="text-center p-10 text-error">
+           <p>{error}</p>
+         </div>
+      )}
+
+      {!loading && !error && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+          {problems.length === 0 ? (
+            <p className="col-span-full text-center text-gray-500">No problems found for this category.</p>
+          ) : (
+            problems.map((p) => {
+              const { id, title, emoji } = p;
 
           return (
-            <div
+            <a
               key={id}
-              className="flex items-center gap-2 p-3 bg-primary rounded-md transition-colors"
+              href={`/problem/visualize?id=${id}`}
+              className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 block" // Use 'block' to make the anchor fill the grid cell
             >
-              {/* Display emoji if it exists */}
-              {emoji && <span className="text-lg mr-2">{emoji}</span>}
-              <a
-                href={`/problem/visualize?id=${id}`}
-                className="text-lg font-semibold text-primary-content hover:underline"
-              >
-                {title}
-              </a>
-            </div>
-          );
-        })}
-      </div>
+              <div className="card-body">
+                <h2 className="card-title">
+                  {/* Display emoji if it exists, adding some space */}
+                  {emoji && <span className="mr-2">{emoji}</span>}
+                  {title}
+                </h2>
+                {/* Removed the separate link as the whole card is now clickable */}
+              </div>
+            </a>
+            )
+          ))}
+        </div>
+      )}
     </div>
   );
 }

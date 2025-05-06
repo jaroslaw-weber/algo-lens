@@ -24,9 +24,42 @@ app.get("/health", (c) => {
 });
 
 app.get("/problem", async (c) => {
+  const tag = c.req.query("tag"); // Get the tag query parameter
   const all = await getAllProblems();
-  const list = all.map((x) => pick(x, ["id", "title", "difficulty", "emoji"]));
+
+  // Filter problems if a tag is provided
+  const filteredProblems = tag
+    ? all.filter(p => p.tags && p.tags.includes(tag))
+    : all;
+
+  // Map the filtered list to the desired output format
+  const list = filteredProblems.map((x) => pick(x, ["id", "title", "difficulty", "emoji"]));
   return c.json(list);
+});
+
+// New route for getting a random problem
+app.get("/problem/random", async (c) => {
+  try {
+    const all = await getAllProblems();
+    if (!all || all.length === 0) {
+      console.error("No problems found when fetching for /problem/random");
+      return c.json({ error: "No problems available" }, 500);
+    }
+
+    const randomProblem = all[Math.floor(Math.random() * all.length)];
+    const result = pick(randomProblem, ["id", "title", "difficulty", "emoji"]);
+
+    // Ensure we actually found a problem and picked some fields
+    if (!result || !result.id) {
+        console.error("Failed to select a random problem or pick required fields", { randomProblem, result });
+        return c.json({ error: "Failed to retrieve random problem details" }, 500);
+    }
+
+    return c.json(result);
+  } catch (error) {
+    console.error("Error fetching random problem:", error);
+    return c.json({ error: "Internal server error" }, 500);
+  }
 });
 
 app.get("/problem/:id", async (c) => {
