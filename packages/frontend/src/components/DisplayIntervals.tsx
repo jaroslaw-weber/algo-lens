@@ -12,6 +12,10 @@ import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
 import type { IntervalVariable } from "algo-lens-core";
 
+// Constants for chart height calculation
+const BAR_HEIGHT = 30;
+const BASE_PADDING = 70;
+
 // Register the components
 ChartJS.register(
   CategoryScale,
@@ -51,18 +55,13 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
     ],
   };
 
-  function getAspectRatio(intervalCount: number): number {
-    if (intervalCount <= 1) {
-      return 4;
-    }
-    if (intervalCount <= 2) {
-      return 3;
-    }
-    return 2; // Adjust this value based on the number of intervals you want to display in a single row
-  }
-  const options = {
-    aspectRatio: getAspectRatio(data.value.length),
+  // Calculate dynamic chart height
+  const numDataPoints = data.value.length;
+  const chartHeight = numDataPoints === 0 ? BASE_PADDING : (numDataPoints * BAR_HEIGHT) + BASE_PADDING;
 
+
+  const options = {
+    maintainAspectRatio: false,
     indexAxis: "y" as "y", // Explicitly typing it as 'y'
     scales: {
       y: {
@@ -91,7 +90,7 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
   };
 
   return (
-    <div>
+    <div style={{ height: `${chartHeight}px` }}>
       <Bar data={chartData} options={options} />
     </div>
   );
