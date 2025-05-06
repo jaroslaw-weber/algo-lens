@@ -72,6 +72,12 @@ function DisplayState({
 
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
+      {/* Display the breakpoint description */}
+      {state.description && (
+        <div className="mb-4 p-4 border border-dashed border-gray-400 rounded-lg bg-gray-50 w-full text-center">
+          <p className="text-lg font-semibold text-gray-700">{state.description}</p>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-8 w-full">
         {variables.map((variable) => {
           const groupMeta = metadata!.groups?.find(
