@@ -25,8 +25,9 @@ export const testcases = [
     ],
     expected: 2,
     description: "Multiple separate islands",
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [
       ["1", "1", "0", "0", "0"],
@@ -46,5 +47,5 @@ export const testcases = [
     ],
     expected: 1,
     description: "Grid with islands connected by walls",
-  }
+  },
 ];

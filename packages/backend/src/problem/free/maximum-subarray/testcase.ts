@@ -16,11 +16,12 @@ export const testcases = [
     input: [-1, -2, -3, -4],
     expected: -1,
     description: "All negative numbers",
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [5],
     expected: 5,
     description: "Single element array",
-  }
+  },
 ];

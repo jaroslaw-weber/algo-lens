@@ -16,10 +16,11 @@ export const testcases = [
   {
     input: { m: 2, n: 2 },
     expected: 2, // C(2+2-2, 2-1) = C(2, 1) = 2
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: { m: 3, n: 2 },
     expected: 3, // C(3+2-2, 3-1) = C(3, 2) = 3
-  }
+  },
 ];

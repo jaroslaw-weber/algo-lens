@@ -30,7 +30,8 @@ export const testcases = [
     description: "Single cell grid",
   },
   {
-    input: [ // Corrected input structure
+    input: [
+      // Corrected input structure
       [1, 1],
       [1, 1],
       [1, 1],
@@ -44,10 +45,12 @@ export const testcases = [
       [2, 1],
     ],
     description: "All cells reachable",
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
-    input: [ // Corrected input structure
+    input: [
+      // Corrected input structure
       [1, 2],
       [4, 3],
     ],
@@ -57,5 +60,5 @@ export const testcases = [
       [1, 1],
     ],
     description: "Small 2x2 grid",
-  }
+  },
 ];

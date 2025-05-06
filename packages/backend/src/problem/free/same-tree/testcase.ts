@@ -51,10 +51,11 @@ export const testcases = [
   {
     input: [arrayToTree([1, 2]), arrayToTree([1, null, 2])],
     expected: false,
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [arrayToTree([1, 2]), arrayToTree([1, 2, null])],
     expected: true,
-  }
+  },
 ];

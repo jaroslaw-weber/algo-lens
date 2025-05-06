@@ -30,8 +30,9 @@ export const testcases = [
       [8, 10],
       [15, 18],
     ],
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [
       [1, 2],
@@ -41,5 +42,5 @@ export const testcases = [
       [1, 2],
       [3, 4],
     ],
-  }
+  },
 ];

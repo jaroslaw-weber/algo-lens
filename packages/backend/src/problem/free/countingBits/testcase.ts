@@ -23,8 +23,9 @@ export const testcases = [
   {
     input: 3,
     expected: [0, 1, 1, 2],
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: 4,
     expected: [0, 1, 1, 2, 1],
@@ -40,5 +41,5 @@ export const testcases = [
   {
     input: 10,
     expected: [0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2],
-  }
+  },
 ];

@@ -64,8 +64,9 @@ export const testcases = [
     input: [3, []],
     expected: true,
     description: "Test Case 7: No prerequisites",
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [
       5,
@@ -119,13 +120,21 @@ export const testcases = [
     description: "Test Case 11: Larger valid DAG",
   },
   {
-    input: [ // Added another complex DAG case
+    input: [
+      // Added another complex DAG case
       7,
       [
-        [1,0], [2,0], [3,1], [3,2], [4,3], [5,3], [6,4], [6,5]
-      ]
+        [1, 0],
+        [2, 0],
+        [3, 1],
+        [3, 2],
+        [4, 3],
+        [5, 3],
+        [6, 4],
+        [6, 5],
+      ],
     ],
     expected: true,
-    description: "Test Case 12: Complex DAG with multiple paths"
-  }
+    description: "Test Case 12: Complex DAG with multiple paths",
+  },
 ];

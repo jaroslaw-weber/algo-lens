@@ -41,8 +41,9 @@ export const testcases = [
   {
     input: [[[1, 5]], [2, 3]],
     expected: [[1, 5]],
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [[[1, 5]], [6, 8]],
     expected: [
@@ -66,5 +67,5 @@ export const testcases = [
       [5, 7],
     ],
     expected: [[1, 9]],
-  }
+  },
 ];

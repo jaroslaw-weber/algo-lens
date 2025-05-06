@@ -1,9 +1,6 @@
-
 import { ListNode, TestCase } from "algo-lens-core";
 
 import { ReverseListInput } from "./types";
-
-
 
 export const testcases = [
   {
@@ -23,8 +20,9 @@ export const testcases = [
     // Manually create 3 -> 2 -> 1
     expected: new ListNode(3, new ListNode(2, new ListNode(1))),
     description: "List with multiple elements (1->2->3)",
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     // Manually create 5 -> 8
     input: { head: new ListNode(5, new ListNode(8)) },
@@ -32,5 +30,5 @@ export const testcases = [
     // Manually create 8 -> 5
     expected: new ListNode(8, new ListNode(5)),
     description: "List with multiple elements (5->8)",
-  }
+  },
 ];

@@ -61,8 +61,9 @@ export const testcases = [
       [1, 1],
     ],
     description: "Matrix with no zeroes",
-  ,
-    isDefault: true},
+
+    isDefault: true,
+  },
   {
     input: [[0]],
     expected: [[0]],
@@ -73,5 +74,5 @@ export const testcases = [
 
     expected: [[1]],
     description: "Single cell matrix without zero",
-  }
+  },
 ];
