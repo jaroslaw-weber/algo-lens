@@ -36,18 +36,30 @@ export function generateSteps(grid: string[][]): ProblemState[] {
       { max: (rowCount * colCount) / 2, min: 0 }
     );
     l.breakpoint(2);
+    // Check for out of bounds
     if (
       i < 0 ||
       i >= rowCount ||
       j < 0 ||
-      j >= colCount ||
-      grid[i][j] !== "1"
+      j >= colCount
     ) {
+      l.breakpoint(3); // Breakpoint after out-of-bounds check
       return;
     }
-    grid[i][j] = "2"; // Mark the cell as visited
+    // Check if the cell is water or already visited ('0' or '2')
+    if (grid[i][j] !== "1") {
+       l.breakpoint(4); // Breakpoint after water/visited check
+      return;
+    }
+    l.breakpoint(5); // Breakpoint before marking as visited
+    grid[i][j] = "2"; // Mark the cell as visited ('2')
+
     for (const [dx, dy] of directions) {
-      dfs(i + dx, j + dy);
+      const x = i + dx; // Calculate new row index
+      const y = j + dy; // Calculate new column index
+      l.breakpoint(6); // Breakpoint before calculating new coordinates (corresponds to x += i; y += j; conceptually)
+      l.breakpoint(7); // Breakpoint right before the recursive call
+      dfs(x, y); // Recursive call for the adjacent cell
     }
   }
 
