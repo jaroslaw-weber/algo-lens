@@ -39,7 +39,7 @@ function arrayToTree(arr: (number | null)[] | null): BinaryTreeNode | null {
   return root;
 }
 
-export const testcases = [
+export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
   {
     input: [arrayToTree([1, 2, 3]), arrayToTree([1, 2, 3])],
     expected: true,

@@ -13,19 +13,19 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
 
   // Log initial state
   logger.simple({ s: s });
-  logger.arrayV2("wordDict", wordDict);
+  logger.arrayV2({ wordDict });
   logger.breakpoint(currentBreakpoint++); // Breakpoint 0: Initial state
 
   // Create a Set from the dictionary for efficient word lookup
   const wordSet = new Set(wordDict);
-  logger.hashset("wordSet", wordSet, {}); // Log the set
+  logger.hashset("wordSet", wordSet, undefined!); // Log the set
 
   // dp[i] will be true if the first i characters of s (s[0...i-1]) can be segmented.
   const n = s.length;
   const dp = new Array(n + 1).fill(false);
   // Base case: An empty string can always be segmented.
   dp[0] = true;
-  logger.arrayV2("dp", dp);
+  logger.arrayV2({ dp });
   logger.breakpoint(currentBreakpoint++); // Breakpoint 1: DP initialized
 
   // Iterate through the string from length 1 up to n.
@@ -55,20 +55,20 @@ export function generateSteps(p: WordBreakInput): WordBreakProblemState[] {
         // If both conditions are true, then the prefix s[0...i-1] can be segmented.
         dp[i] = true;
         logger.simple({ "dp[i] updated": true }); // Log that dp[i] is updated
-         logger.arrayV2("dp", dp); // Log the updated dp array
+        logger.arrayV2({ dp }, { i }); // Log the updated dp array
         logger.breakpoint(currentBreakpoint++); // Breakpoint: Found valid segmentation, dp[i] updated
         // Break the inner loop since we've found a way to segment s[0...i-1].
         break;
       } else {
-          logger.simple({ "dp[i] updated": false }); // Log that dp[i] was not updated
-          logger.breakpoint(currentBreakpoint++); // Breakpoint: Segmentation using split point j didn't work
+        logger.simple({ "dp[i] updated": false }); // Log that dp[i] was not updated
+        logger.breakpoint(currentBreakpoint++); // Breakpoint: Segmentation using split point j didn't work
       }
     }
-     // Reset j after inner loop finishes or breaks
-     logger.simple({ j: undefined });
-     logger.simple({ suffix: undefined });
-     logger.arrayV2("dp", dp); // Log dp state at the end of outer loop iteration i
-     logger.breakpoint(currentBreakpoint++); // Breakpoint: End of outer loop iteration i
+    // Reset j after inner loop finishes or breaks
+    logger.simple({ j: undefined });
+    logger.simple({ suffix: undefined });
+    logger.arrayV2("dp", dp); // Log dp state at the end of outer loop iteration i
+    logger.breakpoint(currentBreakpoint++); // Breakpoint: End of outer loop iteration i
   }
 
   // Reset i after outer loop finishes
