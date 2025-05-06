@@ -91,7 +91,7 @@ class ProblemStateCache {
     if (testcases.length === 0) {
       throw new Error("no testcases found for problem: " + problem.id!);
     }
-    const testcase = testcases[0].input;
+    const testcase = testcases[2].input;
     console.log("testcase: ", testcase);
     const states = problem.func(testcase);
     for (let i = 0; i < states.length; i++) {

@@ -36,7 +36,6 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.group("loop", { i }, { min: 0, max: prices.length });
     l.breakpoint(
       2,
       `Day ${i}: Calculating potential profit if sold today. Comparing with previous max profit.`
@@ -48,7 +47,6 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.group("loop", { i }, { min: 0, max: prices.length });
     l.breakpoint(
       3,
       `Day ${i}: Updating the minimum price if today's price is lower.`
@@ -60,14 +58,12 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.group("loop", { i }, { min: 0, max: prices.length });
     l.breakpoint(
       4,
       `Day ${i}: State after updating minimum price. Preparing for next iteration.`
     );
     l.hide("smaller");
     l.hide("profit");
-    l.hide("loop");
   }
 
   const result = dp[prices.length - 1];
