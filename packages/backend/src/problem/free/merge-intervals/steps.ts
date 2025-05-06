@@ -97,7 +97,7 @@ export function generateSteps(intervals: number[][]) {
     // l.intervals("lastMerged", [], undefined, { group: "loop" });
   }
   // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-  l.simple({ i: undefined }); // Indicate loop finished
+  l.hide("i");
 
   // Log final state
   l.intervals("intervals", intervals, [], min, max);
