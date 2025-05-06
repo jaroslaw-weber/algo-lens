@@ -74,7 +74,8 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   // Final result
   const result = dpGrid[rows - 1][cols - 1]; // Use variable name from variables.ts
 
-  l.simple("result", result, { group: "result" });
+  // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+  l.simple({ result: result });
   l.grid("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use grid, pass pointer directly
 
   l.breakpoint(5);

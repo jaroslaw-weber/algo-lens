@@ -41,7 +41,8 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
     const lastMerged = merged[merged.length - 1]; // Use variable name from variables.ts
 
     // Log state at the beginning of the loop iteration (before check)
-    l.simple("i", i, { group: "loop" });
+    // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+    l.simple({ i: i });
     l.intervals("currentInterval", [currentInterval], undefined, { group: "loop" });
     l.intervals("lastMerged", [lastMerged], undefined, { group: "loop" });
     l.intervals("intervals", intervals, [i], { group: "input", label: "intervals (sorted)" }); // Highlight current interval being checked
@@ -58,7 +59,8 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
       lastMerged[1] = Math.max(lastEnd, currentEnd);
 
       // Log state after merging
-      l.simple("i", i, { group: "loop" });
+      // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+      l.simple({ i: i });
       l.intervals("currentInterval", [currentInterval], undefined, { group: "loop" });
       l.intervals("lastMerged", [lastMerged], undefined, { group: "loop", label: "lastMerged (updated)" }); // Indicate update
       l.intervals("intervals", intervals, [i], { group: "input", label: "intervals (sorted)" });
@@ -69,7 +71,8 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
       merged.push([...currentInterval]); // Push a copy
 
       // Log state after adding a new interval
-      l.simple("i", i, { group: "loop" });
+      // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+      l.simple({ i: i });
       l.intervals("currentInterval", [currentInterval], undefined, { group: "loop" });
       l.intervals("lastMerged", [lastMerged], undefined, { group: "loop", label: "lastMerged (previous)" }); // Show the one before the new one
       l.intervals("intervals", intervals, [i], { group: "input", label: "intervals (sorted)" });
@@ -81,7 +84,8 @@ export function generateSteps(p: MergeIntervalsInput) { // Renamed and Exported,
      // l.intervals("currentInterval", [], undefined, { group: "loop" });
      // l.intervals("lastMerged", [], undefined, { group: "loop" });
   }
-   l.simple("i", undefined, { group: "loop" }); // Indicate loop finished
+   // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+   l.simple({ i: undefined }); // Indicate loop finished
 
   // Log final state
   l.intervals("intervals", intervals, undefined, { group: "input", label: "intervals (sorted)" });
