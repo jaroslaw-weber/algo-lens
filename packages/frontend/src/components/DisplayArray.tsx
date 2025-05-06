@@ -67,6 +67,11 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
     <tr key={rowIndex} className="flex text-xs relative">
+      {is2D && (
+        <th className="px-2 py-1 border-r border-gray-200 bg-gray-100 text-center font-semibold sticky left-0 z-10">
+          {rowIndex}
+        </th>
+      )}
       {items.map((item, colIndex) => {
         const { style, pointerLabel } = getCellPointerInfo(rowIndex, colIndex);
         return (
@@ -95,9 +100,27 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   return (
     <div className="">
       <table className="w-full table-auto border-collapse border border-gray-200">
+        {is2D && (
+          <thead>
+            <tr className="flex text-xs relative bg-gray-100">
+              <th className="px-2 py-1 border-r border-gray-200 sticky left-0 z-10"></th>{" "}
+              {/* Empty cell for alignment */}
+              {Array.from({ length: numCols }).map((_, colIndex) => (
+                <th
+                  key={colIndex}
+                  className="px-2 py-1 flex-1 text-center font-semibold"
+                >
+                  {colIndex}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
         <tbody>
           {is2D
-            ? array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
+            ? array.map((subArray, rowIndex) =>
+                renderRow(Array.isArray(subArray) ? subArray : [], rowIndex)
+              )
             : renderRow(array, 0)}
         </tbody>
       </table>
