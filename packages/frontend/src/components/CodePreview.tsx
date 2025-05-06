@@ -7,7 +7,9 @@ const CodePreview = ({ code, highlightLineIndex }) => {
     if (preRef.current) {
       const highlightedLine = preRef.current.querySelector(".highlighted");
       if (highlightedLine) {
-        highlightedLine.scrollIntoView({ behavior: "smooth", block: "center" });
+        // Ensure only the <pre> element scrolls
+        preRef.current.scrollTop =
+          highlightedLine.offsetTop - preRef.current.offsetTop;
       }
     }
   }, [highlightLineIndex]);
