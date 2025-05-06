@@ -10,16 +10,17 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   l.simple({ target: target }); // Corrected l.simple call
   l.arrayV2({ nums: nums }, {});
   l.hashmap("seen", seen, undefined); // Corrected l.hashmap call, added undefined highlight
-  l.breakpoint(1); // Corresponds to #1 in original code
+  l.breakpoint(1); // Corresponds to #1
 
   for (let i = 0; i < nums.length; i++) {
+    l.breakpoint(2); // Corresponds to #2 Start loop iteration
     const num = nums[i];
     const complement = target - num;
 
     // Highlight current element and show complement needed
     l.arrayV2({ nums: nums }, { i: i }); // Use inferred label "i"
     l.simple({ complement: complement }); // Corrected l.simple call
-    l.breakpoint(2); // Corresponds to #2
+    l.breakpoint(3); // Corresponds to #3 Calculate complement
 
     const complementIndex = seen.get(complement);
     const existsInSet = complementIndex !== undefined;
@@ -35,22 +36,24 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       l.arrayV2({ nums: nums }, { i: i, complementIndex: complementIndex }); // Use inferred labels "i" and "complementIndex"
       // Show the final result
       l.arrayV2({ result: [complementIndex, i] }, {});
-      l.breakpoint(3); // Corresponds to #3
+      l.breakpoint(4); // Corresponds to #4 Found complement
       return l.getSteps();
     }
+    l.breakpoint(5); // Corresponds to #5 Complement not found yet
 
     seen.set(num, i);
     // Log adding the current number to 'seen' map
     l.hashmap("seen", seen, { value: num, color: "primary" });
-    // No explicit breakpoint 4 in the original structure, but logging the map update is useful
+    l.breakpoint(6); // Corresponds to #6 Add current number and index to map
   }
+  l.breakpoint(7); // Corresponds to #7 Loop finished
 
   l.arrayV2({ result: [] }, {}); // No solution found
 
   // Original code didn't have a specific step for not found,
   // but we can add one if needed, mirroring the original return pattern.
   // If loop finishes without finding a pair, implicitly means no solution.
-  l.breakpoint(5); // Optional: Corresponds to original log(5) if needed
+  l.breakpoint(8); // Corresponds to #8 No solution found
 
   return l.getSteps(); // Return steps even if no solution is found during the loop
 }
