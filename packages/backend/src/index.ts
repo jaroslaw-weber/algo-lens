@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { getAllProblems } from "./problem/core/list";
-import { cloneDeep, pick } from "lodash";
+import { cloneDeep, pick, sample } from "lodash";
 
 const port = process.env.PORT || 3000;
 const app = new Hono();
@@ -24,9 +24,49 @@ app.get("/health", (c) => {
 });
 
 app.get("/problem", async (c) => {
+  const tag = c.req.query("tag"); // Get the tag query parameter
   const all = await getAllProblems();
-  const list = all.map((x) => pick(x, ["id", "title", "difficulty", "emoji"]));
+
+  // Filter problems if a tag is provided
+  const filteredProblems = tag
+    ? all.filter((p) => p.tags && p.tags.includes(tag))
+    : all;
+
+  // Map the filtered list to the desired output format
+  const list = filteredProblems.map((x) =>
+    pick(x, ["id", "title", "difficulty", "emoji"])
+  );
   return c.json(list);
+});
+
+// New route for getting a random problem
+app.get("/problem/random", async (c) => {
+  try {
+    const all = await getAllProblems();
+    if (!all || all.length === 0) {
+      console.error("No problems found when fetching for /problem/random");
+      return c.json({ error: "No problems available" }, 500);
+    }
+
+    const randomProblemId = sample(all)!.id;
+
+    const problem = await getProblemById(randomProblemId);
+
+    const rendered = pick(problem, [
+      "id",
+      "title",
+      "difficulty",
+      "code",
+      "url",
+      "tags",
+      "metadata",
+    ]);
+
+    return c.json(rendered);
+  } catch (error) {
+    console.error("Error fetching random problem:", error);
+    return c.json({ error: "Internal server error" }, 500);
+  }
 });
 
 app.get("/problem/:id", async (c) => {
