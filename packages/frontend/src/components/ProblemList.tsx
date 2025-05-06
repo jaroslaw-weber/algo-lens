@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getProblemList, ProblemInfo } from "../api"; // Import ProblemInfo
+import { getProblemList, type ProblemInfo } from "../api"; // Import ProblemInfo
+import type { Problem } from "algo-lens-core";
 
 // Define props interface
 interface ProblemListProps {
@@ -53,36 +54,39 @@ function ProblemsList({ tag, title }: ProblemListProps) {
       )}
 
       {error && (
-         <div className="text-center p-10 text-error">
-           <p>{error}</p>
-         </div>
+        <div className="text-center p-10 text-error">
+          <p>{error}</p>
+        </div>
       )}
 
       {!loading && !error && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
           {problems.length === 0 ? (
-            <p className="col-span-full text-center text-gray-500">No problems found for this category.</p>
+            <p className="col-span-full text-center text-gray-500">
+              No problems found for this category.
+            </p>
           ) : (
             problems.map((p) => {
               const { id, title, emoji } = p;
 
-          return (
-            <a
-              key={id}
-              href={`/problem/visualize?id=${id}`}
-              className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 block" // Use 'block' to make the anchor fill the grid cell
-            >
-              <div className="card-body">
-                <h2 className="card-title">
-                  {/* Display emoji if it exists, adding some space */}
-                  {emoji && <span className="mr-2">{emoji}</span>}
-                  {title}
-                </h2>
-                {/* Removed the separate link as the whole card is now clickable */}
-              </div>
-            </a>
-          ); // Closing parenthesis for return statement
-        })} {/* Closing parenthesis for map callback */}
+              return (
+                <a
+                  key={id}
+                  href={`/problem/visualize?id=${id}`}
+                  className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 block" // Use 'block' to make the anchor fill the grid cell
+                >
+                  <div className="card-body">
+                    <h2 className="card-title">
+                      {/* Display emoji if it exists, adding some space */}
+                      {emoji && <span className="mr-2">{emoji}</span>}
+                      {title}
+                    </h2>
+                    {/* Removed the separate link as the whole card is now clickable */}
+                  </div>
+                </a>
+              );
+            })
+          )}
         </div>
       )}
     </div>
