@@ -1,9 +1,9 @@
-import { TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core";
 import { InsertIntervalInput } from "./types";
 // Removed ProblemState and InsertIntervalInput imports
 
 // Corrected TestCase signature to use tuple input and number[][] output
-export const testcases = [
+export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
   {
     input: [
       [

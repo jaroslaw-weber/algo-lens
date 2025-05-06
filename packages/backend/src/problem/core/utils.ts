@@ -35,7 +35,6 @@ export async function getProblemById(id: string) {
 
 function validate(problem?: Problem<any, any>) {
   if (!problem) throw new Error("Problem not found");
-  //@ts-expect-error
   if (!problem.code)
     throw new Error("Problem code not found in problem: " + problem.id);
 }

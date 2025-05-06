@@ -53,7 +53,10 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show newInterval before merge loop
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(3, "Starting merge phase. Checking for overlaps with newInterval.");
+  l.breakpoint(
+    3,
+    "Starting merge phase. Checking for overlaps with newInterval."
+  );
 
   // Loop 2: Merge overlapping intervals (Breakpoint #3)
   while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
@@ -62,17 +65,16 @@ export function generateSteps(
     newInterval[1] = Math.max(currentInterval[1], newInterval[1]);
     i++;
 
-      // Log state during merge
-      const message = `Merging interval [${currentInterval.join(
-          ", "
-        )}] into newInterval. Updated newInterval: [${newInterval.join(", ")}].`;
-      l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just merged
-      l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show updated newInterval
-      l.intervals("result", result, [], minValue, maxValue);
-      l.simple({ i });
-      l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-      l.log(message); // Use l.log instead of l.breakpoint for inner loop steps
-
+    // Log state during merge
+    const message = `Merging interval [${currentInterval.join(
+      ", "
+    )}] into newInterval. Updated newInterval: [${newInterval.join(", ")}].`;
+    l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just merged
+    l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show updated newInterval
+    l.intervals("result", result, [], minValue, maxValue);
+    l.simple({ i });
+    l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
+    l.breakpoint(4, message);
   }
 
   // Insert the merged newInterval (Breakpoint #4)
@@ -82,7 +84,7 @@ export function generateSteps(
   l.intervals("result", result, [], minValue, maxValue); // Show result with newInterval added
   l.simple({ i });
   l.breakpoint(
-    4,
+    5,
     `Inserting the final merged/original newInterval [${newInterval.join(
       ", "
     )}].`
@@ -93,7 +95,10 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(5, "Starting phase to add remaining intervals after newInterval.");
+  l.breakpoint(
+    6,
+    "Starting phase to add remaining intervals after newInterval."
+  );
 
   // Loop 3: Add remaining intervals (Breakpoint #5)
   while (i < intervals.length) {
@@ -101,15 +106,16 @@ export function generateSteps(
     result.push(currentInterval);
     i++;
 
-      // Log state adding remaining interval
-      const message = `Adding remaining interval [${currentInterval.join(", ")}] to result.`;
-      l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just added
-      l.intervals("newInterval", [newInterval], [], minValue, maxValue);
-      l.intervals("result", result, [], minValue, maxValue);
-      l.simple({ i });
-      l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-      l.log(message); // Use l.log for inner loop steps
-
+    // Log state adding remaining interval
+    const message = `Adding remaining interval [${currentInterval.join(
+      ", "
+    )}] to result.`;
+    l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just added
+    l.intervals("newInterval", [newInterval], [], minValue, maxValue);
+    l.intervals("result", result, [], minValue, maxValue);
+    l.simple({ i });
+    l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
+    l.breakpoint(7, message); // Use l.log for inner loop steps
   }
 
   // Final state log (Breakpoint #6)

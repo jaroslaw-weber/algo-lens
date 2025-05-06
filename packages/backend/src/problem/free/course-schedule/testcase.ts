@@ -1,9 +1,9 @@
-import { TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core";
 import { CourseScheduleInput } from "./types";
 // Removed import for CourseScheduleInput - Keeping this comment as it was in the original
 
 // Reverted TestCase signature to use tuple input type - Keeping this comment as it was in the original
-export const testcases = [
+export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
   {
     input: [
       2,

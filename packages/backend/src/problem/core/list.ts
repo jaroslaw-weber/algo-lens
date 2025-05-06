@@ -49,7 +49,6 @@ export async function getAllProblemInternal(): Promise<Problem<any, any>[]> {
           // Load the code from typescript.ts file
           const codeFilePath = path.join(entryPath, "/code/typescript.ts");
           if (fs.existsSync(codeFilePath)) {
-            //@ts-expect-error
             foundProblem.code = fs.readFileSync(codeFilePath, "utf-8");
           } else {
             console.warn(
