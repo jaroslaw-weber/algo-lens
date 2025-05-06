@@ -3,58 +3,40 @@ import { EraseOverlapIntervalsInput } from "./types"; // Assuming types file exi
 
 export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
   {
-    input: {
-      intervals: [
-        [1, 2],
-        [2, 3],
-        [3, 4],
-        [1, 3],
-      ],
-    },
+    input: [
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [1, 3],
+    ],
+
     expected: 1,
   },
   {
-    input: {
-      intervals: [
-        [1, 2],
-        [3, 4],
-        [5, 6],
-      ],
-    },
+    input: [
+      [1, 2],
+      [1, 2],
+    ],
+
     expected: 0,
   },
-  // Changed from [[1,10]] (single interval) to a more complex case
   {
-    input: {
-      intervals: [
-        [1, 2],
-        [2, 3],
-        [3, 4],
-        [1, 3],
-      ],
-    },
-    expected: 1,
-    isDefault: true,
+    input: [
+      [1, 5],
+      [1, 5],
+      [2, 3],
+    ],
+
+    expected: 0,
   },
   {
-    input: {
-      intervals: [
-        [1, 100],
-        [11, 22],
-        [1, 11],
-        [2, 12],
-      ],
-    },
+    input: [
+      [1, 5],
+      [2, 3],
+      [5, 7],
+    ],
+
     expected: 2,
-  },
-  {
-    input: {
-      intervals: [
-        [1, 2],
-        [2, 3],
-        [3, 4],
-      ],
-    },
-    expected: 0,
+    isDefault: true,
   },
 ];
