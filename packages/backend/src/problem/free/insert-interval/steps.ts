@@ -1,5 +1,6 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
+import { getIntervalBounds } from "../../core/utils"; // Import the utility function
 import { InsertIntervalInput, Interval } from "./types";
 import { groups } from "./groups"; // Import groups
 import _ = require("lodash");
@@ -11,8 +12,7 @@ export function generateSteps(
   const l = new StepLoggerV2();
 
   const allintervals = [...intervals, newInterval];
-  const minValue = _.min(allintervals.map((i) => i[0]));
-  const maxValue = _.max(allintervals.map((i) => i[1]));
+  const { min: minValue, max: maxValue } = getIntervalBounds(allintervals); // Use the utility function
 
   let result: Interval[] = [];
   let i = 0;

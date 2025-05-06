@@ -1,30 +1,33 @@
 import _ = require("lodash");
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-// Removed ProblemState, Variable, asIntervals, getIntervalBounds
+import { getIntervalBounds } from "../../core/utils"; // Import getIntervalBounds
+// Removed ProblemState, Variable, asIntervals
 import { MergeIntervalsInput } from "./types"; // Import MergeIntervalsInput
 
 export function generateSteps(intervals: number[][]) {
   // Renamed and Exported, Return type inferred
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
-  const min: number = _.min(intervals.map((arr) => arr[0]))!; // Get minimum start time
-  const max: number = _.max(intervals.map((arr) => arr[1]))!; // Get maximum end time
-
-  // Handle empty or single interval case
+  // Handle empty interval case FIRST
   if (!intervals || intervals.length === 0) {
-    l.intervals("intervals", [], [], min, max);
-    l.intervals("merged", [], [], min, max);
+    // For empty input, bounds are irrelevant, but we need some values for logging.
+    // Let's use 0, 0 or handle as appropriate for the logger if it supports undefined bounds.
+    // Assuming the logger needs numbers, we'll pass 0, 0 for the empty case.
+    l.intervals("intervals", [], [], 0, 0);
+    l.intervals("merged", [], [], 0, 0);
     l.breakpoint(6); // Directly to final state
     return l.getSteps();
   }
 
+  // Calculate bounds only if intervals is not empty
+  const { min, max } = getIntervalBounds(intervals); // Use utility function
   // Log initial state (before sort)
   l.intervals(
     "intervals",
     intervals.map((arr) => [...arr]),
     [],
-    min,
-    max
+    min, // Use calculated min
+    max // Use calculated max
   ); // Log copy before sort
   l.intervals("merged", [], [], min, max);
   l.breakpoint(1);
