@@ -94,6 +94,8 @@ export interface Pointer2D {
 
   /** Column index. */
   c: number;
+
+  color?: 1 | 2 | 3;
 }
 
 /** Extends the Variable interface specifically for arrays. */
