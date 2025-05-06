@@ -81,8 +81,8 @@ function ProblemsList({ tag, title }: ProblemListProps) {
                 {/* Removed the separate link as the whole card is now clickable */}
               </div>
             </a>
-            )
-          ))}
+          ); // Closing parenthesis for return statement
+        })} {/* Closing parenthesis for map callback */}
         </div>
       )}
     </div>

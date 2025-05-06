@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProblemList from '../../components/ProblemList.tsx';
-import { capitalCase } from 'change-case'; // Helper for title generation
+// Removed: import { capitalCase } from 'change-case';
 
 const { listId } = Astro.params;
 
@@ -11,8 +11,9 @@ const tag = listId === 'all' ? undefined : listId;
 // Generate a more user-friendly title
 let pageTitle = 'Problems';
 if (listId && listId !== 'all') {
-  // Attempt to make a nice title, e.g., "Blind 75 Problems"
-  pageTitle = `${capitalCase(listId)} Problems`;
+  // Basic capitalization: "blind75" -> "Blind75"
+  const formattedListId = listId.charAt(0).toUpperCase() + listId.slice(1);
+  pageTitle = `${formattedListId} Problems`;
 } else if (listId === 'all') {
   pageTitle = 'All Problems';
 }
