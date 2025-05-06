@@ -31,4 +31,14 @@ export const testcases: TestCase<MergeIntervalsInput, number[][]>[] = [
       [15, 18],
     ],
   },
+  {
+    input: [
+      [1, 2],
+      [3, 4],
+    ],
+    expected: [
+      [1, 2],
+      [3, 4],
+    ],
+  },
 ];

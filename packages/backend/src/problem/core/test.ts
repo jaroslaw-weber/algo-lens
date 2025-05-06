@@ -77,8 +77,9 @@ export async function runTests(problem: Problem<any, ProblemState>) {
       if (!result) {
         throw new Error("No result found in last state");
       }
-      //@ts-expect-error
-      const value = result.value ?? result.values;
+       // Explicitly check for 'value' property existence
+       //@ts-expect-error
+       const value = result.hasOwnProperty('value') ? result.value : result.values;
       expect(value).toEqual(expected);
       /**
     console.log(
