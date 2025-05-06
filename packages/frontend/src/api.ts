@@ -16,8 +16,9 @@ export async function getProblem(id: string) {
   return result.json();
 }
 
-export async function getProblemState(id: string, step: number) {
-  const result = await be.get<ProblemState>(`problem/${id}/state/${step}`);
+// Updated function signature and API endpoint URL
+export async function getProblemState(id: string, testCaseIndex: number, step: number) {
+  const result = await be.get<ProblemState>(`problem/${id}/testcase/${testCaseIndex}/state/${step}`);
   return result.json();
 }
 

@@ -25,6 +25,7 @@ export const testcases: TestCase<MergeIntervalsInput, number[][]>[] = [
       [8, 10],
       [15, 18],
     ],
+    isDefault: true,
     expected: [
       [1, 6],
       [8, 10],
