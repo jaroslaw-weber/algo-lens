@@ -1,28 +1,24 @@
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-// Removed ProblemState, ListNode, Variable, asList, cloneList
-import { ReverseListInput, ListNode } from "./types"; // Keep ReverseListInput, Import ListNode if needed for type hints
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { ReverseListInput } from "./types"; // Import only ReverseListInput from local types
+import { ListNode, NodeHighlight } from "algo-lens-core"; // Import ListNode and NodeHighlight from core
 
-import { NodeHighlight } from "algo-lens-core"; // Import NodeHighlight
+// Note: This function now generates the detailed steps for the visualization.
+// It doesn't call the original solution function directly.
+// The original solution function will be called by problem.ts's func.
 
-// Note: Since cloneList is removed, the visualization might show the original list structure
-// being modified, which reflects the in-place nature of the algorithm.
-// If a pristine 'initial head' view is needed, cloning would be required.
-
-export function generateSteps(input: ReverseListInput) { // Renamed function, Return type inferred
+export function generateSteps(input: ReverseListInput): ProblemState[] { // Added return type hint
   const { head } = input;
-  const l = new StepLoggerV2(); // Instantiate StepLoggerV2
+  const l = new StepLoggerV2();
 
   // Initialize pointers
   let prev: ListNode | null = null;
-  let current = head; // Use the original head
+  let current = head;
   let next: ListNode | null = null;
 
   // Log initial state (#1)
-  if (head) l.list("head", head, []); // Log original head, no highlight
-  else l.simple({ head: null });
-  if (current) l.list("current", current, [{ node: current, color: "blue" }]); // Highlight current
+  l.list("head", head, []); // Log original head structure
+  if (current) l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
   else l.simple({ current: null });
-  // prev and next are null initially
   l.simple({ prev: null });
   l.simple({ next: null });
   l.breakpoint(1);
@@ -31,35 +27,34 @@ export function generateSteps(input: ReverseListInput) { // Renamed function, Re
     // Save next node
     next = current.next;
     // Log state before reversing pointer (#2)
-    if (head) l.list("head", head, []); // No highlight
-    else l.simple({ head: null });
-    l.list("current", current, [{ node: current, color: "blue" }]); // Highlight current
-    if (prev) l.list("prev", prev, [{ node: prev, color: "orange" }]); // Highlight prev
+    l.list("head", head, []);
+    l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
+    if (prev) l.list("prev", prev, [{ node: prev, color: "neutral" }]); // Color: neutral
     else l.simple({ prev: null });
-    if (next) l.list("next", next, [{ node: next, color: "red" }]); // Highlight next
+    if (next) l.list("next", next, [{ node: next, color: "neutral" }]); // Color: neutral
     else l.simple({ next: null });
     l.breakpoint(2);
 
     // Reverse current node's pointer
     current.next = prev;
     // Log state after reversing pointer (#3)
-    if (head) l.list("head", head, []); // No highlight
-    else l.simple({ head: null });
-    l.list("current", current, [{ node: current, color: "blue" }]); // Highlight current (its .next changed)
-    if (prev) l.list("prev", prev, [{ node: prev, color: "orange" }]); // Highlight prev
+    // The 'head' variable still points to the original head, but the list structure accessible from it has changed
+    // Logging 'head' might be confusing here if not careful. Let's keep logging it to show the detached original list.
+    l.list("head", head, []);
+    l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
+    if (prev) l.list("prev", prev, [{ node: prev, color: "neutral" }]); // Color: neutral
     else l.simple({ prev: null });
-    if (next) l.list("next", next, [{ node: next, color: "red" }]); // Highlight next
+    if (next) l.list("next", next, [{ node: next, color: "neutral" }]); // Color: neutral
     else l.simple({ next: null });
     l.breakpoint(3);
 
     // Move prev pointer one step forward
     prev = current;
     // Log state after moving prev (#4)
-    if (head) l.list("head", head, []); // No highlight
-    else l.simple({ head: null });
-    l.list("current", current, [{ node: current, color: "blue" }]); // Highlight current
-    l.list("prev", prev, [{ node: prev, color: "orange" }]); // Highlight new prev
-    if (next) l.list("next", next, [{ node: next, color: "red" }]); // Highlight next
+    l.list("head", head, []);
+    l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
+    l.list("prev", prev, [{ node: prev, color: "neutral" }]); // Color: neutral (new prev)
+    if (next) l.list("next", next, [{ node: next, color: "neutral" }]); // Color: neutral
     else l.simple({ next: null });
     l.breakpoint(4);
 
@@ -88,5 +83,5 @@ export function generateSteps(input: ReverseListInput) { // Renamed function, Re
   else l.simple({ result: null });
   l.breakpoint(6);
 
-  return l.getSteps(); // Return the collected steps
+  return l.getSteps();
 }

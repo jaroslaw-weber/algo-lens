@@ -1,6 +1,20 @@
-import { Group } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core"; // Corrected import
 
-export const groups: Group[] = [
-  { label: "Input", variables: ["a", "b"], highlight: true },
-  { label: "Output", variables: ["result"], highlight: true },
+export const groups: GroupMetadata[] = [ // Corrected type annotation
+  {
+    name: "input", // Use 'name' for identifier
+    label: "Input", // Keep 'label' for display text
+    description: "Input integers a and b", // Added description
+    emoji: "🔢", // Added emoji
+    // variables: ["a", "b"], // Removed invalid 'variables' property
+    // highlight: true // Removed invalid 'highlight' property
+  },
+  {
+    name: "output", // Use 'name' for identifier
+    label: "Output", // Keep 'label' for display text
+    description: "Calculation result", // Added description
+    emoji: "✅", // Added emoji
+    // variables: ["result"], // Removed invalid 'variables' property
+    // highlight: true // Removed invalid 'highlight' property
+  },
 ];

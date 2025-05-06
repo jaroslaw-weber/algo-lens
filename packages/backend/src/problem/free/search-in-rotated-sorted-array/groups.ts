@@ -2,12 +2,12 @@ import { GroupMetadata } from "algo-lens-core";
 
 export const groups: GroupMetadata[] = [
   {
-    id: "input",
+    name: "input",
     title: "Input",
     variables: ["nums", "target"],
   },
   {
-    id: "pointers",
+    name: "pointers",
     title: "Pointers",
     variables: ["left", "right", "mid"],
   },
