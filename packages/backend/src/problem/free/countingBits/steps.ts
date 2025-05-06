@@ -1,88 +1,73 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
-import { CountBitsInput } from "./types";
 
 export function generateSteps(n: number): ProblemState[] {
   const l = new StepLoggerV2();
-  let result: number[] = new Array(n + 1).fill(0);
+  // Initialize the bitCounts array with size n + 1 and fill with 0s
+  let bitCounts: number[] = new Array(n + 1).fill(0);
 
-  // Initial state log before the loop starts
-  l.arrayV2({ result: result }, {});
-  l.breakpoint(1, "Initialize result array.");
+  // Log the initial state of the bitCounts array
+  l.arrayV2({ bitCounts }, {});
+  l.breakpoint(1, "Initialize bitCounts array with zeros."); // Refined message
 
-  //#1 Start the loop to count the number of 1 bits in each integer from 0 to n
-  for (let i = 0; i <= n; i++) {
-    let count = 0;
-    let num = i; // Use a temporary variable for the inner loop
+  // Iterate from 1 to n to compute the bit counts using dynamic programming
+  for (let i = 1; i <= n; i++) {
+    // The number of set bits in i is the number of set bits in i/2 (integer division)
+    // plus 1 if the last bit of i is set.
+    // i >> 1 is equivalent to floor(i / 2)
+    // i & 1 checks if the last bit is 1
+    const prevCountIndex = i >> 1;
+    const lastBit = i & 1;
+    const prevCount = bitCounts[prevCountIndex];
 
-    l.arrayV2({ result: result }, { "i - 1": i - 1 }); // Highlight previous result entry if exists
-    l.binary({ num }, { highlightLast: true });
-    l.group("count", { count }, { min: 0, max: n }); // Max count can be n's bit length technically, but n is safe upper bound vis-wise
-
-    l.breakpoint(2, `Start processing number ${i}. Initialize count to 0.`);
-    let inner_num = i; // Use a separate variable for the inner loop calculation
-    //#2 Calculate the number of 1 bits in the current integer
-    while (inner_num > 0) {
-      l.arrayV2({ result: result }, { "i - 1": i - 1 });
-      l.binary({ num: inner_num }, { highlightLast: true });
-      l.group("count", { count }, { min: 0, max: n });
-      l.breakpoint(3, "Check the least significant bit.");
-
-      //#3 Use a bitwise AND operation to check the least significant bit
-      if (inner_num & 1) {
-        //#4 If the least significant bit is 1, increment the count
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.breakpoint(4, "LSB is 1. Increment count.");
-
-        count++;
-
-        //#5 Log state after incrementing count
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.breakpoint(5, "Count incremented.");
-      } else {
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.breakpoint(4, "LSB is 0. No count increment."); // Add breakpoint for else case
-
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.breakpoint(5, "Skipping count increment."); // Add breakpoint for else case
-      }
-
-      //#6 Shift the number to the right to move to the next bit
-      inner_num >>= 1;
-      l.arrayV2({ result: result }, { "i - 1": i - 1 });
-      l.binary({ num: inner_num }, { highlightLast: true }); // Show shifted number
-      l.group("count", { count }, { min: 0, max: n });
-      l.breakpoint(6, "Right-shift the number to process next bit.");
-    }
-
-    l.arrayV2({ result: result }, { "i - 1": i - 1 }); // Show previous state
-    l.binary({ num }, { highlightLast: false }); // Show original 'i' value
-    l.group("count", { count }, { min: 0, max: n });
-    //#7 Store the count in the result array
+    // --- Step 1: Log state BEFORE calculation ---
+    // Highlight the index (i >> 1) we are reading from in bitCounts
+    l.arrayV2({ bitCounts }, { [prevCountIndex]: prevCountIndex });
+    // Show binary of i, highlight the last bit (i & 1)
+    l.binary({ i }, { highlightLast: true });
+    // Group variables involved in the upcoming calculation
+    l.group(
+      "DP Calculation Step",
+      {
+        "Current Number (i)": i,
+        "Index for Previous Count (i >> 1)": prevCountIndex,
+        "Previous Count (bitCounts[i >> 1])": prevCount,
+        "Last Bit (i & 1)": lastBit,
+      },
+      { showLabel: true } // Use labels for clarity
+    );
     l.breakpoint(
-      7,
-      `Finished counting bits for ${i}. Storing count ${count} in result[${i}].`
+      2,
+      `Calculating bitCounts[${i}] = bitCounts[${prevCountIndex}] + (i & 1)` // Clearer formula representation
     );
 
-    result[i] = count;
+    // --- Step 2: Perform the DP calculation ---
+    bitCounts[i] = prevCount + lastBit;
+    const currentCount = bitCounts[i]; // Store result for logging
 
-    // Log state after storing result
-    l.arrayV2({ result: result }, { i: i }); // Highlight the newly added result
-    l.binary({ num }, { highlightLast: false });
-    l.group("count", { count }, { min: 0, max: n });
-    l.breakpoint(7, `Stored count ${count} in result[${i}].`); // Re-use breakpoint 7 or use a new one if needed
+    // --- Step 3: Log state AFTER calculation and update ---
+    // Highlight the index i where the new count is stored
+    l.arrayV2({ bitCounts }, { i: i });
+    // Show binary of i, no highlight needed now
+    l.binary({ i }, { highlightLast: false });
+    // Group variables showing the result of the calculation
+    l.group(
+      "DP Calculation Result",
+      {
+        "Current Number (i)": i,
+        "Index for Previous Count (i >> 1)": prevCountIndex,
+        "Previous Count (bitCounts[i >> 1])": prevCount,
+        "Last Bit (i & 1)": lastBit,
+        "Calculated Count (bitCounts[i])": currentCount, // Show the final result
+      },
+      { showLabel: true } // Use labels for clarity
+    );
+    l.breakpoint(3, `Stored bitCounts[${i}] = ${currentCount}.`); // Updated message
   }
-  l.simple({ result }); // Show final result array
-  //#8 Log final state
-  l.breakpoint(8, "Finished processing all numbers. Returning result.");
+
+  // Log the final state of the bitCounts array
+  l.arrayV2({ bitCounts }, {}); // Show the final array
+  l.breakpoint(4, "Finished computing bit counts for all numbers."); // Consistent message
 
   return l.getSteps();
 }
