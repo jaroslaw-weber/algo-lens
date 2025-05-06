@@ -8,11 +8,10 @@ const DisplayHashset = ({ data }: { data: HashsetVariable }) => {
 
   return (
     <div className="overflow-x-auto">
-      {label && <h3 className="pl-2 pb-2 text-xl font-semibold">{label}</h3>}
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Hashset Values</th>
+            <th>Hashset</th>
           </tr>
         </thead>
         <tbody>
@@ -20,7 +19,7 @@ const DisplayHashset = ({ data }: { data: HashsetVariable }) => {
             <tr
               key={index}
               className={
-                highlight.value === item
+                highlight?.value === item
                   ? `bg-${highlight.color} text-${highlight.color}-content`
                   : ""
               }

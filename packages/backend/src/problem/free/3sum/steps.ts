@@ -29,6 +29,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
+  l.hashset("seen", seen, undefined!);
   l.breakpoint(1, "Initial state before sorting");
 
   nums.sort((a, b) => a - b); // Sort the array
@@ -65,10 +66,11 @@ export function generateSteps(nums: number[]): ProblemState[] {
     while (left < right) {
       const sum = nums[i] + nums[left] + nums[right];
       const triplet = [nums[i], nums[left], nums[right]];
+      const tripletMap = { i: nums[i], left: nums[left], right: nums[right] };
 
       l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
       l.simple({ target });
-      l.group("triplet", triplet);
+      l.group("triplet", tripletMap);
       l.simple({ sum });
       l.array2d("result", result);
       l.breakpoint(
@@ -79,11 +81,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
       if (sum === target) {
         const tripletKey = triplet.join(",");
 
-        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
-        l.simple({ target });
-        l.group("triplet", triplet);
-        l.simple({ sum });
-        l.array2d("result", result);
         // Add seen set visualization if StepLogger supports it
         // l.set('seen', seen);
         l.breakpoint(
@@ -97,11 +94,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
           seen.add(tripletKey);
           result.push(triplet);
 
-          l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
-          l.simple({ target });
-          l.group("triplet", triplet);
-          l.simple({ sum });
-          l.array2d("result", result);
+          l.hashset("seen", seen, undefined!);
+          l.grid("result", result);
           l.breakpoint(
             8,
             `Inner loop: Added unique triplet [${triplet.join(",")}] to result`
