@@ -55,7 +55,6 @@ export function generateSteps(intervals: number[][]) {
 
     // Log state at the beginning of the loop iteration (before check)
     // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-    l.simple({ i: i });
     l.intervals("currentInterval", [currentInterval], [], min, max);
     l.intervals("lastMerged", [lastMerged], [], min, max);
     l.intervals("intervals", intervals, [i], min, max); // Highlight current interval being checked
@@ -73,7 +72,6 @@ export function generateSteps(intervals: number[][]) {
 
       // Log state after merging
       // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-      l.simple({ i: i });
       l.intervals("currentInterval", [currentInterval], [], min, max);
       l.intervals("lastMerged", [lastMerged], [], min, max); // Indicate update
       l.intervals("intervals", intervals, [i], min, max);
@@ -85,7 +83,6 @@ export function generateSteps(intervals: number[][]) {
 
       // Log state after adding a new interval
       // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-      l.simple({ i: i });
       l.intervals("lastMerged", [lastMerged], [], min, max); // Show the one before the new one
       l.intervals("intervals", intervals, [i], min, max);
       l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight the newly added interval
@@ -96,8 +93,6 @@ export function generateSteps(intervals: number[][]) {
     // l.intervals("currentInterval", [], undefined, { group: "loop" });
     // l.intervals("lastMerged", [], undefined, { group: "loop" });
   }
-  // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-  l.hide("i");
 
   // Log final state
   l.intervals("intervals", intervals, [], min, max);

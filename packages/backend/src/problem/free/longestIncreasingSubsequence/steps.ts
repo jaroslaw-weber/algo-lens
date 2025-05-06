@@ -1,7 +1,8 @@
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { LISInput } from "./types"; // Import LISInput - Keep this as requested
 
-export function generateSteps(nums: number[]) { // Return type inferred
+export function generateSteps(nums: number[]) {
+  // Return type inferred
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
   const n = nums.length;
   if (n === 0) {
@@ -19,10 +20,7 @@ export function generateSteps(nums: number[]) { // Return type inferred
   l.breakpoint(1); //#1
 
   for (let i = 1; i < n; i++) {
-    l.simple({ i }); // Log i at start of outer loop, removed group
     for (let j = 0; j < i; j++) {
-      l.simple({ j }); // Log j at start of inner loop, removed group
-
       // Log state before comparison using arrayV2
       l.arrayV2({ nums: nums }, { i: i, j: j }); // Pass pointers i and j
       l.arrayV2({ dp: dp }, { i: i, j: j }); // Pass pointers i and j
@@ -45,11 +43,7 @@ export function generateSteps(nums: number[]) { // Return type inferred
       }
       // No else breakpoint needed, state logged at breakpoint 2 covers the pre-check state
     }
-    // Reset j after inner loop
-    l.simple({ j: undefined }); // Removed group
   }
-  // Reset i after outer loop
-  l.simple({ i: undefined }); // Removed group
 
   // Calculate and log final result
   const maxLength = n > 0 ? Math.max(...dp) : 0; // Use maxLength based on variables.ts, handle empty array case
@@ -62,6 +56,5 @@ export function generateSteps(nums: number[]) { // Return type inferred
 
   return l.getSteps(); // Return the collected steps
 }
-
 
 // Removed LISInput interface, code, title, getInput, Problem export comment seems outdated, LISInput is imported.
