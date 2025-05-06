@@ -2,10 +2,27 @@
 import ProblemVisualizer from '../../components/ProblemVisualizer';
 import Layout from '../../layouts/Layout.astro';
 import ProblemView from './ProblemView';
+import { getProblem } from "../../api"; // Import the API function
 
+const { problemId } = Astro.params; // Get problemId from URL
+let pageTitle = "Algo Lens - Visualize Problem"; // Default title
 
+if (problemId) {
+  try {
+    const problem = await getProblem(problemId); // Fetch problem details
+    if (problem && problem.title) {
+      pageTitle = `Algo Lens - Visualize ${problem.title}`; // Construct dynamic title
+    }
+  } catch (error) {
+    console.error(`Failed to fetch problem details for ID ${problemId}:`, error);
+    // Keep the default title in case of error
+  }
+} else {
+  console.error("Problem ID not found in URL parameters.");
+  // Keep the default title if ID is missing
+}
 ---
 
-<Layout>
+<Layout title={pageTitle}> {/* Pass the dynamic title to Layout */}
 	<ProblemView client:load/>
 </Layout>

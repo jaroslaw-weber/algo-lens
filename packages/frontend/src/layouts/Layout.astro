@@ -1,6 +1,13 @@
 ---
 import "../styles/global.css";
 import Navbar from "../components/Navbar.tsx";
+import { SEO } from "astro-seo";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Algo Lens" } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,7 +22,17 @@ import Navbar from "../components/Navbar.tsx";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <SEO
+      title={title}
+      description="Visualize algorithms and data structures with Algo Lens. An interactive tool for learning and understanding computer science concepts."
+      openGraph={{
+        basic: {
+          title: title,
+          description: "Visualize algorithms and data structures with Algo Lens. An interactive tool for learning and understanding computer science concepts.",
+          type: "website",
+        }
+      }}
+    />
   </head>
   <body>
     <Navbar client:load />
