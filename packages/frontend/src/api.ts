@@ -16,13 +16,32 @@ export async function getProblem(id: string) {
   return result.json();
 }
 
-export async function getProblemState(id: string, step: number) {
-  const result = await be.get<ProblemState>(`problem/${id}/state/${step}`);
+export async function getProblemState(id: string, step: number, testcaseIndex?: number) {
+  let url = `problem/${id}/state/${step}`;
+  if (testcaseIndex !== undefined) {
+    url += `?testcaseIndex=${testcaseIndex}`;
+  }
+  const result = await be.get<ProblemState>(url);
   return result.json();
 }
 
-export async function getProblemSize(id:string){
-  const result = await be.get<{size:number}>(`problem/${id}/size`);
+export async function getProblemSize(id: string, testcaseIndex?: number) {
+  let url = `problem/${id}/size`;
+  if (testcaseIndex !== undefined) {
+    url += `?testcaseIndex=${testcaseIndex}`;
+  }
+  const result = await be.get<{size:number}>(url);
   const json = await result.json();
   return json.size;
+}
+
+export async function setTestcaseIndex(id: string, index: number) {
+  const result = await be.get<{success: boolean, testcaseIndex: number}>(`problem/${id}/testcase/${index}`);
+  return result.json();
+}
+
+export async function getCurrentTestcaseIndex(id: string) {
+  const result = await be.get<{testcaseIndex: number}>(`problem/${id}/testcase`);
+  const json = await result.json();
+  return json.testcaseIndex;
 }

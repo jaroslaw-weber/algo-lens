@@ -57,6 +57,7 @@ app.get("/problem/:id", async (c) => {
     "url",
     "tags",
     "metadata",
+    "testcases",
   ]);
   if (Object.keys(rendered).length === 0) {
     throw new Error("invalid problem: " + problem);
@@ -66,24 +67,24 @@ app.get("/problem/:id", async (c) => {
 
 class ProblemStateCache {
   private cache = new Map<string, ProblemState>();
-
   private size = new Map<string, number>();
+  private testcaseIndex = new Map<string, number>();
 
-  getKey(problem: Problem<any, any>, step: number): string {
-    return problem.id + "-" + step;
+  getKey(problem: Problem<any, any>, step: number, testcaseIndex: number = 0): string {
+    return `${problem.id}-${testcaseIndex}-${step}`;
   }
 
-  get(problem: Problem<any, any>, step: number): ProblemState | undefined {
-    const key = this.getKey(problem, step);
+  get(problem: Problem<any, any>, step: number, testcaseIndex: number = 0): ProblemState | undefined {
+    const key = this.getKey(problem, step, testcaseIndex);
     const cached = this.cache.get(key);
     if (cached) {
       return cached;
     }
-    this.cacheProblem(problem);
+    this.cacheProblem(problem, testcaseIndex);
     return this.cache.get(key);
   }
 
-  private cacheProblem(problem: Problem<any, any>) {
+  private cacheProblem(problem: Problem<any, any>, testcaseIndex: number = 0) {
     const { testcases } = problem;
     if (!testcases) {
       throw new Error("no testcases found for problem: " + problem.id!);
@@ -91,37 +92,111 @@ class ProblemStateCache {
     if (testcases.length === 0) {
       throw new Error("no testcases found for problem: " + problem.id!);
     }
-    const testcase = testcases[2].input;
-    console.log("testcase: ", testcase);
+    
+    // Use the specified testcase index or default to the first one if out of bounds
+    const actualIndex = testcaseIndex >= 0 && testcaseIndex < testcases.length 
+      ? testcaseIndex 
+      : 0;
+      
+    const testcase = testcases[actualIndex].input;
+    console.log("testcase: ", testcase, "index:", actualIndex);
+    
     const states = problem.func(testcase);
     for (let i = 0; i < states.length; i++) {
       const state = states[i];
-      const key2 = this.getKey(problem, i + 1);
+      const key2 = this.getKey(problem, i + 1, actualIndex);
       this.cache.set(key2, state);
     }
-    this.size.set(problem.id!, states.length);
+    
+    const sizeKey = `${problem.id!}-${actualIndex}`;
+    this.size.set(sizeKey, states.length);
+    this.testcaseIndex.set(problem.id!, actualIndex);
   }
 
-  getSize(problem: Problem<any, any>): number | undefined {
-    const size = this.size.get(problem.id!);
+  getSize(problem: Problem<any, any>, testcaseIndex: number = 0): number | undefined {
+    const sizeKey = `${problem.id!}-${testcaseIndex}`;
+    const size = this.size.get(sizeKey);
     if (!size) {
-      this.cacheProblem(problem);
+      this.cacheProblem(problem, testcaseIndex);
     }
-    return this.size.get(problem.id!);
+    return this.size.get(sizeKey);
+  }
+  
+  setTestcaseIndex(problemId: string, index: number) {
+    this.testcaseIndex.set(problemId, index);
+    // Clear cache for this problem to force recalculation with new testcase
+    const keysToDelete: string[] = [];
+    this.cache.forEach((_, key) => {
+      if (key.startsWith(problemId)) {
+        keysToDelete.push(key);
+      }
+    });
+    keysToDelete.forEach(key => this.cache.delete(key));
+    
+    // Clear size cache for this problem
+    const sizeKeysToDelete: string[] = [];
+    this.size.forEach((_, key) => {
+      if (key.startsWith(problemId)) {
+        sizeKeysToDelete.push(key);
+      }
+    });
+    sizeKeysToDelete.forEach(key => this.size.delete(key));
+  }
+  
+  getTestcaseIndex(problemId: string): number {
+    return this.testcaseIndex.get(problemId) || 0;
   }
 }
 
 const stateCache = new ProblemStateCache();
+
+// Add endpoint to set testcase index
+app.get("/problem/:problemId/testcase/:index", async (c) => {
+  const problemId = c.req.param("problemId");
+  const index = parseInt(c.req.param("index"));
+  
+  const problem = await getProblemById(problemId!);
+  if (!problem) {
+    return c.json({ error: "Problem not found" }, 404);
+  }
+  
+  // Validate testcase index
+  if (index < 0 || !problem.testcases || index >= problem.testcases.length) {
+    return c.json({ error: "Invalid testcase index" }, 400);
+  }
+  
+  stateCache.setTestcaseIndex(problemId!, index);
+  return c.json({ success: true, testcaseIndex: index });
+});
+
+// Get current testcase index
+app.get("/problem/:problemId/testcase", async (c) => {
+  const problemId = c.req.param("problemId");
+  
+  const problem = await getProblemById(problemId!);
+  if (!problem) {
+    return c.json({ error: "Problem not found" }, 404);
+  }
+  
+  const index = stateCache.getTestcaseIndex(problemId!);
+  return c.json({ testcaseIndex: index });
+});
+
 app.get("/problem/:problemId/state/:step", async (c) => {
   const problemId = c.req.param("problemId");
   const step = parseInt(c.req.param("step"));
+  
+  // Get testcase index from query param or use default
+  const testcaseIndex = c.req.query("testcaseIndex") 
+    ? parseInt(c.req.query("testcaseIndex")) 
+    : stateCache.getTestcaseIndex(problemId!);
 
   const problem = await getProblemById(problemId!);
   if (!problem) {
     throw new Error(`Problem not found: ${problemId} `);
   }
 
-  const state = stateCache.get(problem!, step);
+  const state = stateCache.get(problem!, step, testcaseIndex);
 
   const preserialized = preserialize(state!);
   return c.json(preserialized);
@@ -147,10 +222,18 @@ function preserialize(state: ProblemState): any {
 
 app.get("/problem/:problemId/size", async (c) => {
   const problemId = c.req.param("problemId");
+  
+  // Get testcase index from query param or use default
+  const testcaseIndex = c.req.query("testcaseIndex") 
+    ? parseInt(c.req.query("testcaseIndex")) 
+    : stateCache.getTestcaseIndex(problemId!);
 
   const problem = await getProblemById(problemId!);
+  if (!problem) {
+    return c.json({ error: "Problem not found" }, 404);
+  }
 
-  const size = stateCache.getSize(problem!);
+  const size = stateCache.getSize(problem!, testcaseIndex);
 
   return c.json({ size });
 });
