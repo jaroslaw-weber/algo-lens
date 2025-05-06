@@ -9,6 +9,7 @@ import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
 import { getProblem, getProblemSize } from "../api";
 
 function ProblemVisualizer() {
+  const [activeTab, setActiveTab] = useState("visualizer"); // Added state for active tab
   const [state] = useAtom(problemStateAtom);
   const [problem, setProblem] = useAtom(problemAtom);
 
@@ -77,24 +78,68 @@ function ProblemVisualizer() {
             <i className="fas fa-copy"></i>
           </button>
         </div>
-        <div className="flex flex-col lg:flex-row  lg:gap-20">
-          <div className="flex-1 p-2  lg:w-1/2">
-            <CodePreview code={code} highlightLineIndex={line} />
-          </div>
-          <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-            <div className="flex items-center gap-6">
-              <Slider
-                min={1}
-                max={maxStep}
-                value={step}
-                onChange={handleSliderChange}
-              />
-            </div>
-            <div>
-              <DisplayState state={state} problem={problem} />
-            </div>
-          </div>
+
+        {/* Tabs */}
+        <div role="tablist" className="tabs tabs-lifted mt-4">
+          <button
+            role="tab"
+            className={`tab ${activeTab === 'visualizer' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('visualizer')}
+          >
+            Visualizer
+          </button>
+          <button
+            role="tab"
+            className={`tab ${activeTab === 'description' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('description')}
+          >
+            Description
+          </button>
         </div>
+
+        {/* Tab Content Area */}
+        <div className="mt-4">
+          {/* Visualizer Content Container */}
+          {activeTab === 'visualizer' && (
+            <div className="visualizer-content">
+              {/* Moved original content here */}
+              <div className="flex flex-col lg:flex-row  lg:gap-20">
+                 <div className="flex-1 p-2  lg:w-1/2">
+                   <CodePreview code={code} highlightLineIndex={line} />
+                 </div>
+                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
+                   <div className="flex items-center gap-6">
+                     <Slider
+                       min={1}
+                       max={maxStep}
+                       value={step}
+                       onChange={handleSliderChange}
+                     />
+                   </div>
+                   <div>
+                     <DisplayState state={state} problem={problem} />
+                   </div>
+                 </div>
+               </div>
+            </div>
+          )}
+
+          {/* Description Content Container */}
+          {activeTab === 'description' && (
+            <div className="description-content">
+              {/* Display problem description or fallback */}
+              <div className="p-4">
+                {problem?.description ? (
+                  <p>{problem.description}</p> // Assuming description is plain text
+                ) : (
+                  <p>No description available.</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Original content block removed from here */}
       </div>
     </div>
   );

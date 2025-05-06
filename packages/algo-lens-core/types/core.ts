@@ -19,6 +19,9 @@ export interface Problem<Input, State> {
   /** Title of the problem. */
   title: string;
 
+  /** Optional description of the problem. */
+  description?: string;
+
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
 
