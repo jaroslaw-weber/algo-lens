@@ -199,6 +199,14 @@ export function asArray(
   column2?: number,
   column3?: number
 ): ArrayVariable {
+  // Initialize result object
+  const result: ArrayVariable = {
+    label,
+    type: "array",
+    value: cloneDeep(arr), // Assuming deep cloning is desired for arrays too
+    pointers: [],
+  };
+
   if (column1 !== undefined) {
     result.pointers.push({
       value: column1,
@@ -249,17 +257,23 @@ export function asBinary(
   if (options?.highlightLast) {
     // check what is index of last element of binary representation of the value number and set it as pointer
     const lastIndex = asBinaryString.length - 1;
-    result.pointers.push({
-      value: lastIndex,
-      dimension: "column",
+    if (result.pointers) { // Guard added
+      result.pointers.push({
+        value: lastIndex,
+        dimension: "column",
+      });
+    }
     });
   }
   for (const pointer in options?.pointersLeft ?? []) {
     const value = options?.pointersLeft?.[pointer];
     if (value !== undefined) {
-      result.pointers.push({
-        value,
-        dimension: "column",
+      if (result.pointers) { // Guard added
+        result.pointers.push({
+          value,
+          dimension: "column",
+        });
+      }
       });
     }
   }
@@ -267,9 +281,12 @@ export function asBinary(
   for (const pointer in options?.pointersRight ?? []) {
     const rightPointerValue = options?.pointersRight?.[pointer];
     if (rightPointerValue !== undefined) {
-      result.pointers.push({
-        value: asBinaryString.length - 1 - rightPointerValue,
-        dimension: "column",
+      if (result.pointers) { // Guard added
+        result.pointers.push({
+          value: asBinaryString.length - 1 - rightPointerValue,
+          dimension: "column",
+        });
+      }
       });
     }
   }
@@ -288,6 +305,14 @@ export function asStringArray(
   column2?: number,
   column3?: number
 ): ArrayVariable {
+  // Initialize result object
+  const result: ArrayVariable = {
+    label,
+    type: "array",
+    value: s.split(""), // Convert string to array of characters
+    pointers: [],
+  };
+
   if (column1 !== undefined) {
     result.pointers.push({
       value: column1,

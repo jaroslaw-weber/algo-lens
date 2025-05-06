@@ -1,4 +1,4 @@
-import { TestCase } from '../../../../utils/types';
+import { TestCase } from "algo-lens-core"; // Corrected import path
 
 export const testcases: TestCase<number, number>[] = [
   { input: { n: 0 }, output: 0 }, // Binary: 0

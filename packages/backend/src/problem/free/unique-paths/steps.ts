@@ -25,7 +25,8 @@ export function generateSteps(p: UniquePathsInput) {
   // Initialize the first column with 1
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
-    l.simple("i", i, { group: "loopIndices" });
+    // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+    l.simple({ i: i });
     l.grid("dp", dp, { r: i, c: 0 }); // Use grid, pass pointer directly
     l.breakpoint(1);
   }
@@ -35,7 +36,8 @@ export function generateSteps(p: UniquePathsInput) {
   // Initialize the first row with 1
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
-    l.simple("j", j, { group: "loopIndices" });
+    // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+    l.simple({ j: j });
     l.grid("dp", dp, { r: 0, c: j }); // Use grid, pass pointer directly
     l.breakpoint(2);
   }
@@ -66,7 +68,8 @@ export function generateSteps(p: UniquePathsInput) {
 
   // Final result
   const result = dp[m - 1][n - 1];
-  l.simple("result", result, { group: "result" });
+  // Corrected l.simple call to match signature: simple(value: Record<string, any>)
+  l.simple({ result: result });
   l.grid("dp", dp, { r: m - 1, c: n - 1 }); // Use grid, pass pointer directly
   l.breakpoint(4);
 
