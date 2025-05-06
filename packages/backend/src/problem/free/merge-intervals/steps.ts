@@ -3,9 +3,8 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 // Removed ProblemState, Variable, asIntervals, getIntervalBounds
 import { MergeIntervalsInput } from "./types"; // Import MergeIntervalsInput
 
-export function generateSteps(p: MergeIntervalsInput) {
+export function generateSteps(intervals: number[][]) {
   // Renamed and Exported, Return type inferred
-  const { intervals } = p;
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   const min: number = _.min(intervals.map((arr) => arr[0]))!; // Get minimum start time

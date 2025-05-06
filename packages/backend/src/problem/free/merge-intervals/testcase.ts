@@ -4,19 +4,31 @@ import { MergeIntervalsInput } from "./types";
 // Added second generic argument for Output type (number[][])
 export const testcases: TestCase<MergeIntervalsInput, number[][]>[] = [
   {
-    input: { intervals: [] },
-    expected: { intervals: [] },
+    input: [
+      [1, 5],
+      [2, 3],
+    ],
+    expected: [[1, 5]],
   },
   {
-    input: { intervals: [[1, 5], [2, 3]] },
-    expected: { intervals: [[1, 5]] },
+    input: [
+      [1, 4],
+      [2, 3],
+      [3, 5],
+    ],
+    expected: [[1, 5]],
   },
   {
-    input: { intervals: [[1, 3], [2, 6], [8, 10], [15, 18]] },
-    expected: { intervals: [[1, 6], [8, 10], [15, 18]] },
-  },
-  {
-    input: { intervals: [[1, 2], [3, 4], [5, 6]] },
-    expected: { intervals: [[1, 2], [3, 4], [5, 6]] },
+    input: [
+      [1, 3],
+      [2, 6],
+      [8, 10],
+      [15, 18],
+    ],
+    expected: [
+      [1, 6],
+      [8, 10],
+      [15, 18],
+    ],
   },
 ];
