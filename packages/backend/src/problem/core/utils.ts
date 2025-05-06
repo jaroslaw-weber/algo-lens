@@ -257,37 +257,37 @@ export function asBinary(
   if (options?.highlightLast) {
     // check what is index of last element of binary representation of the value number and set it as pointer
     const lastIndex = asBinaryString.length - 1;
-    if (result.pointers) { // Guard added
+    if (result.pointers) {
+      // Guard added
       result.pointers.push({
         value: lastIndex,
         dimension: "column",
       });
     }
-    });
   }
   for (const pointer in options?.pointersLeft ?? []) {
     const value = options?.pointersLeft?.[pointer];
     if (value !== undefined) {
-      if (result.pointers) { // Guard added
+      if (result.pointers) {
+        // Guard added
         result.pointers.push({
           value,
           dimension: "column",
         });
       }
-      });
     }
   }
 
   for (const pointer in options?.pointersRight ?? []) {
     const rightPointerValue = options?.pointersRight?.[pointer];
     if (rightPointerValue !== undefined) {
-      if (result.pointers) { // Guard added
+      if (result.pointers) {
+        // Guard added
         result.pointers.push({
           value: asBinaryString.length - 1 - rightPointerValue,
           dimension: "column",
         });
       }
-      });
     }
   }
 
