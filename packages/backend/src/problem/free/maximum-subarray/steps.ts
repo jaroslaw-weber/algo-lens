@@ -34,57 +34,18 @@ export function generateSteps(nums: number[]): ProblemState[] {
     // Kadane's logic: Decide whether to extend or start new subarray
     // (Corresponds to original logic block checking nums[i] > maxCurrent + nums[i])
     // We log *before* the update based on the comparison.
-    const extendSum = maxEndingHere + num;
-    const startNew = num;
+     // Kadane's logic: Decide whether to extend or start new subarray
+     // Simplified logging: Log state *after* the update for maxEndingHere
+     maxEndingHere = Math.max(num, maxEndingHere + num);
 
-    if (startNew > extendSum) {
-      // Log state *before* updating maxEndingHere (Corresponds roughly to original log(3, i))
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere });
-      l.simple({ maxSoFar });
-      l.simple({ num });
-      l.simple({
-        comparison: `${startNew} (num) > ${extendSum} (maxEndingHere + num)`,
-      });
-      l.breakpoint(
-        3,
-        `Starting new subarray as ${num} is greater than ${maxEndingHere} + ${num}.`
-      );
+     // Log state *after* updating maxEndingHere (Corresponds to #3 in code)
+     l.arrayV2({ nums: nums }, { i: i });
+     l.simple({ maxEndingHere }); // Updated
+     l.simple({ maxSoFar });
+     l.simple({ num });
+     l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`);
 
-      maxEndingHere = startNew;
-
-      // Log state *after* updating maxEndingHere (Corresponds roughly to original log(4, i))
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere }); // Updated
-      l.simple({ maxSoFar });
-      l.simple({ num });
-      l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3 as per code.ts
-    } else {
-      // Log state *before* updating maxEndingHere (Corresponds roughly to original log(5, i))
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere });
-      l.simple({ maxSoFar });
-      l.simple({ num });
-      l.simple({
-        comparison: `${startNew} (num) <= ${extendSum} (maxEndingHere + num)`,
-      });
-      l.breakpoint(
-        3,
-        `Extending current subarray as ${maxEndingHere} + ${num} is greater than or equal to ${num}.`
-      ); // Use breakpoint 3 logic flow
-
-      maxEndingHere = extendSum;
-
-      // Log state *after* updating maxEndingHere (Corresponds roughly to original log(6, i))
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere }); // Updated
-      l.simple({ maxSoFar });
-      l.simple({ num });
-      l.breakpoint(3, `Updated maxEndingHere to ${maxEndingHere}.`); // Reuse breakpoint 3
-    }
-
-    // Update maxSoFar (Corresponds to original log(7, i) to log(9, i) block)
-    // Log state *before* updating maxSoFar
+     // Log state *before* updating maxSoFar (Corresponds to #4 in code)
     l.arrayV2({ nums: nums }, { i: i });
     l.simple({ maxEndingHere });
     l.simple({ maxSoFar });
@@ -94,34 +55,17 @@ export function generateSteps(nums: number[]): ProblemState[] {
       `Comparing maxEndingHere (${maxEndingHere}) with maxSoFar (${maxSoFar}).`
     );
 
-    if (maxEndingHere > maxSoFar) {
-      // Log state *before* updating maxSoFar (Corresponds roughly to original log(8, i))
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere });
-      l.simple({ maxSoFar });
-      l.simple({ num });
-      l.simple({ comparison: `${maxEndingHere} > ${maxSoFar}` });
-      l.breakpoint(5, `maxEndingHere is greater than maxSoFar.`); // Use breakpoint 5 as per code.ts
+     // Simplified logging: Log state *after* the update for maxSoFar
+     maxSoFar = Math.max(maxSoFar, maxEndingHere);
 
-      maxSoFar = maxEndingHere;
-
-      // Log state *after* updating maxSoFar (Corresponds roughly to original log(9, i))
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere });
-      l.simple({ maxSoFar }); // Updated
-      l.simple({ num });
-      l.breakpoint(5, `Updated maxSoFar to ${maxSoFar}.`); // Reuse breakpoint 5
-    } else {
-      // Log state if maxSoFar is not updated
-      l.arrayV2({ nums: nums }, { i: i });
-      l.simple({ maxEndingHere });
-      l.simple({ maxSoFar });
-      l.simple({ num });
-      l.simple({ comparison: `${maxEndingHere} <= ${maxSoFar}` });
-      l.breakpoint(5, `maxSoFar (${maxSoFar}) remains the maximum.`); // Reuse breakpoint 5
-    }
-    // End of loop iteration (Corresponds to original log(10, i))
+     // Log state *after* updating maxSoFar (Corresponds to #5 in code)
+     l.arrayV2({ nums: nums }, { i: i });
+     l.simple({ maxEndingHere });
+     l.simple({ maxSoFar }); // Updated
+     l.simple({ num });
+     l.breakpoint(5, `Updated maxSoFar to ${maxSoFar}.`);
   }
+   // End of loop iteration
 
   // Final state log (Corresponds to original log(11))
   l.arrayV2({ nums: nums }, {});

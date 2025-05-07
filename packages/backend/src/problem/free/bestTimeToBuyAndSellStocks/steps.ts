@@ -48,7 +48,8 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.group("smaller", { diff, prev });
     l.breakpoint(
       3,
-      `Day ${i}: Updating the minimum price if today's price is lower.`
+      // Updated log message to reflect dp[i] update
+      `Day ${i}: Updated max profit up to today (dp[${i}] = ${dp[i]}). Now checking if minPrice needs update.`
     );
 
     minPrice = Math.min(minPrice, price);

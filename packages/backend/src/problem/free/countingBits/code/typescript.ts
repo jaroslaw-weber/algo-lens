@@ -12,12 +12,16 @@ export function countBits(n: number): number[] {
         //#4 If the least significant bit is 1, increment the count
         count++;
         //#5 If the least significant bit is 1, increment the count
+       } else {
+         //#4.1 LSB is 0
+         //#5.1 Skipping increment
       }
       num >>= 1;
       //#6 Shift the number to the right to move to the next bit
     }
     //#7 Store the count in the result array
     result[i] = count;
+     //#7.1 Count stored
   }
   //#8
   return result;

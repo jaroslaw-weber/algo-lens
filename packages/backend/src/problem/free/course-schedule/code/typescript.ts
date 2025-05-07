@@ -42,8 +42,8 @@ export function canFinish(
       inDegree[neighbor]--;
       //#11
       if (inDegree[neighbor] === 0) {
+         //#12 Neighbor with no remaining prerequisites - about to enqueue
         queue.push(neighbor);
-        //#12 Neighbor with no remaining prerequisites enqueued
       }
     }
     //#13 Processed all neighbors for the current course

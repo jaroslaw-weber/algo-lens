@@ -38,16 +38,18 @@ export function generateSteps(intervals: number[][]) {
   // Log state after sort
   l.intervals("intervals", intervals, [], min, max);
   l.intervals("merged", [], [], min, max);
-  l.breakpoint(2);
+   l.breakpoint(2); // State after sort
 
   // Initialize the variable for merged intervals using the correct variable name 'merged'
   const merged: number[][] = []; // Use 'merged' as variable name based on variables.ts
-  merged.push([...intervals[0]]); // Push a copy to avoid mutation issues if original interval obj is reused
+   if (intervals.length > 0) { // Check if intervals is not empty before accessing index 0
+       merged.push([...intervals[0]]); // Push a copy to avoid mutation issues if original interval obj is reused
+       // Log state after adding the first interval
+       l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
+       l.intervals("merged", merged, [0], min, max); // Highlight the newly added interval
+       l.breakpoint(2.5); // New breakpoint for state after initializing merged
+   } // If intervals was empty, merged remains empty, handled by initial check
 
-  // Log state after adding the first interval
-  l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
-  l.intervals("merged", merged, [0], min, max); // Highlight the newly added interval
-  l.breakpoint(2); // Maybe a new breakpoint 2.5 or adjust existing ones? Let's reuse 2 for now or add a specific one later if needed.
 
   for (let i = 1; i < intervals.length; i++) {
     const currentInterval = intervals[i]; // Use variable name from variables.ts

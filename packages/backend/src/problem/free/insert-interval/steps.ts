@@ -28,7 +28,7 @@ export function generateSteps(
   l.simple({ i });
   l.breakpoint(1, "Initial state before processing intervals.");
 
-  // Loop 1: Add intervals before newInterval (Breakpoint #2)
+  // Loop 1: Add intervals before newInterval
   while (i < intervals.length && intervals[i][1] < newInterval[0]) {
     const currentInterval = intervals[i];
     result.push(currentInterval);
@@ -40,7 +40,7 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.simple({ i });
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(
+    l.breakpoint( // Corresponds to #2 in code
       2,
       `Added interval [${currentInterval.join(
         ", "
@@ -53,12 +53,12 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show newInterval before merge loop
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(
+  l.breakpoint( // Corresponds to #3 in code
     3,
     "Starting merge phase. Checking for overlaps with newInterval."
   );
 
-  // Loop 2: Merge overlapping intervals (Breakpoint #3)
+  // Loop 2: Merge overlapping intervals
   while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
     const currentInterval = intervals[i];
     newInterval[0] = Math.min(currentInterval[0], newInterval[0]);
@@ -74,18 +74,25 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.simple({ i });
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(4, message);
+    l.breakpoint(4, message); // Corresponds to #4 in code
   }
 
-  // Insert the merged newInterval (Breakpoint #4)
+  // Log state before inserting merged interval
+  l.intervals("intervals", intervals, [], minValue, maxValue);
+  l.intervals("newInterval", [newInterval], [], minValue, maxValue);
+  l.intervals("result", result, [], minValue, maxValue);
+  l.simple({ i });
+  l.breakpoint(5, "Finished merging. About to insert newInterval."); // Corresponds to #5 in code
+
+  // Insert the merged newInterval
   result.push(newInterval);
   l.intervals("intervals", intervals, [], minValue, maxValue);
   l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show final merged/original newInterval
   l.intervals("result", result, [], minValue, maxValue); // Show result with newInterval added
   l.simple({ i });
-  l.breakpoint(
-    5,
-    `Inserting the final merged/original newInterval [${newInterval.join(
+   l.breakpoint( // Corresponds to #6 in code
+     6,
+     `Inserted the final merged/original newInterval [${newInterval.join(
       ", "
     )}].`
   );
@@ -95,12 +102,12 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(
-    6,
+   l.breakpoint( // Corresponds to #7 in code
+     7,
     "Starting phase to add remaining intervals after newInterval."
   );
 
-  // Loop 3: Add remaining intervals (Breakpoint #5)
+   // Loop 3: Add remaining intervals
   while (i < intervals.length) {
     const currentInterval = intervals[i];
     result.push(currentInterval);
@@ -115,15 +122,15 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.simple({ i });
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(7, message); // Use l.log for inner loop steps
+     l.breakpoint(8, message); // Corresponds to #8 in code
   }
 
-  // Final state log (Breakpoint #6)
+   // Final state log
   l.intervals("intervals", intervals, [], minValue, maxValue);
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue); // Final result array
   l.simple({ i });
-  l.breakpoint(6, "Finished processing all intervals. Returning final result.");
+   l.breakpoint(9, "Finished processing all intervals. Returning final result."); // Corresponds to #9 in code
 
   return l.getSteps();
 }

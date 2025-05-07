@@ -1,9 +1,11 @@
 export function merge(intervals: number[][]): number[][] {
   //#1 Sort intervals by their start points
   intervals.sort((a, b) => a[0] - b[0]);
+   //#2 State after sort
   let merged = [intervals[0]];
+   //#2.5 State after initializing merged with first interval
 
-  //#2 Start iterating through the intervals
+   // Start iterating through the intervals
   for (let i = 1; i < intervals.length; i++) {
     //#3 Check if the current interval starts before the last merged interval ends
     if (intervals[i][0] <= merged[merged.length - 1][1]) {

@@ -11,16 +11,10 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
   const min = _.min(nums);
   const max = _.max(nums);
-  l.groupOptions.set("triplet", {
-    min,
-    max,
-    reverse: false,
-  });
-  l.groupOptions.set("result", {
-    min,
-    max,
-    reverse: false,
-  });
+  // Optional: Configure group options if needed, but seen set visualization is removed.
+  // l.groupOptions.set("triplet", { min, max, reverse: false });
+  l.groupOptions.set("result", { min, max, reverse: false });
+
   const target = 0;
   const result: number[][] = [];
   const seen = new Set<string>(); // To track unique triplets
@@ -29,7 +23,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
-  l.hashset("seen", seen, undefined!);
+  // Removed seen set visualization l.hashset("seen", seen, undefined!);
   l.breakpoint(1, "Initial state before sorting");
 
   nums.sort((a, b) => a - b); // Sort the array
@@ -81,8 +75,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
       if (sum === target) {
         const tripletKey = triplet.join(",");
 
-        // Add seen set visualization if StepLogger supports it
-        // l.set('seen', seen);
+        // Log state when a potential triplet is found
+        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
+        l.simple({ target });
+        l.group("triplet", tripletMap); // Keep triplet vis here
+        l.simple({ sum });
+        l.array2d("result", result);
         l.breakpoint(
           7,
           `Inner loop: Found potential triplet [${triplet.join(
@@ -94,8 +92,13 @@ export function generateSteps(nums: number[]): ProblemState[] {
           seen.add(tripletKey);
           result.push(triplet);
 
-          l.hashset("seen", seen, undefined!);
-          l.grid("result", result);
+          // Log state after adding unique triplet
+          l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
+          l.simple({ target });
+          l.group("triplet", tripletMap); // Keep triplet vis here
+          l.simple({ sum });
+          // Removed seen set visualization l.hashset("seen", seen, undefined!);
+          l.array2d("result", result); // Use array2d for consistency
           l.breakpoint(
             8,
             `Inner loop: Added unique triplet [${triplet.join(",")}] to result`
@@ -109,10 +112,11 @@ export function generateSteps(nums: number[]): ProblemState[] {
           skippedLeft = true;
         }
         if (skippedLeft) {
+          // Log state after skipping left duplicates
           l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
-          l.group("triplet", triplet);
-          l.simple({ sum });
+          // Removed stale triplet log l.group("triplet", triplet);
+          // Removed stale sum log l.simple({ sum });
           l.array2d("result", result);
           l.breakpoint(
             9,
@@ -127,10 +131,11 @@ export function generateSteps(nums: number[]): ProblemState[] {
           skippedRight = true;
         }
         if (skippedRight) {
+          // Log state after skipping right duplicates
           l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
           l.simple({ target });
-          l.group("triplet", triplet);
-          l.simple({ sum });
+          // Removed stale triplet log l.group("triplet", triplet);
+          // Removed stale sum log l.simple({ sum });
           l.array2d("result", result);
           l.breakpoint(
             10,
@@ -138,61 +143,58 @@ export function generateSteps(nums: number[]): ProblemState[] {
           );
         }
 
-        l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
-        l.simple({ target });
-        l.group("triplet", triplet);
-        l.simple({ sum });
-        l.array2d("result", result);
-        l.breakpoint(
-          11,
-          `Inner loop: Moving pointers after finding target sum`
-        );
+        // Removed breakpoint 11 as breakpoint 12 captures the state after moving pointers.
 
         left++;
         right--;
 
+        // Log state AFTER moving pointers
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
-        l.simple({ sum });
-        // Don't log triplet/sum here as they are recalculated at the start of the next iteration
+        // Removed stale triplet log l.group("triplet", triplet);
+        // Removed stale sum log l.simple({ sum });
         l.array2d("result", result);
-        l.hide("triplet");
+        l.hide("triplet"); // Hide potentially stale triplet from previous iteration
         l.breakpoint(
           12,
           `Inner loop: Moved pointers, new left = ${left}, new right = ${right}`
         );
       } else if (sum < target) {
+        // Log state BEFORE moving left pointer (sum < target)
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
+        l.group("triplet", tripletMap);
         l.simple({ sum });
         l.array2d("result", result);
+        // Breakpoint 13 logs the decision to move left
         l.breakpoint(
           13,
           `Inner loop: Sum ${sum} < target ${target}, incrementing left pointer`
         );
         left++;
-      } else {
-        // sum > target
-
+        // State after moving left pointer is captured at the start of the next loop (breakpoint 6) or loop end (14.5)
+      } else { // sum > target
+        // Log state BEFORE moving right pointer (sum > target)
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
-        l.group("triplet", triplet);
+        l.group("triplet", tripletMap);
         l.simple({ sum });
         l.array2d("result", result);
+        // Breakpoint 14 logs the decision to move right
         l.breakpoint(
           14,
           `Inner loop: Sum ${sum} > target ${target}, decrementing right pointer`
         );
         right--;
+        // State after moving right pointer is captured at the start of the next loop (breakpoint 6) or loop end (14.5)
       }
     }
     // Log state at the end of the inner loop for the current 'i'
-    l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
+    l.arrayV2({ nums: nums }, { i: i /* left and right are now potentially out of bounds or equal */ });
     l.simple({ target });
     l.array2d("result", result);
-    l.breakpoint(14.5, `Inner loop finished for i = ${i}`); // Added intermediate breakpoint
+    l.hide("triplet"); // Ensure triplet group is hidden
+    l.breakpoint(14.5, `Inner loop finished for i = ${i}`); // Keep intermediate breakpoint
   }
 
   l.arrayV2({ nums: nums }, {});
