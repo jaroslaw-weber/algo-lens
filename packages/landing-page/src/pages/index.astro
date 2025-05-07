@@ -6,29 +6,165 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Algo Lens - Landing Page</title>
+    <title>AlgoLens - Visualize Data Structures and Algorithms</title>
     <style>
-      body { font-family: sans-serif; padding: 2em; }
-      h1, h2 { color: #333; }
-      .container { max-width: 800px; margin: auto; }
-      .placeholder { border: 1px dashed #ccc; padding: 2em; text-align: center; margin-top: 2em; }
+      :root {
+        --primary-color: #007bff;
+        --secondary-color: #6c757d;
+        --background-color: #f8f9fa;
+        --text-color: #212529;
+        --heading-color: #343a40;
+        --link-color: var(--primary-color);
+        --button-hover-bg: #0056b3;
+      }
+
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
+        padding: 0; 
+        margin: 0;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+      .container { 
+        max-width: 800px; 
+        margin: 2em auto; 
+        padding: 1em 2em;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      header {
+        text-align: center;
+        margin-bottom: 2.5em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid #eee;
+      }
+      h1 { 
+        color: var(--heading-color); 
+        font-size: 2.5em;
+        margin-bottom: 0.2em;
+      }
+      header p {
+        font-size: 1.1em;
+        color: var(--secondary-color);
+      }
+      h2 { 
+        color: var(--heading-color); 
+        font-weight: 600;
+        margin-top: 2em;
+        margin-bottom: 1em;
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid #eee;
+      }
+      section {
+        margin-bottom: 2em;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 0.5em;
+      }
+      strong {
+        color: var(--heading-color);
+      }
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .cta-section {
+        text-align: center;
+        margin: 3em 0;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: var(--primary-color); 
+        color: white; 
+        padding: 0.8em 1.8em; 
+        text-decoration: none; 
+        border-radius: 5px; 
+        font-size: 1.2em;
+        font-weight: 500;
+        transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+      }
+      .cta-button:hover {
+        background-color: var(--button-hover-bg);
+        text-decoration: none;
+        transform: translateY(-2px);
+      }
+      .preview-gif {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 1.5em auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      }
+      footer {
+        text-align: center;
+        margin-top: 3em;
+        padding-top: 1.5em;
+        border-top: 1px solid #eee;
+        font-size: 0.9em;
+        color: var(--secondary-color);
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Welcome to Algo Lens</h1>
+      <header>
+        <h1>AlgoLens</h1>
+        <p>Visualize and Practice Data Structures & Algorithms</p>
+      </header>
       
-      <h2>About the Product</h2>
-      <p>
-        Algo Lens helps you visualize and understand complex algorithms. 
-        It provides interactive visualizations and explanations to make learning algorithms easier and more engaging. 
-        (More detailed explanation to be added here).
-      </p>
+      <section id="about">
+        <h2>About AlgoLens</h2>
+        <p>
+          AlgoLens is designed to help you easily visualize and practice Data Structures and Algorithms (DSA). 
+          Our goal is to make learning complex concepts like dynamic programming, bit manipulation, and binary search more intuitive and engaging through interactive visualizations and step-by-step explanations.
+        </p>
+      </section>
 
-      <h2>Sample Visualization</h2>
-      <div class="placeholder">
-        <p>(Sample algorithm visualization will be embedded here)</p>
-      </div>
+      <section id="features">
+        <h2>Features</h2>
+        <ul>
+          <li><strong>Step-by-step Visualizations:</strong> Understand how algorithms build solutions incrementally.</li>
+          <li><strong>Interactive Tools:</strong> Experiment with algorithms and see how they work in real-time.</li>
+          <li><strong>Wide Coverage:</strong> Explore topics including Dynamic Programming, Bit Manipulation, Binary Search, and more.</li>
+          <li><strong>Practice Problems:</strong> Work through common problems to solidify your understanding.</li>
+        </ul>
+      </section>
+
+      <section id="try-it-out" class="cta-section">
+        <h2>Try It Out!</h2>
+        <p>
+          Ready to start visualizing? Jump right into the application:
+        </p>
+        <a href="https://algolens.dev/" target="_blank" class="cta-button">Launch AlgoLens App</a>
+      </section>
+      
+      <section id="practice">
+        <h2>Practice Common Problems</h2>
+        <p>
+          AlgoLens includes implementations and visualizations for many popular interview questions, including a significant portion of the Blind 75 list, helping you prepare effectively.
+        </p>
+      </section>
+
+      <section id="preview">
+        <h2>Sample Visualization</h2>
+        <img src="https://github.com/jaroslaw-weber/algo-lens/assets/9774233/c4e639e5-ebf0-4a46-84fc-0bfbe9698cad" alt="AlgoLens Preview GIF" class="preview-gif">
+      </section>
+
+      <footer>
+        <p>&copy; {new Date().getFullYear()} AlgoLens. All rights reserved.</p>
+        <!-- Optional: Add link to main app or GitHub repo -->
+        <p><a href="https://algolens.dev/">Main App</a> | <a href="https://github.com/jaroslaw-weber/algo-lens">GitHub Repository</a></p>
+      </footer>
 
     </div>
   </body>
