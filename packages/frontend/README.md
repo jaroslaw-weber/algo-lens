@@ -43,6 +43,25 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
+## 📊 Analytics (Umami)
+
+This project uses Umami for analytics tracking. To enable it, you need to configure the following environment variables:
+
+1.  **Copy the example environment file:**
+    ```bash
+    cp .env.example .env
+    ```
+2.  **Edit the `.env` file:**
+    Open the newly created `.env` file and replace the placeholder values with your actual Umami Website ID and Script URL.
+
+    ```dotenv
+    # .env
+    PUBLIC_UMAMI_WEBSITE_ID="YOUR_UMAMI_WEBSITE_ID"
+    PUBLIC_UMAMI_SCRIPT_URL="YOUR_UMAMI_SCRIPT_URL"
+    ```
+
+The tracking script in `src/layouts/Layout.astro` will automatically pick up these variables.
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

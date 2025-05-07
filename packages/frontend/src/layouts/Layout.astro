@@ -27,6 +27,12 @@ const { title = "Algo Lens" } = Astro.props;
       description="Visualize algorithms and data structures with Algo Lens. An interactive tool for learning and understanding computer science concepts."
        
     />
+    <script
+      async
+      defer
+      data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID}
+      src={import.meta.env.PUBLIC_UMAMI_SCRIPT_URL}
+    ></script>
   </head>
   <body>
     <Navbar client:load />
