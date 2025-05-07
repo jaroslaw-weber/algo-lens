@@ -22,6 +22,9 @@ export interface Problem<Input, State> {
   /** Optional description of the problem. */
   description?: string;
 
+  /** Optional explanation for the problem. */
+  explanation?: string;
+
   /** Function that processes the input and returns an array of states capturing each computation step. */
   func: (t: Input) => ProblemState[];
 

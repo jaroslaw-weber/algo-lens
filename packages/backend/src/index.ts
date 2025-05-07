@@ -98,6 +98,7 @@ app.get("/problem/:id", async (c) => {
     "tags",
     "metadata",
     "description", // Added description field
+    "explanation", // Add this line
   ]);
   if (Object.keys(rendered).length === 0) {
     throw new Error("invalid problem: " + problem);

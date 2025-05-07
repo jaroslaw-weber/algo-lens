@@ -7,6 +7,7 @@ import Slider from "./Slider";
 import { useAtom } from "jotai";
 import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
 import { getProblem, getProblemSize } from "../api";
+import ReactMarkdown from 'react-markdown'; // Add this line
 
 function ProblemVisualizer() {
   const [activeTab, setActiveTab] = useState("visualizer"); // Added state for active tab
@@ -95,6 +96,13 @@ function ProblemVisualizer() {
           >
             Description
           </button>
+          <button
+            role="tab"
+            className={`tab ${activeTab === 'explanation' ? 'tab-active' : ''}`}
+            onClick={() => setActiveTab('explanation')}
+          >
+            Explanation
+          </button>
         </div>
 
         {/* Tab Content Area */}
@@ -135,6 +143,13 @@ function ProblemVisualizer() {
                   <p>No description available.</p>
                 )}
               </div>
+            </div>
+          )}
+
+          {/* Explanation Content Container */}
+          {activeTab === 'explanation' && (
+            <div className="explanation-content p-4"> {/* Added padding */}
+               <ReactMarkdown>{problem?.explanation || 'No explanation available.'}</ReactMarkdown>
             </div>
           )}
         </div>
