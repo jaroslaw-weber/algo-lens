@@ -4,8 +4,6 @@
 
 **Hosts:** Alex & Ben
 
-**(Intro Music Fades)**
-
 **Alex:** Hey everyone, and welcome back to "Cracking the Coding Interview"! I'm Alex.
 
 **Ben:** And I'm Ben. Today, we're tackling a classic problem often seen in interviews: the 3Sum problem.
@@ -65,5 +63,3 @@ First, for our main pointer `i`. As we iterate through the array, if we encounte
 **Alex:** Great explanation, Ben! That's all the time we have for today on "Cracking the Coding Interview".
 
 **Ben:** Join us next time as we break down another common coding challenge. Happy coding!
-
-**(Outro Music Fades In)**
