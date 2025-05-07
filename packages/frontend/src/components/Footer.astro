@@ -1,0 +1,58 @@
+---
+// No props needed for this simple footer yet
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <span>&copy; {new Date().getFullYear()} Your Application Name</span>
+    <nav class="footer-links">
+      <a href="#">Terms of Service</a>
+      <a href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 1rem 2rem;
+    margin-top: 2rem; /* Add some space above the footer */
+    border-top: 1px solid #e7e7e7; /* Subtle top border */
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d; /* Muted text color */
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+
+  .footer-links a {
+    color: #007bff; /* Standard link blue */
+    text-decoration: none;
+    margin-left: 1rem;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
+  /* Basic responsiveness */
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 0.5rem; /* Add space between stacked items */
+    }
+
+    .footer-links a {
+      margin-left: 0;
+      margin-right: 1rem; /* Add spacing between links when stacked */
+    }
+     .footer-links a:last-child {
+       margin-right: 0;
+     }
+  }
+</style>
