@@ -31,14 +31,12 @@
     "react-chartjs-2": "^5.2.0",
     "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18.2.0",
-    "react-markdown": "^9.0.1", # Add this line
     "reagraph": "^4.17.4",
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.1",
     "@types/node": "^20.11.6",
-    "@types/react-markdown": "^9.0.1", # Add this line
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
     "daisyui": "^5.0.22",
