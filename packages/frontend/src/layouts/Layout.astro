@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Navbar from "../components/Navbar.tsx";
+import Footer from '../components/Footer.astro';
 import { SEO } from "astro-seo";
 
 interface Props {
@@ -37,6 +38,7 @@ const { title = "Algo Lens" } = Astro.props;
   <body>
     <Navbar client:load />
     <slot />
+    <Footer />
   </body>
 </html>
 

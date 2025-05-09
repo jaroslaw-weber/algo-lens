@@ -83,49 +83,56 @@ function ProblemVisualizer() {
         <div role="tablist" className="tabs tabs-lifted mt-4">
           <button
             role="tab"
-            className={`tab ${activeTab === 'visualizer' ? 'tab-active' : ''}`}
-            onClick={() => setActiveTab('visualizer')}
+            className={`tab ${activeTab === "visualizer" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("visualizer")}
           >
             Visualizer
           </button>
           <button
             role="tab"
-            className={`tab ${activeTab === 'description' ? 'tab-active' : ''}`}
-            onClick={() => setActiveTab('description')}
+            className={`tab ${activeTab === "description" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("description")}
           >
             Description
+          </button>
+          <button
+            role="tab"
+            className={`tab ${activeTab === "explanation" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("explanation")}
+          >
+            Explanation
           </button>
         </div>
 
         {/* Tab Content Area */}
         <div className="mt-4">
           {/* Visualizer Content Container */}
-          {activeTab === 'visualizer' && (
+          {activeTab === "visualizer" && (
             <div className="visualizer-content">
               {/* Moved original content here */}
               <div className="flex flex-col lg:flex-row  lg:gap-20">
-                 <div className="flex-1 p-2  lg:w-1/2">
-                   <CodePreview code={code} highlightLineIndex={line} />
-                 </div>
-                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-                   <div className="flex items-center gap-6">
-                     <Slider
-                       min={1}
-                       max={maxStep}
-                       value={step}
-                       onChange={handleSliderChange}
-                     />
-                   </div>
-                   <div>
-                     <DisplayState state={state} problem={problem} />
-                   </div>
-                 </div>
-               </div>
+                <div className="flex-1 p-2  lg:w-1/2">
+                  <CodePreview code={code} highlightLineIndex={line} />
+                </div>
+                <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
+                  <div className="flex items-center gap-6">
+                    <Slider
+                      min={1}
+                      max={maxStep}
+                      value={step}
+                      onChange={handleSliderChange}
+                    />
+                  </div>
+                  <div>
+                    <DisplayState state={state} problem={problem} />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
           {/* Description Content Container */}
-          {activeTab === 'description' && (
+          {activeTab === "description" && (
             <div className="description-content">
               {/* Display problem description or fallback */}
               <div className="p-4">
@@ -135,6 +142,17 @@ function ProblemVisualizer() {
                   <p>No description available.</p>
                 )}
               </div>
+            </div>
+          )}
+
+          {/* Explanation Content Container */}
+          {activeTab === "explanation" && (
+            <div className="explanation-content p-4">
+              {" "}
+              {/* Added padding */}
+              {
+                "No explanation available. (Work in progress)" // Assuming explanation is plain text
+              }
             </div>
           )}
         </div>

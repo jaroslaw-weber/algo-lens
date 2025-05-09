@@ -1,11 +1,5 @@
-To install dependencies:
-```sh
-bun install
-```
+# AlgoLens Backend
 
-To run:
-```sh
-bun run dev
-```
+This package contains the backend API for AlgoLens.
 
-open http://localhost:3000
+For setup instructions, project structure details, and contribution guidelines, please refer to the main [README.md](../../README.md) in the root directory.
