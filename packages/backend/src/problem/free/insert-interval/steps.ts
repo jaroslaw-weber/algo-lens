@@ -25,7 +25,6 @@ export function generateSteps(
   l.intervals("intervals", intervals, [], minValue, maxValue);
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
-  l.simple({ i });
   l.breakpoint(1, "Initial state before processing intervals.");
 
   // Loop 1: Add intervals before newInterval (Breakpoint #2)
@@ -38,8 +37,8 @@ export function generateSteps(
     l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just added
     l.intervals("newInterval", [newInterval], [], minValue, maxValue);
     l.intervals("result", result, [], minValue, maxValue);
-    l.simple({ i });
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
+    l.simple({ i });
     l.breakpoint(
       2,
       `Added interval [${currentInterval.join(
