@@ -1,10 +1,10 @@
-# Podcast Script: Solving the 3Sum Problem Efficiently
+# Podcast: Algocast - Visualize algorithms
 
-**Episode:** Cracking the Coding Interview
+**Episode:** Solving the 3Sum Problem Efficiently
 
 **Hosts:** Alex & Ben
 
-**Alex:** Hey everyone, and welcome back to "Cracking the Coding Interview"! I'm Alex.
+**Alex:** Hey everyone, and welcome back to "Algolens"! I'm Alex.
 
 **Ben:** And I'm Ben. Today, we're tackling a classic problem often seen in interviews: the 3Sum problem.
 
