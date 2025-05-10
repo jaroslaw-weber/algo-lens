@@ -45,7 +45,7 @@ export async function generateCodeFromSteps(
   // Remove imports
   result = result.replace(/^import[\s\S]*?;?\n/gm, "");
   const content = result;
-  console.log("result", result);
+  //console.log("result", result);
   const formattedContent = await prettier.format(content, {
     parser: "typescript",
   });

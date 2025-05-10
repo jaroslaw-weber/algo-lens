@@ -92,8 +92,12 @@ async function getProblemCode(
       } catch (e: any) {
         return `// Error generating code: ${e.message}`;
       }
+    } else {
+      throw new Error("no steps.ts at path: " + stepsPath);
     }
     return "// codegen config present, but steps.ts not found.";
+  } else {
+    console.error("problem.codegen missing for problem: " + problem.id);
   }
 
   const fallbackPath = path.join(dir, "code/typescript.ts");
@@ -101,5 +105,5 @@ async function getProblemCode(
     return fs.readFileSync(fallbackPath, "utf-8");
   }
 
-  return "// Code file not found.";
+  return "// CODEGEN FAILED";
 }
