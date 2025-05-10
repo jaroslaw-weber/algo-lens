@@ -26,6 +26,9 @@ export const problem: Problem<SumOfTwoIntegersInput, ProblemState[]> = {
   id: "sum-of-two-integers",
   tags: ["bit manipulation"],
   difficulty: "easy",
+  codeGenConfig: { // New property
+    targetFunctionSignature: "getSum(a: number, b: number): number",
+  },
   metadata: {
     groups: groups,
     variables: variables,
