@@ -15,24 +15,27 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   // #1 Initialize carry
   l.binary({ a });
   l.binary({ b });
-  // carry is undefined here initially, which is fine.
-  // Or, we could initialize it to a specific value if the logic implies, e.g., 0
-  // For this problem, undefined is representative of its state before first calculation.
-  l.binary({ carry });
+  l.breakpoint_explanation = `Initial state: a = ${a} (${a.toString(2)}), b = ${b} (${b.toString(2)}).`;
   l.breakpoint(1);
 
   while (b !== 0) {
-    // #2 Start loop iteration (while carry exists)
-    l.binary({ a });
-    l.binary({ b });
-    l.binary({ carry }); // carry from previous iteration or undefined
+    const prevA = a;
+    const prevB = b;
+    carry = prevA & prevB;
+    // State after calculating carry (Breakpoint 2)
+    l.binary({ a: prevA }); // Show 'a' before it's updated in the next step
+    l.binary({ b: prevB }); // Show 'b' before it's updated
+    l.binary({ carry });
+    l.breakpoint_explanation = `Calculated carry = a & b = ${prevA.toString(2)} & ${prevB.toString(2)} = ${carry.toString(2)}.`;
     l.breakpoint(2);
 
-    carry = a & b;
-    // #3 Calculate carry bits
-    l.binary({ a });
-    l.binary({ b });
+    a = prevA ^ prevB;
+    // State after calculating sum without carry (Breakpoint 3)
+    l.binary({ a }); // Show new 'a'
+    l.binary({ b: prevB }); // Show 'b' before it's updated
+
     l.binary({ carry });
+    l.breakpoint_explanation = `Calculated a = a ^ b (sum without carry) = ${prevA.toString(2)} ^ ${prevB.toString(2)} = ${a.toString(2)}.`;
     l.breakpoint(3);
 
     a = a ^ b;
@@ -43,11 +46,13 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.breakpoint(4);
 
     b = carry << 1;
-    // #5 Shift carry left for next iteration
-    l.binary({ a });
+    // State after shifting carry (Breakpoint 4)
+    l.binary({ a }); // Show 'a' (which is sum without carry)
     l.binary({ b }); // b now holds the shifted carry
-    l.binary({ carry }); // carry still holds the value before shifting for this step's log
-    l.breakpoint(5);
+    // l.binary({ carry }); // carry here is the value *before* b = carry << 1
+    l.breakpoint_explanation = `Calculated b = carry << 1 (shifted carry) = ${carry.toString(2)} << 1 = ${b.toString(2)}. (New a: ${a.toString(2)}, New b: ${b.toString(2)})`;
+    l.breakpoint(4);
+
   }
 
   // #6 Loop finished (no more carry)
@@ -60,7 +65,11 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   const result = a; // Assign final sum in 'a' to 'result'
   l.binary({ result }); // Log the variable 'result' (which now holds the sum)
   l.binary({ b }); // b should be 0 here
-  if (carry !== undefined) { // carry here refers to the state after loop
+  // Optionally log the final carry if it was defined in the last iteration
+  // For the explanation, we'll assume carry might be relevant if b was non-zero in the last iteration
+  l.breakpoint_explanation = `Loop finished (b is 0). Final result is a = ${a} (${a.toString(2)}).`;
+  if (carry !== undefined) { // if carry was calculated in the loop
+
     l.binary({ carry });
   }
   l.breakpoint(7);

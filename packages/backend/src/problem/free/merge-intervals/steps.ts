@@ -30,6 +30,7 @@ export function generateSteps(intervals: number[][]) {
     max // Use calculated max
   ); // Log copy before sort
   l.intervals("merged", [], [], min, max);
+  l.breakpoint_explanation = "Initial state: intervals before sorting.";
   l.breakpoint(1);
 
   // Sort the intervals based on the start time
@@ -47,6 +48,7 @@ export function generateSteps(intervals: number[][]) {
   // Log state after adding the first interval
   l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
   l.intervals("merged", merged, [0], min, max); // Highlight the newly added interval
+  l.breakpoint_explanation = "Intervals sorted. First interval added to merged list.";
   l.breakpoint(2); // Maybe a new breakpoint 2.5 or adjust existing ones? Let's reuse 2 for now or add a specific one later if needed.
 
   for (let i = 1; i < intervals.length; i++) {
@@ -59,6 +61,7 @@ export function generateSteps(intervals: number[][]) {
     l.intervals("lastMerged", [lastMerged], [], min, max);
     l.intervals("intervals", intervals, [i], min, max); // Highlight current interval being checked
     l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight the last merged interval
+    l.breakpoint_explanation = `Comparing currentInterval [${currentInterval.join(',')}] with lastMerged interval [${lastMerged.join(',')}].`;
     l.breakpoint(3);
 
     const currentStart = currentInterval[0];
@@ -76,6 +79,7 @@ export function generateSteps(intervals: number[][]) {
       l.intervals("lastMerged", [lastMerged], [], min, max); // Indicate update
       l.intervals("intervals", intervals, [i], min, max);
       l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight updated merged interval and show previous end
+      l.breakpoint_explanation = `Overlap found. Merged currentInterval into lastMerged. Updated lastMerged: [${lastMerged.join(',')}].`;
       l.breakpoint(4);
     } else {
       // No overlap: Add the current interval to 'merged'
@@ -86,6 +90,7 @@ export function generateSteps(intervals: number[][]) {
       l.intervals("lastMerged", [lastMerged], [], min, max); // Show the one before the new one
       l.intervals("intervals", intervals, [i], min, max);
       l.intervals("merged", merged, [merged.length - 1], min, max); // Highlight the newly added interval
+      l.breakpoint_explanation = `No overlap. Added currentInterval [${currentInterval.join(',')}] to merged list.`;
       l.breakpoint(5);
     }
     // Reset loop specific variables? Optional.
@@ -97,6 +102,7 @@ export function generateSteps(intervals: number[][]) {
   // Log final state
   l.intervals("intervals", intervals, [], min, max);
   l.intervals("result", merged, [], min, max); // Changed "merged" to "result"
+  l.breakpoint_explanation = "Final result: merged intervals.";
   l.breakpoint(6);
 
   return l.getSteps(); // Return the collected steps

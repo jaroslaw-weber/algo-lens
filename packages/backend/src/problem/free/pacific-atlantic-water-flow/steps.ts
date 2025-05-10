@@ -42,8 +42,6 @@ export function generateSteps(heights: number[][]) {
   );
   const result: [number, number][] = []; // Keep using result for final output
 
-  let currentBreakpoint = 0;
-
   // Log initial state
   // Corrected: Use object format for l.simple and remove invalid group arg
   l.simple({ rows: rows });
@@ -54,7 +52,8 @@ export function generateSteps(heights: number[][]) {
   l.grid("atlanticReachable", booleanGridToNumber(atlanticVisited)); // Replaced l.array2d with l.grid
   l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
   l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
-  l.breakpoint(currentBreakpoint++); // Breakpoint 0
+  l.breakpoint_explanation = "Initial state: heights, empty visited arrays (pacificReachable, atlanticReachable), and empty queues.";
+  l.breakpoint(0); // Breakpoint 0
 
   // Add all cells on the Pacific coast to the queue
   const initialPacificCells: Pointer2D[] = []; // Store as Pointer2D
@@ -82,7 +81,8 @@ export function generateSteps(heights: number[][]) {
   ); // Replaced l.array2d with l.grid, Pass first highlight if exists
   l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
   l.grid("heights", heights); // Replaced l.array2d with l.grid, Optionally show heights again
-  l.breakpoint(currentBreakpoint++); // Breakpoint 1
+  l.breakpoint_explanation = "Initialized Pacific queue and visited cells along the Pacific coast.";
+  l.breakpoint(1); // Breakpoint 1
 
   // --- Perform BFS from the Pacific coast ---
   let pacificStepCounter = 0;
@@ -135,7 +135,8 @@ export function generateSteps(heights: number[][]) {
     // Corrected: Use object format for l.simple and remove invalid group arg
     l.hide("nr");
     l.hide("nc");
-    l.breakpoint(currentBreakpoint++); // Breakpoint inside Pacific BFS loop
+    l.breakpoint_explanation = `Processing cell (${r}, ${c}) from Pacific queue. Explored neighbors, pacificReachable and pacificQueue updated.`;
+    l.breakpoint(2); // Breakpoint inside Pacific BFS loop
 
     pacificStepCounter++;
   }
@@ -170,7 +171,8 @@ export function generateSteps(heights: number[][]) {
   ); // Replaced l.array2d with l.grid, Pass first highlight
   l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
   l.grid("pacificReachable", booleanGridToNumber(pacificVisited)); // Replaced l.array2d with l.grid, Show final pacific state
-  l.breakpoint(currentBreakpoint++);
+  l.breakpoint_explanation = "Initialized Atlantic queue and visited cells along the Atlantic coast.";
+  l.breakpoint(3);
 
   // --- Perform BFS from the Atlantic coast ---
   let atlanticStepCounter = 0;
@@ -223,7 +225,8 @@ export function generateSteps(heights: number[][]) {
     // Corrected: Use object format for l.simple and remove invalid group arg
     l.simple({ nr: undefined });
     l.simple({ nc: undefined });
-    l.breakpoint(currentBreakpoint++); // Breakpoint inside Atlantic BFS loop
+    l.breakpoint_explanation = `Processing cell (${r}, ${c}) from Atlantic queue. Explored neighbors, atlanticReachable and atlanticQueue updated.`;
+    l.breakpoint(4); // Breakpoint inside Atlantic BFS loop
 
     atlanticStepCounter++;
   }
@@ -257,7 +260,8 @@ export function generateSteps(heights: number[][]) {
     resultCellsHighlight[0]
   ); // Replaced l.array2d with l.grid
   l.arrayV2({ result: result }); // Replaced l.array with l.arrayV2, Log the result array directly
-  l.breakpoint(currentBreakpoint++); // Final breakpoint
+  l.breakpoint_explanation = "Final result: cells reachable by both oceans.";
+  l.breakpoint(5); // Final breakpoint
 
   return l.getSteps(); // Return the collected steps
 }

@@ -24,6 +24,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
   else l.simple({ current: null });
   l.simple({ prev: null });
   l.simple({ next: null });
+  l.breakpoint_explanation = "Initial state: prev = null, current = head, next = null.";
   l.breakpoint(1);
 
   while (current != null) {
@@ -38,6 +39,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     if (next) l.list("next", next, [{ node: next, color: "neutral" }]);
     // Color: neutral
     else l.simple({ next: null });
+    l.breakpoint_explanation = `Saved next = current.next. Current: ${current.val}, Next: ${next ? next.val : 'null'}.`;
     l.breakpoint(2);
 
     // Reverse current node's pointer
@@ -53,6 +55,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     if (next) l.list("next", next, [{ node: next, color: "neutral" }]);
     // Color: neutral
     else l.simple({ next: null });
+    l.breakpoint_explanation = `Reversed current.next to point to prev. Current: ${current.val}, Prev: ${prev ? prev.val : 'null'}.`;
     l.breakpoint(3);
 
     // Move prev pointer one step forward
@@ -64,6 +67,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     if (next) l.list("next", next, [{ node: next, color: "neutral" }]);
     // Color: neutral
     else l.simple({ next: null });
+    l.breakpoint_explanation = `Moved prev to current. Prev: ${prev.val}.`;
     l.breakpoint(4);
 
     // Move current pointer one step forward
@@ -78,6 +82,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     if (next) l.list("next", next, [{ node: next, color: "bad" }]);
     // Highlight next (doesn't change here, but log for consistency)
     else l.simple({ next: null });
+    l.breakpoint_explanation = `Moved current to next. New Current: ${current ? current.val : 'null'}. This is the new current for the next iteration or null if end.`;
     l.breakpoint(5);
   }
 
@@ -93,6 +98,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
   if (prev) l.list("result", prev, [{ node: prev, color: "neutral" }]);
   // Highlight result (same as prev)
   else l.simple({ result: null });
+  l.breakpoint_explanation = "Loop finished. current is null. prev is the new head (result).";
   l.breakpoint(6);
 
   return l.getSteps();

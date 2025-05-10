@@ -26,17 +26,18 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
 
   l.array2d("grid", dpGrid);
 
+  l.breakpoint_explanation = "Initial DP table (copy of grid).";
   l.breakpoint(1);
 
   // Initialize the first row (using 'col' index as per variables.ts)
   for (let col = 1; col < cols; col++) {
     l.simple({ col }); // Log current col index
     const prevValue = dpGrid[0][col - 1];
-    const currentValue = dpGrid[0][col]; // Original value from grid
+    const currentValue = grid[0][col]; // Original value from grid
     dpGrid[0][col] = prevValue + currentValue; // Update in place
 
     l.grid("grid", dpGrid, { r: 0, c: col }, { r: 0, c: col - 1 }); // Use grid, pass pointers directly
-
+    l.breakpoint_explanation = `Initializing first row: dpGrid[0][${col}] = dpGrid[0][${col-1}] (${prevValue}) + grid[0][${col}] (${currentValue}) = ${dpGrid[0][col]}.`;
     l.breakpoint(2);
   }
   l.simple({ col: undefined }); // Reset col index
@@ -45,11 +46,11 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   for (let row = 1; row < rows; row++) {
     l.simple({ row }); // Log current row index
     const prevValue = dpGrid[row - 1][0];
-    const currentValue = dpGrid[row][0]; // Original value from grid
+    const currentValue = grid[row][0]; // Original value from grid
     dpGrid[row][0] = prevValue + currentValue; // Update in place
 
     l.grid("grid", dpGrid, { r: row, c: 0 }, { r: row - 1, c: 0 }); // Use grid, pass pointers directly
-
+    l.breakpoint_explanation = `Initializing first column: dpGrid[${row}][0] = dpGrid[${row-1}][0] (${prevValue}) + grid[${row}][0] (${currentValue}) = ${dpGrid[row][0]}.`;
     l.breakpoint(3);
   }
   l.simple({ row: undefined }); // Reset row index
@@ -65,6 +66,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
       dpGrid[row][col] = Math.min(valueAbove, valueLeft) + originalValue; // Update in place
 
       l.grid("grid", dpGrid, { r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }); // Use grid, pass pointers directly
+      l.breakpoint_explanation = `Filling DP table: dpGrid[${row}][${col}] = min(dpGrid[${row-1}][${col}] (${valueAbove}), dpGrid[${row}][${col-1}] (${valueLeft})) + grid[${row}][${col}] (${originalValue}) = ${dpGrid[row][col]}.`;
       l.breakpoint(4);
     }
     l.simple({ col: undefined }); // Reset col index for inner loop
@@ -77,7 +79,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   // Corrected l.simple call to match signature: simple(value: Record<string, any>)
   l.simple({ result: result });
   l.grid("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use grid, pass pointer directly
-
+  l.breakpoint_explanation = `Final result: dpGrid[${rows-1}][${cols-1}] = ${result}.`;
   l.breakpoint(5);
 
   return l.getSteps(); // Return the collected steps
