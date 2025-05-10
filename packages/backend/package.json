@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/lodash": "^4.17.16",
+    "prettier": "^3.5.3",
     "typescript": "^5.0.0"
   }
 }

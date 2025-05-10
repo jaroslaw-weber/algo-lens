@@ -81,12 +81,13 @@ async function getProblemCode(
     if (fs.existsSync(stepsPath)) {
       try {
         const steps = fs.readFileSync(stepsPath, "utf-8");
-        const generated = generateCodeFromSteps({
+        const generated = await generateCodeFromSteps({
           stepsFileContent: steps,
           targetFunctionSignature: problem.codegen.signature,
+          problemName: problem.id,
         });
-        const { content, logs } = generated;
-        console.log("content", content, logs);
+        const { content } = generated;
+        console.log("content", content);
         return content;
       } catch (e: any) {
         return `// Error generating code: ${e.message}`;
