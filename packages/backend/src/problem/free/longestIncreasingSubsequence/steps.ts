@@ -17,6 +17,7 @@ export function generateSteps(nums: number[]) {
   l.arrayV2({ nums: nums }); // No pointers needed
   l.arrayV2({ dp: dp }); // No pointers needed
 
+  l.breakpoint_explanation = "Initial state: nums array and dp array (all 1s).";
   l.breakpoint(1); //#1
 
   for (let i = 1; i < n; i++) {
@@ -25,6 +26,7 @@ export function generateSteps(nums: number[]) {
       l.arrayV2({ nums: nums }, { i: i, j: j }); // Pass pointers i and j
       l.arrayV2({ dp: dp }, { i: i, j: j }); // Pass pointers i and j
 
+      l.breakpoint_explanation = `Comparing nums[${i}] (${nums[i]}) with nums[${j}] (${nums[j]}).`;
       l.breakpoint(2); //#2
 
       if (nums[i] > nums[j]) {
@@ -39,6 +41,7 @@ export function generateSteps(nums: number[]) {
 
         // Optionally log j again if needed
         // l.simple({ j }); // Removed group
+        l.breakpoint_explanation = `nums[${i}] (${nums[i]}) > nums[${j}] (${nums[j]}). Updated dp[${i}] from ${currentDpI} to ${dp[i]} because dp[${j}] (${dp[j]}) + 1 = ${newDpI}.`;
         l.breakpoint(3); //#3
       }
       // No else breakpoint needed, state logged at breakpoint 2 covers the pre-check state
@@ -52,6 +55,7 @@ export function generateSteps(nums: number[]) {
   l.arrayV2({ dp: dp }); // Use arrayV2, no pointers needed
   l.arrayV2({ nums: nums }); // Use arrayV2, no pointers needed
 
+  l.breakpoint_explanation = "Final result: calculated maxLength from dp array.";
   l.breakpoint(4); //#4
 
   return l.getSteps(); // Return the collected steps

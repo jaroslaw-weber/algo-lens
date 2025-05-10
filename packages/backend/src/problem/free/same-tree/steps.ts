@@ -29,6 +29,7 @@ export function sameTree(
       q,
       qNode ? [{ node: qNode, color: "neutral" as HighlightColor }] : []
     );
+    l.breakpoint_explanation = `Comparing nodes pNode (${pNode ? pNode.val : 'null'}) and qNode (${qNode ? qNode.val : 'null'}).`;
     l.breakpoint(1); // Log initial call
 
     if (!pNode && !qNode) {
@@ -36,6 +37,7 @@ export function sameTree(
       l.tree("pTree", p, []);
       l.tree("qTree", q, []);
       l.simple({ "is node same?": true });
+      l.breakpoint_explanation = "Base case: Both pNode and qNode are null. Trees are same at this path. Returning true.";
       l.breakpoint(2); // Log base case: both null
       return true;
     }
@@ -52,6 +54,7 @@ export function sameTree(
         qNode ? [{ node: qNode, color: "bad" as HighlightColor }] : []
       );
       l.simple({ "is node same?": false });
+      l.breakpoint_explanation = `Base case: One of pNode or qNode is null, the other is not. pNode is ${pNode ? pNode.val : 'null'}, qNode is ${qNode ? qNode.val : 'null'}. Trees are different. Returning false.`;
       l.breakpoint(3); // Log base case: one null
       return false;
     }
@@ -63,6 +66,7 @@ export function sameTree(
       l.tree("pTree", p, [{ node: pNode, color: "bad" as HighlightColor }]);
       l.tree("qTree", q, [{ node: qNode, color: "bad" as HighlightColor }]);
       l.simple({ "is node same?": false });
+      l.breakpoint_explanation = `Nodes have different values (pNode.val = ${pNode.val}, qNode.val = ${qNode.val}). Trees are different. Returning false.`;
       l.breakpoint(4); // Log values differ
       return false;
     }
@@ -70,6 +74,7 @@ export function sameTree(
     l.tree("pTree", p, [{ node: pNode, color: "good" as HighlightColor }]);
     l.tree("qTree", q, [{ node: qNode, color: "good" as HighlightColor }]);
     l.simple({ "is node same?": true }); // Log values are same before recursing
+    // No breakpoint here, the next breakpoint will be 1 from the recursive call or 5 if returning
 
     // Recursively check left and right subtrees
     const leftSame = checkNodes(pNode.left, qNode.left);
@@ -78,6 +83,7 @@ export function sameTree(
       l.tree("pTree", p, [{ node: pNode, color: "bad" as HighlightColor }]);
       l.tree("qTree", q, [{ node: qNode, color: "bad" as HighlightColor }]);
       l.simple({ "overall result": false });
+      l.breakpoint_explanation = `Recursive step result for node pNode (${pNode.val}): Node values matched. Left subtree same: ${leftSame}. Returning false.`;
       l.breakpoint(5);
       return false;
     }
@@ -92,6 +98,7 @@ export function sameTree(
       { node: qNode, color: (result ? "good" : "bad") as HighlightColor },
     ]);
     l.simple({ "overall result": result });
+    l.breakpoint_explanation = `Recursive step result for node pNode (${pNode.val}): Node values matched. Left subtree same: ${leftSame}. Right subtree same: ${rightSame}. Overall result for this node: ${result}.`;
     l.breakpoint(5); // Note: Breakpoint 5 is used multiple times, which is fine.
     return result;
   }
@@ -99,6 +106,7 @@ export function sameTree(
   // Start the recursive checking process
   const result = checkNodes(p, q);
   l.simple({ result });
+  l.breakpoint_explanation = `Overall result for the entire tree: ${result}.`;
   l.breakpoint(6); // Log overall result for the entire tree
 
   return l.getSteps();

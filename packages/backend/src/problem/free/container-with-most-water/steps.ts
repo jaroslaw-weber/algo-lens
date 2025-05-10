@@ -31,10 +31,11 @@ export function generateSteps(height: number[]): ProblemState[] {
     } else {
       l.hide("area");
     }
-    l.breakpoint(point);
+    l.breakpoint(point.toString());
   }
 
   // Initial state log before the loop starts
+  l.breakpoint_explanation = "Initial state before the loop.";
   log(1);
 
   // Main loop to check areas
@@ -42,18 +43,22 @@ export function generateSteps(height: number[]): ProblemState[] {
     const width = right - left;
     const minHeight = Math.min(height[left], height[right]);
     const area = width * minHeight;
+    l.breakpoint_explanation = "Calculated area for the current pair of lines.";
     log(2, area);
 
     if (area > maxArea) {
       maxArea = area;
+      l.breakpoint_explanation = "Updated maxArea with the new larger area.";
       log(3, area);
     }
 
     if (height[left] < height[right]) {
       left++;
+      l.breakpoint_explanation = "Moved left pointer because height[left] < height[right].";
       log(4, area);
     } else {
       right--;
+      l.breakpoint_explanation = "Moved right pointer because height[left] >= height[right].";
       log(5, area);
     }
   }
@@ -61,6 +66,7 @@ export function generateSteps(height: number[]): ProblemState[] {
   const result = maxArea;
   l.simple({ result });
   // Logs the final state with the maximum area
+  l.breakpoint_explanation = "Final result.";
   log(6, undefined);
 
   return l.getSteps();
