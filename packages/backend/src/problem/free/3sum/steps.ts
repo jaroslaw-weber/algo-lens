@@ -35,6 +35,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.array2d("result", result);
   l.hashset("seen", seen, undefined!);
   l.comment = "Initial state before sorting";
+  l.comment = "Inspect the initial state of the input array before sorting.";
   l.breakpoint(1);
   l.comment = "Initial state before sorting";
 
@@ -45,18 +46,22 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.simple({ target });
   l.array2d("result", result);
   l.comment = "Array sorted";
+  l.comment = "Inspect the state after sorting the input array.";
   l.breakpoint(2);
 
   for (let i = 0; i < nums.length - 2; i++) {
     l.arrayV2({ nums: nums }, { i: i });
     l.simple({ target });
     l.array2d("result", result);
+    l.comment =
+      "Inspect the current index and state before processing the triplet.";
     l.breakpoint(3);
 
     if (i > 0 && nums[i] === nums[i - 1]) {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ target });
       l.array2d("result", result);
+      l.comment = "Inspect the state when skipping duplicates.";
       l.breakpoint(4);
 
       continue; // Skip duplicates
@@ -68,6 +73,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
     l.simple({ target });
     l.array2d("result", result);
+    l.comment = "Inspect the state before entering the two-pointer search.";
     l.breakpoint(5);
 
     while (left < right) {
@@ -80,6 +86,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.group("triplet", tripletMap);
       l.simple({ sum });
       l.array2d("result", result);
+      l.comment = "Inspect the current triplet and sum calculated.";
       l.breakpoint(6);
 
       if (sum === target) {
@@ -87,6 +94,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
         // Add seen set visualization if StepLogger supports it
         // l.set('seen', seen);
+        l.comment = "Inspect the state when a valid triplet is found.";
         l.breakpoint(7);
 
         if (!seen.has(tripletKey)) {
@@ -95,6 +103,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
           l.hashset("seen", seen, undefined!);
           l.grid("result", result);
+          l.comment =
+            "Inspect the state after adding a new triplet to the result.";
           l.breakpoint(8);
         }
 
@@ -111,6 +121,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.simple({ sum });
           l.array2d("result", result);
           l.comment = `Inner loop: Skipped duplicate left pointers, new left = ${left}`;
+          l.comment =
+            "Inspect the state after skipping duplicate left pointers.";
           l.breakpoint(9);
         }
 
@@ -127,6 +139,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.simple({ sum });
           l.array2d("result", result);
           l.comment = `Inner loop: Skipped duplicate right pointers, new right = ${right}`;
+          l.comment =
+            "Inspect the state after skipping duplicate right pointers.";
           l.breakpoint(10);
         }
 
@@ -136,6 +150,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.simple({ sum });
         l.array2d("result", result);
         l.comment = `Inner loop: Moving pointers after finding target sum`;
+        l.comment = "Inspect the state after moving both pointers.";
         l.breakpoint(11);
 
         left++;
@@ -148,6 +163,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         // Don't log triplet/sum here as they are recalculated at the start of the next iteration
         l.array2d("result", result);
         l.hide("triplet");
+        l.comment = "Inspect the state after recalculating the triplet.";
         l.breakpoint(12);
       } else if (sum < target) {
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
@@ -156,6 +172,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.simple({ sum });
         l.array2d("result", result);
 
+        l.comment = "Inspect the state when the sum is less than the target.";
         l.breakpoint(13);
         left++;
       } else {
@@ -166,6 +183,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
+        l.comment =
+          "Inspect the state when the sum is greater than the target.";
         l.breakpoint(14);
         right--;
       }
@@ -174,6 +193,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
     l.simple({ target });
     l.array2d("result", result);
+    l.comment =
+      "Inspect the state at the end of the inner loop for the current index.";
     l.breakpoint(15);
   }
 
@@ -181,6 +202,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.simple({ target });
   l.array2d("result", result);
   l.comment = "Finished searching for triplets";
+  l.comment = "Inspect the final state after processing all triplets.";
   l.breakpoint(16);
 
   return l.getSteps();
