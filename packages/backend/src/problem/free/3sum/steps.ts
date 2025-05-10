@@ -139,8 +139,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.simple({ sum });
           l.array2d("result", result);
           l.comment = `Inner loop: Skipped duplicate right pointers, new right = ${right}`;
-          l.comment =
-            "Inspect the state after skipping duplicate right pointers.";
           l.breakpoint(10);
         }
 
@@ -150,7 +148,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.simple({ sum });
         l.array2d("result", result);
         l.comment = `Inner loop: Moving pointers after finding target sum`;
-        l.comment = "Inspect the state after moving both pointers.";
         l.breakpoint(11);
 
         left++;
