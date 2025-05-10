@@ -1,10 +1,18 @@
 import * as fs from "fs";
 import * as path from "path";
-// Removed specific problem imports as they will be loaded dynamically
 import { Problem, ProblemGroup } from "algo-lens-core";
+import { generateCodeFromSteps } from "./codeGenerator"; // Added import
 
 // Helper function to check if an object is a Problem instance
-function isProblem(obj: any): obj is Problem<any, any> {
+// Extended Problem type to include optional codeGenConfig
+interface ProblemWithCodeGen<TInput, TOutput> extends Problem<TInput, TOutput> {
+  codeGenConfig?: {
+    targetFunctionSignature: string;
+    // returnVariable: string; // Removed
+  };
+}
+
+function isProblem(obj: any): obj is ProblemWithCodeGen<any, any> {
   return (
     obj &&
     typeof obj === "object" &&
@@ -42,18 +50,43 @@ export async function getAllProblemInternal(): Promise<Problem<any, any>[]> {
         const module = await import(`./${relativePath}`);
 
         const foundProblem = Object.values(module)[0] as
-          | Problem<any, any>
+          | ProblemWithCodeGen<any, any> // Use extended type
           | undefined;
 
         if (foundProblem && !loadedProblemTitles.has(foundProblem.id)) {
-          // Load the code from typescript.ts file
-          const codeFilePath = path.join(entryPath, "/code/typescript.ts");
-          if (fs.existsSync(codeFilePath)) {
-            foundProblem.code = fs.readFileSync(codeFilePath, "utf-8");
+          if (foundProblem.codeGenConfig) {
+            const stepsFilePath = path.join(entryPath, "steps.ts");
+            if (fs.existsSync(stepsFilePath)) {
+              try {
+                const stepsFileContent = fs.readFileSync(stepsFilePath, "utf-8");
+                const generatedCode = generateCodeFromSteps({
+                  stepsFileContent,
+                  targetFunctionSignature: foundProblem.codeGenConfig.targetFunctionSignature,
+                  // returnVariable: foundProblem.codeGenConfig.returnVariable, // Removed
+                });
+                foundProblem.code = generatedCode.content;
+                // Optionally log success or generatedCode.logs
+                console.log(`Code generated for problem: ${foundProblem.title} using steps.ts. Logs: ${JSON.stringify(generatedCode.logs)}`);
+              } catch (error) {
+                console.error(`Error generating code for problem ${foundProblem.title} from steps.ts:`, error);
+                foundProblem.code = `// Error generating code from steps.ts: ${error.message}`;
+              }
+            } else {
+              console.warn(`steps.ts file not found for problem: ${foundProblem.title}, though codeGenConfig is present.`);
+              foundProblem.code = "// steps.ts not found, code generation skipped.";
+            }
           } else {
-            console.warn(
-              `Code file not found for problem: ${foundProblem.title}`
-            );
+            // Fallback to old logic: Load the code from code/typescript.ts file
+            const codeFilePath = path.join(entryPath, "/code/typescript.ts");
+            if (fs.existsSync(codeFilePath)) {
+              foundProblem.code = fs.readFileSync(codeFilePath, "utf-8");
+              console.log(`Code loaded from code/typescript.ts for problem: ${foundProblem.title} (no codeGenConfig).`);
+            } else {
+              console.warn(
+                `Code file (code/typescript.ts) not found for problem: ${foundProblem.title}`
+              );
+              foundProblem.code = "// Code file not found.";
+            }
           }
 
           dynamicallyLoadedProblems.push(foundProblem);
