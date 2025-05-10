@@ -112,7 +112,11 @@ function ProblemVisualizer() {
               {/* Moved original content here */}
               <div className="flex flex-col lg:flex-row  lg:gap-20">
                 <div className="flex-1 p-2  lg:w-1/2">
-                  <CodePreview code={code} highlightLineIndex={line} />
+                  <CodePreview
+                    code={problem.code}
+                    highlightLineIndex={line}
+                    problem={problem}
+                  />
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
                   <div className="flex items-center gap-6">
