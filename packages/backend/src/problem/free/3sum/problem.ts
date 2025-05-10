@@ -1,6 +1,6 @@
 import { Problem, ProblemState } from "algo-lens-core";
-import fs from 'fs'; // Add import
-import path from 'path'; // Add import
+import fs from "fs"; // Add import
+import path from "path"; // Add import
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
@@ -8,7 +8,10 @@ import { testcases } from "./testcase";
 import { ThreeSumInput } from "./types";
 
 // Read explanation markdown
-const explanationMarkdown = fs.readFileSync(path.join(__dirname, 'explanation.md'), 'utf-8');
+const explanationMarkdown = fs.readFileSync(
+  path.join(__dirname, "explanation.md"),
+  "utf-8"
+);
 
 export const problem: Problem<ThreeSumInput, ProblemState> = {
   title: "Three Sum",
@@ -22,5 +25,8 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
   metadata: {
     variables,
     groups,
+  },
+  codegen: {
+    signature: "function threeSteps(numbers: number[])",
   },
 };

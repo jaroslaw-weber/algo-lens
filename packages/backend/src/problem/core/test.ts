@@ -40,6 +40,7 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     problem.func2 = exportedFunctions[0];
     //read module as string
     const code = fs.readFileSync(tsFilePath, "utf-8");
+    
     problem.code = code;
     if (!code) {
       throw new Error("No code found in TypeScript file");

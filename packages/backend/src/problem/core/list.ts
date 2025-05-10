@@ -1,134 +1,104 @@
 import * as fs from "fs";
 import * as path from "path";
 import { Problem, ProblemGroup } from "algo-lens-core";
-import { generateCodeFromSteps } from "./codeGenerator"; // Added import
+import { generateCodeFromSteps } from "./codeGenerator";
 
-function isProblem(obj: any): obj is Problem<any, any> {
-  return (
-    obj &&
-    typeof obj === "object" &&
-    "title" in obj &&
-    "description" in obj &&
-    "tags" in obj &&
-    "testCases" in obj
-  );
-}
-
-export async function getAllProblemInternal(): Promise<Problem<any, any>[]> {
-  const freeDirPath = path.join(__dirname, "../free");
-  //console.log("loading problems from", freeDirPath);
-  const dirEntries = fs.readdirSync(freeDirPath, { withFileTypes: true });
-  //console.log(dirEntries);
-
-  const dynamicallyLoadedProblems: Problem<any, any>[] = [];
-  const loadedProblemTitles = new Set<string>();
-
-  for (const entry of dirEntries) {
-    const entryPath = path.join(freeDirPath, entry.name);
-    const modulePath = entry.isDirectory()
-      ? path.join(entryPath, "problem.ts")
-      : entry.isFile() &&
-        entry.name.endsWith(".ts") &&
-        !entry.name.endsWith(".d.ts")
-      ? entryPath
-      : null;
-
-    if (modulePath && fs.existsSync(modulePath)) {
-      try {
-        const relativePath = path
-          .relative(__dirname, modulePath)
-          .replace(/\\/g, "/");
-        const module = await import(`./${relativePath}`);
-
-        const foundProblem = Object.values(module)[0] as
-          | Problem<any, any> // Use extended type
-          | undefined;
-
-        if (foundProblem && !loadedProblemTitles.has(foundProblem.id)) {
-          if (foundProblem.codegen) {
-            const stepsFilePath = path.join(entryPath, "steps.ts");
-            if (fs.existsSync(stepsFilePath)) {
-              try {
-                const stepsFileContent = fs.readFileSync(
-                  stepsFilePath,
-                  "utf-8"
-                );
-                const generatedCode = generateCodeFromSteps({
-                  stepsFileContent,
-                  targetFunctionSignature: foundProblem.codegen.signature,
-                  // returnVariable: foundProblem.codeGenConfig.returnVariable, // Removed
-                });
-                foundProblem.code = generatedCode.content;
-                // Optionally log success or generatedCode.logs
-                console.log(
-                  `Code generated for problem: ${
-                    foundProblem.title
-                  } using steps.ts. Logs: ${JSON.stringify(generatedCode.logs)}`
-                );
-              } catch (error) {
-                console.error(
-                  `Error generating code for problem ${foundProblem.title} from steps.ts:`,
-                  error
-                );
-                foundProblem.code = `// Error generating code from steps.ts: ${error.message}`;
-              }
-            } else {
-              console.warn(
-                `steps.ts file not found for problem: ${foundProblem.title}, though codeGenConfig is present.`
-              );
-              foundProblem.code =
-                "// steps.ts not found, code generation skipped.";
-            }
-          } else {
-            // Fallback to old logic: Load the code from code/typescript.ts file
-            const codeFilePath = path.join(entryPath, "/code/typescript.ts");
-            if (fs.existsSync(codeFilePath)) {
-              foundProblem.code = fs.readFileSync(codeFilePath, "utf-8");
-              console.log(
-                `Code loaded from code/typescript.ts for problem: ${foundProblem.title} (no codeGenConfig).`
-              );
-            } else {
-              console.warn(
-                `Code file (code/typescript.ts) not found for problem: ${foundProblem.title}`
-              );
-              foundProblem.code = "// Code file not found.";
-            }
-          }
-
-          dynamicallyLoadedProblems.push(foundProblem);
-          loadedProblemTitles.add(foundProblem.title);
-        } else if (foundProblem) {
-          console.warn(`Duplicate problem found: ${foundProblem.title}`);
-        } else {
-          console.warn(`No Problem export found in module: ${relativePath}`);
-        }
-      } catch (error) {
-        console.error(`Error importing module ${modulePath}:`, error);
-      }
-    }
-  }
-  return dynamicallyLoadedProblems;
+// Public API
+export async function getAllProblems(): Promise<Problem<any, any>[]> {
+  return loadProblemsFromDir(path.join(__dirname, "../free"));
 }
 
 export const other: ProblemGroup[] = [];
 
-function groupByTags(problems: Problem<any, any>[]) {
-  // Changed parameter name
-  const groupedBlind = new Map();
-  for (const problem of problems) {
-    // Use the parameter
-    if (problem.tags) {
-      for (const tag of problem.tags) {
-        if (!groupedBlind.has(tag)) {
-          groupedBlind.set(tag, []);
-        }
-        groupedBlind.get(tag).push(problem);
-      }
+// Load all problems from a directory
+async function loadProblemsFromDir(
+  dirPath: string
+): Promise<Problem<any, any>[]> {
+  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+  const problems: Problem<any, any>[] = [];
+  const seenTitles = new Set<string>();
+
+  for (const entry of entries) {
+    const filePath = resolveProblemFilePath(dirPath, entry);
+    if (!filePath) continue;
+
+    const problem = await loadProblem(filePath, path.join(dirPath, entry.name));
+    if (problem && !seenTitles.has(problem.title)) {
+      problems.push(problem);
+      seenTitles.add(problem.title);
     }
   }
-  return groupedBlind;
+
+  return problems;
 }
 
-export async function getAllProblems(): Promise<Problem<any, any>[]> {
-  return getAllProblemInternal();
+// Determine the correct file to load
+function resolveProblemFilePath(
+  baseDir: string,
+  entry: fs.Dirent
+): string | null {
+  const entryPath = path.join(baseDir, entry.name);
+  if (entry.isDirectory()) return path.join(entryPath, "problem.ts");
+  if (
+    entry.isFile() &&
+    entry.name.endsWith(".ts") &&
+    !entry.name.endsWith(".d.ts")
+  )
+    return entryPath;
+  return null;
+}
+
+// Load and process a single problem
+async function loadProblem(
+  filePath: string,
+  entryDir: string
+): Promise<Problem<any, any> | null> {
+  try {
+    const relPath = path.relative(__dirname, filePath).replace(/\\/g, "/");
+    //console.log("path", relPath);
+    const mod = await import(`./${relPath}`);
+    const problem = mod.problem;
+    if (!problem) return null;
+
+    problem.code = await getProblemCode(problem, entryDir);
+    if (filePath.includes("3sum")) console.log("problem code: ", problem.code);
+    return problem;
+  } catch (e) {
+    console.error(`Error loading ${filePath}:`, e);
+    return null;
+  }
+}
+
+// Get the code: use codegen if configured, else fallback to file
+async function getProblemCode(
+  problem: Problem<any, any>,
+  dir: string
+): Promise<string> {
+  //console.log("problem.codegen", problem.codegen);
+  if (problem.codegen) {
+    const stepsPath = path.join(dir, "steps.ts");
+    console.log("steps path: " + stepsPath);
+    if (fs.existsSync(stepsPath)) {
+      try {
+        const steps = fs.readFileSync(stepsPath, "utf-8");
+        const generated = generateCodeFromSteps({
+          stepsFileContent: steps,
+          targetFunctionSignature: problem.codegen.signature,
+        });
+        const { content, logs } = generated;
+        console.log("content", content, logs);
+        return content;
+      } catch (e: any) {
+        return `// Error generating code: ${e.message}`;
+      }
+    }
+    return "// codegen config present, but steps.ts not found.";
+  }
+
+  const fallbackPath = path.join(dir, "code/typescript.ts");
+  if (fs.existsSync(fallbackPath)) {
+    return fs.readFileSync(fallbackPath, "utf-8");
+  }
+
+  return "// Code file not found.";
 }

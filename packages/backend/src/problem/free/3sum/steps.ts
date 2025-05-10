@@ -114,10 +114,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
-          l.breakpoint(
-            9,
-            `Inner loop: Skipped duplicate left pointers, new left = ${left}`
-          );
+          l.comment = `Inner loop: Skipped duplicate left pointers, new left = ${left}`;
+          l.breakpoint(9);
         }
 
         // Skip duplicates for right pointer
@@ -132,10 +130,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
-          l.breakpoint(
-            10,
-            `Inner loop: Skipped duplicate right pointers, new right = ${right}`
-          );
+          l.comment = `Inner loop: Skipped duplicate right pointers, new right = ${right}`;
+          l.breakpoint(10);
         }
 
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
@@ -143,10 +139,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
-        l.breakpoint(
-          11,
-          `Inner loop: Moving pointers after finding target sum`
-        );
+        l.comment = `Inner loop: Moving pointers after finding target sum`;
+        l.breakpoint(11);
 
         left++;
         right--;
