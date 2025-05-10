@@ -2,7 +2,8 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 // Removed ProblemState, as2dArray, asArray, asSimpleValue
 import { MinPathSumInput } from "./types"; // Import MinPathSumInput
 
-export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Return type inferred
+export function generateSteps(p: MinPathSumInput) {
+  // Renamed and Exported, Return type inferred
   const { grid } = p; // Assuming grid is number[][]
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
@@ -15,7 +16,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   }
 
   // Make a deep copy to avoid modifying the original input grid if it's passed by reference elsewhere
-  const dpGrid = grid.map(row => [...row]); // Use dpGrid for in-place DP calculations
+  const dpGrid = grid.map((row) => [...row]); // Use dpGrid for in-place DP calculations
 
   const rows = dpGrid.length; // Use variable name from variables.ts
   const cols = dpGrid[0].length; // Use variable name from variables.ts
@@ -26,7 +27,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
 
   l.array2d("grid", dpGrid);
 
-  l.breakpoint_explanation = "Initial DP table (copy of grid).";
+  l.comment = "Initial DP table (copy of grid).";
   l.breakpoint(1);
 
   // Initialize the first row (using 'col' index as per variables.ts)
@@ -37,7 +38,9 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
     dpGrid[0][col] = prevValue + currentValue; // Update in place
 
     l.grid("grid", dpGrid, { r: 0, c: col }, { r: 0, c: col - 1 }); // Use grid, pass pointers directly
-    l.breakpoint_explanation = `Initializing first row: dpGrid[0][${col}] = dpGrid[0][${col-1}] (${prevValue}) + grid[0][${col}] (${currentValue}) = ${dpGrid[0][col]}.`;
+    l.comment = `Initializing first row: dpGrid[0][${col}] = dpGrid[0][${
+      col - 1
+    }] (${prevValue}) + grid[0][${col}] (${currentValue}) = ${dpGrid[0][col]}.`;
     l.breakpoint(2);
   }
   l.simple({ col: undefined }); // Reset col index
@@ -50,7 +53,11 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
     dpGrid[row][0] = prevValue + currentValue; // Update in place
 
     l.grid("grid", dpGrid, { r: row, c: 0 }, { r: row - 1, c: 0 }); // Use grid, pass pointers directly
-    l.breakpoint_explanation = `Initializing first column: dpGrid[${row}][0] = dpGrid[${row-1}][0] (${prevValue}) + grid[${row}][0] (${currentValue}) = ${dpGrid[row][0]}.`;
+    l.comment = `Initializing first column: dpGrid[${row}][0] = dpGrid[${
+      row - 1
+    }][0] (${prevValue}) + grid[${row}][0] (${currentValue}) = ${
+      dpGrid[row][0]
+    }.`;
     l.breakpoint(3);
   }
   l.simple({ row: undefined }); // Reset row index
@@ -65,8 +72,20 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
       const originalValue = grid[row][col]; // Use original grid value for the addition part
       dpGrid[row][col] = Math.min(valueAbove, valueLeft) + originalValue; // Update in place
 
-      l.grid("grid", dpGrid, { r: row, c: col }, { r: row - 1, c: col }, { r: row, c: col - 1 }); // Use grid, pass pointers directly
-      l.breakpoint_explanation = `Filling DP table: dpGrid[${row}][${col}] = min(dpGrid[${row-1}][${col}] (${valueAbove}), dpGrid[${row}][${col-1}] (${valueLeft})) + grid[${row}][${col}] (${originalValue}) = ${dpGrid[row][col]}.`;
+      l.grid(
+        "grid",
+        dpGrid,
+        { r: row, c: col },
+        { r: row - 1, c: col },
+        { r: row, c: col - 1 }
+      ); // Use grid, pass pointers directly
+      l.comment = `Filling DP table: dpGrid[${row}][${col}] = min(dpGrid[${
+        row - 1
+      }][${col}] (${valueAbove}), dpGrid[${row}][${
+        col - 1
+      }] (${valueLeft})) + grid[${row}][${col}] (${originalValue}) = ${
+        dpGrid[row][col]
+      }.`;
       l.breakpoint(4);
     }
     l.simple({ col: undefined }); // Reset col index for inner loop
@@ -79,7 +98,7 @@ export function generateSteps(p: MinPathSumInput) { // Renamed and Exported, Ret
   // Corrected l.simple call to match signature: simple(value: Record<string, any>)
   l.simple({ result: result });
   l.grid("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use grid, pass pointer directly
-  l.breakpoint_explanation = `Final result: dpGrid[${rows-1}][${cols-1}] = ${result}.`;
+  l.comment = `Final result: dpGrid[${rows - 1}][${cols - 1}] = ${result}.`;
   l.breakpoint(5);
 
   return l.getSteps(); // Return the collected steps

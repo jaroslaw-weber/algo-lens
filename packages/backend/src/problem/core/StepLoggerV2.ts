@@ -46,7 +46,9 @@ export class StepLoggerV2 {
   private variables: Variable[];
   private metadata: Map<string, VariableMetadata>;
   private currentBreakpoint = 0;
-  breakpoint_explanation?: string;
+
+  /** explanation of the current step */
+  comment?: string;
   groupOptions: Map<string, any> = new Map();
   constructor() {
     // Initialize the array to store the history of problem states (steps).
@@ -68,7 +70,7 @@ export class StepLoggerV2 {
     const aggregated: ProblemState = {
       variables: this.variables,
       breakpoint: this.currentBreakpoint,
-      description: this.breakpoint_explanation,
+      description: this.comment,
     };
     // Deep-clone the aggregated state to ensure immutability of past steps.
     const cloned = _.cloneDeep(aggregated);

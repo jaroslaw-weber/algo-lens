@@ -19,14 +19,14 @@ export function generateSteps(p: UniquePathsInput) {
   for (let i = 0; i < m; i++) {
     dp[i][0] = 1;
     l.grid("dp", dp, { r: i, c: 0 }); // Use grid, pass pointer directly
-    l.breakpoint_explanation = `Initializing first column of DP table to 1s. dp[${i}][0] = ${dp[i][0]}.`;
+    l.comment = `Initializing first column of DP table to 1s. dp[${i}][0] = ${dp[i][0]}.`;
     l.breakpoint(1);
   }
   // Initialize the first row with 1
   for (let j = 0; j < n; j++) {
     dp[0][j] = 1;
     l.grid("dp", dp, { r: 0, c: j }); // Use grid, pass pointer directly
-    l.breakpoint_explanation = `Initializing first row of DP table to 1s. dp[0][${j}] = ${dp[0][j]}.`;
+    l.comment = `Initializing first row of DP table to 1s. dp[0][${j}] = ${dp[0][j]}.`;
     l.breakpoint(2);
   }
 
@@ -38,7 +38,11 @@ export function generateSteps(p: UniquePathsInput) {
       dp[i][j] = valueAbove + valueLeft;
       // Log state after calculation using grid
       l.grid("dp", dp, { r: i, c: j }, { r: i - 1, c: j }, { r: i, c: j - 1 }); // Pass pointers directly
-      l.breakpoint_explanation = `Calculated dp[${i}][${j}] = dp[${i-1}][${j}] (${valueAbove}) + dp[${i}][${j-1}] (${valueLeft}) = ${dp[i][j]}.`;
+      l.comment = `Calculated dp[${i}][${j}] = dp[${
+        i - 1
+      }][${j}] (${valueAbove}) + dp[${i}][${j - 1}] (${valueLeft}) = ${
+        dp[i][j]
+      }.`;
       l.breakpoint(3);
     }
   }
@@ -48,7 +52,7 @@ export function generateSteps(p: UniquePathsInput) {
   // Corrected l.simple call to match signature: simple(value: Record<string, any>)
   l.simple({ result: result });
   l.grid("dp", dp, { r: m - 1, c: n - 1 }); // Use grid, pass pointer directly
-  l.breakpoint_explanation = `Final result: dp[${m-1}][${n-1}] = ${result}.`;
+  l.comment = `Final result: dp[${m - 1}][${n - 1}] = ${result}.`;
   l.breakpoint(4);
 
   return l.getSteps(); // Return the collected steps

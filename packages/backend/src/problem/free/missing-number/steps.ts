@@ -17,7 +17,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.arrayV2({ nums }); // Log initial array
   l.group("sum", { expectedSum, actualSum }); // Log initial sums
 
-  l.breakpoint_explanation = `Initial state: Calculate expectedSum = (n * (n + 1)) / 2 = ${expectedSum}. actualSum is 0.`;
+  l.comment = `Initial state: Calculate expectedSum = (n * (n + 1)) / 2 = ${expectedSum}. actualSum is 0.`;
   l.breakpoint(1);
   // Loop to calculate actual sum
   for (let i = 0; i < nums.length; i++) {
@@ -27,7 +27,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     // Breakpoint 2: Inside loop state
     l.arrayV2({ nums }, { i }); // Log array, highlighting index i
     l.group("sum", { expectedSum, actualSum }); // Log current sums
-    l.breakpoint_explanation = `Looping: Added nums[${i}] (${nums[i]}) to actualSum. actualSum = ${prevActualSum} + ${nums[i]} = ${actualSum}.`;
+    l.comment = `Looping: Added nums[${i}] (${nums[i]}) to actualSum. actualSum = ${prevActualSum} + ${nums[i]} = ${actualSum}.`;
     l.breakpoint(2);
   }
 
@@ -39,7 +39,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.group("sum", { expectedSum, actualSum, result }); // Log final sums and result
   // Optionally log result as simple value if not included in 'sum' group
   l.simple({ result });
-  l.breakpoint_explanation = `Final state: Calculated result = expectedSum (${expectedSum}) - actualSum (${actualSum}) = ${result}.`;
+  l.comment = `Final state: Calculated result = expectedSum (${expectedSum}) - actualSum (${actualSum}) = ${result}.`;
   l.breakpoint(3);
 
   return l.getSteps(); // Return the generated steps

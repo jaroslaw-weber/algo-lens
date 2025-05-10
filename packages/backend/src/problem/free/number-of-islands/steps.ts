@@ -26,7 +26,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
     { numIslands },
     { max: (rowCount * colCount) / 2, min: 0 }
   );
-  l.breakpoint_explanation = "Initial state: grid and numIslands = 0.";
+  l.comment = "Initial state: grid and numIslands = 0.";
   l.breakpoint(1);
 
   function dfs(i: number, j: number) {
@@ -36,21 +36,21 @@ export function generateSteps(grid: string[][]): ProblemState[] {
       { numIslands },
       { max: (rowCount * colCount) / 2, min: 0 }
     );
-    l.breakpoint_explanation = `DFS: Start processing cell (${i}, ${j}).`;
+    l.comment = `DFS: Start processing cell (${i}, ${j}).`;
     l.breakpoint(2);
     // Check for out of bounds
     if (i < 0 || i >= rowCount || j < 0 || j >= colCount) {
-      l.breakpoint_explanation = `DFS: Out of bounds for cell (${i}, ${j}). Returning.`;
+      l.comment = `DFS: Out of bounds for cell (${i}, ${j}). Returning.`;
       l.breakpoint(3); // Breakpoint after out-of-bounds check
       return;
     }
     // Check if the cell is water or already visited ('0' or '2')
     if (grid[i][j] !== "1") {
-      l.breakpoint_explanation = `DFS: Cell (${i}, ${j}) is water or already visited ('${grid[i][j]}'). Returning.`;
+      l.comment = `DFS: Cell (${i}, ${j}) is water or already visited ('${grid[i][j]}'). Returning.`;
       l.breakpoint(4); // Breakpoint after water/visited check
       return;
     }
-    l.breakpoint_explanation = `DFS: Marking cell (${i}, ${j}) as visited ('2').`;
+    l.comment = `DFS: Marking cell (${i}, ${j}) as visited ('2').`;
     l.breakpoint(5); // Breakpoint before marking as visited
     grid[i][j] = "2"; // Mark the cell as visited ('2')
 
@@ -65,9 +65,9 @@ export function generateSteps(grid: string[][]): ProblemState[] {
           { r: x, c: y, color: 2 as const },
         ]
       );
-      l.breakpoint_explanation = `DFS: Exploring neighbor (${x}, ${y}) of cell (${i}, ${j}).`;
+      l.comment = `DFS: Exploring neighbor (${x}, ${y}) of cell (${i}, ${j}).`;
       l.breakpoint(6); // Breakpoint before calculating new coordinates (corresponds to x += i; y += j; conceptually)
-      l.breakpoint_explanation = `DFS: Recursive call for neighbor (${x}, ${y}).`;
+      l.comment = `DFS: Recursive call for neighbor (${x}, ${y}).`;
       l.breakpoint(7); // Breakpoint right before the recursive call
 
       dfs(x, y); // Recursive call for the adjacent cell
@@ -82,7 +82,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
         { numIslands },
         { max: (rowCount * colCount) / 2, min: 0 }
       );
-      l.breakpoint_explanation = `Main loop: Checking cell (${i}, ${j}).`;
+      l.comment = `Main loop: Checking cell (${i}, ${j}).`;
       l.breakpoint(8);
       if (grid[i][j] === "1") {
         l.grid("grid", grid, ...[{ r: i, c: j }]);
@@ -91,7 +91,9 @@ export function generateSteps(grid: string[][]): ProblemState[] {
           { numIslands: numIslands + 1 }, // Show the value after increment
           { max: (rowCount * colCount) / 2, min: 0 }
         );
-        l.breakpoint_explanation = `Main loop: Found land (grid[${i}][${j}] === '1'). Incrementing numIslands and starting DFS. New numIslands will be ${numIslands + 1}.`;
+        l.comment = `Main loop: Found land (grid[${i}][${j}] === '1'). Incrementing numIslands and starting DFS. New numIslands will be ${
+          numIslands + 1
+        }.`;
         l.breakpoint(9);
         numIslands++;
         dfs(i, j);
@@ -101,7 +103,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
 
   const result = numIslands;
   l.simple({ result });
-  l.breakpoint_explanation = `Final result: numIslands = ${result}.`;
+  l.comment = `Final result: numIslands = ${result}.`;
   l.breakpoint(10);
   return l.getSteps();
 }
