@@ -67,8 +67,6 @@ export function generateSteps(grid: string[][]): ProblemState[] {
       );
       l.comment = `DFS: Exploring neighbor (${x}, ${y}) of cell (${i}, ${j}).`;
       l.breakpoint(6); // Breakpoint before calculating new coordinates (corresponds to x += i; y += j; conceptually)
-      l.comment = `DFS: Recursive call for neighbor (${x}, ${y}).`;
-      l.breakpoint(7); // Breakpoint right before the recursive call
 
       dfs(x, y); // Recursive call for the adjacent cell
     }
@@ -83,7 +81,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
         { max: (rowCount * colCount) / 2, min: 0 }
       );
       l.comment = `Main loop: Checking cell (${i}, ${j}).`;
-      l.breakpoint(8);
+      l.breakpoint(7);
       if (grid[i][j] === "1") {
         l.grid("grid", grid, ...[{ r: i, c: j }]);
         l.group(
@@ -94,7 +92,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
         l.comment = `Main loop: Found land (grid[${i}][${j}] === '1'). Incrementing numIslands and starting DFS. New numIslands will be ${
           numIslands + 1
         }.`;
-        l.breakpoint(9);
+        l.breakpoint(8);
         numIslands++;
         dfs(i, j);
       }
@@ -104,7 +102,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
   const result = numIslands;
   l.simple({ result });
   l.comment = `Final result: numIslands = ${result}.`;
-  l.breakpoint(10);
+  l.breakpoint(9);
   return l.getSteps();
 }
 

@@ -24,8 +24,8 @@ export async function generateCodeFromSteps(
     if (line.includes("return l.getSteps")) {
       lines[i] = "return result;";
     }
-    if (lines.includes("new StepLoggerV2")) {
-      lines[i] = "\n";
+    if (lines.includes("StepLoggerV2")) {
+      lines[i] = "";
     }
   }
 

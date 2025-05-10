@@ -25,7 +25,10 @@ function ProblemVisualizer() {
   const lines = code!.split("\n");
   for (let i = 0; i < lines.length; i++) {
     const loc = lines[i];
-    if (loc.trimStart().startsWith("//#")) {
+    if (
+      loc.trimStart().startsWith("//#") ||
+      loc.trimStart().startsWith("// #")
+    ) {
       //get number from this line with regex
       const no = new RegExp(/\d+/).exec(loc);
       if (!no) {
