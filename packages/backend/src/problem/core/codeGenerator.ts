@@ -8,21 +8,15 @@ interface GeneratedCodeOutput {
   content: string;
 }
 
-function includeLine(line: string) {
-  if (line.trim().startsWith("l.")) {
-    return false;
-  }
-  if (line.trim().startsWith("import")) {
-    return false;
-  }
-  return true;
-}
-
 export function generateCodeFromSteps(
   params: GenerateCodeParams
 ): GeneratedCodeOutput {
   let result = params.stepsFileContent;
-  result = result.replace(/l\..*?[=:].*?(\n|$)/g, ""); // Remove any string pattern starting with l. and ending with : or =, including multiline
+  //start with 'l.TEXT' and end with ; (include multiline)
+  result = result.replace(/l\.[\s\S]*?;/g, "");
+  //todo: remove extra empty lines (remove if 2 or more empty lines)
+  //todo: remove step logger line
+  //todo: remove imports
 
   const content = result;
   return { content };
