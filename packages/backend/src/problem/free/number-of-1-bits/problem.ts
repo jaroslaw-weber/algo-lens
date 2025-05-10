@@ -17,4 +17,7 @@ export const problem: Problem<HammingWeightInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: {
+    signature: "function hammingWeight(n: number): number",
+  },
 };

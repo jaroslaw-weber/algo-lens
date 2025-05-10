@@ -20,4 +20,7 @@ export const problem: Problem<SetMatrixZeroesInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: {
+    signature: "function setZeroes(matrix: number[][]): void",
+  },
 };

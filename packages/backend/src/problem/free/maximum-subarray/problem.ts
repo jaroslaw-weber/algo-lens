@@ -19,4 +19,7 @@ export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
     variables: variableMetadata, // Updated usage
     groups: groups,
   },
+  codegen: {
+    signature: "function maxSubArray(nums: number[]): number",
+  },
 };

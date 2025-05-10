@@ -22,4 +22,7 @@ export const problem: Problem<MinPathSumInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: {
+    signature: "function minPathSum(grid: number[][]): number",
+  },
 };

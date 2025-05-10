@@ -16,5 +16,8 @@ export const problem: Problem<NumIslandsInput, ProblemState> = {
   difficulty: "medium",
   tags: ["graph"],
   metadata: { variables, groups },
+  codegen: {
+    signature: "function numIslands(grid: string[][]): number",
+  },
   testcases,
 };

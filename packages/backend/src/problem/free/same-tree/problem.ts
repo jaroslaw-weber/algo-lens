@@ -19,4 +19,8 @@ export const problem: Problem<SameTreeInput, ProblemState> = {
     groups,
     variables,
   },
+  codegen: {
+    signature:
+      "function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean",
+  },
 };

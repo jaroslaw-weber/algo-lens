@@ -19,4 +19,7 @@ export const problem: Problem<CoinChangeInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: {
+    signature: "function coinChange(coins: number[], amount: number): number",
+  },
 };

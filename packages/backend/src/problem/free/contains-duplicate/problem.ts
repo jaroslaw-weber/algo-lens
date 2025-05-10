@@ -21,4 +21,7 @@ export const problem: Problem<ContainsDuplicateInput, ProblemState> = {
     groups: [], // Keep groups as empty for now, unless defined elsewhere
     variables, // Use the imported variables
   },
+  codegen: {
+    signature: "function containsDuplicate(nums: number[]): boolean",
+  },
 };

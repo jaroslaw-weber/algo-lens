@@ -19,4 +19,7 @@ export const problem: Problem<ClimbingStairsInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: {
+    signature: "function climbStairs(n: number): number",
+  },
 };

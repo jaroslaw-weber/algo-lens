@@ -19,4 +19,7 @@ export const problem: Problem<LISInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: {
+    signature: "function lengthOfLIS(nums: number[]): number",
+  },
 };
