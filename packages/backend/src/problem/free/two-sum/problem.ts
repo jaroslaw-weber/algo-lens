@@ -10,7 +10,10 @@ import { testcases } from "./testcase";
 // Read the description from description.md
 let description = "";
 try {
-  description = fs.readFileSync(path.join(__dirname, "description.md"), "utf-8");
+  description = fs.readFileSync(
+    path.join(__dirname, "description.md"),
+    "utf-8"
+  );
 } catch (error) {
   console.error("Error reading description.md:", error);
   // Keep description as empty string if file reading fails
@@ -29,5 +32,7 @@ export const problem: Problem<TwoSumInput, ProblemState> = {
     groups, // Use the imported groups
   },
   testcases: testcases, // Use the imported testcases
-  // Note: The 'code' property is intentionally removed.
+  codegen: {
+    signature: "function twoSum(nums: number[], target: number): number[]",
+  },
 };

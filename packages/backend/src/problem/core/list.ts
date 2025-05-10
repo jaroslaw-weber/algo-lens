@@ -61,7 +61,7 @@ async function loadProblem(
     if (!problem) return null;
 
     problem.code = await getProblemCode(problem, entryDir);
-    if (filePath.includes("3sum")) console.log("problem code: ", problem.code);
+    // if (filePath.includes("3sum")) console.log("problem code: ", problem.code);
     return problem;
   } catch (e) {
     console.error(`Error loading ${filePath}:`, e);
@@ -77,7 +77,7 @@ async function getProblemCode(
   //console.log("problem.codegen", problem.codegen);
   if (problem.codegen) {
     const stepsPath = path.join(dir, "steps.ts");
-    console.log("steps path: " + stepsPath);
+    //console.log("steps path: " + stepsPath);
     if (fs.existsSync(stepsPath)) {
       try {
         const steps = fs.readFileSync(stepsPath, "utf-8");
@@ -87,7 +87,7 @@ async function getProblemCode(
           problemName: problem.id,
         });
         const { content } = generated;
-        console.log("content", content);
+        //console.log("content", content);
         return content;
       } catch (e: any) {
         return `// Error generating code: ${e.message}`;

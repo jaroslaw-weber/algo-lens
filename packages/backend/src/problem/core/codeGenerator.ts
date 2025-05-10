@@ -14,6 +14,23 @@ export async function generateCodeFromSteps(
   params: GenerateCodeParams
 ): Promise<GeneratedCodeOutput> {
   let result = params.stepsFileContent;
+  const lines = result.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    // console.log("line", line);
+    if (line.includes(": ProblemState[] {")) {
+      lines[i] = params.targetFunctionSignature + "{";
+    }
+    if (line.includes("return l.getSteps")) {
+      lines[i] = "return result;";
+    }
+    if (lines.includes("new StepLoggerV2")) {
+      lines[i] = "\n";
+    }
+  }
+
+  result = lines.join("\n");
+
   // Remove comments
   result = result.replace(/^\s*\/\/.*$\n/gm, "");
   // Replace breakpoints with //#1 etc
@@ -28,6 +45,7 @@ export async function generateCodeFromSteps(
   // Remove imports
   result = result.replace(/^import[\s\S]*?;?\n/gm, "");
   const content = result;
+  console.log("result", result);
   const formattedContent = await prettier.format(content, {
     parser: "typescript",
   });
