@@ -9,8 +9,12 @@ import _ = require("lodash");
 export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2();
 
-  const min = _.min(nums);
-  const max = _.max(nums);
+  let min = Infinity;
+  let max = -Infinity;
+  for (const num of nums) {
+    if (num < min) min = num;
+    if (num > max) max = num;
+  }
   l.groupOptions.set("triplet", {
     min,
     max,
@@ -30,7 +34,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.simple({ target });
   l.array2d("result", result);
   l.hashset("seen", seen, undefined!);
-  l.breakpoint(1, "Initial state before sorting");
+  l.comment = "Initial state before sorting";
+  l.breakpoint(1);
+  l.comment = "Initial state before sorting";
 
   nums.sort((a, b) => a - b); // Sort the array
 
@@ -38,19 +44,20 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
-  l.breakpoint(2, "Array sorted");
+  l.comment = "Array sorted";
+  l.breakpoint(2);
 
   for (let i = 0; i < nums.length - 2; i++) {
     l.arrayV2({ nums: nums }, { i: i });
     l.simple({ target });
     l.array2d("result", result);
-    l.breakpoint(3, `Outer loop: Start iteration with i = ${i}`);
+    l.breakpoint(3);
 
     if (i > 0 && nums[i] === nums[i - 1]) {
       l.arrayV2({ nums: nums }, { i: i });
       l.simple({ target });
       l.array2d("result", result);
-      l.breakpoint(4, `Outer loop: Skip duplicate i = ${i}`);
+      l.breakpoint(4);
 
       continue; // Skip duplicates
     }
@@ -61,7 +68,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
     l.simple({ target });
     l.array2d("result", result);
-    l.breakpoint(5, `Inner loop: Initialize left = ${left}, right = ${right}`);
+    l.breakpoint(5);
 
     while (left < right) {
       const sum = nums[i] + nums[left] + nums[right];
@@ -73,22 +80,14 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.group("triplet", tripletMap);
       l.simple({ sum });
       l.array2d("result", result);
-      l.breakpoint(
-        6,
-        `Inner loop: Calculate sum = ${sum} for triplet [${triplet.join(",")}]`
-      );
+      l.breakpoint(6);
 
       if (sum === target) {
         const tripletKey = triplet.join(",");
 
         // Add seen set visualization if StepLogger supports it
         // l.set('seen', seen);
-        l.breakpoint(
-          7,
-          `Inner loop: Found potential triplet [${triplet.join(
-            ","
-          )}] with sum = ${target}`
-        );
+        l.breakpoint(7);
 
         if (!seen.has(tripletKey)) {
           seen.add(tripletKey);
@@ -96,10 +95,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
           l.hashset("seen", seen, undefined!);
           l.grid("result", result);
-          l.breakpoint(
-            8,
-            `Inner loop: Added unique triplet [${triplet.join(",")}] to result`
-          );
+          l.breakpoint(8);
         }
 
         // Skip duplicates for left pointer
@@ -152,20 +148,15 @@ export function generateSteps(nums: number[]): ProblemState[] {
         // Don't log triplet/sum here as they are recalculated at the start of the next iteration
         l.array2d("result", result);
         l.hide("triplet");
-        l.breakpoint(
-          12,
-          `Inner loop: Moved pointers, new left = ${left}, new right = ${right}`
-        );
+        l.breakpoint(12);
       } else if (sum < target) {
         l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
         l.simple({ target });
         l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
-        l.breakpoint(
-          13,
-          `Inner loop: Sum ${sum} < target ${target}, incrementing left pointer`
-        );
+
+        l.breakpoint(13);
         left++;
       } else {
         // sum > target
@@ -175,10 +166,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
-        l.breakpoint(
-          14,
-          `Inner loop: Sum ${sum} > target ${target}, decrementing right pointer`
-        );
+        l.breakpoint(14);
         right--;
       }
     }
@@ -186,13 +174,14 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV2({ nums: nums }, { i: i, left: left, right: right });
     l.simple({ target });
     l.array2d("result", result);
-    l.breakpoint(14.5, `Inner loop finished for i = ${i}`); // Added intermediate breakpoint
+    l.breakpoint(15);
   }
 
   l.arrayV2({ nums: nums }, {});
   l.simple({ target });
   l.array2d("result", result);
-  l.breakpoint(15, "Finished searching for triplets");
+  l.comment = "Finished searching for triplets";
+  l.breakpoint(16);
 
   return l.getSteps();
 }
