@@ -40,6 +40,10 @@ export interface Problem<Input, State> {
   difficulty: Difficulty;
 
   metadata: ProblemMetadata;
+
+  codegen?: {
+    signature: string;
+  };
 }
 
 export type ProblemGroup = {
