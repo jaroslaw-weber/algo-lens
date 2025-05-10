@@ -46,7 +46,7 @@ export class StepLoggerV2 {
   private variables: Variable[];
   private metadata: Map<string, VariableMetadata>;
   private currentBreakpoint = 0;
-  private description?: string;
+  breakpoint_explanation?: string;
   groupOptions: Map<string, any> = new Map();
   constructor() {
     // Initialize the array to store the history of problem states (steps).
@@ -68,7 +68,7 @@ export class StepLoggerV2 {
     const aggregated: ProblemState = {
       variables: this.variables,
       breakpoint: this.currentBreakpoint,
-      description: this.description,
+      description: this.breakpoint_explanation,
     };
     // Deep-clone the aggregated state to ensure immutability of past steps.
     const cloned = _.cloneDeep(aggregated);
@@ -84,10 +84,9 @@ export class StepLoggerV2 {
    * @param breakpoint - A numerical identifier for this breakpoint.
    * @param description - An optional description for the breakpoint (currently unused).
    */
-  public breakpoint(breakpoint: number, description?: string) {
+  public breakpoint(breakpoint: number) {
     // Update the current breakpoint identifier. This value will be stored in the saved state.
     this.currentBreakpoint = breakpoint;
-    this.description = description;
     // Call the save method to capture and store the current variable state snapshot.
     this.save();
   }
