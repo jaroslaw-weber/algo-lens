@@ -12,42 +12,58 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   const l = new StepLoggerV2();
   let carry: number | undefined; // Define carry outside the loop
 
-  // Initial state (Breakpoint 1)
+  // #1 Initialize carry
   l.binary({ a });
   l.binary({ b });
+  // carry is undefined here initially, which is fine.
+  // Or, we could initialize it to a specific value if the logic implies, e.g., 0
+  // For this problem, undefined is representative of its state before first calculation.
+  l.binary({ carry });
   l.breakpoint(1);
 
   while (b !== 0) {
-    carry = a & b;
-    // State after calculating carry (Breakpoint 2)
+    // #2 Start loop iteration (while carry exists)
     l.binary({ a });
     l.binary({ b });
-    l.binary({ carry });
+    l.binary({ carry }); // carry from previous iteration or undefined
     l.breakpoint(2);
 
-    a = a ^ b;
-    // State after calculating sum without carry (Breakpoint 3)
+    carry = a & b;
+    // #3 Calculate carry bits
     l.binary({ a });
     l.binary({ b });
     l.binary({ carry });
     l.breakpoint(3);
 
-    b = carry << 1;
-    // State after shifting carry (Breakpoint 4)
-    l.binary({ a });
-    l.binary({ b }); // b now holds the shifted carry
+    a = a ^ b;
+    // #4 Calculate sum bits (without carry)
+    l.binary({ a }); // a now holds sum without carry
+    l.binary({ b });
     l.binary({ carry });
     l.breakpoint(4);
+
+    b = carry << 1;
+    // #5 Shift carry left for next iteration
+    l.binary({ a });
+    l.binary({ b }); // b now holds the shifted carry
+    l.binary({ carry }); // carry still holds the value before shifting for this step's log
+    l.breakpoint(5);
   }
 
-  // Final state (Breakpoint 5)
-  l.binary({ result: a }); // Log 'a' with the label 'result'
+  // #6 Loop finished (no more carry)
+  l.binary({ a }); // Final sum is in a
+  l.binary({ b }); // b is 0
+  l.binary({ carry }); // carry from the last iteration (could be 0 or the last non-zero carry)
+  l.breakpoint(6);
+
+  // #7 Return final sum
+  const result = a; // Assign final sum in 'a' to 'result'
+  l.binary({ result }); // Log the variable 'result' (which now holds the sum)
   l.binary({ b }); // b should be 0 here
-  // Optionally log the final carry if it was defined in the last iteration
-  if (carry !== undefined) {
+  if (carry !== undefined) { // carry here refers to the state after loop
     l.binary({ carry });
   }
-  l.breakpoint(5);
+  l.breakpoint(7);
 
   return l.getSteps();
 }
