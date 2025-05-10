@@ -17,6 +17,7 @@ export async function generateCodeFromSteps(
   // Remove comments
   result = result.replace(/^\s*\/\/.*$\n/gm, "");
   // Replace breakpoints with //#1 etc
+  result = result.replace(/\s*\/\/.*$/gm, "");
   result = result.replace(/^.*l\.breakpoint\((\d+)\).*$\n/gm, "// #$1\n");
   //start with 'l.TEXT' and end with ; (include multiline)
   result = result.replace(/l\.[\s\S]*?;/g, "");
