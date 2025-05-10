@@ -20,13 +20,15 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   l.array2d("matrix", matrix);
   l.simple({ rows, cols });
   l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-  l.breakpoint(1, "Initial state");
+  l.comment = "Initial state";
+  l.breakpoint(1);
 
   // Determine if the first column has any zeros
   for (let i = 0; i < rows; i++) {
     l.array2d("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-    l.breakpoint(2, `Check first column, row i=${i}`);
+    l.comment = `Check first column, row i=${i}`;
+    l.breakpoint(2);
 
     if (matrix[i][0] === 0) {
       firstColHasZero = true;
@@ -44,7 +46,8 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   for (let j = 0; j < cols; j++) {
     l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-    l.breakpoint(4, `Check first row, column j=${j}`);
+    l.comment = `Check first row, column j=${j}`;
+    l.breakpoint(4);
 
     if (matrix[0][j] === 0) {
       firstRowHasZero = true;
@@ -63,7 +66,8 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
     for (let j = 1; j < cols; j++) {
       l.array2d("matrix", matrix, { r: i, c: j }); // Changed from array to object
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.breakpoint(6, `Mark zeroes: Check cell (${i}, ${j})`);
+      l.comment = `Mark zeroes: Check cell (${i}, ${j})`;
+      l.breakpoint(6);
 
       if (matrix[i][j] === 0) {
         matrix[i][0] = 0;
@@ -115,41 +119,48 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
   l.array2d("matrix", matrix);
   l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-  l.breakpoint(10, "Prepare to zero out first row/column based on flags");
+  l.comment = "Prepare to zero out first row/column based on flags";
+  l.breakpoint(10);
 
   // Zero out the first row if needed
   if (firstRowHasZero) {
     l.array2d("matrix", matrix);
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-    l.breakpoint(11, "Zero out first row because firstRowHasZero is true");
+    l.comment = "Zero out first row because firstRowHasZero is true";
+    l.breakpoint(11);
     for (let j = 0; j < cols; j++) {
       matrix[0][j] = 0;
       l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.breakpoint(12, `Zero out first row: Set cell (0, ${j}) to zero`);
+      l.comment = `Zero out first row: Set cell (0, ${j}) to zero`;
+      l.breakpoint(12);
     }
   }
 
   l.array2d("matrix", matrix);
   l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-  l.breakpoint(13, "Prepare to zero out first column based on flags");
+  l.comment = "Prepare to zero out first column based on flags";
+  l.breakpoint(13);
 
   // Zero out the first column if needed
   if (firstColHasZero) {
     l.array2d("matrix", matrix);
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-    l.breakpoint(14, "Zero out first column because firstColHasZero is true");
+    l.comment = "Zero out first column because firstColHasZero is true";
+    l.breakpoint(14);
     for (let i = 0; i < rows; i++) {
       matrix[i][0] = 0;
       l.array2d("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.breakpoint(15, `Zero out first column: Set cell (${i}, 0) to zero`);
+      l.comment = `Zero out first column: Set cell (${i}, 0) to zero`;
+      l.breakpoint(15);
     }
   }
 
   l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
   l.array2d("result", matrix); // Ensure this logs the final state correctly
-  l.breakpoint(16, "Final state after setting rows and columns to zero");
+  l.comment = "Final state after setting rows and columns to zero";
+  l.breakpoint(16);
 
   return l.getSteps();
 }

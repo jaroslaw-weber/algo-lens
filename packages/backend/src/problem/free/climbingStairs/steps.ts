@@ -15,7 +15,8 @@ export function generateSteps(n: number): ProblemState[] {
   // Log initial state before loop
   l.simple({ n }); // n belongs to 'input' group
   l.arrayV2({ dp: dp }, {}); // dp belongs to 'computation' group
-  l.breakpoint(1, "Initialize base cases for dp array");
+  l.comment = "Initialize base cases for dp array";
+  l.breakpoint(1);
 
   // Loop through steps
   for (let i = 2; i <= n; i++) {
@@ -25,7 +26,8 @@ export function generateSteps(n: number): ProblemState[] {
     l.simple({ n });
     l.arrayV2({ dp: dp }, { i: i, "i - 1": i - 1, "i - 2": i - 2 });
     l.group("loop", { i }, { min: 2, max: n }); // i belongs to 'computation' group
-    l.breakpoint(2, `Calculate ways for step ${i}`);
+    l.comment = `Calculate ways for step ${i}`;
+    l.breakpoint(2);
     l.hide("loop");
   }
 
@@ -33,7 +35,8 @@ export function generateSteps(n: number): ProblemState[] {
   const result = dp[n];
   l.arrayV2({ dp: dp }, { n: n });
   l.simple({ result }); // result belongs to 'computation' group
-  l.breakpoint(3, "Store the final result");
+  l.comment = "Store the final result";
+  l.breakpoint(3);
 
   return l.getSteps();
 }
