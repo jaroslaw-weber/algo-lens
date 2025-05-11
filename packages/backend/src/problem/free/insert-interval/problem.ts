@@ -11,6 +11,9 @@ export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
   emoji: "➕",
   func: (i) => generateSteps(...i), // Use generateSteps from steps.ts
+  codegen: { // Added codegen property
+    signature: "insertInterval(intervals: number[][], newInterval: number[]): number[][]", // Added signature
+  },
   testcases,
   difficulty: "medium",
   id: "insert-interval",

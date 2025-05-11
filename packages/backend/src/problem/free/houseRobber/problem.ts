@@ -11,6 +11,9 @@ export const problem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
   emoji: "🏠", // Updated emoji
   func: generateSteps, // Use imported generateSteps function
+  codegen: { // Added codegen property
+    signature: "rob(nums: number[]): number", // Added signature
+  },
   difficulty: "medium",
   testcases, // Added testcases
   id: "houseRobber", // Updated id

@@ -13,6 +13,9 @@ export const problem: Problem<WordBreakInput, WordBreakProblemState> = {
   emoji: "📖",
   func: generateSteps, // Use generateSteps
   id: "word-break",
+  codegen: { // Added codegen property
+    signature: "wordBreak(s: string, wordDict: string[]): boolean", // Added signature
+  },
   tags: ["dynamic programming", "string"],
   difficulty: "medium",
   testcases,

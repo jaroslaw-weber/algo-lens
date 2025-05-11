@@ -14,6 +14,9 @@ export const problem: Problem<EditDistanceInput, ProblemState> = {
   difficulty: "medium",
   tags: ["dynamic programming", "string"],
   func: (input) => generateSteps(...input), // Corrected function assignment
+  codegen: { // Added codegen property
+    signature: "minDistance(word1: string, word2: string): number", // Added signature
+  },
   testcases, // Added testcases property
   metadata: {
     variables,

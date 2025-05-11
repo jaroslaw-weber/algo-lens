@@ -12,6 +12,9 @@ export const problem: Problem<MergeIntervalsInput, ProblemState> = {
   difficulty: "medium",
   func: generateSteps, // Use the imported merge function
   id: "merge-intervals",
+  codegen: { // Added codegen property
+    signature: "mergeIntervals(intervals: number[][]): number[][]", // Added signature
+  },
   tags: ["interval"],
   metadata: {
     variables,

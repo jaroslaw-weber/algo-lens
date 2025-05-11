@@ -13,6 +13,9 @@ export const problem: Problem<CourseScheduleInput, ProblemState> = {
   emoji: "📚",
   difficulty: "medium",
   func: (i) => generateSteps(...i),
+  codegen: { // Added codegen property
+    signature: "canFinish(numCourses: number, prerequisites: number[][]): boolean", // Added signature
+  },
   testcases,
   id: "course-schedule",
   tags: ["graph", "topological sort", "dfs", "bfs"],
