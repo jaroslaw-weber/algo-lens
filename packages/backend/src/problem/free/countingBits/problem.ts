@@ -20,6 +20,6 @@ export const problem: Problem<CountBitsInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function countBits(n: number): number[]",
+    signature: "countBits(n: number): number[]",
   },
 };

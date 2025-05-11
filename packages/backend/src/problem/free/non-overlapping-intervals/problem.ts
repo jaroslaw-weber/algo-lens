@@ -19,7 +19,7 @@ export const problem: Problem<EraseOverlapIntervalsInput, ProblemState> = {
     groups,
   }, // Add the metadata property here
   codegen: {
-    signature: "function eraseOverlapIntervals(intervals: number[][]): number",
+    signature: "eraseOverlapIntervals(intervals: number[][]): number",
   },
   testcases, // Add placeholder testcases
   difficulty: "easy", // Add placeholder difficulty

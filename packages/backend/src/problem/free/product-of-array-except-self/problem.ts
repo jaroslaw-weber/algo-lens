@@ -24,6 +24,6 @@ export const problem: Problem<ProductExceptSelfInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function productExceptSelf(nums: number[]): number[]",
+    signature: "productExceptSelf(nums: number[]): number[]",
   },
 };

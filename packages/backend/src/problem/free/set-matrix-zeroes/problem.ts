@@ -21,6 +21,6 @@ export const problem: Problem<SetMatrixZeroesInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function setZeroes(matrix: number[][]): void",
+    signature: "setZeroes(matrix: number[][]): void",
   },
 };

@@ -18,6 +18,6 @@ export const problem: Problem<HammingWeightInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function hammingWeight(n: number): number",
+    signature: "hammingWeight(n: number): number",
   },
 };

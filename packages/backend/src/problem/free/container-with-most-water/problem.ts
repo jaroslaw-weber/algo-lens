@@ -19,6 +19,6 @@ export const problem: Problem<ContainerInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function maxArea(height: number[]): number",
+    signature: "maxArea(height: number[]): number",
   },
 };

@@ -21,7 +21,7 @@ export const problem: Problem<ReverseListInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function reverseList(head: ListNode | null): ListNode | null",
+    signature: "reverseList(head: ListNode | null): ListNode | null",
   },
   testcases,
 };

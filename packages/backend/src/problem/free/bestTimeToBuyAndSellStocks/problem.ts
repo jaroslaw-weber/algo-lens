@@ -20,6 +20,6 @@ export const problem: Problem<MaxProfitInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function bestTimeToBuyAndSellStocks(prices: number[]): number",
+    signature: "bestTimeToBuyAndSellStocks(prices: number[]): number",
   },
 };

@@ -27,6 +27,6 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
     groups,
   },
   codegen: {
-    signature: "function threeSteps(numbers: number[])",
+    signature: "threeSteps(numbers: number[])",
   },
 };

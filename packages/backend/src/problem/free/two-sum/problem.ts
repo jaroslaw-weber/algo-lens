@@ -33,6 +33,6 @@ export const problem: Problem<TwoSumInput, ProblemState> = {
   },
   testcases: testcases, // Use the imported testcases
   codegen: {
-    signature: "function twoSum(nums: number[], target: number): number[]",
+    signature: "twoSum(nums: number[], target: number): number[]",
   },
 };

@@ -19,6 +19,6 @@ export const problem: Problem<UniquePathsInput, ProblemState> = {
     groups: groups, // Use imported groups
   },
   codegen: {
-    signature: "function uniquePaths(m: number, n: number): number",
+    signature: "uniquePaths(m: number, n: number): number",
   },
 };

@@ -22,6 +22,6 @@ export const problem: Problem<ContainsDuplicateInput, ProblemState> = {
     variables, // Use the imported variables
   },
   codegen: {
-    signature: "function containsDuplicate(nums: number[]): boolean",
+    signature: "containsDuplicate(nums: number[]): boolean",
   },
 };
