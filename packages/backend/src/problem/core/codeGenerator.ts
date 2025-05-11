@@ -49,5 +49,6 @@ export async function generateCodeFromSteps(
   const formattedContent = await prettier.format(content, {
     parser: "typescript",
   });
+  console.log("code: ", formattedContent)
   return { content: formattedContent };
 }

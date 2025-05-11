@@ -1,6 +1,4 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLogger } from "../../core/StepLogger";
-import { MaxProfitInput } from "./types";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 export function generateSteps(prices: number[]): ProblemState[] {
@@ -22,10 +20,10 @@ export function generateSteps(prices: number[]): ProblemState[] {
   l.arrayV2({ prices }, { i: 0 });
   l.arrayV2({ dp });
   l.group("profit", { minPrice });
-  l.breakpoint(
-    1,
-    "Starting the process with initial values. Logging initial prices and setting the first minimum price."
-  );
+  l.comment =
+    "Starting the process with initial values. Logging initial prices and setting the first minimum price.";
+
+  l.breakpoint(1);
 
   for (let i = 1; i < prices.length; i++) {
     const price = prices[i];
@@ -36,10 +34,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.breakpoint(
-      2,
-      `Day ${i}: Calculating potential profit if sold today. Comparing with previous max profit.`
-    );
+    l.comment = `Day ${i}: Calculating potential profit if sold today. Comparing with previous max profit.`;
+
+    l.breakpoint(2);
 
     dp[i] = Math.max(prev, diff);
 
@@ -47,10 +44,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.breakpoint(
-      3,
-      `Day ${i}: Updating the minimum price if today's price is lower.`
-    );
+    l.comment = `Day ${i}: Updating the minimum price if today's price is lower.`;
+
+    l.breakpoint(3);
 
     minPrice = Math.min(minPrice, price);
 
@@ -58,10 +54,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.breakpoint(
-      4,
-      `Day ${i}: State after updating minimum price. Preparing for next iteration.`
-    );
+    l.comment = `Day ${i}: State after updating minimum price. Preparing for next iteration.`;
+
+    l.breakpoint(4);
     l.hide("smaller");
     l.hide("profit");
   }
@@ -70,10 +65,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
   l.arrayV2({ prices }, { result: prices.length - 1 });
   l.simple({ result });
-  l.breakpoint(
-    5,
-    "Final result calculated. Logging the maximum profit achievable."
-  );
+  l.comment = "Final result calculated. Logging the maximum profit achievable.";
+
+  l.breakpoint(5);
 
   return l.getSteps();
 }
