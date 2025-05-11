@@ -17,6 +17,9 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
     variables,
     groups,
   },
+  codegen: { // Added codegen property
+    signature: "pacificAtlantic(heights: number[][]): number[][]", // Added signature
+  },
   tags: ["grid", "dfs"],
   testcases,
   difficulty: "medium",

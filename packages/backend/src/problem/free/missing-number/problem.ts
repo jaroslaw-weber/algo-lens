@@ -15,6 +15,9 @@ export const problem: Problem<MissingNumberInput, ProblemState> = {
   id: "missing-number",
   tags: ["math", "array"],
   func: generateSteps, // Imported from ./steps
+  codegen: { // Added codegen property
+    signature: "missingNumber(nums: number[]): number", // Added signature
+  },
   testcases,
   difficulty: "easy",
   metadata: {

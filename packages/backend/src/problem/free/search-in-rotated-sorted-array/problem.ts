@@ -9,6 +9,9 @@ export const problem: Problem<SearchInput, ProblemState> = {
   title: "Search in Rotated Sorted Array",
   emoji: "🔍",
   func: (i) => generateSteps(...i), // Use the step generation function
+  codegen: { // Added codegen property
+    signature: "search(nums: number[], target: number): number", // Added signature
+  },
   id: "search-in-rotated-sorted-array",
   tags: ["array", "binary-search"],
   difficulty: "medium",
