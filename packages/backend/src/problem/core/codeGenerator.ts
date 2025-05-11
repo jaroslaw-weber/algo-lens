@@ -19,7 +19,7 @@ export async function generateCodeFromSteps(
     const line = lines[i];
     // console.log("line", line);
     if (line.includes(": ProblemState[] {")) {
-      lines[i] = params.targetFunctionSignature + "{";
+      lines[i] = "function "+ params.targetFunctionSignature + "{";
     }
     if (line.includes("return l.getSteps")) {
       lines[i] = "return result;";
