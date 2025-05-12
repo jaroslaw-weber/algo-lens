@@ -183,7 +183,6 @@ export interface ListVariable extends Variable {
 }
 
 export type HashHighlight = {
-  key?: string;
   value?: string | number;
   color: ThemeColor;
 };
