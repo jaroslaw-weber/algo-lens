@@ -53,7 +53,7 @@ function removeImports(result: string) {
 }
 
 function removeComments(result: string) {
-  result = result.replace(/^\s*\/\/.*$\n/gm, "");
+  result = result.replace(/\s*\/\/.*$/gm, "");
   return result;
 }
 

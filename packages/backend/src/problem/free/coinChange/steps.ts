@@ -64,7 +64,8 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
   l.arrayV2({ coins: coins }, {});
   l.arrayV2({ dp: dp }, { target: target }); // Highlight final dp[target]
   l.simple({ result });
-  l.breakpoint(4, "Determine final result from dp[target]"); // Adjusted breakpoint number to match code comment
+  l.comment = "Determine final result from dp[target]"
+  l.breakpoint(4); // Adjusted breakpoint number to match code comment
 
   return l.getSteps();
 }
