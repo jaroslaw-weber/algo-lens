@@ -62,11 +62,14 @@ function removeExtraEmptyLines(result: string) {
   return result;
 }
 
+
+
 function replaceBreakpointWithNumber(result: string) {
 
-  result = result.replace(/^.*l\.breakpoint\((\d+)\).*;$\n/gm, "// #$1\n");
+  result = result.replace(/^.*l\.breakpoint\((\d+)\)[^;]*;\s*$\n/gm, "// #$1\n");
   return result;
 }
+
 
 function removeStepLoggerLog(result: string) {
   result = result.replace(/l\.[\s\S]*?;/g, "");
