@@ -9,10 +9,13 @@ describe("generateCodeFromSteps", () => {
       stepsFileContent: `
 function something(): ProblemState[] {
     const l = new StepLoggerV2();
+    l.comment = "something";
+    l.breakpoint(1);
     const a = 1;
     const b = 2;
     const c = a + b;
     l.simple({ a, b, c});
+    l.breakpoint(2);
 
     return l.getSteps();
 }`,
@@ -21,10 +24,12 @@ function something(): ProblemState[] {
     });
     //console.log("generated:", generated);
     const expected = `function something(): number {
+  // #1
   const a = 1;
   const b = 2;
   const c = a + b;
 
+  // #2
   return result;
 }
 `;
