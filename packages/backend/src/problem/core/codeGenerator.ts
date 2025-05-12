@@ -14,8 +14,6 @@ export async function generateCodeFromSteps(
   params: GenerateCodeParams
 ): Promise<GeneratedCodeOutput> {
   let result = params.stepsFileContent;
-  // Remove imports
-  result = result.replace(/^import[\s\S]*?;?\n/gm, "");
   let lines = result.split("\n");
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -34,10 +32,10 @@ export async function generateCodeFromSteps(
   lines = lines.filter(l => !l.trim().startsWith("//"))
   result = lines.join("\n");
 
-  
   result = removeComments(result);
-  result = removeExtraEmptyLines(result);
   result = replaceBreakpointWithNumber(result);
+  result = removeImports(result);
+  result = removeExtraEmptyLines(result);
   result = removeStepLoggerLog(result);
   const content = result;
   //console.log("result", result);
@@ -48,6 +46,11 @@ export async function generateCodeFromSteps(
   return { content: formattedContent };
 }
 
+
+function removeImports(result: string) {
+  result = result.replace(/^import[\s\S]*?;?\n/gm, "");
+  return result;
+}
 
 function removeComments(result: string) {
   result = result.replace(/^\s*\/\/.*$\n/gm, "");
@@ -60,6 +63,7 @@ function removeExtraEmptyLines(result: string) {
 }
 
 function replaceBreakpointWithNumber(result: string) {
+
   result = result.replace(/^.*l\.breakpoint\((\d+)\).*;$\n/gm, "// #$1\n");
   return result;
 }
