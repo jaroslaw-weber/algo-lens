@@ -41,7 +41,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
 }: {
   data: any;
 }) => {
-  console.log("data", data);
+ // console.log("data", data);
 
   const count = data.data.length;
   const chartData = {

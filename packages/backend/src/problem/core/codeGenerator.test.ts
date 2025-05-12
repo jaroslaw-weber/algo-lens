@@ -19,7 +19,7 @@ function something(): ProblemState[] {
       targetFunctionSignature: `something(): number`,
       problemName: "something",
     });
-    console.log("generated:", generated);
+    //console.log("generated:", generated);
     const expected = `function something(): number {
   const a = 1;
   const b = 2;

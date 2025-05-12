@@ -399,6 +399,6 @@ export function from2dArrayToMap(arr: any[][]): Map<any, any> {
       );
     }
   }
-  console.log(result);
+ // console.log(result);
   return result;
 }
