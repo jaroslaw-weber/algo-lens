@@ -1,12 +1,6 @@
 import { ProblemState } from "algo-lens-core"; // Keep ProblemState for return type hint
-import { asArray, asHashset } from "../../core/utils"; // Keep utils used by logger internally
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
-/**
- * Implements the containsDuplicate algorithm which checks if there are any duplicate numbers in an array.
- * @param nums - The input array of numbers.
- * @returns An array of ProblemState capturing each step of the computation for visualization.
- */
 export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2();
   let result = false; // Initialize result to false
