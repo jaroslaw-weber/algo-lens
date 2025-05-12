@@ -378,15 +378,19 @@ export function asHashmap(
   map: Map<any, any>,
   highlight?: HashHighlight
 ): HashmapVariable {
+  const obj: { [key: string]: any } = {};
+  map.forEach((value, key) => {
+    obj[String(key)] = value;
+  });
   return {
     label,
     type: "hashmap",
-    value: new Map(map), // cloning the map
+    value: obj, // Convert Map to object for serialization
     highlight,
   };
 }
 
-export function from2dArrayToMap(arr: any[][]): Map<any, any> {
+export function from2dArrayToMap<T,U>(arr: any[][]): Map<T, U> {
   const result = new Map();
   for (const row of arr) {
     if (row.length) {
@@ -399,6 +403,7 @@ export function from2dArrayToMap(arr: any[][]): Map<any, any> {
       );
     }
   }
- // console.log(result);
+  console.log("Input array:", arr);
+  console.log("Generated map:", result);
   return result;
 }

@@ -31,7 +31,9 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
               }
             >
               <td>{key}</td>
-              <td>{val}</td>
+              <td>
+                {Array.isArray(val) ? `[${val.join(', ')}]` : val}
+              </td>
             </tr>
           ))}
         </tbody>
