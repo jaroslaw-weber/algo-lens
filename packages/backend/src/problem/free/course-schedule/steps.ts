@@ -33,9 +33,10 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   // Initialize the graphMap and in-degree array
   for (const [course, prereq] of prerequisites) {
     // Log before updating graphMap/inDegree (Breakpoint 2)
+    l.hashmap("prerequisitesMap", prerequisitesMap, { value: course, color: "primary" });
     l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
     l.arrayV2({ inDegree: inDegree }, {});
-    l.comment = `Processing prerequisite: [${course}, ${prereq}]. Highlighting current prerequisite and prerequisite course in graphMap.`;
+    l.comment = `Processing prerequisite: [${course}, ${prereq}]. Highlighting the prerequisite course value in prerequisitesMap.`;
     l.breakpoint(2);
 
     graphMap.get(prereq)!.push(course);
@@ -85,7 +86,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       const neighbor = neighbors[i];
 
       // Log before decrementing neighbor inDegree (Breakpoint 10)
-      l.arrayV2({ inDegree: inDegree }, {});
+      l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
       l.comment = `Processing neighbor of '${current}' course. Highlighting neighbor's inDegree.`;
       l.breakpoint(10);
 
@@ -94,14 +95,14 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       l.breakpoint(10);
 
       // Log after decrementing neighbor inDegree (Breakpoint 11)
-      l.arrayV2({ inDegree: inDegree }, {});
+      l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
       l.comment = `Decremented inDegree for neighbor '${neighbor}'.`;
       l.breakpoint(11);
 
 
       if (inDegree[neighbor] === 0) {
         // Log before adding neighbor to queue (Breakpoint 12)
-        l.arrayV2({ queue: queue }, {});
+        l.arrayV2({ queue: queue }, { "newly added": queue.length }); // Highlight the newly added element's position
         l.comment = `Neighbor '${neighbor}' inDegree is now 0. Adding to queue.`;
         l.breakpoint(12);
         queue.push(neighbor);
