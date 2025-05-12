@@ -8,57 +8,6 @@ import * as path from "path";
 export async function runTests(problem: Problem<any, ProblemState>) {
   const { testcases, metadata } = problem;
 
-  // Check for TypeScript file existence
-  const tsFilePath = path.join(
-    process.cwd(), // Assuming the test runs from the repo root
-    "src",
-    "problem",
-    "free",
-    problem.id,
-    "code",
-    "typescript.ts"
-  );
-
-  if (fs.existsSync(tsFilePath)) {
-    // Dynamically import the JavaScript file
-    const jsFilePath = tsFilePath;
-    if (!fs.existsSync(jsFilePath)) {
-      throw new Error(
-        `JavaScript file not found for problem ${problem.id} at ${jsFilePath}`
-      );
-    }
-
-    const module = await import(jsFilePath);
-    const exportedFunctions = Object.values(module);
-    if (
-      exportedFunctions.length !== 1 ||
-      typeof exportedFunctions[0] !== "function"
-    ) {
-      throw new Error(`Expected a single function export in ${jsFilePath}`);
-    }
-    //@ts-expect-error
-    problem.func2 = exportedFunctions[0];
-    //read module as string
-    const code = fs.readFileSync(tsFilePath, "utf-8");
-    
-    problem.code = code;
-    if (!code) {
-      throw new Error("No code found in TypeScript file");
-    }
-    if (!code.length) {
-      throw new Error("No code found in TypeScript file");
-    }
-    //code has to have #1 in there (comment)
-    if (!code.includes("#1")) {
-      throw new Error(
-        `Warning: TypeScript file doesn't have a comment starting with '#1' in problem ${problem.id}`
-      );
-    }
-  } else {
-    throw new Error(
-      `Warning: TypeScript file not found for problem ${problem.id} at ${tsFilePath}`
-    );
-  }
 
   //has metadata check
   if (!metadata) {

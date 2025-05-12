@@ -1,8 +1,4 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLogger } from "../../core/StepLogger"; // Assuming StepLogger is in core
-import { ThreeSumInput } from "./types";
-// Import group names - adjust if groups.ts exports differently
-import { groups } from "./groups";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 import _ = require("lodash");
 
