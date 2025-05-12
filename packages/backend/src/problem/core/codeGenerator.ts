@@ -34,14 +34,11 @@ export async function generateCodeFromSteps(
   lines = lines.filter(l => !l.trim().startsWith("//"))
   result = lines.join("\n");
 
-  // Remove comments
-  result = result.replace(/^\s*\/\/.*$\n/gm, "");
-  // Remove extra empty lines (remove if 2 or more empty lines)
-  result = result.replace(/(\n\s*){2,}/g, "\n");
-  // replace breakpoints with number
-  result = result.replace(/^.*l\.breakpoint\((\d+)\).*;$\n/gm, "// #$1\n");
-  //start with 'l.TEXT' and end with ; (include multiline)
-  result = result.replace(/l\.[\s\S]*?;/g, "");
+  
+  result = removeComments(result);
+  result = removeExtraEmptyLines(result);
+  result = replaceBreakpointWithNumber(result);
+  result = removeStepLoggerLog(result);
   const content = result;
   //console.log("result", result);
   const formattedContent = await prettier.format(content, {
@@ -50,3 +47,25 @@ export async function generateCodeFromSteps(
   console.log("code: ", formattedContent)
   return { content: formattedContent };
 }
+
+
+function removeComments(result: string) {
+  result = result.replace(/^\s*\/\/.*$\n/gm, "");
+  return result;
+}
+
+function removeExtraEmptyLines(result: string) {
+  result = result.replace(/(\n\s*){2,}/g, "\n");
+  return result;
+}
+
+function replaceBreakpointWithNumber(result: string) {
+  result = result.replace(/^.*l\.breakpoint\((\d+)\).*;$\n/gm, "// #$1\n");
+  return result;
+}
+
+function removeStepLoggerLog(result: string) {
+  result = result.replace(/l\.[\s\S]*?;/g, "");
+  return result;
+}
+
