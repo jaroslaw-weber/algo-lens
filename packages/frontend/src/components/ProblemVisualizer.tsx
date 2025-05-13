@@ -79,8 +79,6 @@ function ProblemVisualizer() {
                   <CodePreview code={code} highlightLineIndex={line} />
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-                  <div className="flex items-center gap-6"></div>
-                  <div>
                     <Slider
                       min={1}
                       max={maxStep}
@@ -88,7 +86,6 @@ function ProblemVisualizer() {
                       onChange={handleSliderChange}
                     />
                     <DisplayState state={state} problem={problem} />
-                  </div>
                 </div>
               </div>
             </div>

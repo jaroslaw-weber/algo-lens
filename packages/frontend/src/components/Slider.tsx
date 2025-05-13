@@ -56,7 +56,7 @@ const Slider: React.FC<SliderProps> = ({ min, max, value, onChange }) => {
   }, [value]);
 
   return (
-    <div className="flex flex-column items-center justify-center gap-4 w-full">
+    <div className="flex flex-column items-center justify-center gap-4 w-full mb-8">
       <div
         className="tooltip  tooltip-top"
         data-tip="Use slider to see how the code works. Press ← or → to adjust the value using keyboard arrows."
