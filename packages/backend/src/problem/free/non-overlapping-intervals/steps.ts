@@ -21,9 +21,6 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
   logger.breakpoint(1);
 
   intervals.sort((a, b) => a[1] - b[1]); //#2 Sort the intervals by end points
-  logger.intervals("intervals", intervals, [], min, max);
-  logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
-  logger.simple({ removalCount });
   logger.comment = "Log after sort"; // Set comment before breakpoint
   logger.breakpoint(2);
 
@@ -33,27 +30,18 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
     const currentEnd = intervals[i][1];
     logger.intervals("intervals", intervals, [i], min, max);
     logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
-    logger.simple({ removalCount });
-    logger.simple({ i }); // Log index i
     logger.comment = "Iterate through the intervals"; // Set comment before breakpoint
     logger.breakpoint(3);
     if (currentStart < lastEnd) {
       // Increment removal count if there is an overlap
       removalCount++;
-      logger.intervals("intervals", intervals, [i], min, max);
-      logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
       logger.simple({ removalCount });
-      logger.simple({ i });
       logger.comment = "Log overlapping case"; // Set comment before breakpoint
       logger.breakpoint(4);
     } else {
       // Update the end point and record the interval
       lastEnd = currentEnd;
       remainingIntervals.push(intervals[i]);
-      logger.intervals("intervals", intervals, [i], min, max);
-      logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
-      logger.simple({ removalCount });
-      logger.simple({ i });
       logger.comment = "Update non-overlapping intervals"; // Set comment before breakpoint
       logger.breakpoint(5);
     }
@@ -61,12 +49,10 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
 const result = removalCount
   logger.intervals("intervals", intervals, [], min, max);
   logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
-  logger.simple({ removalCount });
   logger.comment = "Final log after all calculations"; // Set comment before breakpoint
+  logger.simple({ result });
   logger.breakpoint(6);
 
-  // Log the final removal count as 'result'
-  logger.simple({ result });
   return logger.getSteps(); // Return steps from the logger
 }
 

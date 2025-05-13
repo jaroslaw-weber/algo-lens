@@ -403,7 +403,7 @@ export function from2dArrayToMap<T,U>(arr: any[][]): Map<T, U> {
       );
     }
   }
-  console.log("Input array:", arr);
-  console.log("Generated map:", result);
+ // console.log("Input array:", arr);
+ // console.log("Generated map:", result);
   return result;
 }

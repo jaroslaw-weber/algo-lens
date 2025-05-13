@@ -119,7 +119,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   // Final log to show result (Breakpoint 14)
   const allCoursesTaken = count === numCourses;
   const result = allCoursesTaken;
-  l.group("result", { result });
+  l.simple({ result });
   l.comment = `Final result: Can all courses be finished? ${result}`;
   l.breakpoint(14);
 
