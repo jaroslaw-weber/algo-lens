@@ -1,15 +1,18 @@
+import ProblemHeader from './ProblemHeader';
+import StateDescription from "./ProblemDescription";
 import React, { useState, useRef, useEffect } from "react";
 import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
 import CodePreview from "./CodePreview";
 import Slider from "./Slider";
+import ProblemTabs from "./ProblemTabs"; // Import the new component
 import { useAtom } from "jotai";
 import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
 import { getProblem, getProblemSize } from "../api";
 
 function ProblemVisualizer() {
-  const [activeTab, setActiveTab] = useState("visualizer"); // Added state for active tab
+  const [activeTab, setActiveTab] = useState("visualizer"); // Keep state here for content rendering
   const [state] = useAtom(problemStateAtom);
   const [problem, setProblem] = useAtom(problemAtom);
 
@@ -58,54 +61,6 @@ function ProblemVisualizer() {
   return (
     <div className="mx-8 my-8 flex-1">
       <div className="">
-        <div className="flex items-center gap-6">
-          {/* Adjust the gap as needed */}
-          <h2 className="font-display text-3xl pl-2">{title}</h2>
-          <a
-            href={`https://leetcode.com/problems/${id}/description/`}
-            className="link  tooltip tooltip-right"
-            data-tip="Go to Leetcode"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i
-              className="fas fa-external-link-alt transition-transform duration-300 hover:scale-110"
-              aria-hidden="true"
-            ></i>
-          </a>
-          <button
-            className="button button-primary tooltip tooltip-right"
-            onClick={handleCopyCode}
-            data-tip="Copy code"
-          >
-            <i className="fas fa-copy"></i>
-          </button>
-        </div>
-
-        {/* Tabs */}
-        <div role="tablist" className="tabs tabs-lifted mt-4">
-          <button
-            role="tab"
-            className={`tab ${activeTab === "visualizer" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("visualizer")}
-          >
-            Visualizer
-          </button>
-          <button
-            role="tab"
-            className={`tab ${activeTab === "description" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("description")}
-          >
-            Description
-          </button>
-          <button
-            role="tab"
-            className={`tab ${activeTab === "explanation" ? "tab-active" : ""}`}
-            onClick={() => setActiveTab("explanation")}
-          >
-            Explanation
-          </button>
-        </div>
 
         {/* Tab Content Area */}
         <div className="mt-4">
@@ -115,25 +70,23 @@ function ProblemVisualizer() {
               {/* Moved original content here */}
               <div className="flex flex-col lg:flex-row  lg:gap-20">
                 <div className="flex-1 p-2  lg:w-1/2">
-                  {" "}
-                  <Slider
-                    min={1}
-                    max={maxStep}
-                    value={step}
-                    onChange={handleSliderChange}
-                  />{" "}
-                  {state.description && (
-                    <div className="mb-4 mt-4 p-4 border border-dashed border-gray-400 rounded-lg bg-gray-50 w-full text-center">
-                      <p className="text-lg font-semibold text-gray-700">
-                        {state.description}
-                      </p>
-                    </div>
-                  )}
+                <ProblemHeader title={title} id={id} handleCopyCode={handleCopyCode} />
+                  <ProblemTabs
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                  />
+                  <StateDescription description={state.description} />
                   <CodePreview code={code} highlightLineIndex={line} />
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
                   <div className="flex items-center gap-6"></div>
                   <div>
+                    <Slider
+                      min={1}
+                      max={maxStep}
+                      value={step}
+                      onChange={handleSliderChange}
+                    />
                     <DisplayState state={state} problem={problem} />
                   </div>
                 </div>
