@@ -6,6 +6,7 @@ const colors = ["primary", "secondary"];
 const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const { value: array, label: title, pointers } = data;
 
+  //console.log("DisplayArray array:", array);
   //console.log("DisplayArray pointers:", pointers);
 
   // Determine if the array is 2D
@@ -99,9 +100,17 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
     <div className="">
       <table className="w-full table-auto border-collapse border border-gray-200">
         <tbody>
-          {is2D
-            ? array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
-            : renderRow(array, 0)}
+          {array.length === 0 ? (
+            <tr>
+              <td colSpan={numCols > 0 ? numCols : 1} className="text-center text-gray-500 py-1 text-xs">
+                Empty Array
+              </td>
+            </tr>
+          ) : is2D ? (
+            array.map((subArray, rowIndex) => renderRow(subArray, rowIndex))
+          ) : (
+            renderRow(array, 0)
+          )}
         </tbody>
       </table>
     </div>

@@ -43,7 +43,9 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     graphMap.get(prereq)!.push(course);
     inDegree[course]++;
 
-    l.comment = "Updated graphMap and inDegree for the current prerequisite.";
+    // Log after updating graphMap and inDegree (Breakpoint 3)
+    l.hashmap("graphMap", graphMap, { value: prereq, color: "primary" });
+    l.comment = "Updated graphMap and inDegree for the current prerequisite. Highlighting the prerequisite node in graphMap.";
     l.breakpoint(3);
   }
 
@@ -79,9 +81,10 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     for (let i = 0; i < neighbors.length; i++) {
       const neighbor = neighbors[i];
 
-      // Log before decrementing neighbor inDegree (Breakpoint 10)
+      // Log before decrementing neighbor inDegree (Breakpoint 8)
+      l.hashmap("graphMap", graphMap, { value: current, color: "primary" });
       l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
-      l.comment = `Processing neighbor of '${current}' course. Highlighting neighbor's inDegree.`;
+      l.comment = `Processing neighbor of '${current}' course. Highlighting the current node in graphMap and neighbor's inDegree.`;
       l.breakpoint(8);
 
       inDegree[neighbor]--;
