@@ -17,13 +17,15 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
   logger.intervals("intervals", intervals, [], min, max); // Assuming intervals is number[][]
   logger.intervals("remainingIntervals", remainingIntervals, [], min, max); // Assuming remainingIntervals is number[][]
   logger.simple({ removalCount });
-  logger.breakpoint(1, "Log initial state"); // Added description
+  logger.comment = "Log initial state"; // Set comment before breakpoint
+  logger.breakpoint(1);
 
   intervals.sort((a, b) => a[1] - b[1]); //#2 Sort the intervals by end points
   logger.intervals("intervals", intervals, [], min, max);
   logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
   logger.simple({ removalCount });
-  logger.breakpoint(2, "Log after sort"); // Added description
+  logger.comment = "Log after sort"; // Set comment before breakpoint
+  logger.breakpoint(2);
 
   let lastEnd = Number.MIN_SAFE_INTEGER;
   for (let i = 0; i < intervals.length; i++) {
@@ -33,7 +35,8 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
     logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
     logger.simple({ removalCount });
     logger.simple({ i }); // Log index i
-    logger.breakpoint(3, "Iterate through the intervals"); // Added description
+    logger.comment = "Iterate through the intervals"; // Set comment before breakpoint
+    logger.breakpoint(3);
     if (currentStart < lastEnd) {
       // Increment removal count if there is an overlap
       removalCount++;
@@ -41,7 +44,8 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
       logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
       logger.simple({ removalCount });
       logger.simple({ i });
-      logger.breakpoint(4, "Log overlapping case"); // Added description
+      logger.comment = "Log overlapping case"; // Set comment before breakpoint
+      logger.breakpoint(4);
     } else {
       // Update the end point and record the interval
       lastEnd = currentEnd;
@@ -50,17 +54,19 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
       logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
       logger.simple({ removalCount });
       logger.simple({ i });
-      logger.breakpoint(5, "Update non-overlapping intervals"); // Added description
+      logger.comment = "Update non-overlapping intervals"; // Set comment before breakpoint
+      logger.breakpoint(5);
     }
   }
-
+const result = removalCount
   logger.intervals("intervals", intervals, [], min, max);
   logger.intervals("remainingIntervals", remainingIntervals, [], min, max);
   logger.simple({ removalCount });
-  logger.breakpoint(6, "Final log after all calculations"); // Added description
+  logger.comment = "Final log after all calculations"; // Set comment before breakpoint
+  logger.breakpoint(6);
 
   // Log the final removal count as 'result'
-  logger.simple({ result: removalCount });
+  logger.simple({ result });
   return logger.getSteps(); // Return steps from the logger
 }
 
