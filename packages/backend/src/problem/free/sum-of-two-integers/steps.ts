@@ -44,7 +44,6 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     )} ^ ${prevB.toString(2)} = ${a.toString(2)}.`;
     l.breakpoint(3);
 
-    a = a ^ b;
     // #4 Calculate sum bits (without carry)
     l.binary({ a }); // a now holds sum without carry
     l.binary({ b });
