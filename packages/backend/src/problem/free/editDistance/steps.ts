@@ -13,14 +13,14 @@ export function generateSteps(s1: string, s2: string) {
   // Log initial state (optional, could log inputs here)
   l.arrayV2({ s1: s1.split("") });
   l.arrayV2({ s2: s2.split("") });
-  l.simple({ s1Length: s1.length });
-  l.simple({ s2Length: s2.length });
+  l.groupOptions.set("size", { min: 0, max: Math.max(m, n) });
+  l.group("size", { m, n });
   l.array2d("dp", dp); // Log initial empty dp table
 
   // Initialize the DP table - First Column
   for (let i = 0; i <= m; i++) {
     dp[i][0] = i;
-    l.array2d("dp", dp, ...[{ r: i, c: 0 }]);
+    l.grid("dp", dp, ...[{ r: i, c: 0 }]);
     l.comment = `Initializing first column of DP table (deletions to empty string). dp[${i}][0] = ${i}.`;
     l.breakpoint(1);
   }
@@ -32,6 +32,7 @@ export function generateSteps(s1: string, s2: string) {
     l.comment = `Initializing first row of DP table (insertions from empty string). dp[0][${j}] = ${j}.`;
     l.breakpoint(2);
   }
+  l.groupOptions.set("cost", { min: 0, max: m+n });
 
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
@@ -65,7 +66,7 @@ export function generateSteps(s1: string, s2: string) {
         // l.simple("insertionCost", insertionCost, { group: "loopVariables" });
         // l.simple("deletionCost", deletionCost, { group: "loopVariables" });
         // l.simple("substitutionCost", substitutionCost, { group: "loopVariables" });
-        l.simple({ insertionCost, deletionCost, substitutionCost });
+        l.group("cost", { insertionCost, deletionCost, substitutionCost });
         l.simple({ op });
         l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
         l.comment = `Calculated DP value for dp[${i}][${j}]. s1[${i - 1}] ('${

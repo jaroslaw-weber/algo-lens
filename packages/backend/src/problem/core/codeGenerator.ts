@@ -27,6 +27,9 @@ export async function generateCodeFromSteps(
     if (line.includes("StepLoggerV2")) {
       lines[i] = "";
     }
+    if(line.includes("// HIDE")){ //manually hide some lines
+      lines[i] = ""
+    }
   }
 
   lines = lines.filter(l => !l.trim().startsWith("//"));
@@ -80,7 +83,8 @@ function replaceBreakpointWithNumber(result: string) {
 
 
 function removeStepLoggerLog(result: string) {
-  result = result.replace(/l\.[\s\S]*?;/g, "");
+  result = result.replace(/l\.\s*[\s\S]*?;\s*/g, ""); 
   return result;
 }
+
 
