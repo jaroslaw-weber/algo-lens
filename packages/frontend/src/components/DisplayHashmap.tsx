@@ -12,7 +12,6 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
 
   return (
     <div className="overflow-x-auto">
-      {label && <h3 className="pl-2 pb-2 text-xl font-semibold">{label}</h3>}
       <table className="table w-full">
         <thead>
           <tr>

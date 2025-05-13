@@ -25,10 +25,8 @@ export function generateSteps(n: number): ProblemState[] {
     // Log state within the loop
     l.simple({ n });
     l.arrayV2({ dp: dp }, { i: i, "i - 1": i - 1, "i - 2": i - 2 });
-    l.group("loop", { i }, { min: 2, max: n }); // i belongs to 'computation' group
     l.comment = `Calculate ways for step ${i}`;
     l.breakpoint(2);
-    l.hide("loop");
   }
 
   // Log final result

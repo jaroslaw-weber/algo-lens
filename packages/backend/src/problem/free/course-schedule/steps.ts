@@ -18,7 +18,6 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     graphMap.set(i, []);
   }
   // Initial state log (Breakpoint 1)
-  l.simple({ numCourses });
   l.hashmap("prerequisitesMap", prerequisitesMap, {
     value: -1,
     color: "neutral",
@@ -26,6 +25,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
   l.arrayV2({ inDegree: inDegree }, {});
   l.arrayV2({ queue: queue }, {});
+  l.simple({ numCourses });
   l.comment =
     "Initial state: numCourses, empty graph, inDegree array, and queue.";
   l.breakpoint(1);
