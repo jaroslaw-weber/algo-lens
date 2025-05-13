@@ -29,7 +29,9 @@ export async function generateCodeFromSteps(
     }
   }
 
-  lines = lines.filter(l => !l.trim().startsWith("//"))
+  lines = lines.filter(l => !l.trim().startsWith("//"));
+  // Remove lines containing "Pointer2D"
+  lines = lines.filter(l => !l.includes("Pointer2D"));
   result = lines.join("\n");
 
   result = removeJSDocComments(result);

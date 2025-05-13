@@ -26,7 +26,7 @@ export function generateSteps(heights: number[][]) {
     // Corrected: Remove invalid { group: ... }
     l.grid("heights", []); // Replaced l.array2d with l.grid
     l.arrayV2({ result: [] }); // Replaced l.array with l.arrayV2
-    l.breakpoint(0); // Initial/Final state
+    l.breakpoint(1); // Initial state
     return l.getSteps();
   }
 
@@ -42,18 +42,18 @@ export function generateSteps(heights: number[][]) {
   );
   const result: [number, number][] = []; // Keep using result for final output
 
-  // Log initial state
-  // Corrected: Use object format for l.simple and remove invalid group arg
-  l.simple({ rows: rows });
-  l.simple({ cols: cols });
+  l.groupOptions.set("size", {min:0,max:Math.max(cols, rows)});
+  l.groupOptions.set("pointers", {min:0, max:Math.max(cols, rows)});
+  l.group("size", { cols, rows });
   // Corrected: Remove invalid { group: ... } and label properties from non-existent options object
   l.grid("heights", heights); // Replaced l.array2d with l.grid
   l.grid("pacificReachable", booleanGridToNumber(pacificVisited)); // Replaced l.array2d with l.grid
   l.grid("atlanticReachable", booleanGridToNumber(atlanticVisited)); // Replaced l.array2d with l.grid
   l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
   l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
-  l.comment = "Initialize the state with the heights grid, two boolean grids to track cells reachable by the Pacific and Atlantic oceans (initially all false), and two empty queues for BFS traversal starting from the coasts.";
-  l.breakpoint(0); // Breakpoint 0
+  l.comment =
+    "Initialize the state with the heights grid, two boolean grids to track cells reachable by the Pacific and Atlantic oceans (initially all false), and two empty queues for BFS traversal starting from the coasts.";
+  l.breakpoint(2); // Initialize state
 
   // Add all cells on the Pacific coast to the queue
   const initialPacificCells: Pointer2D[] = []; // Store as Pointer2D
@@ -81,16 +81,16 @@ export function generateSteps(heights: number[][]) {
   ); // Replaced l.array2d with l.grid, Pass first highlight if exists
   l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
   l.grid("heights", heights); // Replaced l.array2d with l.grid, Optionally show heights again
-  l.comment = "Identify and add all cells on the Pacific coast (top row and leftmost column) to the Pacific queue. Mark these cells as reachable by the Pacific ocean in the pacificReachable grid. These coastal cells are the starting points for the BFS to find all cells that can flow to the Pacific.";
-  l.breakpoint(1); // Breakpoint 1
+  l.comment =
+    "Identify and add all cells on the Pacific coast (top row and leftmost column) to the Pacific queue. Mark these cells as reachable by the Pacific ocean in the pacificReachable grid. These coastal cells are the starting points for the BFS to find all cells that can flow to the Pacific.";
+  l.breakpoint(3); // Initialize Pacific queue/visited
 
   // --- Perform BFS from the Pacific coast ---
   let pacificStepCounter = 0;
   while (pacificQueue.length > 0) {
     const [r, c] = pacificQueue.shift()!;
-    // Corrected: Use object format for l.simple and remove invalid group arg
-    l.simple({ r: r });
-    l.simple({ c: c });
+
+    l.group("pointers", { r, c });
 
     const neighborsVisited: Pointer2D[] = []; // Store as Pointer2D
     const currentCellHighlight: Pointer2D = { r, c }; // Single Pointer2D
@@ -103,9 +103,8 @@ export function generateSteps(heights: number[][]) {
     ]) {
       const nr = r + dr;
       const nc = c + dc;
-      // Corrected: Use object format for l.simple and remove invalid group arg
-      l.simple({ nr: nr });
-      l.simple({ nc: nc });
+
+      l.group("pointers", { r, c, nr, nc });
 
       if (
         nr >= 0 &&
@@ -133,17 +132,13 @@ export function generateSteps(heights: number[][]) {
     l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
     // Reset neighbor indices?
     // Corrected: Use object format for l.simple and remove invalid group arg
-    l.hide("nr");
-    l.hide("nc");
+
     l.comment = `Process the cell (${r}, ${c}) from the front of the Pacific queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Pacific BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Pacific queue and mark it as reachable by the Pacific. Update the pacificReachable grid and the pacificQueue.`;
-    l.breakpoint(2); // Breakpoint inside Pacific BFS loop
+    l.breakpoint(4); // Breakpoint inside Pacific BFS loop
 
     pacificStepCounter++;
   }
-  // Reset r/c after loop
-  // Corrected: Use object format for l.simple and remove invalid group arg
-  l.hide("r");
-  l.hide("c");
+  l.hide("pointers");
 
   // --- Add all cells on the Atlantic coast to the queue ---
   const initialAtlanticCells: Pointer2D[] = []; // Store as Pointer2D
@@ -171,16 +166,16 @@ export function generateSteps(heights: number[][]) {
   ); // Replaced l.array2d with l.grid, Pass first highlight
   l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
   l.grid("pacificReachable", booleanGridToNumber(pacificVisited)); // Replaced l.array2d with l.grid, Show final pacific state
-  l.comment = "Identify and add all cells on the Atlantic coast (bottom row and rightmost column) to the Atlantic queue. Mark these cells as reachable by the Atlantic ocean in the atlanticReachable grid. These coastal cells are the starting points for the BFS to find all cells that can flow to the Atlantic.";
-  l.breakpoint(3);
+  l.comment =
+    "Identify and add all cells on the Atlantic coast (bottom row and rightmost column) to the Atlantic queue. Mark these cells as reachable by the Atlantic ocean in the atlanticReachable grid. These coastal cells are the starting points for the BFS to find all cells that can flow to the Atlantic.";
+  l.breakpoint(5); // Initialize Atlantic queue/visited
 
   // --- Perform BFS from the Atlantic coast ---
   let atlanticStepCounter = 0;
   while (atlanticQueue.length > 0) {
     const [r, c] = atlanticQueue.shift()!;
-    // Corrected: Use object format for l.simple and remove invalid group arg
-    l.simple({ r: r });
-    l.simple({ c: c });
+
+    l.group("pointers", { r, c });
 
     const neighborsVisited: Pointer2D[] = []; // Store as Pointer2D
     const currentCellHighlight: Pointer2D = { r, c }; // Single Pointer2D
@@ -194,8 +189,8 @@ export function generateSteps(heights: number[][]) {
       const nr = r + dr;
       const nc = c + dc;
       // Corrected: Use object format for l.simple and remove invalid group arg
-      l.simple({ nr: nr });
-      l.simple({ nc: nc });
+
+      l.group("pointers", { r, c, nr, nc });
 
       if (
         nr >= 0 &&
@@ -223,17 +218,13 @@ export function generateSteps(heights: number[][]) {
     l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
     // Reset neighbor indices?
     // Corrected: Use object format for l.simple and remove invalid group arg
-    l.simple({ nr: undefined });
-    l.simple({ nc: undefined });
+
     l.comment = `Process the cell (${r}, ${c}) from the front of the Atlantic queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Atlantic BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Atlantic queue and mark it as reachable by the Atlantic. Update the atlanticReachable grid and the atlanticQueue.`;
-    l.breakpoint(4); // Breakpoint inside Atlantic BFS loop
+    l.breakpoint(6); // Breakpoint inside Atlantic BFS loop
 
     atlanticStepCounter++;
   }
-  // Reset r/c after loop
-  // Corrected: Use object format for l.simple and remove invalid group arg
-  l.simple({ r: undefined });
-  l.simple({ c: undefined });
+  l.hide("pointers");
 
   // --- Find the cells that can flow to both oceans ---
   const resultCellsHighlight: Pointer2D[] = []; // Store as Pointer2D
@@ -260,8 +251,9 @@ export function generateSteps(heights: number[][]) {
     resultCellsHighlight[0]
   ); // Replaced l.array2d with l.grid
   l.arrayV2({ result: result }); // Replaced l.array with l.arrayV2, Log the result array directly
-  l.comment = "After completing BFS from both the Pacific and Atlantic coasts, iterate through all cells in the grid. If a cell is marked as reachable by *both* the Pacific and Atlantic oceans, it means water can flow from this cell to both oceans. Collect these cells as the final result.";
-  l.breakpoint(5); // Final breakpoint
+  l.comment =
+    "After completing BFS from both the Pacific and Atlantic coasts, iterate through all cells in the grid. If a cell is marked as reachable by *both* the Pacific and Atlantic oceans, it means water can flow from this cell to both oceans. Collect these cells as the final result.";
+  l.breakpoint(7); // Final breakpoint
 
   return l.getSteps(); // Return the collected steps
 }

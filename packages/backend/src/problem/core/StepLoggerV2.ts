@@ -49,7 +49,7 @@ export class StepLoggerV2 {
 
   /** explanation of the current step */
   comment?: string;
-  groupOptions: Map<string, any> = new Map();
+  groupOptions: Map<string, {min?:number, max?:number, reverse?:boolean}> = new Map();
   constructor() {
     // Initialize the array to store the history of problem states (steps).
     this.steps = [];
