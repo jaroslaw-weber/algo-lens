@@ -9,7 +9,7 @@ interface ProblemListProps {
 }
 
 function ProblemsList({ tag, title }: ProblemListProps) {
-  console.log(`ProblemsList rendering for tag: ${tag}, title: ${title}`); // Log component rendering with props
+  // 
 
   // Use local state instead of Jotai atom
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
@@ -19,18 +19,18 @@ function ProblemsList({ tag, title }: ProblemListProps) {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        console.log(`Fetching problems with tag: ${tag}`);
+        // 
         setLoading(true);
         setError(null);
         const ps = await getProblemList(tag); // Pass tag to API call
-        console.log("Fetched problems data:", ps); // Log fetched data
+        // 
         setProblems(ps);
       } catch (err) {
         console.error("Failed to fetch problems:", err);
         setError("Failed to load problems. Please try refreshing.");
       } finally {
         setLoading(false);
-        console.log("Finished fetching problems.");
+        // 
       }
     };
 

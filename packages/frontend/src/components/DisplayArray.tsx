@@ -6,8 +6,8 @@ const colors = ["primary", "secondary"];
 const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const { value: array, label: title, pointers } = data;
 
-  //console.log("DisplayArray array:", array);
-  //console.log("DisplayArray pointers:", pointers);
+  //// 
+  //// 
 
   // Determine if the array is 2D
   const is2D = useMemo(
@@ -19,7 +19,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const getCellPointerInfo = useMemo(() => {
     return (rowIndex: number, colIndex: number) => {
       if (!pointers || pointers.length === 0) {
-       // console.log("No pointers available");
+       // // 
         return { style: "", pointerLabel: null };
       }
 
@@ -31,7 +31,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
           (p) => p.dimension === "column" && p.value === colIndex
         ) ?? null;
 
-      //console.log("rowPointer:", rowPointer, "colPointer:", colPointer);
+      //// 
 
       // Determine if the cell is targeted
       const isTargeted = is2D

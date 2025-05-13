@@ -26,7 +26,7 @@ export async function getRandomProblem() {
 }
 
 export async function getProblemById(id: string) {
-  //console.log("getProblemById", id);
+  //// 
   const all = await getAllProblems();
 
   const problems = all.filter((p) => p.id === id);
@@ -403,7 +403,7 @@ export function from2dArrayToMap<T,U>(arr: any[][]): Map<T, U> {
       );
     }
   }
- // console.log("Input array:", arr);
- // console.log("Generated map:", result);
+ // // 
+ // // 
   return result;
 }

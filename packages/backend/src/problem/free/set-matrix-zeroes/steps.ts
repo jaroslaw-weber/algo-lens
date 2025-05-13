@@ -6,8 +6,6 @@ import { deepClone2DArray } from "../../core/utils"; // Assuming deepClone2DArra
 // import { groups } from "./groups";
 
 export function generateSteps(matrix: number[][]): ProblemState[] {
-  // It's crucial to clone the input matrix to avoid modifying the original test case data
-  matrix = deepClone2DArray(matrix);
   const l = new StepLoggerV2();
   l.groupOptions.set("zeroFlags", { min: 0, max: 1, reverse: false });
 
@@ -70,11 +68,13 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
         matrix[i][0] = 0;
         matrix[0][j] = 0;
         // Highlight the cell and the markers
+        // HIDE_START
         const pointers: Pointer2D[] = [
           { r: i, c: j },
           { r: i, c: 0 },
           { r: 0, c: j },
         ];
+        // HIDE_END
         l.array2d("matrix", matrix, ...pointers);
         l.simple({ rows, cols, i, j });
         l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
@@ -88,11 +88,13 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   for (let i = 1; i < rows; i++) {
     for (let j = 1; j < cols; j++) {
       // Highlight the cell and the markers being checked
+      // HIDE_START
       const pointers: Pointer2D[] = [
         { r: i, c: j },
         { r: i, c: 0 },
         { r: 0, c: j },
       ];
+      // HIDE_END
       l.array2d("matrix", matrix, ...pointers);
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.comment = `Apply markers: Check cell (${i}, ${j}) using markers matrix[${i}][0] and matrix[0][${j}]`;
