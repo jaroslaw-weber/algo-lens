@@ -44,27 +44,20 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
     l.comment = "Updated graphMap and inDegree for the current prerequisite.";
     l.breakpoint(3);
-    // Log after updating graphMap/inDegree (Breakpoint 3)
-    l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
-    l.arrayV2({ inDegree: inDegree }, {});
-    l.comment =
-      "Finished initializing graph and inDegree array from prerequisites.";
-    l.breakpoint(4);
   }
+
   l.comment =
     "Checking inDegree for each course to find starting points (degree 0).";
-  l.breakpoint(5);
+  l.breakpoint(4);
 
-  l.comment = "Found course with inDegree 0. Adding to queue.";
-  l.breakpoint(6);
   for (let index = 0; index < inDegree.length; index++) {
     l.comment = "Initial queue populated with all courses having inDegree 0.";
-    l.breakpoint(7);
+    l.breakpoint(5);
     const deg = inDegree[index];
 
     l.comment =
       "Start of while loop: Processing queue. Current courses finished count.";
-    l.breakpoint(8);
+    l.breakpoint(6);
     if (deg === 0) {
       queue.push(index);
     }
@@ -77,7 +70,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     l.simple({ numCourses, current });
     l.group("courses finished", { count });
     l.comment = `Dequeued '${current}' course. Incremented courses finished count.`;
-    l.breakpoint(9);
+    l.breakpoint(7);
 
     // Log after dequeuing and incrementing count (Breakpoint 9)
 
@@ -88,23 +81,21 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       // Log before decrementing neighbor inDegree (Breakpoint 10)
       l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
       l.comment = `Processing neighbor of '${current}' course. Highlighting neighbor's inDegree.`;
-      l.breakpoint(10);
+      l.breakpoint(8);
 
       inDegree[neighbor]--;
-      l.comment = `Processing neighbor of '${current}' course. Highlighting neighbor's inDegree.`;
-      l.breakpoint(10);
 
       // Log after decrementing neighbor inDegree (Breakpoint 11)
       l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
       l.comment = `Decremented inDegree for neighbor '${neighbor}'.`;
-      l.breakpoint(11);
+      l.breakpoint(9);
 
 
       if (inDegree[neighbor] === 0) {
         // Log before adding neighbor to queue (Breakpoint 12)
         l.arrayV2({ queue: queue }, { "newly added": queue.length }); // Highlight the newly added element's position
         l.comment = `Neighbor '${neighbor}' inDegree is now 0. Adding to queue.`;
-        l.breakpoint(12);
+        l.breakpoint(10);
         queue.push(neighbor);
         // Note: No log immediately after queue.push, next iteration or step 13 will show it
       }
@@ -113,7 +104,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     // Log after processing all neighbors of 'current' (Breakpoint 13)
     l.arrayV2({ queue: queue }, {});
     l.comment = `Finished processing all neighbors of '${current}'.`;
-    l.breakpoint(13);
+    l.breakpoint(11);
   }
 
   // Final log to show result (Breakpoint 14)
@@ -121,7 +112,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   const result = allCoursesTaken;
   l.simple({ result });
   l.comment = `Final result: Can all courses be finished? ${result}`;
-  l.breakpoint(14);
+  l.breakpoint(12);
 
   // Return the collected steps
   return l.getSteps();
