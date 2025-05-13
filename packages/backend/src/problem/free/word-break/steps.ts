@@ -14,7 +14,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
   // Log initial state
   l.simple({ s: s });
   l.arrayV2({ wordDict });
-  // logger.breakpoint(0); // No marker for initial state
+  // 
 
   // Create a Set from the dictionary for efficient word lookup
   const wordSet = new Set(wordDict);
@@ -65,14 +65,14 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
         l.comment = `Both conditions are true: the prefix s[0...j-1] can be segmented (dp[${j}] is true) and the suffix "${suffix}" is a valid word in the dictionary. This means the prefix s[0...i-1] can be segmented. Set dp[${i}] to true and break the inner loop because we've found at least one way to segment this prefix.`;
         l.breakpoint(6); // #6 Found valid segmentation, dp[i] updated
         // Break the inner loop since we've found a way to segment s[0...i-1].
-        break; // #7 Break inner loop (optimization) - Breakpoint 7 is conceptually here, but adding logger.breakpoint(7) after break is unreachable.
+        break; // #7 Break inner loop (optimization) - Breakpoint 7 is conceptually here, but adding 
       } else {
         l.simple({ "dp[i] updated": false }); // Log that dp[i] was not updated
         l.comment = `The conditions for a valid segmentation using split point j = ${j} are not met (either dp[${j}] is ${canSegmentPrefix} or the suffix "${suffix}" is not in the wordSet). Continue to the next possible split point.`;
         l.breakpoint(8); // #8 Segmentation using split point j didn't work
       }
     }
-    // logger.breakpoint(7) could be placed here if we want a breakpoint specifically after a break, but #9 seems more logical for the end of the inner loop.
+    // 
     l.simple({ suffix: undefined }); // Clear suffix for the next outer loop iteration
     l.arrayV2({ dp }, { i }); // Log dp state at the end of inner loop checks for i
     l.comment = `Finished checking all possible split points j for the prefix s[0...${ i - 1 }]. The value of dp[${i}] (${dp[i]}) indicates whether this prefix can be segmented into words from the dictionary.`;

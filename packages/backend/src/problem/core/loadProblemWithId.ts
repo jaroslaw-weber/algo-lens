@@ -36,10 +36,10 @@ export async function getProblemCode(
   problem: Problem<any, any>,
   dir: string
 ): Promise<string> {
-  //console.log("problem.codegen", problem.codegen);
+  //// console.log("problem.codegen", problem.codegen);
   if (problem.codegen) {
     const stepsPath = path.join(dir, "steps.ts");
-    //console.log("steps path: " + stepsPath);
+    //// console.log("steps path: " + stepsPath);
     if (fs.existsSync(stepsPath)) {
       try {
         const steps = fs.readFileSync(stepsPath, "utf-8");
@@ -49,7 +49,7 @@ export async function getProblemCode(
           problemName: problem.id,
         });
         const { content } = generated;
-        //console.log("content", content);
+        //// console.log("content", content);
         return content;
       } catch (e: any) {
         console.error(e.message);

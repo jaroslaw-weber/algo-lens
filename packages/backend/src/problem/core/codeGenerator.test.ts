@@ -22,7 +22,7 @@ function something(): ProblemState[] {
       targetFunctionSignature: `something(): number`,
       problemName: "something",
     });
-    //console.log("generated:", generated);
+    //// console.log("generated:", generated);
     const expected = `export function something(): ProblemState[] {
   // #1
   const a = 1;
@@ -33,7 +33,7 @@ function something(): ProblemState[] {
   return result;
 }
 `;
-console.log("content", generated.content)
+// console.log("content", generated.content)
     expect(generated.content).toEqual(expected);
   });
 });

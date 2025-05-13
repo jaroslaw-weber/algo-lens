@@ -27,18 +27,18 @@ export default function ProblemView() {
   const state = useProblemState();
 
   async function init() {
-    console.log("init problem visualizer");
+    // console.log("init problem visualizer");
     if (problem) {
       return;
     }
     //get id from url query parameters
     const url = new URL(window.location.href);
     const id = url.searchParams.get("id");
-    console.log("init problem visualizer with id", id);
+    // console.log("init problem visualizer with id", id);
     //fetch problem details from backend
     const p = await getProblem(id!);
 
-    console.log("init problem visualizer with problem", p);
+    // console.log("init problem visualizer with problem", p);
     setProblem(p);
   }
   useEffect(() => {

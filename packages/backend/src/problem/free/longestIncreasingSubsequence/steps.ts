@@ -1,62 +1,50 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 
-export function generateSteps(nums: number[]):ProblemState[] {
-  // Return type inferred
-  const l = new StepLoggerV2(); // Instantiate StepLoggerV2
+export function generateSteps(nums: number[]): ProblemState[] {
+  const l = new StepLoggerV2();
   const n = nums.length;
+
   if (n === 0) {
     l.simple({ maxLength: 0 });
-    l.breakpoint(4); // Final breakpoint
+    l.breakpoint(4);
     return l.getSteps();
   }
 
   const dp: number[] = new Array(n).fill(1);
 
-  // Log initial state using arrayV2
-  l.arrayV2({ nums: nums }); // No pointers needed
-  l.arrayV2({ dp: dp }); // No pointers needed
-
+  l.arrayV2({ nums: nums });
+  l.arrayV2({ dp: dp });
   l.comment = "Initial state: nums array and dp array (all 1s).";
   l.breakpoint(1); //#1
 
   for (let i = 1; i < n; i++) {
     for (let j = 0; j < i; j++) {
-      // Log state before comparison using arrayV2
-      l.arrayV2({ nums: nums }, { i: i, j: j }); // Pass pointers i and j
-      l.arrayV2({ dp: dp }, { i: i, j: j }); // Pass pointers i and j
-
+      l.arrayV2({ nums: nums }, { i: i, j: j });
+      l.arrayV2({ dp: dp }, { i: i, j: j });
       l.comment = `Comparing nums[${i}] (${nums[i]}) with nums[${j}] (${nums[j]}).`;
       l.breakpoint(2); //#2
 
       if (nums[i] > nums[j]) {
-        // Condition met, potential update
         const currentDpI = dp[i];
         const newDpI = dp[j] + 1;
         dp[i] = Math.max(currentDpI, newDpI);
 
-        // Log state after potential update using arrayV2
-        l.arrayV2({ nums: nums }, { i: i, j: j }); // Pass pointers i and j
-        l.arrayV2({ dp: dp }, { i: i }); // Pass pointer i (previousValue option removed)
+        l.arrayV2({ nums: nums }, { i: i, j: j });
+        l.arrayV2({ dp: dp }, { i: i });
 
-        // Optionally log j again if needed
-        // l.simple({ j }); // Removed group
         l.comment = `nums[${i}] (${nums[i]}) > nums[${j}] (${nums[j]}). Updated dp[${i}] from ${currentDpI} to ${dp[i]} because dp[${j}] (${dp[j]}) + 1 = ${newDpI}.`;
         l.breakpoint(3); //#3
       }
-      // No else breakpoint needed, state logged at breakpoint 2 covers the pre-check state
     }
   }
 
-  // Calculate and log final result
-  const maxLength = n > 0 ? Math.max(...dp) : 0; // Use maxLength based on variables.ts, handle empty array case
-
-  l.simple({ result: maxLength }); // Changed label to "result"
-  l.arrayV2({ dp: dp }); // Use arrayV2, no pointers needed
-  l.arrayV2({ nums: nums }); // Use arrayV2, no pointers needed
-
+  const maxLength = n > 0 ? Math.max(...dp) : 0;
+  l.simple({ result: maxLength });
+  l.arrayV2({ dp: dp });
+  l.arrayV2({ nums: nums });
   l.comment = "Final result: calculated maxLength from dp array.";
   l.breakpoint(4); //#4
 
-  return l.getSteps(); // Return the collected steps
+  return l.getSteps();
 }

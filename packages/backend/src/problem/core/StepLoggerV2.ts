@@ -194,7 +194,7 @@ export class StepLoggerV2 {
       value: values,
       pointers: fixedPointers,
     };
-    //console.log("array v2", v);
+    //// console.log("array v2", v);
     this.upsert(v);
   }
 
