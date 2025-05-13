@@ -1,4 +1,4 @@
-import ProblemHeader from './ProblemHeader';
+import ProblemHeader from "./ProblemHeader";
 import StateDescription from "./ProblemDescription";
 import React, { useState, useRef, useEffect } from "react";
 import copy from "copy-to-clipboard";
@@ -61,7 +61,6 @@ function ProblemVisualizer() {
   return (
     <div className="mx-8 my-8 flex-1">
       <div className="">
-
         {/* Tab Content Area */}
         <div className="mt-4">
           {/* Visualizer Content Container */}
@@ -70,22 +69,27 @@ function ProblemVisualizer() {
               {/* Moved original content here */}
               <div className="flex flex-col lg:flex-row  lg:gap-20">
                 <div className="flex-1 p-2  lg:w-1/2">
-                <ProblemHeader title={title} id={id} handleCopyCode={handleCopyCode} />
+                  <ProblemHeader
+                    title={title}
+                    id={id}
+                    handleCopyCode={handleCopyCode}
+                  />
                   <ProblemTabs
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
                   />
-                  <StateDescription description={state.description} />
+                    <StateDescription description={state.description} />
+                 
                   <CodePreview code={code} highlightLineIndex={line} />
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-                    <Slider
-                      min={1}
-                      max={maxStep}
-                      value={step}
-                      onChange={handleSliderChange}
-                    />
-                    <DisplayState state={state} problem={problem} />
+                  <Slider
+                    min={1}
+                    max={maxStep}
+                    value={step}
+                    onChange={handleSliderChange}
+                  />
+                  <DisplayState state={state} problem={problem} />
                 </div>
               </div>
             </div>
