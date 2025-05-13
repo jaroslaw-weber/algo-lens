@@ -32,6 +32,7 @@ export async function generateCodeFromSteps(
   lines = lines.filter(l => !l.trim().startsWith("//"))
   result = lines.join("\n");
 
+  result = removeJSDocComments(result);
   result = removeComments(result);
   result = replaceBreakpointWithNumber(result);
   result = removeImports(result);
@@ -49,6 +50,11 @@ export async function generateCodeFromSteps(
 
 function removeImports(result: string) {
   result = result.replace(/^import[\s\S]*?;?\n/gm, "");
+  return result;
+}
+
+function removeJSDocComments(result: string) {
+  result = result.replace(/\/\*\*[\s\S]*?\*\/\n?/g, "");
   return result;
 }
 
