@@ -17,6 +17,7 @@ export const testcases = [
     // Original: [0, 0, 0] - Changed to a medium size input
     input: [-1, 0, 1, 2, -1, -4, 5, -2, 3],
     expected: [
+      [-4, -1, 5],
       [-4, 1, 3],
       [-2, -1, 3],
       [-2, 0, 2],

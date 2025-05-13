@@ -18,7 +18,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
       [1, 2],
     ],
 
-    expected: 0,
+    expected: 1,
   },
   {
     input: [
