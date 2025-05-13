@@ -21,7 +21,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   l.arrayV2({ nums }, { left, right });
   l.simple({ target });
   l.simple({ result });
-  l.comment = "Initial state: left, right, target, and result = -1.";
+  l.comment = "Initialize the 'left' pointer to the start of the array (index 0) and the 'right' pointer to the end of the array (index length - 1). The 'result' is initialized to -1, indicating the target has not been found yet. The 'target' is the value we are searching for.";
   l.breakpoint(1);
 
   // Main loop to find the target number in the rotated array
@@ -29,73 +29,82 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     const mid = Math.floor((left + right) / 2);
     l.simple({ mid });
     l.arrayV2({ nums }, { left, right, mid });
-    l.comment = `Calculated mid = floor((${left} + ${right}) / 2) = ${mid}. nums[mid] = ${nums[mid]}.`;
+    // We find the middle spot to split the current search area in half.
+    l.comment = `Calculate the middle index ('mid') of the current search range [left, right]. This divides the search space in half. The value at the middle index is nums[mid] = ${nums[mid]}.`;
     l.breakpoint(2);
 
     if (nums[mid] === target) {
       result = mid;
       l.simple({ result });
       l.arrayV2({ nums }, { left, right, mid });
-      l.comment = `Target found at mid. result = ${mid}. Returning. Target: ${target}.`;
+      l.comment = `Check if the value at the middle index (nums[mid] = ${nums[mid]}) is equal to the target (${target}). If it is, the target is found at index 'mid'. Set 'result' to 'mid' and terminate the search.`;
       l.breakpoint(3);
       return l.getSteps();
     }
 
     if (nums[left] <= nums[mid]) {
       l.arrayV2({ nums }, { left, right, mid });
-      l.comment = `Checking if left part is sorted (nums[left] <= nums[mid]). nums[${left}] (${nums[left]}) <= nums[${mid}] (${nums[mid]}).`;
-      l.breakpoint(4);
-      //Check if the left half is sorted
-      if (nums[left] <= target && target < nums[mid]) {
-        //#5 If the target is in the left half, move the right pointer
-        const oldRight = right;
-        right = mid - 1;
-        l.simple({ right });
-        l.arrayV2({ nums: nums }, { left: left, right: right });
-        l.comment = `Left part is sorted. Target (${target}) is in the left part (nums[${left}] (${nums[left]}) <= target < nums[${mid}] (${nums[mid]})). Updating right = ${mid} - 1 = ${right}.`;
-        l.breakpoint(5);
-      } else {
-        //#6 If the target is not in the left half, move the left pointer
-        const oldLeft = left;
-        left = mid + 1;
-        l.simple({ left: left });
-        l.arrayV2({ nums: nums }, { left: left, right: right });
-        l.comment = `Left part is sorted. Target (${target}) is not in the left part. Updating left = ${mid} + 1 = ${left}.`;
-        l.breakpoint(6);
-      }
-    } else {
-      l.arrayV2({ nums: nums }, { left: left, right: right, mid: mid });
-      l.comment = `Right part is sorted (nums[left] > nums[mid]). nums[${left}] (${nums[left]}) > nums[${mid}] (${nums[mid]}).`;
-      l.breakpoint(7);
-      //#7 Check if the right half is sorted
-      if (nums[mid] < target && target <= nums[right]) {
-        //#8 If the target is in the right half, move the left pointer
-        const oldLeft = left;
-        left = mid + 1;
-        l.simple({ left: left });
-        l.arrayV2({ nums: nums }, { left: left, right: right });
-        l.comment = `Right part is sorted. Target (${target}) is in the right part (nums[${mid}] (${nums[mid]}) < target <= nums[${right}] (${nums[right]})). Updating left = ${mid} + 1 = ${left}.`;
-        l.breakpoint(8);
-      } else {
-        //#9 If the target is not in the right half, move the right pointer
-        const oldRight = right;
-        right = mid - 1;
-        l.simple({ right: right });
-        l.arrayV2({ nums: nums }, { left: left, right: right });
-        l.comment = `Right part is sorted. Target (${target}) is not in the right part. Updating right = ${mid} - 1 = ${right}.`;
-        l.breakpoint(9);
-      }
-    }
-    // Ensure mid is cleared if loop continues
-    l.simple({ mid: undefined });
-  }
+      // Check if the left side of our current search area (from 'left' to 'mid') is sorted correctly.
+     // Check if the left side (from 'left' to 'mid') is sorted.
+     l.comment = `Determine which half of the array (from 'left' to 'mid' or from 'mid' to 'right') is sorted. Check if the element at the 'left' pointer (nums[left] = ${nums[left]}) is less than or equal to the element at the 'mid' pointer (nums[mid] = ${nums[mid]}). If true, the left half is sorted.`;
+     l.breakpoint(4);
+     // If the left side is sorted, we see if the target is in this sorted range.
+     if (nums[left] <= target && target < nums[mid]) {
+       // If the target is in the sorted left part, we can ignore the right side.
+       // We move 'right' to search only in the left part.
+       const oldRight = right;
+       right = mid - 1;
+       l.simple({ right });
+       l.arrayV2({ nums: nums }, { left: left, right: right });
+       l.comment = `The left half of the array (from index ${left} to ${mid}) is sorted. Check if the target (${target}) falls within the range of values in this sorted left half (i.e., target is between nums[left] = ${nums[left]} and nums[mid] = ${nums[mid]}). If it does, the target must be in this left half. Discard the right half by moving the 'right' pointer to mid - 1 = ${right}.`;
+       l.breakpoint(5);
+     } else {
+       // If the target is not in the sorted left part, it must be in the right part (which might be rotated).
+       // We ignore the left part and move 'left' to search in the right part.
+       const oldLeft = left;
+       left = mid + 1;
+       l.simple({ left: left });
+       l.arrayV2({ nums: nums }, { left: left, right: right });
+       l.comment = `The left half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the right half (from index ${mid} to ${right}), which might be rotated. Discard the left half by moving the 'left' pointer to mid + 1 = ${left}.`;
+       l.breakpoint(6);
+     }
+   } else {
+     l.arrayV2({ nums: nums }, { left: left, right: right, mid: mid });
+     // If the left side is not sorted, the right side (from 'mid' to 'right') must be sorted because the array is rotated.
+     l.comment = "The left half of the array (from index 'left' to 'mid') is not sorted. This implies that the right half of the array (from index 'mid' to 'right') must be sorted because the array is a rotated sorted array.";
+     l.breakpoint(7);
+     // Since the right side is sorted, we see if the target is in this sorted range.
+     if (nums[mid] < target && target <= nums[right]) {
+       // If the target is in the sorted right part, we can ignore the left side.
+       // We move 'left' to search only in the right part.
+       const oldLeft = left;
+       left = mid + 1;
+       l.simple({ left: left });
+       l.arrayV2({ nums: nums }, { left: left, right: right });
+       l.comment = `The right half of the array (from index ${mid} to ${right}) is sorted. Check if the target (${target}) falls within the range of values in this sorted right half (i.e., target is between nums[mid] = ${nums[mid]} and nums[right] = ${nums[right]}). If it does, the target must be in this right half. Discard the left half by moving the 'left' pointer to mid + 1 = ${left}.`;
+       l.breakpoint(8);
+     } else {
+       // If the target is NOT in the sorted right part, it must be in the left part (which might be rotated).
+       // We ignore the right part and move 'right' to search in the left part.
+       const oldRight = right;
+       right = mid - 1;
+       l.simple({ right: right });
+       l.arrayV2({ nums: nums }, { left: left, right: right });
+       l.comment = `The right half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the left part (from index ${left} to ${mid}), which might be rotated. Discard the right half by moving the 'right' pointer to mid - 1 = ${right}.`;
+       l.breakpoint(9);
+     }
+   }
+   // We clear 'mid' for the next check.
+   l.simple({ mid: undefined });
+ }
 
-  // Logs the final state if the target is not found
-  result = -1; // Explicitly set result to -1 if loop finishes without finding target
-  l.simple({ result });
-  l.arrayV2({ nums: nums }, { left: left, right: right });
-  l.comment = "Loop finished. Target not found. result = -1.";
-  l.breakpoint(10);
+ // If the loop finishes, the target was not found.
+ // We set the result to -1.
+ result = -1; // Explicitly set result to -1 if loop finishes without finding target
+ l.simple({ result });
+ l.arrayV2({ nums: nums }, { left: left, right: right });
+ l.comment = "The loop has finished without finding the target. This occurs when the search range [left, right] becomes empty (left > right). The result remains -1, indicating the target is not present in the array.";
+ l.breakpoint(10);
 
-  return l.getSteps();
+ return l.getSteps();
 }

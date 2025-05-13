@@ -12,6 +12,7 @@ import {
   ProblemState,
 } from "algo-lens-core";
 import { getProblemById } from "./problem/core/utils";
+import { loadProblemWithId } from "./problem/core/loadProblemWithId";
 
 app.use(cors());
 
@@ -161,7 +162,7 @@ app.get("/problem/:problemId/state/:step", async (c) => {
   const problemId = c.req.param("problemId");
   const step = parseInt(c.req.param("step"));
 
-  const problem = await getProblemById(problemId!);
+  const problem = await loadProblemWithId(problemId!);
   if (!problem) {
     throw new Error(`Problem not found: ${problemId} `);
   }

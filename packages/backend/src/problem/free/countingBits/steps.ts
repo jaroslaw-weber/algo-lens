@@ -53,13 +53,8 @@ export function generateSteps(n: number): ProblemState[] {
         l.binary({ num: inner_num }, { highlightLast: true });
         l.group("count", { count }, { min: 0, max: n });
         l.comment = "LSB is 0. No count increment.";
-        l.breakpoint(4); // Add breakpoint for else case
+        l.breakpoint(6); // Add breakpoint for else case
 
-        l.arrayV2({ result: result }, { "i - 1": i - 1 });
-        l.binary({ num: inner_num }, { highlightLast: true });
-        l.group("count", { count }, { min: 0, max: n });
-        l.comment = "Skipping count increment.";
-        l.breakpoint(5); // Add breakpoint for else case
       }
 
       //#6 Shift the number to the right to move to the next bit
@@ -68,7 +63,7 @@ export function generateSteps(n: number): ProblemState[] {
       l.binary({ num: inner_num }, { highlightLast: true }); // Show shifted number
       l.group("count", { count }, { min: 0, max: n });
       l.comment = "Right-shift the number to process next bit.";
-      l.breakpoint(6);
+      l.breakpoint(7);
     }
 
     l.arrayV2({ result: result }, { "i - 1": i - 1 }); // Show previous state
@@ -76,7 +71,7 @@ export function generateSteps(n: number): ProblemState[] {
     l.group("count", { count }, { min: 0, max: n });
     //#7 Store the count in the result array
     l.comment = `Finished counting bits for ${i}. Storing count ${count} in result[${i}].`;
-    l.breakpoint(7);
+    l.breakpoint(8);
 
     result[i] = count;
 
@@ -85,12 +80,11 @@ export function generateSteps(n: number): ProblemState[] {
     l.binary({ num }, { highlightLast: false });
     l.group("count", { count }, { min: 0, max: n });
     l.comment = `Stored count ${count} in result[${i}].`;
-    l.breakpoint(7); // Re-use breakpoint 7 or use a new one if needed
   }
   l.arrayV2({ result }); // Show final result array
   //#8 Log final state
   l.comment = "Finished processing all numbers. Returning result.";
-  l.breakpoint(8);
+  l.breakpoint(9);
 
   return l.getSteps();
 }

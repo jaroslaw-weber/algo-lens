@@ -40,13 +40,14 @@ function arrayToTree(arr: (number | null)[] | null): BinaryTreeNode | null {
 }
 
 export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
-  {
-    input: [arrayToTree([1, 2, 3]), arrayToTree([1, 2, 3])],
-    expected: true,
-  },
+  
   {
     input: [arrayToTree([1, 2, 3]), arrayToTree([1, 3, 2])],
     expected: false,
+  },
+  {
+    input: [arrayToTree([1, 2, 3]), arrayToTree([1, 2, 3])],
+    expected: true,
   },
   {
     // Changed from [1, 2] vs [1, null, 2] to slightly larger trees with different structure
@@ -56,6 +57,6 @@ export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
   },
   {
     input: [arrayToTree([1, 2]), arrayToTree([1, 2, 3])],
-    expected: true,
+    expected: false,
   },
 ];

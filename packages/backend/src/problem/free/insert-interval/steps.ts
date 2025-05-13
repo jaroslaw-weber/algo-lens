@@ -25,7 +25,8 @@ export function generateSteps(
   l.intervals("intervals", intervals, [], minValue, maxValue);
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
-  l.breakpoint(1, "Initial state before processing intervals.");
+  l.breakpoint(1);
+  l.comment = "Initial state before processing intervals.";
 
   // Loop 1: Add intervals before newInterval (Breakpoint #2)
   while (i < intervals.length && intervals[i][1] < newInterval[0]) {
@@ -39,12 +40,10 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
     l.simple({ i });
-    l.breakpoint(
-      2,
-      `Added interval [${currentInterval.join(
+    l.breakpoint(2);
+    l.comment = `Added interval [${currentInterval.join(
         ", "
-      )}] to result because it ends before newInterval starts. State after addition:`
-    );
+      )}] to result because it ends before newInterval starts. State after addition:`;
   }
 
   // Log state before loop 2
@@ -52,10 +51,8 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show newInterval before merge loop
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(
-    3,
-    "Starting merge phase. Checking for overlaps with newInterval."
-  );
+  l.breakpoint(3);
+  l.comment = "Starting merge phase. Checking for overlaps with newInterval.";
 
   // Loop 2: Merge overlapping intervals (Breakpoint #3)
   while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
@@ -73,7 +70,8 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.simple({ i });
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(4, message);
+    l.breakpoint(4);
+    l.comment = message;
   }
 
   // Insert the merged newInterval (Breakpoint #4)
@@ -82,22 +80,18 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue); // Show final merged/original newInterval
   l.intervals("result", result, [], minValue, maxValue); // Show result with newInterval added
   l.simple({ i });
-  l.breakpoint(
-    5,
-    `Inserting the final merged/original newInterval [${newInterval.join(
+  l.breakpoint(5);
+  l.comment = `Inserting the final merged/original newInterval [${newInterval.join(
       ", "
-    )}].`
-  );
+    )}].`;
 
   // Log state before loop 3
   l.intervals("intervals", intervals, [], minValue, maxValue); // Show intervals before loop
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue);
   l.simple({ i });
-  l.breakpoint(
-    6,
-    "Starting phase to add remaining intervals after newInterval."
-  );
+  l.breakpoint(6);
+  l.comment = "Starting phase to add remaining intervals after newInterval.";
 
   // Loop 3: Add remaining intervals (Breakpoint #5)
   while (i < intervals.length) {
@@ -114,7 +108,8 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.simple({ i });
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
-    l.breakpoint(7, message); // Use l.log for inner loop steps
+    l.breakpoint(7);
+    l.comment = message; // Use l.log for inner loop steps
   }
 
   // Final state log (Breakpoint #6)
@@ -122,7 +117,8 @@ export function generateSteps(
   l.intervals("newInterval", [newInterval], [], minValue, maxValue);
   l.intervals("result", result, [], minValue, maxValue); // Final result array
   l.simple({ i });
-  l.breakpoint(6, "Finished processing all intervals. Returning final result.");
+  l.breakpoint(6);
+  l.comment = "Finished processing all intervals. Returning final result.";
 
   return l.getSteps();
 }

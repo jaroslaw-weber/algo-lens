@@ -19,13 +19,15 @@ export function generateSteps(nums: number[]) {
 
   l.arrayV2({ nums });
   l.arrayV2({ dp }, { here: 0 }); // Highlight dp[0]
-  l.breakpoint(1, "Initialize dp array with base case dp[0]");
+  l.breakpoint(1);
+  l.comment = "Initialize dp array with base case dp[0]";
 
   dp[1] = nums[0];
 
   l.arrayV2({ nums }, { here: 0 }); // Highlight nums[0]
   l.arrayV2({ dp }, { here: 1 }); // Highlight dp[1]
-  l.breakpoint(2, "Set base case dp[1]");
+  l.breakpoint(2);
+  l.comment = "Set base case dp[1]";
 
   for (let i = 2; i <= n; i++) {
     const skipCurrent = dp[i - 1];
@@ -44,10 +46,8 @@ export function generateSteps(nums: number[]) {
       twoHousesBefore,
       currentHouse,
     });
-    l.breakpoint(
-      3,
-      "Calculate dp[i] based on max of skipping or including current house"
-    );
+    l.breakpoint(3);
+    l.comment = "Calculate dp[i] based on max of skipping or including current house";
   }
 
   const result = dp[n];
@@ -55,7 +55,8 @@ export function generateSteps(nums: number[]) {
   l.arrayV2({ nums: nums }, {});
   l.arrayV2({ dp: dp }, { n: n }); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
-  l.breakpoint(4, "Final result is dp[n]");
+  l.breakpoint(4);
+  l.comment = "Final result is dp[n]";
 
   return l.getSteps(); // Return steps from StepLoggerV2
 }
