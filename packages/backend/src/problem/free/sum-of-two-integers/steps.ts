@@ -67,7 +67,9 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   // #6 Loop finished (no more carry)
   l.binary({ a }); // Final sum is in a
   l.binary({ b }); // b is 0
-  l.binary({ carry }); // carry from the last iteration (could be 0 or the last non-zero carry)
+  if (carry!==undefined) {
+    l.binary({ carry }); // carry from the last iteration (could be 0 or the last non-zero carry)
+  }
   l.breakpoint(6);
 
   // #7 Return final sum
@@ -84,6 +86,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
 
     l.binary({ carry });
   }
+
   l.breakpoint(7);
 
   return l.getSteps();
