@@ -15,6 +15,7 @@ export async function generateCodeFromSteps(
 ): Promise<GeneratedCodeOutput> {
   // console.log("Content before replacements:", params.stepsFileContent); // Log initial content
   let result = params.stepsFileContent;
+  result = removeManualHideBlocks(result); // Add this line to remove manual hide blocks
   result = removeImports(result);
   result = removeUnwantedLines(result);
   result = replaceProblemStateSignature(result, params.targetFunctionSignature);
@@ -23,6 +24,8 @@ export async function generateCodeFromSteps(
   result = removeJSDocComments(result);
   result = removeExtraEmptyLines(result);
   result = removeComments(result); // Add this line to call removeComments
+  console.log("Before removeManualHideBlocks:", result); // Log before removing hide blocks
+  console.log("After removeManualHideBlocks:", result); // Log after removing hide blocks
   result = replaceBreakpointWithNumber(result);
   result = removeStepLoggerLog(result);
   const content = result;
@@ -78,6 +81,16 @@ export function removeStepLoggerLog(result: string) {
   result = result.replace(/^\s*l\.(?!comment\s*=)[\s\S]*?;\s*$/gm, ""); // Removed \n from the end of the regex
   // console.log("After removeStepLoggerLog:", result); // Add logging
   return result;
+}
+
+/**
+ * Removes lines between // HIDE_START and // HIDE_END markers.
+ * @param result The input string content.
+ * @returns The content with manual hide blocks removed.
+ */
+export function removeManualHideBlocks(result: string): string {
+  const regex = /\s*\/\/ HIDE_START[\s\S]*?\/\/ HIDE_END\s*/g;
+  return result.replace(regex, "\n");
 }
 
 /**
@@ -167,7 +180,7 @@ export function replaceProblemStateSignature(
   // Replace the function declaration with the correct signature and opening brace
   result = result.replace(
     /^(?:export\s+)?function\s+(\w+)\s*\([\s\S]*?\)\s*:\s*ProblemState\[\]\s*\{\s*$/gm,
-    "export function $1(): ProblemState[] {"
+    "export function "+targetFunctionSignature+" {"
   );
   // console.log("After replaceProblemStateSignature:", result); // Add logging
   return result;

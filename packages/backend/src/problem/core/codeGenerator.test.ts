@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { generateCodeFromSteps, removeImports, removeJSDocComments, removeComments, removeExtraEmptyLines, replaceBreakpointWithNumber, removeStepLoggerLog, removeUnwantedLines, replaceProblemStateSignature, replaceGetStepsReturn } from "./codeGenerator";
+import { generateCodeFromSteps, removeImports, removeJSDocComments, removeComments, removeExtraEmptyLines, replaceBreakpointWithNumber, removeStepLoggerLog, removeUnwantedLines, replaceProblemStateSignature, replaceGetStepsReturn, removeManualHideBlocks } from "./codeGenerator";
 import * as fs from "fs";
 import * as path from "path";
 import { loadProblemWithId } from "./loadProblemWithId";
@@ -24,7 +24,7 @@ function something(): ProblemState[] {
       problemName: "something",
     });
     //// console.log("generated:", generated);
-    const expected = `export function something(): ProblemState[] {
+    const expected = `export function something(): number {
   // #1
   const a = 1;
   const b = 2;
@@ -34,7 +34,7 @@ function something(): ProblemState[] {
   return result;
 }
 `;
-// console.log("content", generated.content)
+    // console.log("content", generated.content)
     expect(generated.content).toEqual(expected);
   });
 });
@@ -167,11 +167,11 @@ describe("removeUnwantedLines", () => {
 });
 
 describe("replaceProblemStateSignature", () => {
-  it("should replace function signature with ProblemState[] return type", () => {
+  it("should replace function signature with provided signature", () => {
     const input = `function solve(a: number): ProblemState[] {\n  // code\n}`;
-    const expected = `export function solve(): ProblemState[] {\n  // code\n}`;
+    const expected = `export function solve(): any {\n  // code\n}`;
     // @ts-ignore // Accessing private function for testing
-    expect(replaceProblemStateSignature(input, "solve(): any")).toEqual(expected); // targetFunctionSignature is unused
+    expect(replaceProblemStateSignature(input, "solve(): any")).toEqual(expected);
   });
 });
 
@@ -181,6 +181,25 @@ describe("replaceGetStepsReturn", () => {
     const expected = `return result;\n}`;
     // @ts-ignore // Accessing private function for testing
     expect(replaceGetStepsReturn(input)).toEqual(expected);
+  });
+});
+
+describe("removeManualHideBlocks", () => {
+  it("should remove multiline hide blocks", () => {
+    const input = `
+const a = 1;
+// HIDE_START
+const hidden1 = 1;
+const hidden2 = 2;
+// HIDE_END
+const b = 2;
+`;
+    const expected = `
+const a = 1;
+const b = 2;
+`;
+    // @ts-ignore // Accessing private function for testing
+    expect(removeManualHideBlocks(input)).toEqual(expected);
   });
 });
 
