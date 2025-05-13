@@ -32,10 +32,10 @@ export default {
 	],
 	safelist: [
 		{
-			pattern: /bg-(primary|error|success)/,
+			pattern: /bg-(primary|error|success|neutral)/,
 			variants: ['lg', 'hover', 'focus', 'lg:hover'],
 		}, {
-			pattern: /text-(primary|error|success)-content/,
+			pattern: /text-(primary|error|success|neutral)-content/,
 			variants: ['lg', 'hover', 'focus', 'lg:hover'],
 		},
 	],
