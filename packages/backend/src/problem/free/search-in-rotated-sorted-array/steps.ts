@@ -21,7 +21,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   l.arrayV2({ nums }, { left, right });
   l.simple({ target });
   l.simple({ result });
-  l.comment = "Initial state: left, right, target, and result = -1.";
+  l.comment = "Initialize the 'left' pointer to the start of the array (index 0) and the 'right' pointer to the end of the array (index length - 1). The 'result' is initialized to -1, indicating the target has not been found yet. The 'target' is the value we are searching for.";
   l.breakpoint(1);
 
   // Main loop to find the target number in the rotated array
@@ -30,14 +30,14 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     l.simple({ mid });
     l.arrayV2({ nums }, { left, right, mid });
     // We find the middle spot to split the current search area in half.
-    l.comment = `Found the middle index: mid = ${mid}. The number here is nums[mid] = ${nums[mid]}.`;
+    l.comment = `Calculate the middle index ('mid') of the current search range [left, right]. This divides the search space in half. The value at the middle index is nums[mid] = ${nums[mid]}.`;
     l.breakpoint(2);
 
     if (nums[mid] === target) {
       result = mid;
       l.simple({ result });
       l.arrayV2({ nums }, { left, right, mid });
-      l.comment = `Target found at mid. result = ${mid}. Returning. Target: ${target}.`;
+      l.comment = `Check if the value at the middle index (nums[mid] = ${nums[mid]}) is equal to the target (${target}). If it is, the target is found at index 'mid'. Set 'result' to 'mid' and terminate the search.`;
       l.breakpoint(3);
       return l.getSteps();
     }
@@ -46,7 +46,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       l.arrayV2({ nums }, { left, right, mid });
       // Check if the left side of our current search area (from 'left' to 'mid') is sorted correctly.
      // Check if the left side (from 'left' to 'mid') is sorted.
-     l.comment = `Is the left part sorted? We check if nums[left] (${nums[left]}) is <= nums[mid] (${nums[mid]}).`;
+     l.comment = `Determine which half of the array (from 'left' to 'mid' or from 'mid' to 'right') is sorted. Check if the element at the 'left' pointer (nums[left] = ${nums[left]}) is less than or equal to the element at the 'mid' pointer (nums[mid] = ${nums[mid]}). If true, the left half is sorted.`;
      l.breakpoint(4);
      // If the left side is sorted, we see if the target is in this sorted range.
      if (nums[left] <= target && target < nums[mid]) {
@@ -56,7 +56,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
        right = mid - 1;
        l.simple({ right });
        l.arrayV2({ nums: nums }, { left: left, right: right });
-       l.comment = `Yes, the left part is sorted. Target (${target}) is between ${nums[left]} and ${nums[mid]}. This means the target is in the left part. We move the 'right' pointer to ${mid} - 1 = ${right} to search only in this left part.`;
+       l.comment = `The left half of the array (from index ${left} to ${mid}) is sorted. Check if the target (${target}) falls within the range of values in this sorted left half (i.e., target is between nums[left] = ${nums[left]} and nums[mid] = ${nums[mid]}). If it does, the target must be in this left half. Discard the right half by moving the 'right' pointer to mid - 1 = ${right}.`;
        l.breakpoint(5);
      } else {
        // If the target is not in the sorted left part, it must be in the right part (which might be rotated).
@@ -65,13 +65,13 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
        left = mid + 1;
        l.simple({ left: left });
        l.arrayV2({ nums: nums }, { left: left, right: right });
-       l.comment = `Yes, the left part is sorted, but target (${target}) is not in it. This means the target must be in the right part (which could be rotated). We move the 'left' pointer to ${mid} + 1 = ${left} to search only in this right part.`;
+       l.comment = `The left half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the right half (from index ${mid} to ${right}), which might be rotated. Discard the left half by moving the 'left' pointer to mid + 1 = ${left}.`;
        l.breakpoint(6);
      }
    } else {
      l.arrayV2({ nums: nums }, { left: left, right: right, mid: mid });
      // If the left side is not sorted, the right side (from 'mid' to 'right') must be sorted because the array is rotated.
-     l.comment = `No, the left part is not sorted. This means the right part is sorted.`;
+     l.comment = "The left half of the array (from index 'left' to 'mid') is not sorted. This implies that the right half of the array (from index 'mid' to 'right') must be sorted because the array is a rotated sorted array.";
      l.breakpoint(7);
      // Since the right side is sorted, we see if the target is in this sorted range.
      if (nums[mid] < target && target <= nums[right]) {
@@ -81,7 +81,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
        left = mid + 1;
        l.simple({ left: left });
        l.arrayV2({ nums: nums }, { left: left, right: right });
-       l.comment = `Yes, the right part is sorted. Target (${target}) is between ${nums[mid]} and ${nums[right]}. This means the target is in the right part. We move the 'left' pointer to ${mid} + 1 = ${left} to search only in this right part.`;
+       l.comment = `The right half of the array (from index ${mid} to ${right}) is sorted. Check if the target (${target}) falls within the range of values in this sorted right half (i.e., target is between nums[mid] = ${nums[mid]} and nums[right] = ${nums[right]}). If it does, the target must be in this right half. Discard the left half by moving the 'left' pointer to mid + 1 = ${left}.`;
        l.breakpoint(8);
      } else {
        // If the target is NOT in the sorted right part, it must be in the left part (which might be rotated).
@@ -90,7 +90,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
        right = mid - 1;
        l.simple({ right: right });
        l.arrayV2({ nums: nums }, { left: left, right: right });
-       l.comment = `Yes, the right part is sorted, but target (${target}) is not in it. This means the target must be in the left part (which might be rotated). We move the 'right' pointer to ${mid} - 1 = ${right} to search only in this left part.`;
+       l.comment = `The right half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the left part (from index ${left} to ${mid}), which might be rotated. Discard the right half by moving the 'right' pointer to mid - 1 = ${right}.`;
        l.breakpoint(9);
      }
    }
@@ -103,7 +103,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
  result = -1; // Explicitly set result to -1 if loop finishes without finding target
  l.simple({ result });
  l.arrayV2({ nums: nums }, { left: left, right: right });
- l.comment = "Finished searching. Target not found. Result is -1.";
+ l.comment = "The loop has finished without finding the target. This occurs when the search range [left, right] becomes empty (left > right). The result remains -1, indicating the target is not present in the array.";
  l.breakpoint(10);
 
  return l.getSteps();

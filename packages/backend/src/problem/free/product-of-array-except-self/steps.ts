@@ -21,8 +21,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   logger.arrayV2({ productsLeft: productsLeft }, {});
   logger.arrayV2({ productsRight: productsRight }, {});
   logger.arrayV2({ output: output }, {});
-  logger.comment =
-    "Initial state: nums, productsLeft, productsRight, and output arrays (all 1s).";
+  logger.comment = "Initialize the output array and two temporary arrays, productsLeft and productsRight, all filled with 1s. productsLeft will store the product of all elements to the left of the current index, and productsRight will store the product of all elements to the right.";
   logger.breakpoint(1);
 
   // Fill productsLeft array (prefix products)
@@ -34,11 +33,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     logger.arrayV2({ productsLeft: productsLeft }, { i: i, "i - 1": i - 1 }); // Use inferred labels "i" and "i - 1"
     logger.arrayV2({ productsRight: productsRight }, {});
     logger.arrayV2({ output: output }, {});
-    logger.comment = `Calculated productsLeft[${i}] = productsLeft[${
-      i - 1
-    }] (${prevProductsLeft}) * nums[${i - 1}] (${prevNum}) = ${
-      productsLeft[i]
-    }.`;
+    logger.comment = `Calculate the prefix product for index ${i}. productsLeft[${i}] is the product of all elements to the left of index ${i}. This is calculated by multiplying the prefix product at the previous index (${i - 1}), which is productsLeft[${ i - 1 }] (${prevProductsLeft}), by the number at the previous index nums[${i - 1}] (${prevNum}). The result is ${ productsLeft[i] }.`;
     logger.breakpoint(2);
   }
 
@@ -51,11 +46,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     logger.arrayV2({ productsLeft: productsLeft }, {});
     logger.arrayV2({ productsRight: productsRight }, { i: i, "i + 1": i + 1 }); // Use inferred labels "i" and "i + 1"
     logger.arrayV2({ output: output }, {});
-    logger.comment = `Calculated productsRight[${i}] = productsRight[${
-      i + 1
-    }] (${nextProductsRight}) * nums[${i + 1}] (${nextNum}) = ${
-      productsRight[i]
-    }.`;
+    logger.comment = `Calculate the suffix product for index ${i}. productsRight[${i}] is the product of all elements to the right of index ${i}. This is calculated by multiplying the suffix product at the next index (${i + 1}), which is productsRight[${ i + 1 }] (${nextProductsRight}), by the number at the next index nums[${i + 1}] (${nextNum}). The result is ${ productsRight[i] }.`;
     logger.breakpoint(3);
   }
 
@@ -68,7 +59,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     logger.arrayV2({ productsLeft: productsLeft }, { i: i });
     logger.arrayV2({ productsRight: productsRight }, { i: i });
     logger.arrayV2({ output: output }, { i: i });
-    logger.comment = `Calculated output[${i}] = productsLeft[${i}] (${currentProductsLeft}) * productsRight[${i}] (${currentProductsRight}) = ${output[i]}.`;
+    logger.comment = `Calculate the final output for index ${i}. The product of all elements except self at index ${i} is the product of the prefix product to its left (productsLeft[${i}] = ${currentProductsLeft}) and the suffix product to its right (productsRight[${i}] = ${currentProductsRight}). The result is output[${i}] = ${output[i]}.`;
     logger.breakpoint(4);
   }
 
@@ -78,7 +69,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   logger.hide("productsLeft");
   logger.hide("productsRight");
   logger.hide("output");
-  logger.comment = "Final result: output array.";
+  logger.comment = "All elements have been processed. The output array now contains the product of all elements except self for each index of the original input array.";
   logger.breakpoint(5);
 
   return logger.getSteps();

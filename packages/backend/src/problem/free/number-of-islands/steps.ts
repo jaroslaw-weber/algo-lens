@@ -26,7 +26,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
     { numIslands },
     { max: (rowCount * colCount) / 2, min: 0 }
   );
-  l.comment = "Initial state: grid and numIslands = 0.";
+  l.comment = "Initialize the island count to 0. This variable will keep track of the number of distinct islands found in the grid. The grid represents the map, where '1' is land and '0' is water.";
   l.breakpoint(1);
 
   function dfs(i: number, j: number) {
@@ -36,21 +36,21 @@ export function generateSteps(grid: string[][]): ProblemState[] {
       { numIslands },
       { max: (rowCount * colCount) / 2, min: 0 }
     );
-    l.comment = `DFS: Start processing cell (${i}, ${j}).`;
+    l.comment = `Start a Depth First Search (DFS) from the land cell at (${i}, ${j}). DFS is used to explore and mark all connected land cells belonging to the same island.`;
     l.breakpoint(2);
     // Check for out of bounds
     if (i < 0 || i >= rowCount || j < 0 || j >= colCount) {
-      l.comment = `DFS: Out of bounds for cell (${i}, ${j}). Returning.`;
+      l.comment = `Check if the current cell coordinates (${i}, ${j}) are outside the grid boundaries. If they are out of bounds, stop the DFS traversal for this path.`;
       l.breakpoint(3); // Breakpoint after out-of-bounds check
       return;
     }
     // Check if the cell is water or already visited ('0' or '2')
     if (grid[i][j] !== "1") {
-      l.comment = `DFS: Cell (${i}, ${j}) is water or already visited ('${grid[i][j]}'). Returning.`;
+      l.comment = `Check if the current cell (${i}, ${j}) is water ('0') or has already been visited ('2'). If it's not land ('1'), stop the DFS traversal for this path to avoid processing water or revisiting land.`;
       l.breakpoint(4); // Breakpoint after water/visited check
       return;
     }
-    l.comment = `DFS: Marking cell (${i}, ${j}) as visited ('2').`;
+    l.comment = `The current cell (${i}, ${j}) is land ('1') and has not been visited. Mark this cell as visited by changing its value to '2'. This prevents recounting the same land cell as part of a different island.`;
     l.breakpoint(5); // Breakpoint before marking as visited
     grid[i][j] = "2"; // Mark the cell as visited ('2')
 
@@ -65,7 +65,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
           { r: x, c: y, color: 2 as const },
         ]
       );
-      l.comment = `DFS: Exploring neighbor (${x}, ${y}) of cell (${i}, ${j}).`;
+      l.comment = `Explore the neighbor cell at (${x}, ${y}) of the current cell (${i}, ${j}). Recursively call DFS on this neighbor to continue exploring the connected land cells of the current island.`;
       l.breakpoint(6); // Breakpoint before calculating new coordinates (corresponds to x += i; y += j; conceptually)
 
       dfs(x, y); // Recursive call for the adjacent cell
@@ -80,7 +80,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
         { numIslands },
         { max: (rowCount * colCount) / 2, min: 0 }
       );
-      l.comment = `Main loop: Checking cell (${i}, ${j}).`;
+      l.comment = `Iterate through each cell in the grid row by row and column by column. Check if the current cell at (${i}, ${j}) is land ('1') and has not been visited.`;
       l.breakpoint(7);
       if (grid[i][j] === "1") {
         l.grid("grid", grid, ...[{ r: i, c: j }]);
@@ -89,9 +89,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
           { numIslands: numIslands + 1 }, // Show the value after increment
           { max: (rowCount * colCount) / 2, min: 0 }
         );
-        l.comment = `Main loop: Found land (grid[${i}][${j}] === '1'). Incrementing numIslands and starting DFS. New numIslands will be ${
-          numIslands + 1
-        }.`;
+        l.comment = `Found a land cell at (${i}, ${j}) that has not been visited. This indicates the discovery of a new island. Increment the island count to ${numIslands + 1} and start a DFS from this cell to mark all connected land cells of this newly found island.`;
         l.breakpoint(8);
         numIslands++;
         dfs(i, j);
@@ -101,7 +99,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
 
   const result = numIslands;
   l.simple({ result });
-  l.comment = `Final result: numIslands = ${result}.`;
+  l.comment = `All cells in the grid have been visited. The total number of distinct islands found is ${result}.`;
   l.breakpoint(9);
   return l.getSteps();
 }
