@@ -14,28 +14,9 @@ export async function generateCodeFromSteps(
   params: GenerateCodeParams
 ): Promise<GeneratedCodeOutput> {
   let result = params.stepsFileContent;
-  let lines = result.split("\n");
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    // console.log("line", line);
-    if (line.includes(": ProblemState[] {")) {
-      lines[i] = "function "+ params.targetFunctionSignature + "{";
-    }
-    if (line.includes("return l.getSteps")) {
-      lines[i] = "return result;";
-    }
-    if (line.includes("StepLoggerV2")) {
-      lines[i] = "";
-    }
-    if(line.includes("// HIDE")){ //manually hide some lines
-      lines[i] = ""
-    }
-  }
-
-  lines = lines.filter(l => !l.trim().startsWith("//"));
-  // Remove lines containing "Pointer2D"
-  lines = lines.filter(l => !l.includes("Pointer2D"));
-  result = lines.join("\n");
+  result = removeUnwantedLines(result);
+  result = replaceProblemStateSignature(result, params.targetFunctionSignature);
+  result = replaceGetStepsReturn(result);
 
   result = removeJSDocComments(result);
   result = removeComments(result);
@@ -88,3 +69,80 @@ function removeStepLoggerLog(result: string) {
 }
 
 
+
+/**
+ * Removes lines containing StepLoggerV2, // HIDE, Pointer2D, or starting with //.
+ * @param result The input string content.
+ * @returns The content with unwanted lines removed.
+ * @example
+ * const input = `
+ * const logger = new StepLoggerV2(); // Remove this
+ * // HIDE this line
+ * // This is a comment
+ * const ptr: Pointer2D = { x: 0, y: 0 }; // Remove this
+ * function myFunction() {
+ *   // Some code
+ * }
+ * `;
+ * const output = removeUnwantedLines(input);
+ * // Expected output:
+ * // `
+ * //
+ * //
+ * //
+ * // function myFunction() {
+ * //   // Some code
+ * // }
+ * // `
+ */
+function removeUnwantedLines(result: string): string {
+  return result.replace(/^.*(StepLoggerV2|\/\/ HIDE|Pointer2D).*$|^\s*\/\/.*$/gm, "");
+}
+
+/**
+ * Replaces lines containing ": ProblemState[] {" with the target function signature.
+ * @param result The input string content.
+ * @param targetFunctionSignature The function signature to insert.
+ * @returns The content with the signature replaced.
+ * @example
+ * const input = `
+ * function solve(): ProblemState[] {
+ *   // Some code
+ * }
+ * `;
+ * const targetSignature = "mySolution(arr: number[]): number[]";
+ * const output = replaceProblemStateSignature(input, targetSignature);
+ * // Expected output:
+ * // `
+ * // function mySolution(arr: number[]): number[] {
+ * //   // Some code
+ * // }
+ * // `
+ */
+function replaceProblemStateSignature(result: string, targetFunctionSignature: string): string {
+  return result.replace(/^.*: ProblemState\[\] \{\s*$/gm, "function " + targetFunctionSignature + " {");
+}
+
+/**
+ * Replaces lines containing "return l.getSteps" with "return result;".
+ * @param result The input string content.
+ * @returns The content with the return statement replaced.
+ * @example
+ * const input = `
+ * function solve(): ProblemState[] {
+ *   // Some code
+ *   return l.getSteps();
+ * }
+ * `;
+ * const output = replaceGetStepsReturn(input);
+ * // Expected output:
+ * // `
+ * // function solve(): ProblemState[] {
+ * //   // Some code
+ * //   return result;
+ * // }
+ * // `
+ */
+function replaceGetStepsReturn(result: string): string {
+  return result.replace(/^.*return l\.getSteps.*;\s*$/gm, "return result;");
+}
