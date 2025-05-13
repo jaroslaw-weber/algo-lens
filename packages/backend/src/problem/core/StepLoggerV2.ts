@@ -205,8 +205,10 @@ export class StepLoggerV2 {
    * @param node - The head node of the linked list.
    * @param highlight - Optional array of node highlights.
    */
-  public list(name: string, node?: ListNode, highlight?: NodeHighlight[]) {
-    const variable = asList(name, node, highlight);
+  public list(name: string, node?: ListNode | null, highlight?: NodeHighlight[]) {
+    // Filter out highlights where the node is null or undefined
+    const filteredHighlight = highlight?.filter(h => h.node != null);
+    const variable = asList(name, node, filteredHighlight);
     this.upsert(variable);
   }
 
@@ -269,7 +271,7 @@ export class StepLoggerV2 {
       throw new Error("no options for this group: " + name);
     }
 
-    const variable = asValueGroup(name, values, o);
+    const variable = asValueGroup(name, values, o as any);
     this.upsert(variable);
   }
 

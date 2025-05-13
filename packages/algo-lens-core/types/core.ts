@@ -199,7 +199,7 @@ export type ThemeColor =
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node: BinaryTreeNode | ListNode;
+  node?: BinaryTreeNode | ListNode |null;
   color: HighlightColor;
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
