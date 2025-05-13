@@ -115,17 +115,24 @@ function ProblemVisualizer() {
               {/* Moved original content here */}
               <div className="flex flex-col lg:flex-row  lg:gap-20">
                 <div className="flex-1 p-2  lg:w-1/2">
+                  {" "}
+                  <Slider
+                    min={1}
+                    max={maxStep}
+                    value={step}
+                    onChange={handleSliderChange}
+                  />{" "}
+                  {state.description && (
+                    <div className="mb-4 mt-4 p-4 border border-dashed border-gray-400 rounded-lg bg-gray-50 w-full text-center">
+                      <p className="text-lg font-semibold text-gray-700">
+                        {state.description}
+                      </p>
+                    </div>
+                  )}
                   <CodePreview code={code} highlightLineIndex={line} />
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-                  <div className="flex items-center gap-6">
-                    <Slider
-                      min={1}
-                      max={maxStep}
-                      value={step}
-                      onChange={handleSliderChange}
-                    />
-                  </div>
+                  <div className="flex items-center gap-6"></div>
                   <div>
                     <DisplayState state={state} problem={problem} />
                   </div>
