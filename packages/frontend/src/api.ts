@@ -11,7 +11,7 @@ export type ProblemInfo = {
   emoji?: string; // Emoji might be optional
 };
 
-// console.log("Backend URL:", BACKEND_URL);
+// 
 const be = ky.create({ prefixUrl: BACKEND_URL });
 
 // Updated to accept an optional tag and return ProblemInfo array

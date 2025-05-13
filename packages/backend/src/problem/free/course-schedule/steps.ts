@@ -33,7 +33,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   // Initialize the graphMap and in-degree array
   for (const [course, prereq] of prerequisites) {
     // Log before updating graphMap/inDegree (Breakpoint 2)
-    //// console.log("Highlighting prerequisitesMap:", { prerequisitesMap, highlightValue: course });
+    //// 
     l.hashmap("prerequisitesMap", prerequisitesMap, { value: course, color: "primary" });
     l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
     l.arrayV2({ inDegree: inDegree }, {});

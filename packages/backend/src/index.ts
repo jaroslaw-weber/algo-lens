@@ -138,7 +138,7 @@ class ProblemStateCache {
     if (!testcase) {
       throw new Error("no default testcase found for problem: " + problem.id!);
     }
-    // // console.log("testcase: ", testcase);
+    // // 
     const states = problem.func(testcase.input);
     for (let i = 0; i < states.length; i++) {
       const state = states[i];
