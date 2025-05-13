@@ -14,7 +14,8 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
   l.simple({ target });
   l.arrayV2({ coins: coins }, {});
   l.arrayV2({ dp: dp }, { 0: 0 });
-  l.breakpoint(1, "Initialize dp table with base case dp[0] = 0");
+  l.breakpoint(1);
+  l.comment = "Initialize dp table with base case dp[0] = 0";
 
   // Outer loop: Iterate through coins
   // Note: The original code uses for...of, but the original ProblemState generation used indices.
@@ -38,7 +39,8 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
       l.simple({ left });
       l.simple({ include });
       l.simple({ exclude });
-      l.breakpoint(2, `Evaluating amount ${amount} with coin ${coin}`);
+      l.breakpoint(2);
+      l.comment = `Evaluating amount ${amount} with coin ${coin}`;
 
       if (include < exclude) {
         dp[amount] = include;
@@ -53,7 +55,8 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
         l.simple({ left });
         l.simple({ include });
         l.simple({ exclude: dp[amount] }); // exclude is now equal to the new dp[amount]
-        l.breakpoint(3, `Updated dp[${amount}] using coin ${coin}`);
+        l.breakpoint(3);
+        l.comment = `Updated dp[${amount}] using coin ${coin}`;
       }
     }
   }
