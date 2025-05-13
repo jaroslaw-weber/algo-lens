@@ -23,7 +23,7 @@ function something(): ProblemState[] {
       problemName: "something",
     });
     //console.log("generated:", generated);
-    const expected = `function something(): number {
+    const expected = `export function something(): ProblemState[] {
   // #1
   const a = 1;
   const b = 2;
@@ -33,6 +33,7 @@ function something(): ProblemState[] {
   return result;
 }
 `;
+console.log("content", generated.content)
     expect(generated.content).toEqual(expected);
   });
 });

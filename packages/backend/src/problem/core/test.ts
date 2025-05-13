@@ -4,6 +4,7 @@ import { cloneDeep, last, isEqual } from "lodash";
 import { describe, it, expect } from "bun:test";
 import * as fs from "fs";
 import * as path from "path";
+import { loadProblemWithId } from "./loadProblemWithId";
 
 export async function runTests(problem: Problem<any, ProblemState>) {
   const { testcases, metadata } = problem;
@@ -51,6 +52,11 @@ export async function runTests(problem: Problem<any, ProblemState>) {
         console.error(`Test case #${i} failed.`);
       }
       expect(value).toEqual(expected)
+      const loaded = await loadProblemWithId(problem.id)
+      const code = loaded?.code;
+      expect(code).toBeTruthy()
+      
+      expect(!code?.includes("FORMATTING ERROR"))
       /**
     console.log(
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(

@@ -19,20 +19,25 @@ export async function generateCodeFromSteps(
   result = replaceGetStepsReturn(result);
 
   result = removeJSDocComments(result);
-  result = removeComments(result);
   result = replaceBreakpointWithNumber(result);
   result = removeImports(result);
   result = removeExtraEmptyLines(result);
   result = removeStepLoggerLog(result);
   const content = result;
-  //console.log("result", result);
-  const formattedContent = await prettier.format(content, {
-    parser: "typescript",
-  });
-  //console.log("code: ", formattedContent)
-  return { content: formattedContent };
+  //console.log("Content before Prettier:", content);
+  try {
+    const formattedContent = await prettier.format(content, {
+      parser: "typescript",
+    });
+    //console.log("code: ", formattedContent)
+    return { content: formattedContent };
+  } catch (e) {
+    return {
+      content: `FORMATTING ERROR:
+${content}`,
+    };
+  }
 }
-
 
 function removeImports(result: string) {
   result = result.replace(/^import[\s\S]*?;?\n/gm, "");
@@ -54,14 +59,13 @@ function removeExtraEmptyLines(result: string) {
   return result;
 }
 
-
-
 function replaceBreakpointWithNumber(result: string) {
-
-  result = result.replace(/^.*l\.breakpoint\((\d+)\)[^;]*;\s*$\n/gm, "// #$1\n");
+  result = result.replace(
+    /^.*l\.breakpoint\((\d+)\)[^;]*;\s*$\n/gm,
+    "// #$1\n"
+  );
   return result;
 }
-
 
 function removeStepLoggerLog(result: string) {
   // Remove l.comment and other l. calls, handling multi-line comments
@@ -70,8 +74,6 @@ function removeStepLoggerLog(result: string) {
   result = result.replace(/^\s*l\.(?!comment\s*=)[\s\S]*?;\s*$\n/gm, "");
   return result;
 }
-
-
 
 /**
  * Removes lines containing StepLoggerV2, // HIDE, Pointer2D, or starting with //.
@@ -99,7 +101,8 @@ function removeStepLoggerLog(result: string) {
  * // `
  */
 function removeUnwantedLines(result: string): string {
-  return result.replace(/^.*(StepLoggerV2|\/\/ HIDE|Pointer2D).*$|^\s*\/\/.*$/gm, "");
+  // Removes lines containing StepLoggerV2, // HIDE, or Pointer2D.
+  return result.replace(/^.*(StepLoggerV2|\/\/ HIDE|Pointer2D).*$/gm, "");
 }
 
 /**
@@ -148,12 +151,18 @@ function removeUnwantedLines(result: string): string {
  * // }
  * // `
  */
-function replaceProblemStateSignature(result: string, targetFunctionSignature: string): string {
+function replaceProblemStateSignature(
+  result: string,
+  targetFunctionSignature: string
+): string {
   // Remove the line containing ": ProblemState[] {"
   result = result.replace(/^.*:\s*ProblemState\[\]\s*\{\s*$/gm, ""); // Corrected regex
 
   // Replace the function declaration (potentially multi-line) with the target signature and add the opening brace
-  result = result.replace(/^export function generateSteps\([\s\S]*?\)\s*/gm, "function " + targetFunctionSignature + " {"); // Added opening brace
+  result = result.replace(
+    /^export function generateSteps\([\s\S]*?\)\s*/gm,
+    "function " + targetFunctionSignature + " {"
+  ); // Added opening brace
 
   return result;
 }

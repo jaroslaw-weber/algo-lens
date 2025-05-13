@@ -3,7 +3,9 @@ import * as path from "path";
 import { Problem } from "algo-lens-core";
 import { generateCodeFromSteps } from "./codeGenerator";
 
-export async function loadProblemWithId(id: string): Promise<Problem<any, any> | null> {
+export async function loadProblemWithId(
+  id: string
+): Promise<Problem<any, any> | null> {
   // Assuming the problem ID corresponds to the directory name
   const problemDir = path.join(__dirname, "../free", id);
   const problemFilePath = path.join(problemDir, "problem.ts");
@@ -21,10 +23,9 @@ export async function loadProblemWithId(id: string): Promise<Problem<any, any> |
       return null;
     }
 
-	problem.code = await getProblemCode(problem, problemDir)
+    problem.code = await getProblemCode(problem, problemDir);
 
     return problem;
-
   } catch (error) {
     console.error(`Error loading problem with ID ${id}:`, error);
     return null;
@@ -51,7 +52,9 @@ export async function getProblemCode(
         //console.log("content", content);
         return content;
       } catch (e: any) {
-        return `// Error generating code: ${e.message}`;
+        console.error(e.message);
+        return `FORMATTING ERROR: 
+generated`
       }
     } else {
       throw new Error("no steps.ts at path: " + stepsPath);
