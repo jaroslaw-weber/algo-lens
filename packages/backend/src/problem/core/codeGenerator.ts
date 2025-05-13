@@ -64,7 +64,10 @@ function replaceBreakpointWithNumber(result: string) {
 
 
 function removeStepLoggerLog(result: string) {
-  result = result.replace(/^\s*l\..*;\s*$\n/gm, "");
+  // Remove l.comment and other l. calls, handling multi-line comments
+  result = result.replace(/^\s*l\.comment\s*=\s*[\s\S]*?;\s*$\n/gm, "");
+  // Remove other single-line l. calls
+  result = result.replace(/^\s*l\.(?!comment\s*=)[\s\S]*?;\s*$\n/gm, "");
   return result;
 }
 

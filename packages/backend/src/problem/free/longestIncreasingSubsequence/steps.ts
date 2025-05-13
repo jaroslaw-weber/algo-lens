@@ -1,7 +1,7 @@
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-import { LISInput } from "./types"; // Import LISInput - Keep this as requested
 
-export function generateSteps(nums: number[]) {
+export function generateSteps(nums: number[]):ProblemState[] {
   // Return type inferred
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
   const n = nums.length;
@@ -60,5 +60,3 @@ export function generateSteps(nums: number[]) {
 
   return l.getSteps(); // Return the collected steps
 }
-
-// Removed LISInput interface, code, title, getInput, Problem export comment seems outdated, LISInput is imported.
