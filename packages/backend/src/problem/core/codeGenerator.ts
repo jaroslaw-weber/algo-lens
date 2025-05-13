@@ -64,7 +64,7 @@ function replaceBreakpointWithNumber(result: string) {
 
 
 function removeStepLoggerLog(result: string) {
-  result = result.replace(/l\.\s*[\s\S]*?;\s*/g, ""); 
+  result = result.replace(/^\s*l\..*;\s*$\n/gm, "");
   return result;
 }
 
@@ -100,13 +100,39 @@ function removeUnwantedLines(result: string): string {
 }
 
 /**
- * Replaces lines containing ": ProblemState[] {" with the target function signature.
+ * Replaces the function signature and handles the ProblemState[] return type.
  * @param result The input string content.
  * @param targetFunctionSignature The function signature to insert.
  * @returns The content with the signature replaced.
  * @example
  * const input = `
- * function solve(): ProblemState[] {
+ * export function generateSteps(
+ *   intervals: Interval[],
+ *   newInterval: Interval
+ * ): ProblemState[] {
+ *   // Some code
+ * }
+ * `;
+ * const targetSignature = "mySolution(arr: number[]): number[]";
+ * const output = replaceProblemStateSignature(input, targetSignature);
+ * // Expected output:
+ * // `
+ * // function mySolution(arr: number[]): number[] {
+ * //   // Some code
+ * // }
+ * // `
+ */
+/**
+ * Replaces the function signature and handles the ProblemState[] return type.
+ * @param result The input string content.
+ * @param targetFunctionSignature The function signature to insert.
+ * @returns The content with the signature replaced.
+ * @example
+ * const input = `
+ * export function generateSteps(
+ *   intervals: Interval[],
+ *   newInterval: Interval
+ * ): ProblemState[] {
  *   // Some code
  * }
  * `;
@@ -120,7 +146,13 @@ function removeUnwantedLines(result: string): string {
  * // `
  */
 function replaceProblemStateSignature(result: string, targetFunctionSignature: string): string {
-  return result.replace(/^.*: ProblemState\[\] \{\s*$/gm, "function " + targetFunctionSignature + " {");
+  // Remove the line containing ": ProblemState[] {"
+  result = result.replace(/^.*:\s*ProblemState\[\]\s*\{\s*$/gm, ""); // Corrected regex
+
+  // Replace the function declaration (potentially multi-line) with the target signature and add the opening brace
+  result = result.replace(/^export function generateSteps\([\s\S]*?\)\s*/gm, "function " + targetFunctionSignature + " {"); // Added opening brace
+
+  return result;
 }
 
 /**
