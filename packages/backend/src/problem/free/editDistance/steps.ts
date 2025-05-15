@@ -1,4 +1,3 @@
-import { EditDistanceInput } from "./types"; // Keep this if needed, or remove if EditDistanceInput is defined elsewhere or not used
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 
 export function generateSteps(s1: string, s2: string) {
@@ -21,7 +20,7 @@ export function generateSteps(s1: string, s2: string) {
   for (let i = 0; i <= m; i++) {
     dp[i][0] = i;
     l.grid("dp", dp, ...[{ r: i, c: 0 }]);
-    l.comment = `Initializing first column of DP table. The value ${i} represents the number of deletions needed to transform the first ${i} characters of s1 into an empty string.`;
+    l.comment = `Initializing the first column of the DP table. The value represents the number of deletions needed to transform a prefix of s1 into an empty string.`;
     l.breakpoint(1);
   }
 
@@ -29,19 +28,21 @@ export function generateSteps(s1: string, s2: string) {
   for (let j = 0; j <= n; j++) {
     dp[0][j] = j;
     l.grid("dp", dp, ...[{ r: 0, c: j }]);
-    l.comment = `Initializing first row of DP table. The value ${j} represents the number of insertions needed to transform an empty string into the first ${j} characters of s2.`;
+    l.comment = `Initializing the first row of the DP table. The value represents the number of insertions needed to transform an empty string into a prefix of s2.`;
     l.breakpoint(2);
   }
   l.groupOptions.set("cost", { min: 0, max: m+n });
 
+  l.comment = `DP table initialized. Starting to compute the minimum edit distance using dynamic programming.`;
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
       l.arrayV2({ s1: s1.split("") }, { "i - 1": i - 1 }); // Highlight characters being compared
       l.arrayV2({ s2: s2.split("") }, { "j - 1": j - 1 });
 
-      let cost = 0; // Renamed 'op' to 'cost' for clarity? Or keep 'op'? Let's keep 'op'.
-      let op = 0; // Operation cost - keeping original name 'op'
+      let op = 0; // Operation cost
+      l.breakpoint(3); // Change breakpoint to 3
+    
 
       if (s1[i - 1] === s2[j - 1]) {
         // Characters match
@@ -51,7 +52,7 @@ export function generateSteps(s1: string, s2: string) {
         l.simple({ op });
         l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' match. The cost is inherited from the diagonal cell, which is ${op}.`;
-        l.breakpoint(3); // Breakpoint after calculation
+        l.breakpoint(4); // Keep breakpoint as 4
       } else {
         // Characters don't match - find min cost
         const insertionCost = dp[i][j - 1];
@@ -60,6 +61,8 @@ export function generateSteps(s1: string, s2: string) {
         op = 1 + Math.min(insertionCost, deletionCost, substitutionCost);
         dp[i][j] = op;
         // Log state: mismatch case
+        l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. Considering insertion cost (${insertionCost}), deletion cost (${deletionCost}), and substitution cost (${substitutionCost}).`;
+        l.breakpoint(5); // Change breakpoint to 5
         // Optional: Log intermediate costs if helpful for visualization
         // l.simple("insertionCost", insertionCost, { group: "loopVariables" });
         // l.simple("deletionCost", deletionCost, { group: "loopVariables" });
@@ -68,7 +71,7 @@ export function generateSteps(s1: string, s2: string) {
         l.simple({ op });
         l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. The cost is 1 plus the minimum of the costs for insertion (${insertionCost}), deletion (${deletionCost}), or substitution (${substitutionCost}). The calculated cost is ${op}.`;
-        l.breakpoint(3); // Breakpoint after calculation
+        l.breakpoint(6); // Change breakpoint to 6
       }
       // Reset op? Maybe not needed if logged correctly above.
       // l.simple("op", undefined, { group: "loopVariables" });
@@ -80,9 +83,7 @@ export function generateSteps(s1: string, s2: string) {
   l.simple({ result });
   l.grid("dp", dp, ...[{ r: m, c: n }]); // Highlight final result cell
   l.comment = `Final result: The minimum edit distance is ${result}.`;
-  l.breakpoint(4);
+  l.breakpoint(7); // Change breakpoint to 7
 
   return l.getSteps(); // Return the collected steps
 }
-// Ensure EditDistanceInput type is correctly handled or removed if not used directly in this file.
-// If EditDistanceInput was just for type hinting the input object, it might not be needed anymore.

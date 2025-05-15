@@ -12,6 +12,8 @@ Based on the style in `container-with-most-water/steps.ts`, here are the key pri
 4.  **Be Concise:** Keep comments brief and to the point. Avoid unnecessary jargon or overly technical language.
 5.  **Use Clear Language:** Write in simple, straightforward English that is easy for someone unfamiliar with the specific code to understand.
 6.  **Reference Variables by Name:** Use the variable names (e.g., `left`, `right`, `maxArea`, `currentInterval`, `complement`) when referring to values or concepts.
+7. **Add breakpoints in important places** Use l.breakpoint to explain to the user what's going on and allow them to insepect and learn more about the code. Breakpoints needs to be unique and increasing as the logging goes. Only natural numbers, no fractions.
+8. **Assume the people who read comments are beginners** This tool is made for people learning about algorithms. Keep that in mind
 
 **Example (from `container-with-most-water/steps.ts`):**
 
