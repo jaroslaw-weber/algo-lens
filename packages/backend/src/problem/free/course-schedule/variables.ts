@@ -12,7 +12,7 @@ export const variables: VariableMetadata[] = [
 {
     name: "prerequisitesMap",
     label: "Prerequisites Map",
-    description: "Map of prerequisites.",
+    description: "A list of prerequisite pairs. Each pair [a, b] indicates that course 'a' must be taken before course 'b'.",
     emoji: "🗺️",
   },
   {
@@ -30,7 +30,7 @@ export const variables: VariableMetadata[] = [
   {
     name: "queue",
     label: "Queue",
-    description: "Queue for topological sort.",
+    description: "A queue containing courses that have an in-degree of 0, meaning they have no prerequisites and can be taken.",
     emoji: "➡️",
   },
   {
