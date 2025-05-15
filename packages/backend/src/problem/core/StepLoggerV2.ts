@@ -191,10 +191,10 @@ export class StepLoggerV2 {
     const v: ArrayVariable = {
       label: arrayKey,
       type: "array",
-      value: values,
+      value: values.map(item => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
       pointers: fixedPointers,
     };
-    //// 
+    ////
     this.upsert(v);
   }
 

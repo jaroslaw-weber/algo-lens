@@ -118,7 +118,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
 };
 
 function formatValue(value: any): any {
-  if (value === Infinity) {
+  if (value === "INFINITY") {
     return "∞";
   }
   if (value === true) {
