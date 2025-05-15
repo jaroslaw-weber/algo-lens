@@ -242,12 +242,14 @@ export class StepLoggerV2 {
     values: any[][],
     pointer1?: Pointer2D,
     pointer2?: Pointer2D,
-    pointer3?: Pointer2D
+    pointer3?: Pointer2D,
+    
+    pointer4?: Pointer2D
   ) {
     const variable = as2dArray(
       name,
       values,
-      [pointer1, pointer2, pointer3].filter((x) => !!x)
+      [pointer1, pointer2, pointer3, pointer4].filter((x) => !!x)
     );
     this.upsert(variable);
   }

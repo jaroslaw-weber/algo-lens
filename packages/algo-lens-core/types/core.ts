@@ -103,6 +103,8 @@ export interface Pointer2D {
   c: number;
 
   color?: 1 | 2 | 3;
+
+  label?:string;
 }
 
 /** Extends the Variable interface specifically for arrays. */

@@ -31,7 +31,7 @@ export function generateSteps(s1: string, s2: string) {
     l.comment = `Initializing the first row of the DP table. The value represents the number of insertions needed to transform an empty string into a prefix of s2.`;
     l.breakpoint(2);
   }
-  l.groupOptions.set("cost", { min: 0, max: m+n });
+  l.groupOptions.set("cost", { min: 0, max: m + n });
 
   l.comment = `DP table initialized. Starting to compute the minimum edit distance using dynamic programming.`;
   // Compute the DP values
@@ -42,7 +42,6 @@ export function generateSteps(s1: string, s2: string) {
 
       let op = 0; // Operation cost
       l.breakpoint(3); // Change breakpoint to 3
-    
 
       if (s1[i - 1] === s2[j - 1]) {
         // Characters match
@@ -50,7 +49,14 @@ export function generateSteps(s1: string, s2: string) {
         dp[i][j] = op;
         // Log state: match case
         l.simple({ op });
-        l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
+        l.grid(
+          "dp",
+          dp,
+          ...[
+            { r: i, c: j, label: "current" },
+            { r: i - 1, c: j - 1, label: "op" },
+          ]
+        ); // Highlight updated cell
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' match. The cost is inherited from the diagonal cell, which is ${op}.`;
         l.breakpoint(4); // Keep breakpoint as 4
       } else {
@@ -63,11 +69,21 @@ export function generateSteps(s1: string, s2: string) {
         // Log state: mismatch case
         l.group("cost", { insertionCost, deletionCost, substitutionCost });
         l.simple({ op });
-        l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
+        // HIDE_START
+        l.grid(
+          "dp",
+          dp,
+          ...[
+            { r: i, c: j, label: "current" },
+            { r: i, c: j - 1, label: "insert" },
+            { r: i - 1, c: j, label: "deletion" },
+            { r: i - 1, c: j - 1, label: "substitution" },
+          ]
+        ); 
+        // HIDE_END
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. The cost is 1 plus the minimum of the costs for insertion (${insertionCost}), deletion (${deletionCost}), or substitution (${substitutionCost}). The calculated cost is ${op}.`;
         l.breakpoint(5); // Change breakpoint to 6
       }
-
     }
   }
 
