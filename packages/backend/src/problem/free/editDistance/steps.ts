@@ -61,20 +61,13 @@ export function generateSteps(s1: string, s2: string) {
         op = 1 + Math.min(insertionCost, deletionCost, substitutionCost);
         dp[i][j] = op;
         // Log state: mismatch case
-        l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. Considering insertion cost (${insertionCost}), deletion cost (${deletionCost}), and substitution cost (${substitutionCost}).`;
-        l.breakpoint(5); // Change breakpoint to 5
-        // Optional: Log intermediate costs if helpful for visualization
-        // l.simple("insertionCost", insertionCost, { group: "loopVariables" });
-        // l.simple("deletionCost", deletionCost, { group: "loopVariables" });
-        // l.simple("substitutionCost", substitutionCost, { group: "loopVariables" });
         l.group("cost", { insertionCost, deletionCost, substitutionCost });
         l.simple({ op });
         l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. The cost is 1 plus the minimum of the costs for insertion (${insertionCost}), deletion (${deletionCost}), or substitution (${substitutionCost}). The calculated cost is ${op}.`;
-        l.breakpoint(6); // Change breakpoint to 6
+        l.breakpoint(5); // Change breakpoint to 6
       }
-      // Reset op? Maybe not needed if logged correctly above.
-      // l.simple("op", undefined, { group: "loopVariables" });
+
     }
   }
 
@@ -83,7 +76,7 @@ export function generateSteps(s1: string, s2: string) {
   l.simple({ result });
   l.grid("dp", dp, ...[{ r: m, c: n }]); // Highlight final result cell
   l.comment = `Final result: The minimum edit distance is ${result}.`;
-  l.breakpoint(7); // Change breakpoint to 7
+  l.breakpoint(6); // Change breakpoint to 7
 
   return l.getSteps(); // Return the collected steps
 }
