@@ -116,7 +116,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
     console.log("x", x, meta)
     progressBars.push(
       <div className="flex flex-col gap-1 w-full">
-        <p className="text-xs text-gray-600">{x.label}</p>
+        <p className="text-xs text-gray-600">{meta?.emoji} {x.label}</p>
         <p className="text-xs text-gray-400">{desc}</p>
         <div className="flex items-center gap-4">
           {/* Remove the min value display */}
