@@ -142,6 +142,7 @@ export interface ValueGroupVariable extends Variable {
   data: {
     label: string;
     value: number;
+    description?:string;
   }[];
   options: {
     min: number;

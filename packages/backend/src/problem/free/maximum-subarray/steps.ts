@@ -27,13 +27,21 @@ export function generateSteps(nums: number[]): ProblemState[] {
     // Log state at the beginning of the loop
     l.arrayV2({ nums: nums }, { i: i }); // Highlight current number
 
-    l.group("comparision", { maxEndingHere, maxSoFar, num });
-    l.breakpoint(2);
-    l.comment = `Look at the current number, which is ${num}.`;
-
     // Kadane's logic: Decide whether to extend the current subarray or start a new one.
     const extendSum = maxEndingHere + num;
     const startNew = num;
+    // HIDE_START
+    l.group("comparision", {
+      startNew,
+      extendSum,
+      maxEndingHere,
+      maxSoFar,
+      num,
+    });
+    // HIDE_END
+    l.breakpoint(2);
+    l.comment = `Look at the current number, which is ${num}.`;
+
 
     if (startNew > extendSum) {
       // Log state before updating maxEndingHere

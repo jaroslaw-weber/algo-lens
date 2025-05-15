@@ -9,7 +9,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import type { Problem, ValueGroupVariable } from "algo-lens-core";
+import type {
+  Problem,
+  ValueGroupVariable,
+  VariableMetadata,
+} from "algo-lens-core";
 import _ from "lodash";
 
 // Register the necessary Chart.js components
@@ -24,6 +28,7 @@ ChartJS.register(
 
 interface DisplayBarChartProps {
   data: ValueGroupVariable;
+  variables: VariableMetadata[];
 }
 
 function getAspectRatio(count: number): number {
@@ -38,10 +43,12 @@ function getAspectRatio(count: number): number {
 
 const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
   data,
+  variables,
 }: {
   data: any;
+  variables: VariableMetadata[];
 }) => {
- // // 
+  // //
 
   const count = data.data.length;
   const chartData = {
@@ -104,9 +111,13 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
   let i = 0;
   for (const x of data.data) {
     const bgColor = color[i % color.length];
+    const meta = variables.find((v => v.name == x.label));
+    const desc = meta?.description
+    console.log("x", x, meta)
     progressBars.push(
       <div className="flex flex-col gap-1 w-full">
-        <p className="text-xs text-gray-400">{x.label}</p>
+        <p className="text-xs text-gray-600">{x.label}</p>
+        <p className="text-xs text-gray-400">{desc}</p>
         <div className="flex items-center gap-4">
           {/* Remove the min value display */}
           <div

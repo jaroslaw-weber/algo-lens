@@ -17,6 +17,7 @@ import {
   TreeVariable,
   ListNode,
   Problem,
+  VariableMetadata,
 } from "algo-lens-core";
 import { getAllProblems } from "./list";
 
@@ -54,7 +55,7 @@ export function asSimpleValue(o: any): SimpleVariable[] {
 export function asValueGroup(
   label: string,
   o: any,
-  options: { min: number; max: number; reverse?: any }
+  options: { min: number; max: number; reverse?: any },
 ): ValueGroupVariable {
   const result: ValueGroupVariable = {
     data: [],

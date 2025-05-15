@@ -129,7 +129,7 @@ function DisplayState({
                   key={groupData.label}
                   variable={variable}
                 >
-                  <DisplayValueGroup data={groupData} />
+                  <DisplayValueGroup data={groupData} variables={metadata!.variables!} />
                 </Wrapper>
               );
             case "binary":
