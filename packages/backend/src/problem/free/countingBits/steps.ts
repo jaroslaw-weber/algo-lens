@@ -20,7 +20,7 @@ export function generateSteps(n: number): ProblemState[] {
     l.binary({ num }, { highlightLast: true });
     l.group("count", { count }, { min: 0, max: n }); // Max count can be n's bit length technically, but n is safe upper bound vis-wise
 
-    l.comment = `Start processing number ${i}. Initialize count to 0.`;
+    l.comment = `Start processing number ${num}. Initialize count to 0.`;
     l.breakpoint(2);
     let inner_num = i; // Use a separate variable for the inner loop calculation
     //#2 Calculate the number of 1 bits in the current integer
@@ -70,7 +70,7 @@ export function generateSteps(n: number): ProblemState[] {
     l.binary({ num }, { highlightLast: false }); // Show original 'i' value
     l.group("count", { count }, { min: 0, max: n });
     //#7 Store the count in the result array
-    l.comment = `Finished counting bits for ${i}. Storing count ${count} in result[${i}].`;
+    l.comment = `Finished counting bits for ${num}. Storing count ${count}.`;
     l.breakpoint(8);
 
     result[i] = count;
@@ -79,7 +79,7 @@ export function generateSteps(n: number): ProblemState[] {
     l.arrayV2({ result: result }, { i: i }); // Highlight the newly added result
     l.binary({ num }, { highlightLast: false });
     l.group("count", { count }, { min: 0, max: n });
-    l.comment = `Stored count ${count} in result[${i}].`;
+    l.comment = `Stored count ${count} for number ${num}.`;
   }
   l.arrayV2({ result }); // Show final result array
   //#8 Log final state

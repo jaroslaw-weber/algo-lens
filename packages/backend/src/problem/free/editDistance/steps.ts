@@ -21,7 +21,7 @@ export function generateSteps(s1: string, s2: string) {
   for (let i = 0; i <= m; i++) {
     dp[i][0] = i;
     l.grid("dp", dp, ...[{ r: i, c: 0 }]);
-    l.comment = `Initializing first column of DP table (deletions to empty string). dp[${i}][0] = ${i}.`;
+    l.comment = `Initializing first column of DP table. The value ${i} represents the number of deletions needed to transform the first ${i} characters of s1 into an empty string.`;
     l.breakpoint(1);
   }
 
@@ -29,7 +29,7 @@ export function generateSteps(s1: string, s2: string) {
   for (let j = 0; j <= n; j++) {
     dp[0][j] = j;
     l.grid("dp", dp, ...[{ r: 0, c: j }]);
-    l.comment = `Initializing first row of DP table (insertions from empty string). dp[0][${j}] = ${j}.`;
+    l.comment = `Initializing first row of DP table. The value ${j} represents the number of insertions needed to transform an empty string into the first ${j} characters of s2.`;
     l.breakpoint(2);
   }
   l.groupOptions.set("cost", { min: 0, max: m+n });
@@ -50,9 +50,7 @@ export function generateSteps(s1: string, s2: string) {
         // Log state: match case
         l.simple({ op });
         l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
-        l.comment = `Calculated DP value for dp[${i}][${j}]. s1[${i - 1}] ('${
-          s1[i - 1]
-        }') == s2[${j - 1}] ('${s2[j - 1]}'). No cost, op = ${op}.`;
+        l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' match. The cost is inherited from the diagonal cell, which is ${op}.`;
         l.breakpoint(3); // Breakpoint after calculation
       } else {
         // Characters don't match - find min cost
@@ -69,11 +67,7 @@ export function generateSteps(s1: string, s2: string) {
         l.group("cost", { insertionCost, deletionCost, substitutionCost });
         l.simple({ op });
         l.grid("dp", dp, ...[{ r: i, c: j }]); // Highlight updated cell
-        l.comment = `Calculated DP value for dp[${i}][${j}]. s1[${i - 1}] ('${
-          s1[i - 1]
-        }') != s2[${j - 1}] ('${
-          s2[j - 1]
-        }'). Cost = 1 + min(${insertionCost}, ${deletionCost}, ${substitutionCost}) = ${op}.`;
+        l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. The cost is 1 plus the minimum of the costs for insertion (${insertionCost}), deletion (${deletionCost}), or substitution (${substitutionCost}). The calculated cost is ${op}.`;
         l.breakpoint(3); // Breakpoint after calculation
       }
       // Reset op? Maybe not needed if logged correctly above.
@@ -85,7 +79,7 @@ export function generateSteps(s1: string, s2: string) {
   const result = dp[m][n];
   l.simple({ result });
   l.grid("dp", dp, ...[{ r: m, c: n }]); // Highlight final result cell
-  l.comment = `Final result: dp[${m}][${n}] = ${result}.`;
+  l.comment = `Final result: The minimum edit distance is ${result}.`;
   l.breakpoint(4);
 
   return l.getSteps(); // Return the collected steps

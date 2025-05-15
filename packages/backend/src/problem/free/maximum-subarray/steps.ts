@@ -28,7 +28,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.simple({ maxSoFar });
     l.simple({ num });
     l.breakpoint(2);
-    l.comment = `Look at the number at index ${i}, which is ${num}.`;
+    l.comment = `Look at the current number, which is ${num}.`;
 
     // Kadane's logic: Decide whether to extend or start new subarray
     // (Corresponds to original logic block checking nums[i] > maxCurrent + nums[i])

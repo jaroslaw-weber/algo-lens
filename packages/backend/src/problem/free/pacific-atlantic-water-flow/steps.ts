@@ -133,7 +133,7 @@ export function generateSteps(heights: number[][]) {
     // Reset neighbor indices?
     // Corrected: Use object format for l.simple and remove invalid group arg
 
-    l.comment = `Process the cell (${r}, ${c}) from the front of the Pacific queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Pacific BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Pacific queue and mark it as reachable by the Pacific. Update the pacificReachable grid and the pacificQueue.`;
+    l.comment = `Process the current cell from the front of the Pacific queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Pacific BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Pacific queue and mark it as reachable by the Pacific. Update the pacificReachable grid and the pacificQueue.`;
     l.breakpoint(4); // Breakpoint inside Pacific BFS loop
 
     pacificStepCounter++;
@@ -219,7 +219,7 @@ export function generateSteps(heights: number[][]) {
     // Reset neighbor indices?
     // Corrected: Use object format for l.simple and remove invalid group arg
 
-    l.comment = `Process the cell (${r}, ${c}) from the front of the Atlantic queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Atlantic BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Atlantic queue and mark it as reachable by the Atlantic. Update the atlanticReachable grid and the atlanticQueue.`;
+    l.comment = `Process the current cell from the front of the Atlantic queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Atlantic BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Atlantic queue and mark it as reachable by the Atlantic. Update the atlanticReachable grid and the atlanticQueue.`;
     l.breakpoint(6); // Breakpoint inside Atlantic BFS loop
 
     atlanticStepCounter++;
