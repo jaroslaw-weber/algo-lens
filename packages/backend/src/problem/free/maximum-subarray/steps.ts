@@ -16,7 +16,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.simple({ maxEndingHere });
   l.simple({ maxSoFar });
   l.breakpoint(1);
-  l.comment = `Initialize \`maxEndingHere\` and \`maxSoFar\` to the first element (\`nums[0]\`) because the maximum subarray sum must include at least one element, and the first element is the starting point for considering subarrays.`;
+  l.comment = `Start with maxEndingHere and maxSoFar equal to the first number.`;
 
   // Main loop (Starts from i = 1 in standard Kadane, original started from i = 0 but handled i=0 differently)
   for (let i = 1; i < nums.length; i++) {
@@ -28,7 +28,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.simple({ maxSoFar });
     l.simple({ num });
     l.breakpoint(2);
-    l.comment = `Process the element at index ${i} with value ${num}. This is the current element being considered to extend or start a new maximum subarray.`;
+    l.comment = `Look at the number at index ${i}, which is ${num}.`;
 
     // Kadane's logic: Decide whether to extend or start new subarray
     // (Corresponds to original logic block checking nums[i] > maxCurrent + nums[i])
@@ -46,7 +46,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         comparison: `${startNew} (num) > ${extendSum} (maxEndingHere + num)`,
       });
       l.breakpoint(3);
-      l.comment = `Start a new subarray from the current element (${num}) because its value is greater than the sum of the current element and the maximum sum ending at the previous position (${maxEndingHere} + ${num}). This means extending the previous subarray would result in a smaller sum.`;
+      l.comment = `Starting a new subarray with ${num} is better than extending the previous one.`;
 
       maxEndingHere = startNew;
 
@@ -56,7 +56,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.simple({ maxSoFar });
       l.simple({ num });
       l.breakpoint(4);
-      l.comment = `Updated maxEndingHere to ${maxEndingHere}.`;
+      l.comment = `maxEndingHere is now ${maxEndingHere}.`;
     } else {
       // Log state *before* updating maxEndingHere (Corresponds roughly to original log(5, i))
       l.arrayV2({ nums: nums }, { i: i });
@@ -67,7 +67,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         comparison: `${startNew} (num) <= ${extendSum} (maxEndingHere + num)`,
       });
       l.breakpoint(5);
-      l.comment = `Extend the current subarray by adding the current element (${num}) to the maximum sum ending at the previous position (${maxEndingHere}) because extending the previous subarray results in a sum (${maxEndingHere} + ${num}) that is greater than or equal to starting a new subarray from the current element (${num}).`;
+      l.comment = `Extending the previous subarray with ${num} is better or equal to starting a new one.`;
 
       maxEndingHere = extendSum;
 
@@ -77,7 +77,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.simple({ maxSoFar });
       l.simple({ num });
       l.breakpoint(6);
-      l.comment = `Updated maxEndingHere to ${maxEndingHere}.`;
+      l.comment = `maxEndingHere is now ${maxEndingHere}.`;
     }
 
     // Update maxSoFar (Corresponds to original log(7, i) to log(9, i) block)
@@ -87,7 +87,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.simple({ maxSoFar });
     l.simple({ num });
     l.breakpoint(7);
-    l.comment = `Compare the maximum sum ending at the current position (${maxEndingHere}) with the overall maximum sum found so far (${maxSoFar}) to determine if a new overall maximum has been found.`;
+    l.comment = `Check if the current maximum sum ending here (${maxEndingHere}) is greater than the overall maximum sum found so far (${maxSoFar}).`;
 
     if (maxEndingHere > maxSoFar) {
       // Log state *before* updating maxSoFar (Corresponds roughly to original log(8, i))
@@ -97,7 +97,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.simple({ num });
       l.simple({ comparison: `${maxEndingHere} > ${maxSoFar}` });
       l.breakpoint(8);
-      l.comment = `Update maxSoFar to ${maxSoFar} because the maximum sum ending at the current position (${maxEndingHere}) is greater than the overall maximum sum found so far (${maxSoFar}). This means a new largest subarray sum has been found.`;
+      l.comment = `A new overall maximum sum is found. Update maxSoFar to ${maxEndingHere}.`;
 
       maxSoFar = maxEndingHere;
 
@@ -107,7 +107,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.simple({ maxSoFar }); // Updated
       l.simple({ num });
       l.breakpoint(9);
-      l.comment = `Update maxSoFar to ${maxSoFar} because the maximum sum ending at the current position (${maxEndingHere}) is greater than the previous overall maximum sum (${maxSoFar}).`;
+      l.comment = `maxSoFar is updated to ${maxSoFar}.`;
     } else {
       // Log state if maxSoFar is not updated
       l.arrayV2({ nums: nums }, { i: i });
@@ -116,7 +116,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.simple({ num });
       l.simple({ comparison: `${maxEndingHere} <= ${maxSoFar}` });
       l.breakpoint(10);
-      l.comment = `maxSoFar (${maxSoFar}) remains the maximum because the maximum sum ending at the current position (${maxEndingHere}) is not greater than the overall maximum sum found so far (${maxSoFar}).`;
+      l.comment = `maxSoFar (${maxSoFar}) is still the largest sum found so far.`;
     }
     // End of loop iteration (Corresponds to original log(10, i))
   }
@@ -127,7 +127,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.simple({ maxSoFar }); // Final result
   l.simple({ result: maxSoFar }); // Add this line to log 'result'
   l.breakpoint(11);
-  l.comment = `The loop has finished processing all elements. The final maximum subarray sum found is ${maxSoFar}.`;
+  l.comment = `All numbers processed. The final maximum subarray sum is ${maxSoFar}.`;
 
   return l.getSteps();
 }

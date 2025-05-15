@@ -21,7 +21,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
   l.arrayV2({ dp });
   l.group("profit", { minPrice });
   l.comment =
-    "Starting the process with initial values. Logging initial prices and setting the first minimum price.";
+    `Start with the first price (${prices[0]}) as the minimum.`;
 
   l.breakpoint(1);
 
@@ -34,19 +34,22 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.comment = `Day ${i}: Calculating potential profit if sold today. Comparing with previous max profit.`;
+    l.comment = `Day ${i}: Calculate potential profit if selling today (${price} - ${minPrice} = ${diff}).`;
 
     l.breakpoint(2);
 
+    l.comment = `Day ${i}: Compare with previous maximum profit: (${diff} > ${prev} ?). If so, remember that value.`;
+
+    l.breakpoint(3);
     dp[i] = Math.max(prev, diff);
 
     l.arrayV2({ prices }, { i });
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.comment = `Day ${i}: Updating the minimum price if today's price is lower.`;
+    l.comment = `Day ${i}: Update minimum price (${minPrice}) if current price (${price}) is lower.`;
 
-    l.breakpoint(3);
+    l.breakpoint(4);
 
     minPrice = Math.min(minPrice, price);
 
@@ -54,9 +57,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.arrayV2({ dp }, { i, "i - 1": i - 1 });
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.comment = `Day ${i}: State after updating minimum price. Preparing for next iteration.`;
+    l.comment = `Day ${i}: Minimum price updated to ${minPrice}. Move to the next day.`;
 
-    l.breakpoint(4);
+    l.breakpoint(5);
     l.hide("smaller");
     l.hide("profit");
   }
@@ -65,9 +68,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
   l.arrayV2({ prices }, { result: prices.length - 1 });
   l.simple({ result });
-  l.comment = "Final result calculated. Logging the maximum profit achievable.";
+  l.comment = `All days processed. The maximum profit is ${result}.`;
 
-  l.breakpoint(5);
+  l.breakpoint(6);
 
   return l.getSteps();
 }
