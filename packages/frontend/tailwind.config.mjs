@@ -38,6 +38,7 @@ export default {
 			pattern: /text-(primary|error|success|neutral)-content/,
 			variants: ['lg', 'hover', 'focus', 'lg:hover'],
 		},
+		'tooltip-left',"tooltip-right", "tooltip-top", "tooltip-bottom"
 	],
 	daisyui: {
 		themes: [

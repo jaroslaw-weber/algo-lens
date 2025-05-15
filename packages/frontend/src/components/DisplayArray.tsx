@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import type { ArrayVariable, Pointer } from "algo-lens-core";
+import type { ArrayVariable, Pointer, Pointer2D } from "algo-lens-core";
 
 const colors = ["primary", "secondary"];
 
@@ -18,40 +18,20 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Memoized helper to get pointer info (style and label) for a cell
   const getCellPointerInfo = useMemo(() => {
     return (rowIndex: number, colIndex: number) => {
-      if (!pointers || pointers.length === 0) {
-        // //
-        return { style: "", pointerLabel: null };
+      console.log("pointers", pointers);
+      console.log("rowindex:", rowIndex, "colIndex", colIndex)
+      if (is2D) {
+        const pointer = pointers?.find(
+          (x) =>
+            (x as Pointer2D).c == colIndex && (x as Pointer2D).r == rowIndex
+        );
+        return pointer;
+      } else {
+        const pointer = pointers?.find((x) => (x as Pointer).value == colIndex);
+        return pointer;
       }
-
-      const rowPointer =
-        pointers.find((p) => p.dimension === "row" && p.value === rowIndex) ??
-        null;
-      const colPointer =
-        pointers.find(
-          (p) => p.dimension === "column" && p.value === colIndex
-        ) ?? null;
-
-      ////
-
-      // Determine if the cell is targeted
-      const isTargeted = is2D
-        ? rowPointer && colPointer // Both pointers must be present in 2D
-        : (rowPointer && rowPointer.dimension === "row") ||
-          (colPointer && colPointer.dimension === "column");
-
-      if (!isTargeted) {
-        return { style: "", pointerLabel: null };
-      }
-
-      const primaryPointer = colPointer ?? rowPointer; // Prioritize column pointer
-      const pointerIndex = pointers.indexOf(primaryPointer);
-      const bgColor = colors[pointerIndex % colors.length];
-      const style = `bg-${bgColor} text-${bgColor}-content`;
-      const pointerLabel = primaryPointer.label;
-
-      return { style, pointerLabel, direction: primaryPointer?.dir };
     };
-  }, [pointers, is2D]);
+  }, [pointers]); // Removed is2D from dependencies as it's no longer directly used in pointer logic
 
   // Calculate number of columns
   const numCols = useMemo(() => {
@@ -68,20 +48,23 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
     <tr key={rowIndex} className="flex text-xs relative">
-      {console.log(`Rendering row ${rowIndex}`)}
       {items.map((item, colIndex) => {
-        const { style, pointerLabel, direction } = getCellPointerInfo(
-          rowIndex,
-          colIndex
-        );
+        const pointer = getCellPointerInfo(rowIndex, colIndex);
+        console.log("pointer", pointer);
+
+        const tooltipData = pointer?.label;
+
+        let style = tooltipData ? "bg-primary" : "";
+
+        const tootlipDirection = pointer?.dir;
+
         const tooltipStyles = [];
 
-        if (direction) {
-          tooltipStyles.push("tooltip-" + direction);
-        }
         tooltipStyles.push("tooltip-open");
+        if (tootlipDirection) {
+          tooltipStyles.push("tooltip-" + tootlipDirection);
+        }
 
-        console.log(`Processing cell [${rowIndex}, ${colIndex}] with pointerLabel: ${pointerLabel}`);
         return (
           <td
             key={colIndex}
@@ -89,11 +72,11 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
           >
             <div
               className={`text-center ${
-                pointerLabel
+                tooltipData
                   ? `tooltip ${tooltipStyles.join(" ")} tooltip-secondary `
-                : ""
+                  : ""
               }`}
-              data-tip={pointerLabel}
+              data-tip={tooltipData}
             >
               {typeof item === "object"
                 ? JSON.stringify(item)
@@ -143,4 +126,3 @@ function formatValue(value: any): any {
 }
 
 export default DisplayArray;
-

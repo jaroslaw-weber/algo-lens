@@ -346,7 +346,7 @@ export function as2dArray(
   const result: ArrayVariable = {
     label,
     type: "array",
-    value: deepClone2DArray(arr),
+    value: arr,
     pointers: pointers,
   };
   return result;

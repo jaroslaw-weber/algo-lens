@@ -53,8 +53,8 @@ export function generateSteps(s1: string, s2: string) {
           "dp",
           dp,
           ...[
-            { r: i, c: j, label: "current", dir: "bottom" },
-            { r: i - 1, c: j - 1, label: "op", dir: "top" },
+            { r: i, c: j, label: "current", dir: "right" },
+            { r: i - 1, c: j - 1, label: "op", dir: "left" },
           ]
         ); // Highlight updated cell
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' match. The cost is inherited from the diagonal cell, which is ${op}.`;
@@ -75,9 +75,9 @@ export function generateSteps(s1: string, s2: string) {
           dp,
           ...[
             { r: i, c: j, label: "current", dir: "right" },
-            { r: i, c: j - 1, label: "insert", dir: "top" },
-            { r: i - 1, c: j, label: "deletion", dir: "left" },
-            { r: i - 1, c: j - 1, label: "substitution", dir: "bottom" },
+            { r: i, c: j - 1, label: "insert", dir: "left" },
+            { r: i - 1, c: j, label: "deletion", dir: "right" },
+            { r: i - 1, c: j - 1, label: "substitution", dir: "left" },
           ]
         ); 
         // HIDE_END
