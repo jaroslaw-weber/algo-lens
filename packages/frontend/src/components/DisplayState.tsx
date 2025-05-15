@@ -84,7 +84,7 @@ function DisplayState({
           );
 
           const meta = variableMeta ?? groupMeta;
-          const description = meta?.description;
+          const description = variableMeta?.description ?? groupMeta?.description;
           const emoji = meta?.emoji;
 
           const className = getWrapperClassName();
@@ -194,7 +194,7 @@ function DisplayState({
                 <Wrapper
                   className={className}
                   label={hashsetData.label}
-                  description={description}
+                  description={description }
                   emoji={emoji}
                   key={hashsetData.label}
                   variable={variable}
