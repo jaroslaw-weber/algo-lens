@@ -19,4 +19,10 @@ export const groups: GroupMetadata[] = [
     description: "Variables related to the iteration.",
     emoji: "🔁",
   },
+  {
+    name: "comparision",
+    label: "Comparison",
+    description: "Kadane's algorithm variables.",
+    emoji: "🔍",
+  }
 ];
