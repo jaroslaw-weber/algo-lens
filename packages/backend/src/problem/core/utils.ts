@@ -347,18 +347,8 @@ export function as2dArray(
     label,
     type: "array",
     value: deepClone2DArray(arr),
-    pointers: [],
+    pointers: pointers,
   };
-  for (const p of pointers) {
-    result.pointers!.push({
-      value: p.r,
-      dimension: "row",
-    });
-    result.pointers!.push({
-      value: p.c,
-      dimension: "column",
-    });
-  }
   return result;
 }
 export function asHashset<T>(

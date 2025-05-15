@@ -92,6 +92,7 @@ export interface Pointer {
   color?: 1 | 2 | 3;
 
   label?: string;
+  dir?: string//"left" | "right" | "up" | "bottom"
 }
 
 /** Represents a 2D pointer for navigating through two-dimensional arrays. */
@@ -105,6 +106,8 @@ export interface Pointer2D {
   color?: 1 | 2 | 3;
 
   label?:string;
+
+  dir?: string//"left" | "right" | "up" | "bottom"
 }
 
 /** Extends the Variable interface specifically for arrays. */
@@ -116,7 +119,7 @@ export interface ArrayVariable extends Variable {
   value: any[];
 
   /** Optional array of pointers for highlighting specific elements. */
-  pointers?: Pointer[];
+  pointers?: (Pointer | Pointer2D)[];
 }
 
 export interface BinaryVariable extends Variable {

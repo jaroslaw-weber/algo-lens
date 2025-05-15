@@ -6,8 +6,8 @@ const colors = ["primary", "secondary"];
 const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const { value: array, label: title, pointers } = data;
 
-  //// 
-  //// 
+  ////
+  ////
 
   // Determine if the array is 2D
   const is2D = useMemo(
@@ -19,7 +19,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   const getCellPointerInfo = useMemo(() => {
     return (rowIndex: number, colIndex: number) => {
       if (!pointers || pointers.length === 0) {
-       // // 
+        // //
         return { style: "", pointerLabel: null };
       }
 
@@ -31,7 +31,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
           (p) => p.dimension === "column" && p.value === colIndex
         ) ?? null;
 
-      //// 
+      ////
 
       // Determine if the cell is targeted
       const isTargeted = is2D
@@ -49,7 +49,7 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
       const style = `bg-${bgColor} text-${bgColor}-content`;
       const pointerLabel = primaryPointer.label;
 
-      return { style, pointerLabel };
+      return { style, pointerLabel, direction: primaryPointer?.dir };
     };
   }, [pointers, is2D]);
 
@@ -68,11 +68,20 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
     <tr key={rowIndex} className="flex text-xs relative">
+      {console.log(`Rendering row ${rowIndex}`)}
       {items.map((item, colIndex) => {
-        const { style, pointerLabel } = getCellPointerInfo(rowIndex, colIndex);
-        const tooltipStyle = !style?.includes("primary")
-          ? "tooltip-top"
-          : "tooltip-bottom";
+        const { style, pointerLabel, direction } = getCellPointerInfo(
+          rowIndex,
+          colIndex
+        );
+        const tooltipStyles = [];
+
+        if (direction) {
+          tooltipStyles.push("tooltip-" + direction);
+        }
+        tooltipStyles.push("tooltip-open");
+
+        console.log(`Processing cell [${rowIndex}, ${colIndex}] with pointerLabel: ${pointerLabel}`);
         return (
           <td
             key={colIndex}
@@ -81,8 +90,8 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
             <div
               className={`text-center ${
                 pointerLabel
-                  ? `tooltip ${tooltipStyle} tooltip-secondary tooltip-open`
-                  : ""
+                  ? `tooltip ${tooltipStyles.join(" ")} tooltip-secondary `
+                : ""
               }`}
               data-tip={pointerLabel}
             >
@@ -102,7 +111,10 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
         <tbody>
           {array.length === 0 ? (
             <tr>
-              <td colSpan={numCols > 0 ? numCols : 1} className="text-center text-gray-500 py-1 text-xs">
+              <td
+                colSpan={numCols > 0 ? numCols : 1}
+                className="text-center text-gray-500 py-1 text-xs"
+              >
                 Empty Array
               </td>
             </tr>
@@ -131,3 +143,4 @@ function formatValue(value: any): any {
 }
 
 export default DisplayArray;
+
