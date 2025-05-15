@@ -44,7 +44,7 @@ Here's a breakdown of how it works and how to use it:
     *   `l.list({ listName: listNode })`: Logs a linked list.
 
 4.  **Adding Comments and Breakpoints:**
-    *   `l.comment = "Your explanation here";`: Assign a string to `l.comment` to provide a textual explanation for the current step. Comments should follow the guidelines in this document, focusing on values and explaining the logic and purpose of the step.
+    *   `l.comment = "Your explanation here";`: Assign a string to `l.comment` to provide a textual explanation for the current step. Comments should follow the guidelines in this document, focusing on values and explaining the logic and purpose of the step. ALL COMMENTS NEED TO BE IN THIS FIELD. Also comments should be short. if you need extra comment, just add it with another breakpoint.
     *   `l.breakpoint(breakpointNumber);`: Call `l.breakpoint()` with a unique number to mark a specific point in the algorithm's execution where the current state and comment should be recorded as a step in the visualization. **Always set `l.comment` *before* calling `l.breakpoint()`.**
 
 5.  **Including the Result:** For the codegen to work correctly, you must include a variable named `result` in one of your logging calls, typically in the final step after the algorithm has completed. This variable should hold the final output of the algorithm.
