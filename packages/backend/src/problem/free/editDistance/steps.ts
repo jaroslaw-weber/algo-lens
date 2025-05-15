@@ -19,7 +19,7 @@ export function generateSteps(s1: string, s2: string) {
   // Initialize the DP table - First Column
   for (let i = 0; i <= m; i++) {
     dp[i][0] = i;
-    l.grid("dp", dp, ...[{ r: i, c: 0 }]);
+    l.grid("dp", dp, ...[{ r: i, c: 0, label: "deletion" }]);
     l.comment = `Initializing the first column of the DP table. The value represents the number of deletions needed to transform a prefix of s1 into an empty string.`;
     l.breakpoint(1);
   }
@@ -27,7 +27,7 @@ export function generateSteps(s1: string, s2: string) {
   // Initialize the DP table - First Row
   for (let j = 0; j <= n; j++) {
     dp[0][j] = j;
-    l.grid("dp", dp, ...[{ r: 0, c: j }]);
+    l.grid("dp", dp, ...[{ r: 0, c: j , label: "insertion"}]);
     l.comment = `Initializing the first row of the DP table. The value represents the number of insertions needed to transform an empty string into a prefix of s2.`;
     l.breakpoint(2);
   }
