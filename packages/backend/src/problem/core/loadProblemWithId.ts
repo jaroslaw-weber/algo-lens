@@ -3,15 +3,23 @@ import * as path from "path";
 import { Problem } from "algo-lens-core";
 import { generateCodeFromSteps } from "./codeGenerator";
 
+import { ProblemStateCache } from "../../ProblemStateCache";
+
+const problemCache: { [id: string]: Problem<any, any> } = {};
+ 
 export async function loadProblemWithId(
   id: string
 ): Promise<Problem<any, any> | null> {
-  // Assuming the problem ID corresponds to the directory name
-  const problemDir = path.join(__dirname, "../free", id);
-  const problemFilePath = path.join(problemDir, "problem.ts");
+ if (problemCache[id]) {
+   return problemCache[id];
+ } 
 
-  try {
-    if (!fs.existsSync(problemFilePath)) {
+ // Assuming the problem ID corresponds to the directory name
+ const problemDir = path.join(__dirname, "../free", id);
+ const problemFilePath = path.join(problemDir, "problem.ts");
+
+ try {
+   if (!fs.existsSync(problemFilePath)) {
       return null; // Problem file not found
     }
 
@@ -21,12 +29,13 @@ export async function loadProblemWithId(
 
     if (!problem) {
       return null;
-    }
+   }
 
-    problem.code = await getProblemCode(problem, problemDir);
+   problem.code = await getProblemCode(problem, problemDir);
+   problemCache[id] = problem; // Cache the loaded problem
 
-    return problem;
-  } catch (error) {
+   return problem;
+ } catch (error) {
     console.error(`Error loading problem with ID ${id}:`, error);
     return null;
   }
