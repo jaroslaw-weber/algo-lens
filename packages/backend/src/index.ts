@@ -12,6 +12,17 @@ import app from "./router"; // Import the configured Hono app from router.ts
 
 export { pb }; // Export the Pocketbase client instance
 
+app.onError((err, c) => {
+  console.error(`${err}`);
+  return c.json({
+    success: false,
+    error: {
+      status: 500, // Default to 500, can be customized based on error type
+      message: err.message || 'Internal Server Error',
+    },
+  }, 500); // Default to 500 status code
+});
+
 export default {
   port: port,
   fetch: app.fetch,
