@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { pb } from "../auth/pocketbase";
 import Cookies from 'js-cookie';
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -16,14 +17,20 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await pb.collection("users").authWithPassword(email, password);
+      await pb.collection("users").create({
+        email,
+        password,
+        passwordConfirm,
+      });
       // Store token in cookie and redirect
-      console.log("Login successful");
+      console.log("Registration successful");
+      // Optionally log in the user after registration
+      await pb.collection("users").authWithPassword(email, password);
       Cookies.set('token', pb.authStore.token);
       window.location.href = "/";
     } catch (error: any) {
       // Show error message
-      alert("Login failed: " + error.message);
+      alert("Registration failed: " + error.message);
     }
   };
 
@@ -31,7 +38,7 @@ const LoginForm: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-base-200">
       <div className="card w-full max-w-sm shadow-2xl bg-base-100">
         <div className="card-body">
-          <h1 className="text-2xl font-bold text-center">Login</h1>
+          <h1 className="text-2xl font-bold text-center">Register</h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
@@ -65,17 +72,33 @@ const LoginForm: React.FC = () => {
                 required
               />
             </div>
+            <div>
+              <label
+                htmlFor="passwordConfirm"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="passwordConfirm"
+                className="input input-bordered w-full"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                required
+              />
+            </div>
             <button
               type="submit"
               className="btn btn-primary w-full"
             >
-              Login
+              Register
             </button>
           </form>
           <p className="text-center mt-4">
-            Don't have an account?{" "}
-            <a href="/register" className="link link-primary">
-              Register here
+            Already have an account?{" "}
+            <a href="/login" className="link link-primary">
+              Login here
             </a>
             .
           </p>
@@ -85,4 +108,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

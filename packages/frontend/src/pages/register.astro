@@ -1,57 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { authService } from '../auth/authService';
-
-let errorMessage = '';
-
-if (Astro.request.method === 'POST') {
-    try {
-        const formData = await Astro.request.formData();
-        const email = formData.get('email')?.toString() || '';
-        const password = formData.get('password')?.toString() || '';
-        const passwordConfirm = formData.get('passwordConfirm')?.toString() || '';
-
-        if (password !== passwordConfirm) {
-            errorMessage = 'Passwords do not match.';
-        } else {
-            await authService.register({ email, password, passwordConfirm });
-            // Redirect to login page on successful registration
-            return Astro.redirect('/login');
-        }
-    } catch (error: any) {
-        errorMessage = error.message || 'Registration failed.';
-    }
-}
+import Layout from "../layouts/Layout.astro";
+import RegisterForm from "../components/RegisterForm.tsx";
 ---
 
 <Layout title="Register">
-    <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-bold mb-4">Register</h1>
-
-        {errorMessage && <div class="alert alert-error mb-4">{errorMessage}</div>}
-
-        <form method="POST" class="form-control w-full max-w-sm mx-auto">
-            <div class="form-control mb-4">
-                <label class="label" for="email">
-                    <span class="label-text">Email:</span>
-                </label>
-                <input type="email" id="email" name="email" class="input input-bordered w-full" required>
-            </div>
-            <div class="form-control mb-4">
-                <label class="label" for="password">
-                    <span class="label-text">Password:</span>
-                </label>
-                <input type="password" id="password" name="password" class="input input-bordered w-full" required>
-            </div>
-            <div class="form-control mb-4">
-                <label class="label" for="passwordConfirm">
-                    <span class="label-text">Confirm Password:</span>
-                </label>
-                <input type="password" id="passwordConfirm" name="passwordConfirm" class="input input-bordered w-full" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-full">Register</button>
-        </form>
-
-        <p class="text-center mt-4">Already have an account? <a href="/login" class="link link-primary">Login here</a>.</p>
-    </div>
+  <RegisterForm client:load />
 </Layout>
