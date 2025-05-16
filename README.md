@@ -56,3 +56,7 @@ https://github.com/jaroslaw-weber/algo-lens/assets/9774233/94f5b974-b3f6-498b-a7
 ## Screenshots
 
 ![Screenshot (11)](https://github.com/jaroslaw-weber/algo-lens/assets/9774233/d26c35cc-0353-44e4-89b2-9208daed4ef0)
+
+## Adding New Problem Guidelines
+
+If you're interested in contributing new problems to AlgoLens, please refer to the [New Problem Guidelines](packages/backend/src/problem/NEW_PROBLEM_GUIDELINES.md) for instructions on file structure, comment guidelines, and more.

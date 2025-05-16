@@ -48,7 +48,7 @@ export function generateSteps(intervals: number[][]) {
   // Log state after adding the first interval
   l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
   l.intervals("merged", merged, [0], min, max); // Highlight the newly added interval
-  l.comment = "The intervals have been sorted by their start times. The first interval is added to the 'merged' list because it is the starting point for comparison and merging.";
+  l.comment = `The intervals have been sorted by their start times. The first interval, [${intervals[0].join(", ")}], is added to the 'merged' list because it is the starting point for comparison and merging.`;
   l.breakpoint(2); // Maybe a new breakpoint 2.5 or adjust existing ones? Let's reuse 2 for now or add a specific one later if needed.
 
   for (let i = 1; i < intervals.length; i++) {

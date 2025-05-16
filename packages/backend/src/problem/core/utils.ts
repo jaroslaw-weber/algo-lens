@@ -17,6 +17,7 @@ import {
   TreeVariable,
   ListNode,
   Problem,
+  VariableMetadata,
 } from "algo-lens-core";
 import { getAllProblems } from "./list";
 
@@ -54,7 +55,7 @@ export function asSimpleValue(o: any): SimpleVariable[] {
 export function asValueGroup(
   label: string,
   o: any,
-  options: { min: number; max: number; reverse?: any }
+  options: { min: number; max: number; reverse?: any },
 ): ValueGroupVariable {
   const result: ValueGroupVariable = {
     data: [],
@@ -346,19 +347,9 @@ export function as2dArray(
   const result: ArrayVariable = {
     label,
     type: "array",
-    value: deepClone2DArray(arr),
-    pointers: [],
+    value: arr,
+    pointers: pointers,
   };
-  for (const p of pointers) {
-    result.pointers!.push({
-      value: p.r,
-      dimension: "row",
-    });
-    result.pointers!.push({
-      value: p.c,
-      dimension: "column",
-    });
-  }
   return result;
 }
 export function asHashset<T>(

@@ -38,7 +38,7 @@ export function generateSteps(p: MinPathSumInput) {
     dpGrid[0][col] = prevValue + currentValue; // Update in place
 
     l.grid("grid", dpGrid, { r: 0, c: col }, { r: 0, c: col - 1 }); // Use grid, pass pointers directly
-    l.comment = `Initialize the first row of the DP table. The minimum path sum to reach any cell in the first row can only come from the left. So, dpGrid[0][${col}] is the sum of the value at grid[0][${col}] and the minimum path sum to the cell to its left, dpGrid[0][${ col - 1 }] (${prevValue}). The current cell value is ${currentValue}, resulting in dpGrid[0][${col}] = ${dpGrid[0][col]}.`;
+    l.comment = `Initialize the first row of the DP table. The minimum path sum to reach the current cell in the first row can only come from the left. It is the sum of the current cell's value (${currentValue}) and the minimum path sum to the cell to its left (${prevValue}). The minimum path sum to the current cell is ${dpGrid[0][col]}.`;
     l.breakpoint(2);
   }
   l.simple({ col: undefined }); // Reset col index
@@ -51,7 +51,7 @@ export function generateSteps(p: MinPathSumInput) {
     dpGrid[row][0] = prevValue + currentValue; // Update in place
 
     l.grid("grid", dpGrid, { r: row, c: 0 }, { r: row - 1, c: 0 }); // Use grid, pass pointers directly
-    l.comment = `Initialize the first column of the DP table. The minimum path sum to reach any cell in the first column can only come from above. So, dpGrid[${row}][0] is the sum of the value at grid[${row}][0] and the minimum path sum to the cell above it, dpGrid[${ row - 1 }][0] (${prevValue}). The current cell value is ${currentValue}, resulting in dpGrid[${row}][0] = ${ dpGrid[row][0] }.`;
+    l.comment = `Initialize the first column of the DP table. The minimum path sum to reach the current cell in the first column can only come from above. It is the sum of the current cell's value (${currentValue}) and the minimum path sum to the cell above it (${prevValue}). The minimum path sum to the current cell is ${dpGrid[row][0]}.`;
     l.breakpoint(3);
   }
   l.simple({ row: undefined }); // Reset row index
@@ -73,7 +73,7 @@ export function generateSteps(p: MinPathSumInput) {
         { r: row - 1, c: col },
         { r: row, c: col - 1 }
       ); // Use grid, pass pointers directly
-      l.comment = `Fill the rest of the DP table. The minimum path sum to reach cell dpGrid[${row}][${col}] is the current cell's value from the original grid (${originalValue}) plus the minimum of the path sums from the cell above it (dpGrid[${ row - 1 }][${col}] = ${valueAbove}) and the cell to its left (dpGrid[${row}][${ col - 1 }] = ${valueLeft}). This results in dpGrid[${row}][${col}] = ${ dpGrid[row][col] }.`;
+      l.comment = `Fill the rest of the DP table. The minimum path sum to reach the current cell is the current cell's value from the original grid (${originalValue}) plus the minimum of the path sums from the cell above it (${valueAbove}) and the cell to its left (${valueLeft}). The minimum path sum to the current cell is ${dpGrid[row][col]}.`;
       l.breakpoint(4);
     }
     l.simple({ col: undefined }); // Reset col index for inner loop
@@ -86,7 +86,7 @@ export function generateSteps(p: MinPathSumInput) {
   // Corrected l.simple call to match signature: simple(value: Record<string, any>)
   l.simple({ result: result });
   l.grid("grid", dpGrid, { r: rows - 1, c: cols - 1 }); // Use grid, pass pointer directly
-  l.comment = `The loop has finished. The minimum path sum from the top-left to the bottom-right corner is stored in the bottom-right cell of the DP table, dpGrid[${rows - 1}][${cols - 1}], which is ${result}.`;
+  l.comment = `The loop has finished. The minimum path sum from the top-left to the bottom-right corner is stored in the bottom-right cell of the DP table, which is ${result}.`;
   l.breakpoint(5);
 
   return l.getSteps(); // Return the collected steps

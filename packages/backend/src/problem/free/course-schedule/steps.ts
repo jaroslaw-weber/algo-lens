@@ -58,11 +58,11 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     l.breakpoint(5);
     const deg = inDegree[index];
 
-    l.comment =
-      "Start of while loop: Processing queue. Current courses finished count.";
-    l.breakpoint(6);
     if (deg === 0) {
       queue.push(index);
+      l.arrayV2({queue})
+      l.comment = `Course '${index}' has inDegree 0. Adding to queue.`;
+      l.breakpoint(6);
     }
   }
 

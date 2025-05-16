@@ -20,14 +20,14 @@ export function generateSteps(nums: number[]) {
   l.arrayV2({ nums });
   l.arrayV2({ dp }, { here: 0 }); // Highlight dp[0]
   l.breakpoint(1);
-  l.comment = "Initialize dp array with base case dp[0]";
+  l.comment = "Initialize dp array. dp[0] represents the maximum amount that can be robbed from 0 houses, which is 0.";
 
   dp[1] = nums[0];
 
   l.arrayV2({ nums }, { here: 0 }); // Highlight nums[0]
   l.arrayV2({ dp }, { here: 1 }); // Highlight dp[1]
   l.breakpoint(2);
-  l.comment = "Set base case dp[1]";
+  l.comment = "Set the base case for dp[1]. dp[1] represents the maximum amount that can be robbed from the first house, which is the value of the first house.";
 
   for (let i = 2; i <= n; i++) {
     const skipCurrent = dp[i - 1];
@@ -47,7 +47,7 @@ export function generateSteps(nums: number[]) {
       currentHouse,
     });
     l.breakpoint(3);
-    l.comment = "Calculate dp[i] based on max of skipping or including current house";
+    l.comment = `Calculate the maximum amount that can be robbed up to the current house. This is the maximum of either skipping the current house (inheriting the max from the previous house, ${skipCurrent}) or including the current house (adding its value, ${currentHouse}, to the max from two houses before, ${twoHousesBefore}). The maximum amount up to this house is ${dp[i]}.`;
   }
 
   const result = dp[n];
@@ -56,7 +56,7 @@ export function generateSteps(nums: number[]) {
   l.arrayV2({ dp: dp }, { n: n }); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
   l.breakpoint(4);
-  l.comment = "Final result is dp[n]";
+  l.comment = `All houses have been considered. The final result, ${result}, is the maximum amount that can be robbed from all houses.`;
 
   return l.getSteps(); // Return steps from StepLoggerV2
 }

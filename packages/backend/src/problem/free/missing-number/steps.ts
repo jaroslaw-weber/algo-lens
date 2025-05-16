@@ -27,7 +27,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     // Breakpoint 2: Inside loop state
     l.arrayV2({ nums }, { i }); // Log array, highlighting index i
     l.group("sum", { expectedSum, actualSum }); // Log current sums
-    l.comment = `Iterate through the input array. In this step, we add the current number nums[${i}] (${nums[i]}) to the actualSum. The actualSum was previously ${prevActualSum}, and after adding nums[${i}], it becomes ${actualSum}. This helps us find the sum of the numbers that are actually present in the array.`;
+    l.comment = `Iterate through the input array. In this step, we add the current number (${nums[i]}) to the actualSum. The actualSum was previously ${prevActualSum}, and after adding ${nums[i]}, it becomes ${actualSum}. This helps us find the sum of the numbers that are actually present in the array.`;
     l.breakpoint(2);
   }
 
