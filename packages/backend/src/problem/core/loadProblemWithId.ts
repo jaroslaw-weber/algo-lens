@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from "fs/promises";
 import * as path from "path";
 import { Problem } from "algo-lens-core";
 import { generateCodeFromSteps } from "./codeGenerator";
@@ -19,7 +19,8 @@ export async function loadProblemWithId(
  const problemFilePath = path.join(problemDir, "problem.ts");
 
  try {
-   if (!fs.existsSync(problemFilePath)) {
+  const exists = await fs.exists(problemFilePath)
+   if (!exists) {
       return null; // Problem file not found
     }
 
@@ -48,10 +49,11 @@ export async function getProblemCode(
   //// 
   if (problem.codegen) {
     const stepsPath = path.join(dir, "steps.ts");
+    const exists = await fs.exists(stepsPath)
     //// 
-    if (fs.existsSync(stepsPath)) {
+    if (exists) {
       try {
-        const steps = fs.readFileSync(stepsPath, "utf-8");
+        const steps = await fs.readFile(stepsPath, "utf-8");
         const generated = await generateCodeFromSteps({
           stepsFileContent: steps,
           targetFunctionSignature: problem.codegen.signature,
@@ -71,11 +73,6 @@ generated`
     return "// codegen config present, but steps.ts not found.";
   } else {
     console.error("problem.codegen missing for problem: " + problem.id);
-  }
-
-  const fallbackPath = path.join(dir, "code/typescript.ts");
-  if (fs.existsSync(fallbackPath)) {
-    return fs.readFileSync(fallbackPath, "utf-8");
   }
 
   return "// CODEGEN FAILED";
