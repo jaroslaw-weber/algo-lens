@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react"; // Removed useEffect
 import { pb } from "../auth/pocketbase";
-import Cookies from 'js-cookie';
+// Removed import Cookies from 'js-cookie';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      pb.authStore.save(token);
-    }
-  }, []);
+  // Removed useEffect for reading cookie
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      // authWithPassword automatically updates pb.authStore (which uses localStorage by default)
       await pb.collection("users").authWithPassword(email, password);
-      // Store token in cookie and redirect
       console.log("Login successful");
-      Cookies.set('token', pb.authStore.token);
-      window.location.href = "/";
+      // Removed Cookies.set('token', pb.authStore.token);
+      window.location.href = "/"; // Redirect after successful login
     } catch (error: any) {
       // Show error message
       alert("Login failed: " + error.message);
