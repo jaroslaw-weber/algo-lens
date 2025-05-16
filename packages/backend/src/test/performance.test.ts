@@ -1,4 +1,4 @@
-import { ProblemStateCache } from "../../ProblemStateCache";
+import { ProblemStateCache } from "../../cache/ProblemStateCache";
 import { loadProblemWithId } from "./loadProblemWithId";
 import { describe, it, expect, afterAll } from "bun:test";
 

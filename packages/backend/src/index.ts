@@ -7,7 +7,7 @@ import 'dotenv/config'; // Assuming dotenv is used for environment variables
 const port = process.env.PORT || 3000;
 const app = new Hono();
 import { cors } from "hono/cors";
-import { authMiddleware } from './middleware/auth'; // Import authMiddleware
+import { authMiddleware } from './auth/middleware'; // Import authMiddleware
 
 // Initialize Pocketbase Admin client
 const PB_URL = process.env.POCKETBASE_URL || 'YOUR_POCKETBASE_SERVICE_URL'; // Use environment variable
@@ -19,7 +19,7 @@ import {
 } from "algo-lens-core";
 import { getProblemById } from "./problem/core/utils";
 import { loadProblemWithId } from "./problem/core/loadProblemWithId";
-import { ProblemStateCache } from "./ProblemStateCache";
+import { ProblemStateCache } from "./cache/ProblemStateCache";
 getAllProblems()
 app.use(cors());
 app.use(authMiddleware); // Apply authentication middleware globally

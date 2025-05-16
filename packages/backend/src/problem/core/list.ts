@@ -1,7 +1,7 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import { Problem, ProblemGroup } from "algo-lens-core";
-import { generateCodeFromSteps } from "./codeGenerator";
+import { generateCodeFromSteps } from "../../codegen/codeGenerator";
 
 // Public API
 import { loadProblemWithId } from "./loadProblemWithId";

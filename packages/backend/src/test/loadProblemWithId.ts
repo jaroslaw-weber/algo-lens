@@ -3,7 +3,7 @@ import * as path from "path";
 import { Problem } from "algo-lens-core";
 import { generateCodeFromSteps } from "./codeGenerator";
 
-import { ProblemStateCache } from "../../ProblemStateCache";
+import { ProblemStateCache } from "../../cache/ProblemStateCache";
 
 const problemCache: { [id: string]: Problem<any, any> } = {};
  
