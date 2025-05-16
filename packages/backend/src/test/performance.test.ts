@@ -1,5 +1,5 @@
 import { ProblemStateCache } from "../../cache/ProblemStateCache";
-import { loadProblemWithId } from "./loadProblemWithId";
+import { loadProblemWithId } from "../problem/core/load";
 import { describe, it, expect, afterAll } from "bun:test";
 
 const problemIds = [

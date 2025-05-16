@@ -2,7 +2,7 @@ import { describe, it, expect } from "bun:test";
 import { generateCodeFromSteps, removeImports, removeJSDocComments, removeComments, removeExtraEmptyLines, replaceBreakpointWithNumber, removeStepLoggerLog, removeUnwantedLines, replaceProblemStateSignature, replaceGetStepsReturn, removeManualHideBlocks } from "./codeGenerator";
 import * as fs from "fs";
 import * as path from "path";
-import { loadProblemWithId } from "./loadProblemWithId";
+import { loadProblemWithId } from "../problem/core/load";
 
 describe("generateCodeFromSteps", () => {
   it("generateCodeFromSteps", async () => {

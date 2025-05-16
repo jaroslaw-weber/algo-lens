@@ -18,7 +18,7 @@ import {
   ProblemState,
 } from "algo-lens-core";
 import { getProblemById } from "./problem/core/utils";
-import { loadProblemWithId } from "./problem/core/loadProblemWithId";
+import { loadProblemWithId } from "../test/loadProblemWithId";
 import { ProblemStateCache } from "./cache/ProblemStateCache";
 getAllProblems()
 app.use(cors());
