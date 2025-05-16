@@ -37,7 +37,8 @@ const problemIds = [
 describe("Problem Loading Performance", () => {
   const results: {
     problemId: string;
-    executionTime: number;
+    loadExecutionTime: number;
+    stateExecutionTime: number;
     heapMemory: number;
     rssMemory: number;
   }[] = [];
@@ -51,8 +52,12 @@ describe("Problem Loading Performance", () => {
 
       const loadedProblem = await loadProblemWithId(problemId);
 
+      const loadEndTime = performance.now();
+      const loadExecutionTime = loadEndTime - startTime;
+
       // Simulate accessing states to trigger caching
       let states = [];
+      const stateStartTime = performance.now();
       if (loadedProblem?.testcases) {
         const defaultTestcase = loadedProblem.testcases.find((tc) => tc.isDefault);
         if (defaultTestcase) {
@@ -63,67 +68,65 @@ describe("Problem Loading Performance", () => {
           }
         }
       }
+      const stateEndTime = performance.now();
+      const stateExecutionTime = stateEndTime - stateStartTime;
+
 
       const endTime = performance.now();
       const endMemory = process.memoryUsage();
 
-      const executionTime = endTime - startTime;
       const memoryUsedHeap = endMemory.heapUsed - startMemory.heapUsed;
       const memoryUsedRss = endMemory.rss - startMemory.rss;
 
       results.push({
         problemId,
-        executionTime,
+        loadExecutionTime,
+        stateExecutionTime,
         heapMemory: memoryUsedHeap,
         rssMemory: memoryUsedRss,
       });
 
       // Optional: Add assertions for individual problems if needed
-      // expect(executionTime).toBeLessThan(performanceThreshold);
+      // expect(loadExecutionTime).toBeLessThan(performanceThreshold);
+      // expect(stateExecutionTime).toBeLessThan(performanceThreshold);
       // expect(memoryUsedHeap).toBeLessThan(memoryThreshold);
     });
   }
 
   afterAll(() => {
+
+    for(const r of results){
+      //convert to MB
+      r.heapMemory =r.heapMemory; //todo
+      r.rssMemory = r.rssMemory
+    }
+
     console.log("\n--- Performance Results ---");
-    console.log("Sorted by Execution Time (ms):");
-    results.sort((a, b) => b.executionTime - a.executionTime);
-    results.forEach((r) =>
-      console.log(
-        `${r.problemId}: ${r.executionTime.toFixed(2)} ms, Heap: ${(
-          r.heapMemory /
-          (1024 * 1024)
-        ).toFixed(2)} MB, RSS: ${(r.rssMemory / (1024 * 1024)).toFixed(
-          2
-        )} MB`
-      )
-    );
+    console.log("Sorted by Total Execution Time (ms):");
+    results.sort((a, b) => (b.loadExecutionTime + b.stateExecutionTime) - (a.loadExecutionTime + a.stateExecutionTime));
+    console.table(results)
+  
+
+    console.log("\nSorted by Load Execution Time (ms):");
+    results.sort((a, b) => b.loadExecutionTime - a.loadExecutionTime);
+    console.table(results)
+   
+
+    console.log("\nSorted by State Execution Time (ms):");
+    results.sort((a, b) => b.stateExecutionTime - a.stateExecutionTime);
+   
+    console.table(results)
+
 
     console.log("\nSorted by Heap Memory (MB):");
     results.sort((a, b) => b.heapMemory - a.heapMemory);
-    results.forEach((r) =>
-      console.log(
-        `${r.problemId}: ${r.executionTime.toFixed(2)} ms, Heap: ${(
-          r.heapMemory /
-          (1024 * 1024)
-        ).toFixed(2)} MB, RSS: ${(r.rssMemory / (1024 * 1024)).toFixed(
-          2
-        )} MB`
-      )
-    );
+   
+    console.table(results)
 
     console.log("\nSorted by RSS Memory (MB):");
     results.sort((a, b) => b.rssMemory - a.rssMemory);
-    results.forEach((r) =>
-      console.log(
-        `${r.problemId}: ${r.executionTime.toFixed(2)} ms, Heap: ${(
-          r.heapMemory /
-          (1024 * 1024)
-        ).toFixed(2)} MB, RSS: ${(r.rssMemory / (1024 * 1024)).toFixed(
-          2
-        )} MB`
-      )
-    );
+    
+    console.table(results)
     console.log("---------------------------");
   });
 });
