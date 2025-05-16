@@ -14,7 +14,6 @@ describe("loadProblemWithId", () => {
     const defaultTestcase = loadedProblem!.testcases.find((tc) => tc.isDefault);
     expect(defaultTestcase).toBeTruthy();
 
-    const cacheKey = problemId + "-steps";
     let states = [];
 
     const startTime = performance.now();
