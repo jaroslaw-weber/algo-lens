@@ -38,6 +38,7 @@ describe("Problem Loading Performance", () => {
   const results: {
     problemId: string;
     loadExecutionTime: number;
+    secondLoadExecutionTime: number; // Added for second load performance
     stateExecutionTime: number;
     heapMemory: number;
     rssMemory: number;
@@ -54,6 +55,13 @@ describe("Problem Loading Performance", () => {
 
       const loadEndTime = performance.now();
       const loadExecutionTime = loadEndTime - startTime;
+
+      // Measure performance of the second load
+      const secondLoadStartTime = performance.now();
+      await loadProblemWithId(problemId); // Load the same problem again
+      const secondLoadEndTime = performance.now();
+      const secondLoadExecutionTime = secondLoadEndTime - secondLoadStartTime;
+
 
       // Simulate accessing states to trigger caching
       let states = [];
@@ -82,6 +90,7 @@ describe("Problem Loading Performance", () => {
       results.push({
         problemId,
         loadExecutionTime,
+        secondLoadExecutionTime, // Added to results
         stateExecutionTime,
         heapMemory: memoryUsedHeap,
         rssMemory: memoryUsedRss,
@@ -106,13 +115,18 @@ describe("Problem Loading Performance", () => {
     results.sort(
       (a, b) =>
         b.loadExecutionTime +
+        b.secondLoadExecutionTime + // Include second load time in total
         b.stateExecutionTime -
-        (a.loadExecutionTime + a.stateExecutionTime)
+        (a.loadExecutionTime + a.secondLoadExecutionTime + a.stateExecutionTime) // Include second load time in total
     );
     console.table(results);
 
-    console.log("\nSorted by Load Execution Time (ms):");
+    console.log("\nSorted by First Load Execution Time (ms):"); // Updated label
     results.sort((a, b) => b.loadExecutionTime - a.loadExecutionTime);
+    console.table(results);
+
+    console.log("\nSorted by Second Load Execution Time (ms):"); // Added for second load
+    results.sort((a, b) => b.secondLoadExecutionTime - a.secondLoadExecutionTime); // Sort by second load time
     console.table(results);
 
     console.log("\nSorted by State Execution Time (ms):");
