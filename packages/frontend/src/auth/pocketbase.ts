@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 
 // Replace with your Pocketbase service URL
-const PB_URL = import.meta.env.PUBLIC_POCKETBASE_URL || 'YOUR_POCKETBASE_SERVICE_URL';
+const PB_URL = import.meta.env.PUBLIC_POCKETBASE_URL || 'http://db-algolens.jarek-backend.top/_/';
 
 export const pb = new PocketBase(PB_URL);
 
