@@ -4,3 +4,4 @@ export interface WordBreakInput {
   s: string;
   wordDict: string[];
 }
+

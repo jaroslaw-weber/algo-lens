@@ -18,8 +18,8 @@ import {
   ProblemState,
 } from "algo-lens-core";
 import { getProblemById } from "./problem/core/utils";
-import { loadProblemWithId } from "../test/loadProblemWithId";
 import { ProblemStateCache } from "./cache/ProblemStateCache";
+import { loadProblemWithId } from "./problem/core/load";
 getAllProblems()
 app.use(cors());
 app.use(authMiddleware); // Apply authentication middleware globally

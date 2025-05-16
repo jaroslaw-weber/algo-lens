@@ -1,5 +1,5 @@
-import { Problem } from "algo-lens-core";
-import { WordBreakInput, WordBreakProblemState } from "./types"; // Assuming ProblemState might be specific later
+import { Problem, ProblemState } from "algo-lens-core";
+import { WordBreakInput } from "./types"; // Assuming ProblemState might be specific later
 import { generateSteps } from "./steps"; // Import generateSteps instead of wordBreak
 import { code } from "./code/solution";
 import { testcases } from "./testcase"; // Corrected import path
@@ -8,7 +8,7 @@ import { groups } from "./groups";
 
 const title = "Word Break";
 
-export const problem: Problem<WordBreakInput, WordBreakProblemState> = {
+export const problem: Problem<WordBreakInput, ProblemState> = {
   title: title,
   emoji: "📖",
   func: generateSteps, // Use generateSteps

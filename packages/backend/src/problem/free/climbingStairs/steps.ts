@@ -1,7 +1,4 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLogger } from "../../core/StepLogger"; // Adjusted path
-import { ClimbingStairsInput } from "./types";
-import { groups } from "./groups"; // Import groups
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 export function generateSteps(n: number): ProblemState[] {
