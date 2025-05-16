@@ -22,6 +22,7 @@ import { loadProblemWithId } from "./problem/core/loadProblemWithId";
 import { ProblemStateCache } from "./ProblemStateCache";
 getAllProblems()
 app.use(cors());
+app.use(authMiddleware); // Apply authentication middleware globally
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");
@@ -78,11 +79,6 @@ app.get("/problem/random", async (c) => {
 });
 
 // Apply authentication middleware to protected routes
-app.use("/problem/:id/*", authMiddleware);
-app.use("/problem/:problemId/state/:step", authMiddleware);
-app.use("/problem/:problemId/size", authMiddleware);
-
-
 app.get("/problem/:id", async (c) => {
   const id = c.req.param("id");
 

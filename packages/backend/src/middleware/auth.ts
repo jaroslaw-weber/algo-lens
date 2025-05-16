@@ -2,6 +2,7 @@ import { Context, Next } from 'hono';
 import { pb } from '../index'; // Assuming pb is exported from index.ts
 
 export const authMiddleware = async (c: Context, next: Next) => {
+    
     const authHeader = c.req.header('Authorization');
     const token = authHeader?.split(' ')[1]; // Extract token from "Bearer <token>"
 
