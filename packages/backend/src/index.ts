@@ -1,10 +1,17 @@
 import { Hono } from "hono";
 import { getAllProblems } from "./problem/core/list";
 import { cloneDeep, pick, sample } from "lodash";
+import PocketBase from 'pocketbase';
+import 'dotenv/config'; // Assuming dotenv is used for environment variables
 
 const port = process.env.PORT || 3000;
 const app = new Hono();
 import { cors } from "hono/cors";
+import { authMiddleware } from './middleware/auth'; // Import authMiddleware
+
+// Initialize Pocketbase Admin client
+const PB_URL = process.env.POCKETBASE_URL || 'YOUR_POCKETBASE_SERVICE_URL'; // Use environment variable
+const pb = new PocketBase(PB_URL);
 import {
   HashmapVariable,
   HashsetVariable,
@@ -69,6 +76,12 @@ app.get("/problem/random", async (c) => {
     return c.json({ error: "Internal server error" }, 500);
   }
 });
+
+// Apply authentication middleware to protected routes
+app.use("/problem/:id/*", authMiddleware);
+app.use("/problem/:problemId/state/:step", authMiddleware);
+app.use("/problem/:problemId/size", authMiddleware);
+
 
 app.get("/problem/:id", async (c) => {
   const id = c.req.param("id");
@@ -150,6 +163,8 @@ app.get("/problem/:problemId/size", async (c) => {
 
   return c.json({ size });
 });
+
+export { pb }; // Export the Pocketbase client instance
 
 export default {
   port: port,

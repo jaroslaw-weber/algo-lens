@@ -1,6 +1,26 @@
 // components/Navbar.tsx
+import { useState, useEffect } from 'react';
+import { authService } from '../auth/authService';
 
 const Navbar = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(authService.isAuthenticated());
+
+  useEffect(() => {
+    const unsubscribe = authService.onAuthStateChange((token, model) => {
+      setIsAuthenticated(authService.isAuthenticated());
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    authService.logout();
+    // Redirect to home or login page after logout
+    window.location.href = '/';
+  };
+
   return (
     <div className="w-full bg-base-100 flex-shrink ">
       <div className="navbar  mx-auto bg-primary text-primary-content shadow">
@@ -26,6 +46,20 @@ const Navbar = () => {
             <li>
               <a href="/settings">Settings</a>
             </li>
+            {isAuthenticated ? (
+              <li>
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <a href="/login">Login</a>
+                </li>
+                <li>
+                  <a href="/register">Register</a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

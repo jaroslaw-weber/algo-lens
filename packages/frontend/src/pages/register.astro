@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { authService } from '../auth/authService';
+
+let errorMessage = '';
+
+if (Astro.request.method === 'POST') {
+    try {
+        const formData = await Astro.request.formData();
+        const email = formData.get('email')?.toString() || '';
+        const password = formData.get('password')?.toString() || '';
+        const passwordConfirm = formData.get('passwordConfirm')?.toString() || '';
+
+        if (password !== passwordConfirm) {
+            errorMessage = 'Passwords do not match.';
+        } else {
+            await authService.register({ email, password, passwordConfirm });
+            // Redirect to login page on successful registration
+            return Astro.redirect('/login');
+        }
+    } catch (error: any) {
+        errorMessage = error.message || 'Registration failed.';
+    }
+}
+---
+
+<Layout title="Register">
+    <h1>Register</h1>
+
+    {errorMessage && <p style="color: red;">{errorMessage}</p>}
+
+    <form method="POST">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="passwordConfirm">Confirm Password:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="/login">Login here</a>.</p>
+</Layout>
