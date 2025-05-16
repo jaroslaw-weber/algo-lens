@@ -97,8 +97,8 @@ describe("Problem Loading Performance", () => {
   afterAll(() => {
     for (const r of results) {
       //convert to MB
-      r.heapMemory = r.heapMemory; //todo
-      r.rssMemory = r.rssMemory;
+      r.heapMemory = r.heapMemory / (1024 * 1024); // Convert bytes to MB
+      r.rssMemory = r.rssMemory / (1024 * 1024); // Convert bytes to MB
     }
 
     console.log("\n--- Performance Results ---");
