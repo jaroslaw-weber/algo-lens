@@ -6,11 +6,21 @@ import { generateCodeFromSteps } from "./codeGenerator";
 // Public API
 import { loadProblemWithId } from "./loadProblemWithId";
 
+//cache problem list
+let problemFiles: string[] = [];
+
+async function getProblemFiles() {
+  if (!problemFiles?.length) {
+    problemFiles = await fs.readdirSync(path.join(__dirname, "../free"));
+  }
+  return problemFiles
+}
+
 export async function getAllProblems(): Promise<Problem<any, any>[]> {
   const problems: Problem<any, any>[] = [];
-  const problemFiles = fs.readdirSync(path.join(__dirname, "../free"));
+  const files = await getProblemFiles();
 
-  for (const problemFile of problemFiles) {
+  for (const problemFile of files) {
     const problem = await loadProblemWithId(problemFile);
     if (problem) {
       problems.push(problem);
@@ -21,4 +31,3 @@ export async function getAllProblems(): Promise<Problem<any, any>[]> {
 }
 
 export const other: ProblemGroup[] = [];
-

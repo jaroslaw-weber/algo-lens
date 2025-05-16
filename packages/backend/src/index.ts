@@ -13,7 +13,7 @@ import {
 import { getProblemById } from "./problem/core/utils";
 import { loadProblemWithId } from "./problem/core/loadProblemWithId";
 import { ProblemStateCache } from "./ProblemStateCache";
-
+getAllProblems()
 app.use(cors());
 
 app.get("/", (c) => {
