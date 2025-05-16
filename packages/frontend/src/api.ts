@@ -30,9 +30,20 @@ export async function getProblem(id: string) {
   return result.json();
 }
 
+const problemStateCache = new Map<string, ProblemState>();
+
 export async function getProblemState(id: string, step: number) {
+  const cacheKey = `${id}-${step}`;
+  if (problemStateCache.has(cacheKey)) {
+    console.log(`Cache hit for ${cacheKey}`);
+    return problemStateCache.get(cacheKey)!;
+  }
+
+  console.log(`Cache miss for ${cacheKey}`);
   const result = await be.get<ProblemState>(`problem/${id}/state/${step}`);
-  return result.json();
+  const problemState = await result.json();
+  problemStateCache.set(cacheKey, problemState);
+  return problemState;
 }
 
 export async function getProblemSize(id: string) {
