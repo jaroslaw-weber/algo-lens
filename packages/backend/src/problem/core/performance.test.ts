@@ -59,7 +59,9 @@ describe("Problem Loading Performance", () => {
       let states = [];
       const stateStartTime = performance.now();
       if (loadedProblem?.testcases) {
-        const defaultTestcase = loadedProblem.testcases.find((tc) => tc.isDefault);
+        const defaultTestcase = loadedProblem.testcases.find(
+          (tc) => tc.isDefault
+        );
         if (defaultTestcase) {
           for (let i = 1; i < 4; i++) {
             const state = stateCache.get(loadedProblem, i);
@@ -70,7 +72,6 @@ describe("Problem Loading Performance", () => {
       }
       const stateEndTime = performance.now();
       const stateExecutionTime = stateEndTime - stateStartTime;
-
 
       const endTime = performance.now();
       const endMemory = process.memoryUsage();
@@ -94,39 +95,40 @@ describe("Problem Loading Performance", () => {
   }
 
   afterAll(() => {
-
-    for(const r of results){
+    for (const r of results) {
       //convert to MB
-      r.heapMemory =r.heapMemory; //todo
-      r.rssMemory = r.rssMemory
+      r.heapMemory = r.heapMemory; //todo
+      r.rssMemory = r.rssMemory;
     }
 
     console.log("\n--- Performance Results ---");
     console.log("Sorted by Total Execution Time (ms):");
-    results.sort((a, b) => (b.loadExecutionTime + b.stateExecutionTime) - (a.loadExecutionTime + a.stateExecutionTime));
-    console.table(results)
-  
+    results.sort(
+      (a, b) =>
+        b.loadExecutionTime +
+        b.stateExecutionTime -
+        (a.loadExecutionTime + a.stateExecutionTime)
+    );
+    console.table(results);
 
     console.log("\nSorted by Load Execution Time (ms):");
     results.sort((a, b) => b.loadExecutionTime - a.loadExecutionTime);
-    console.table(results)
-   
+    console.table(results);
 
     console.log("\nSorted by State Execution Time (ms):");
     results.sort((a, b) => b.stateExecutionTime - a.stateExecutionTime);
-   
-    console.table(results)
 
+    console.table(results);
 
     console.log("\nSorted by Heap Memory (MB):");
     results.sort((a, b) => b.heapMemory - a.heapMemory);
-   
-    console.table(results)
+
+    console.table(results);
 
     console.log("\nSorted by RSS Memory (MB):");
     results.sort((a, b) => b.rssMemory - a.rssMemory);
-    
-    console.table(results)
+
+    console.table(results);
     console.log("---------------------------");
   });
 });
