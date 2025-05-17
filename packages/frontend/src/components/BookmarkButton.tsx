@@ -49,7 +49,11 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ problemId }) => {
   };
 
   return (
-    <button className="btn btn-ghost btn-circle" onClick={handleToggle}>
+    <button
+      className="button button-primary hover:opacity-80 tooltip tooltip-top"
+      onClick={handleToggle}
+        data-tip="Toggle Bookmark"
+    >
       {isBookmarked ? (
         <i className="fas fa-star text-yellow-500"></i> // Filled star
       ) : (
