@@ -27,25 +27,22 @@ app.get("/health", (c) => {
   return c.json({ status: "ok" });
 });
 
-app.get("/problem", authMiddleware, async (c: Context<{ Variables: AuthEnv['Variables'] }>) => {
+app.get("/problem", async (c: Context<{ Variables: AuthEnv['Variables'] }>) => {
   const { tag, filter } = problemListQuerySchema.parse(c.req.query());
   const user = c.get("user"); // Get user object from authMiddleware context
   const userId = user?.id; // Get user ID if user is authenticated
 
-  const allProblemsWithBookmarkStatus = await getAllProblemsService(userId, filter);
+  const all = await getAllProblemsService(userId, filter);
 
-  const filteredProblems = tag
-    ? allProblemsWithBookmarkStatus.filter((p) => p.tags && p.tags.includes(tag))
-    : allProblemsWithBookmarkStatus;
 
   // The service now returns objects with isBookmarked, so we don't need to pick
   // We should ensure the returned data conforms to problemListSchema
-  const list = filteredProblems.map(problem => ({
+  const list = all.map(problem => ({
     id: problem.id,
     title: problem.title,
     difficulty: problem.difficulty,
     emoji: problem.emoji,
-    isBookmarked: problem.isBookmarked,
+    bookmark: problem.bookmark
   }));
 
   return c.json(list);

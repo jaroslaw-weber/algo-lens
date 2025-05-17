@@ -85,7 +85,7 @@ function ProblemsList() {
                     {pb.authStore.isValid && ( // Only show button if user is logged in
                       <BookmarkButton
                         problemId={id}
-                        isBookmarked={p.bookmark} // Pass the isBookmarked flag
+                        isBookmarked={p.bookmark!} // Pass the isBookmarked flag
                       />
                     )}
                   </div>

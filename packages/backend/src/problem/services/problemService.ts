@@ -8,6 +8,7 @@ import { ProblemStateCache } from "../../cache/ProblemStateCache";
 const stateCache = new ProblemStateCache();
 
 export async function getAllProblemsService(userId?: string, filter?: string) {
+  console.log("info", {userId, filter})
   let allProblems = await coreGetAllProblems();
   if (userId) {
     const bookmarks = await pb.collection("bookmarks").getList(1, 50, {

@@ -2,6 +2,7 @@ import ky from "ky";
 import type { Problem } from "algo-lens-core";
 import { BACKEND_URL } from "astro:env/client";
 import type { ProblemState } from "algo-lens-core";
+import { pb } from "./auth/pocketbase";
 
 // Define a type for the random problem response
 export type ProblemInfo = {
@@ -13,7 +14,19 @@ export type ProblemInfo = {
 };
 
 // 
-const be = ky.create({ prefixUrl: BACKEND_URL });
+const be = ky.create({
+  prefixUrl: BACKEND_URL,
+  hooks: {
+    beforeRequest: [
+      request => {
+        const token = pb.authStore.token;
+        if (token) {
+          request.headers.set('Authorization', `Bearer ${token}`);
+        }
+      }
+    ]
+  }
+});
 
 // Updated to accept an optional tag and return ProblemInfo array
 export async function getProblemList(tag?: string, filter?: string): Promise<ProblemInfo[]> {
