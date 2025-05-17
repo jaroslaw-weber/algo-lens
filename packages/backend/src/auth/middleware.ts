@@ -36,9 +36,10 @@ export const authMiddleware = async (c: Context<AuthEnv>, next: Next) => {
             // Proceed to the next middleware or route handler
             await next();
         } catch (e) {
-            // If token is invalid or expired, clear the auth store and return unauthorized
+            console.error(e)
+            // If token is invalid or expired, clear the auth store and proceed
             pb.authStore.clear(); // Clear the invalid token
-            return c.json({ error: 'Unauthorized' }, 401);
+            await next();
         }
     } else {
         // No token provided, proceed to the next middleware or route handler

@@ -31,6 +31,7 @@ app.get("/problem", async (c: Context<{ Variables: AuthEnv['Variables'] }>) => {
   const { tag, filter } = problemListQuerySchema.parse(c.req.query());
   const user = c.get("user"); // Get user object from authMiddleware context
   const userId = user?.id; // Get user ID if user is authenticated
+  console.log("user", userId)
 
   const all = await getAllProblemsService(userId, filter);
 
