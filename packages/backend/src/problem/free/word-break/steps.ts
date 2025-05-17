@@ -13,13 +13,15 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
 
   // Log initial state
   l.simple({ s: s });
-  l.arrayV2({ wordDict });
-  // 
+  //l.arrayV2({ wordDict });
+  l.groupOptions.set("loop", { min: 0, max: s.length });
+  //
 
   // Create a Set from the dictionary for efficient word lookup
   const wordSet = new Set(wordDict);
   l.hashset("wordSet", wordSet, undefined!); // Log the set
-  l.comment = "Convert the word dictionary 'wordDict' into a Set called 'wordSet'. Using a Set allows for efficient O(1) average time complexity lookups to check if a substring is a valid word in the dictionary.";
+  l.comment =
+    "Convert the word dictionary 'wordDict' into a Set called 'wordSet'. Using a Set allows for efficient O(1) average time complexity lookups to check if a substring is a valid word in the dictionary.";
   l.breakpoint(1); // #1 Initialize word set
 
   // dp[i] will be true if the first i characters of s (s[0...i-1]) can be segmented.
@@ -28,29 +30,30 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
   // Base case: An empty string can always be segmented.
   dp[0] = true;
   l.arrayV2({ dp });
-  l.comment = "Initialize a boolean DP array 'dp' of size n + 1, where n is the length of the input string 's'. dp[i] will store whether the first i characters of 's' (s[0...i-1]) can be segmented into words from the dictionary. Set dp[0] to true as the base case, representing that an empty string can always be segmented.";
+  l.comment =
+    "Initialize a boolean DP array 'dp' of size n + 1, where n is the length of the input string 's'. dp[i] will store whether the first i characters of 's' (s[0...i-1]) can be segmented into words from the dictionary. Set dp[0] to true as the base case, representing that an empty string can always be segmented.";
   l.breakpoint(2); // #2 Initialize DP array and base case
 
   // Iterate through the string from length 1 up to n.
   for (let i = 1; i <= n; i++) {
-    l.simple({ i: i }); // Log current outer loop index 'i'
+    l.group("loop", { i, j: 0 }); // Log current outer loop index 'i'
     l.comment = `Start the outer loop, iterating through possible lengths of the prefix of the string 's'. In each iteration, we consider the prefix of length ${i} and check if it can be segmented into words.`;
     l.breakpoint(3); // #3 Start outer loop
 
     // Check all possible split points j (0 to i-1).
     for (let j = 0; j < i; j++) {
-      l.simple({ j: j }); // Log current inner loop index 'j'
+      l.group("loop", { i, j }); // Log current outer loop index 'i'
       l.comment = `Start the inner loop, iterating through all possible split points for the current prefix. The split point divides the prefix into two parts: a smaller prefix and a suffix.`;
       l.breakpoint(4); // #4 Start inner loop
 
       // Extract the suffix s[j...i-1]
       const suffix = s.substring(j, i);
-      l.simple({ suffix: suffix }); // Log the extracted suffix
+      l.simple({ suffix }); // Log the extracted suffix
 
       const canSegmentPrefix = dp[j];
       const isWordInDict = wordSet.has(suffix);
-      l.simple({ "dp[j]": canSegmentPrefix }); // Log dp[j] value
-      l.simple({ "wordSet.has(suffix)": isWordInDict }); // Log if suffix is in wordSet
+      l.simple({ canSegmentPrefix }); // Log dp[j] value
+      l.simple({ isWordInDict }); // Log if suffix is in wordSet
       l.comment = `Extract the suffix substring, which is "${suffix}". Check if the prefix before this suffix can be segmented (this is stored in dp[j], which is ${canSegmentPrefix}) and if the extracted suffix "${suffix}" is a valid word in the 'wordSet' (${isWordInDict}).`;
       l.breakpoint(5); // #5 Extract suffix and check conditions
 
@@ -60,25 +63,29 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
       if (canSegmentPrefix && isWordInDict) {
         // If both conditions are true, then the prefix s[0...i-1] can be segmented.
         dp[i] = true;
-        l.simple({ "dp[i] updated": true }); // Log that dp[i] is updated
+        l.hashset("wordSet", wordSet, { value: suffix, color: "accent" });
         l.arrayV2({ dp }, { i }); // Log the updated dp array
         l.comment = `Both conditions are true: the prefix before the suffix can be segmented (dp[j] is true) and the suffix "${suffix}" is a valid word in the dictionary. This means the current prefix can be segmented. Set dp[i] to true (${dp[i]}) and break the inner loop because we've found at least one way to segment this prefix.`;
         l.breakpoint(6); // #6 Found valid segmentation, dp[i] updated
         // Break the inner loop since we've found a way to segment s[0...i-1].
-        break; // #7 Break inner loop (optimization) - Breakpoint 7 is conceptually here, but adding 
+        break; // #7 Break inner loop (optimization) - Breakpoint 7 is conceptually here, but adding
       } else {
         l.simple({ "dp[i] updated": false }); // Log that dp[i] was not updated
         l.comment = `The conditions for a valid segmentation using the current split point are not met (either the prefix before the suffix cannot be segmented (${canSegmentPrefix}) or the suffix "${suffix}" is not in the wordSet). Continue to the next possible split point.`;
         l.breakpoint(8); // #8 Segmentation using split point j didn't work
       }
+     // l.hide("suffix")
     }
-    // 
-    l.simple({ suffix: undefined }); // Clear suffix for the next outer loop iteration
+
+    //
+    //l.simple({ suffix: undefined }); // Clear suffix for the next outer loop iteration
     l.arrayV2({ dp }, { i }); // Log dp state at the end of inner loop checks for i
     l.comment = `Finished checking all possible split points for the current prefix. The value of dp[i] (${dp[i]}) indicates whether this prefix can be segmented into words from the dictionary.`;
     l.breakpoint(9); // #9 Finished checking all split points for prefix s[0...i-1]
   }
-  l.comment = "Finished the outer loop, having checked all prefixes of the string s up to length n.";
+  l.hide("loop");
+  l.comment =
+    "Finished the outer loop, having checked all prefixes of the string s up to length n.";
   l.breakpoint(10); // #10 Finished outer loop
 
   // The final result is dp[n]
