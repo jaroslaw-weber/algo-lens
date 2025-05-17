@@ -23,27 +23,45 @@ function ProblemsList() {
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [bookmarkedProblemIds, setBookmarkedProblemIds] = useState<string[]>([]); // New state for bookmarked problem IDs
 
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        //
         setLoading(true);
         setError(null);
         const ps = await getProblemList(tag!); // Pass tag to API call
-        //
         setProblems(ps);
       } catch (err) {
         console.error("Failed to fetch problems:", err);
         setError("Failed to load problems. Please try refreshing.");
       } finally {
         setLoading(false);
-        //
+      }
+    };
+
+    const fetchBookmarkedProblems = async () => {
+      if (showBookmarkedOnly && pb.authStore.isValid) {
+        try {
+          const bookmarks = await pb.collection('bookmarks').getFullList({
+            filter: `user='${pb.authStore.model?.id}'`,
+            fields: 'problem', // Only fetch the problem ID
+          });
+          const bookmarkedIds = bookmarks.map(bookmark => bookmark.problem);
+          setBookmarkedProblemIds(bookmarkedIds);
+        } catch (error) {
+          console.error("Failed to fetch bookmarked problems:", error);
+          setBookmarkedProblemIds([]);
+        }
+      } else {
+        setBookmarkedProblemIds([]); // Clear bookmarked IDs if not showing bookmarked only or not logged in
       }
     };
 
     fetchProblems();
-  }, [tag]); // Re-run effect if tag changes
+    fetchBookmarkedProblems(); // Fetch bookmarked problems on effect run
+
+  }, [tag, showBookmarkedOnly, pb.authStore.isValid]); // Re-run effect if tag, showBookmarkedOnly, or auth status changes
 
   return (
     <div>
@@ -72,7 +90,7 @@ function ProblemsList() {
             </p>
           ) : (
             problems
-              .filter(p => showBookmarkedOnly ? false : true) // Remove bookmark filter logic
+              .filter(p => showBookmarkedOnly ? bookmarkedProblemIds.includes(p.id) : true) // Filter based on bookmark status
               .map((p) => {
                 const { id, title, emoji } = p;
 
