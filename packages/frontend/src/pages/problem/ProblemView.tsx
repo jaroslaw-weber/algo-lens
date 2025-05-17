@@ -88,17 +88,7 @@ export default function ProblemView() {
 
   return (
     <div>
-      {/* Start button */}
-      {problem && ( // Only show button if problem is loaded
-        <button
-          className="btn btn-ghost btn-circle"
-          onClick={() => {
-            console.log(`Start problem with ID: ${problem.id}`); // Placeholder functionality
-          }}
-        >
-          <i className="fas fa-play"></i> {/* Play icon for start */}
-        </button>
-      )}
+     
       {/* Bookmark button */}
       {problem && pb.authStore.isValid && ( // Only show button if problem is loaded and user is logged in
         <button className="btn btn-ghost btn-circle" onClick={handleBookmarkToggle}>

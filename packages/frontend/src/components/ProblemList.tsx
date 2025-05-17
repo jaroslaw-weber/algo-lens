@@ -9,7 +9,10 @@ import _ from "lodash";
 function ProblemsList() {
   // 
   const url = new URL(window.location.href)
-  const tag = url.searchParams.get("tag")
+  let tag = url.searchParams.get("tag")
+  if(tag == "blind75"){
+  tag = null
+  }
   const filter = url.searchParams.get("filter")
   const showBookmarkedOnly = filter == "bookmark"
   const title = _.capitalize(tag || filter || "problems")
@@ -27,7 +30,7 @@ function ProblemsList() {
         // 
         setLoading(true);
         setError(null);
-        const ps = await getProblemList(tag); // Pass tag to API call
+        const ps = await getProblemList(tag!); // Pass tag to API call
         // 
         setProblems(ps);
       } catch (err) {
@@ -124,16 +127,7 @@ function ProblemsList() {
                       {emoji && <span className="mr-2">{emoji}</span>}
                       {title}
                     </h2>
-                    {/* Start button */}
-                    <button
-                      className="btn btn-ghost btn-circle"
-                      onClick={(e) => {
-                        e.preventDefault(); // Prevent navigating to problem page
-                        console.log(`Start problem with ID: ${id}`); // Placeholder functionality
-                      }}
-                    >
-                      <i className="fas fa-play"></i> {/* Play icon for start */}
-                    </button>
+                    
                     {/* Bookmark button */}
                     {pb.authStore.isValid && ( // Only show button if user is logged in
                       <button
