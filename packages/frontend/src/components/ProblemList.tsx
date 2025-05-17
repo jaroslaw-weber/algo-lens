@@ -4,6 +4,7 @@ import type { Problem } from "algo-lens-core";
 import { addBookmark, removeBookmark, pb } from "../auth/pocketbase"; // Import bookmark functions and pb
 import { useAtom } from "jotai"; // Import useAtom
 import _ from "lodash";
+import BookmarkButton from './BookmarkButton';
 
 
 function ProblemsList() {
@@ -66,11 +67,6 @@ function ProblemsList() {
   }, [pb.authStore.isValid]); // Re-run effect if auth state changes
 
   const handleBookmarkToggle = async (problemId: string, isBookmarked: boolean) => {
-    if (!pb.authStore.isValid) {
-      alert("Please log in to bookmark problems.");
-      return;
-    }
-
     try {
       if (isBookmarked) {
         await removeBookmark(problemId);
@@ -130,19 +126,11 @@ function ProblemsList() {
                     
                     {/* Bookmark button */}
                     {pb.authStore.isValid && ( // Only show button if user is logged in
-                      <button
-                        className="btn btn-ghost btn-circle"
-                        onClick={(e) => {
-                          e.preventDefault(); // Prevent navigating to problem page
-                          handleBookmarkToggle(id, bookmarkedProblems.includes(id));
-                        }}
-                      >
-                        {bookmarkedProblems.includes(id) ? (
-                          <i className="fas fa-star text-yellow-500"></i> // Filled star
-                        ) : (
-                          <i className="far fa-star"></i> // Outline star
-                        )}
-                      </button>
+                      <BookmarkButton
+                        problemId={id}
+                        isBookmarked={bookmarkedProblems.includes(id)}
+                        onBookmarkToggle={handleBookmarkToggle}
+                      />
                     )}
                   </div>
                 </a>

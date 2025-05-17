@@ -4,6 +4,7 @@ import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../../atom
 import { getProblem, getProblemState } from "../../api";
 import { useEffect, useState } from "react"; // Import useState
 import { addBookmark, removeBookmark, pb } from "../../auth/pocketbase"; // Import bookmark functions and pb
+import BookmarkButton from '../../components/BookmarkButton';
 export function useProblemState() {
   const [problem, setProblem] = useAtom(problemAtom);
   const [step, setStep] = useAtom(stepAtom);
@@ -29,6 +30,7 @@ export default function ProblemView() {
 
   async function init() {
     // 
+    
     if (problem) {
       return;
     }
@@ -66,7 +68,7 @@ export default function ProblemView() {
     checkBookmarkStatus();
   }, [problem, pb.authStore.isValid]); // Re-run effect if problem or auth state changes
 
-  const handleBookmarkToggle = async () => {
+  const handleBookmarkToggle = async (problemId: string, isBookmarked: boolean) => {
     if (!pb.authStore.isValid || !problem) {
       alert("Please log in to bookmark problems.");
       return;
@@ -74,10 +76,10 @@ export default function ProblemView() {
 
     try {
       if (isBookmarked) {
-        await removeBookmark(problem.id!);
+        await removeBookmark(problemId);
         setIsBookmarked(false);
       } else {
-        await addBookmark(problem.id!);
+        await addBookmark(problemId);
         setIsBookmarked(true);
       }
     } catch (error) {
@@ -91,13 +93,11 @@ export default function ProblemView() {
      
       {/* Bookmark button */}
       {problem && pb.authStore.isValid && ( // Only show button if problem is loaded and user is logged in
-        <button className="btn btn-ghost btn-circle" onClick={handleBookmarkToggle}>
-          {isBookmarked ? (
-            <i className="fas fa-star text-yellow-500"></i> // Filled star
-          ) : (
-            <i className="far fa-star"></i> // Outline star
-          )}
-        </button>
+        <BookmarkButton
+          problemId={problem.id!}
+          isBookmarked={isBookmarked}
+          onBookmarkToggle={handleBookmarkToggle}
+        />
       )}
       {problem && state && <ProblemVisualizer />}
     </div>
