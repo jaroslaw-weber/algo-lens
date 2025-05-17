@@ -13,6 +13,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
 
   // Log initial state
   l.simple({ s: s });
+  l.simple({suffix:undefined})
   //l.arrayV2({ wordDict });
   l.groupOptions.set("loop", { min: 0, max: s.length });
   //
@@ -61,7 +62,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
       if (canSegmentPrefix && isWordInDict) {
         // If both conditions are true, then the prefix s[0...i-1] can be segmented.
         dp[i] = true;
-        l.hashset("wordSet", wordSet, { value: suffix, color: "accent" });
+        l.hashset("wordSet", wordSet, { value: suffix, color: "primary" });
         l.arrayV2({ dp }, { i, "can segment?":j }); // Log the updated dp array
         l.comment = `Both conditions are true: the prefix ending at index 'j' can be segmented (${canSegmentPrefix}) AND the suffix "${suffix}" is a valid word (${isWordInDict}). This means the prefix of length ${i} can be segmented. Set dp[i] to true. We can stop checking other split points for this prefix length.`;
         l.breakpoint(6);
