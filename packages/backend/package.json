@@ -7,6 +7,7 @@
     "build:check": "tsc --noEmit"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "hono": "^4.7.6",
     "lodash": "^4.17.21",
     "pocketbase": "^0.26.0",
