@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getProblemList, type ProblemInfo } from "../api"; // Import ProblemInfo
-import type { Problem } from "algo-lens-core";
 import { pb } from "../auth/pocketbase"; // Import pb
-import { useAtom } from "jotai"; // Import useAtom
 import _ from "lodash";
 import BookmarkButton from "../bookmark/BookmarkButton";
 
@@ -14,10 +12,8 @@ function ProblemsList() {
     tag = null;
   }
   const filter = url.searchParams.get("filter");
-  const showBookmarkedOnly = filter == "bookmark";
   const title = _.capitalize(tag || filter || "problems");
 
-  console.log("show bookmarked?", showBookmarkedOnly);
   // Use local state instead of Jotai atom
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,7 +34,7 @@ function ProblemsList() {
     };
 
     fetchProblems();
-  }, [tag, showBookmarkedOnly]); // Re-run effect if tag or showBookmarkedOnly changes
+  }, [tag, filter]); // Re-run effect if tag or showBookmarkedOnly changes
 
   return (
     <div>

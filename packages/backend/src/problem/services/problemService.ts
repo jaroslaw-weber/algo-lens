@@ -4,6 +4,7 @@ import { loadProblemWithId as coreLoadProblemWithId } from "../core/load";
 import { ProblemState, HashmapVariable, HashsetVariable } from "algo-lens-core";
 import { cloneDeep } from "lodash";
 import { ProblemStateCache } from "../../cache/ProblemStateCache";
+import { getPocketbase } from "../../db/pocketbase";
 
 const stateCache = new ProblemStateCache();
 
@@ -11,19 +12,20 @@ export async function getAllProblemsService(userId?: string, filter?: string) {
   console.log("info", {userId, filter})
   let allProblems = await coreGetAllProblems();
   if (userId) {
-    const bookmarks = await pb.collection("bookmarks").getList(1, 50, {
+    const pb =await  getPocketbase()
+    const pbFilter = `user.id='${userId}'`
+    console.log("pb filter", pbFilter)
+    const bookmarks = await pb.collection("bookmarks").getList(0, 200, {
       // Fetching up to 50 bookmarks, adjust as needed
-      filter: `user='${userId}'`,
-      expand: "problem", // Expand the problem relation
+      filter: pbFilter
     });
-    const ids = bookmarks.items
-      .map((bookmark) => (bookmark.expand?.problem as any)?.id)
-      .filter((id) => id);
+    console.log("bookmarks", bookmarks)
+    const bookmarkIds = bookmarks.items.map(x => x.problem)
 
-    let bookmarkedProblemIds = new Set<string>(ids);
-
+    let bookmarkSet = new Set<string>(bookmarkIds);
+console.log("bm set", bookmarkSet)
     for (const problem of allProblems) {
-      if (bookmarkedProblemIds.has(problem.id)) {
+      if (bookmarkSet.has(problem.id)) {
         problem.bookmark = true;
       }
     }
@@ -76,9 +78,3 @@ export function preserialize(state: ProblemState): any {
 
   return result;
 }
-
-import PocketBase from "pocketbase";
-
-const PB_URL =
-  process.env.PUBLIC_POCKETBASE_URL || "https://db-algolens.jarek-backend.top/";
-const pb = new PocketBase(PB_URL);
