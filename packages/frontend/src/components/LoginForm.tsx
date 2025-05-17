@@ -38,6 +38,8 @@ const LoginForm: React.FC = () => {
               <input
                 type="email"
                 id="email"
+                name="email"
+                autoComplete="email"
                 className="input input-bordered w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -54,6 +56,8 @@ const LoginForm: React.FC = () => {
               <input
                 type="password"
                 id="password"
+                name="password"
+                autoComplete="current-password"
                 className="input input-bordered w-full"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
