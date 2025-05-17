@@ -1,4 +1,6 @@
 import React from 'react';
+import { pb } from '../auth/pocketbase';
+import BookmarkButton from './BookmarkButton';
 
 interface ProblemHeaderProps {
   title: string;
@@ -30,6 +32,11 @@ const ProblemHeader: React.FC<ProblemHeaderProps> = ({ title, id, handleCopyCode
       >
         <i className="fas fa-copy"></i>
       </button>
+      {id && pb.authStore.isValid && ( // Only show button if problem is loaded and user is logged in
+        <BookmarkButton
+          problemId={id!}
+        />
+      )}
     </div>
   );
 };

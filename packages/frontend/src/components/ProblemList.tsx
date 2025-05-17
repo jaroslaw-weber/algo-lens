@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getProblemList, type ProblemInfo } from "../api"; // Import ProblemInfo
 import type { Problem } from "algo-lens-core";
-import { addBookmark, removeBookmark, pb } from "../auth/pocketbase"; // Import bookmark functions and pb
+import { pb } from "../auth/pocketbase"; // Import pb
 import { useAtom } from "jotai"; // Import useAtom
 import _ from "lodash";
 import BookmarkButton from './BookmarkButton';
@@ -23,63 +23,27 @@ function ProblemsList() {
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [bookmarkedProblems, setBookmarkedProblems] = useState<string[]>([]); // State for bookmarked problem IDs
 
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        // 
+        //
         setLoading(true);
         setError(null);
         const ps = await getProblemList(tag!); // Pass tag to API call
-        // 
+        //
         setProblems(ps);
       } catch (err) {
         console.error("Failed to fetch problems:", err);
         setError("Failed to load problems. Please try refreshing.");
       } finally {
         setLoading(false);
-        // 
+        //
       }
     };
 
     fetchProblems();
   }, [tag]); // Re-run effect if tag changes
-
-  useEffect(() => {
-    const fetchBookmarks = async () => {
-      if (pb.authStore.isValid) {
-        try {
-          const bookmarks = await pb.collection('bookmarks').getFullList({
-            filter: `user='${pb.authStore.model?.id}'`,
-            fields: 'problem', // Fetch only the problem ID
-          });
-          setBookmarkedProblems(bookmarks.map(b => b.problem));
-        } catch (error) {
-          console.error("Failed to fetch bookmarks:", error);
-        }
-      } else {
-        setBookmarkedProblems([]); // Clear bookmarks if user is not logged in
-      }
-    };
-
-    fetchBookmarks();
-  }, [pb.authStore.isValid]); // Re-run effect if auth state changes
-
-  const handleBookmarkToggle = async (problemId: string, isBookmarked: boolean) => {
-    try {
-      if (isBookmarked) {
-        await removeBookmark(problemId);
-        setBookmarkedProblems(bookmarkedProblems.filter(id => id !== problemId));
-      } else {
-        await addBookmark(problemId);
-        setBookmarkedProblems([...bookmarkedProblems, problemId]);
-      }
-    } catch (error) {
-      console.error("Failed to toggle bookmark:", error);
-      // Optionally show an error message to the user
-    }
-  };
 
   return (
     <div>
@@ -108,7 +72,7 @@ function ProblemsList() {
             </p>
           ) : (
             problems
-              .filter(p => showBookmarkedOnly ? bookmarkedProblems.includes(String(p.id)) : true) // Apply filter
+              .filter(p => showBookmarkedOnly ? false : true) // Remove bookmark filter logic
               .map((p) => {
                 const { id, title, emoji } = p;
 
@@ -128,8 +92,6 @@ function ProblemsList() {
                     {pb.authStore.isValid && ( // Only show button if user is logged in
                       <BookmarkButton
                         problemId={id}
-                        isBookmarked={bookmarkedProblems.includes(id)}
-                        onBookmarkToggle={handleBookmarkToggle}
                       />
                     )}
                   </div>
