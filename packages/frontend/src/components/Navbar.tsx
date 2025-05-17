@@ -1,6 +1,7 @@
 // components/Navbar.tsx
 import { useState, useEffect } from 'react';
 import { authService } from '../auth/authService';
+import { trackUmamiEvent } from '../utils/umami';
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(authService.isAuthenticated());
@@ -38,27 +39,27 @@ const Navbar = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal p-0">
             <li>
-              <a href="/list?tag=blind75">Blind75</a>
+              <a href="/list?tag=blind75" onClick={() => trackUmamiEvent('click-nav-blind75')}>Blind75</a>
             </li>
             <li>
-              <a href="/list">All Problems</a>
+              <a href="/list" onClick={() => trackUmamiEvent('click-nav-all-problems')}>All Problems</a>
             </li>
             {isAuthenticated ? (
               <>
                 <li>
-                  <a href="/list?filter=bookmark">Bookmarked Problems</a>
+                  <a href="/list?filter=bookmark" onClick={() => trackUmamiEvent('click-nav-bookmarked-problems')}>Bookmarked Problems</a>
                 </li>
                 <li>
-                  <button onClick={handleLogout}>Logout</button>
+                  <button onClick={() => { handleLogout(); trackUmamiEvent('click-logout'); }}>Logout</button>
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <a href="/login">Login</a>
+                  <a href="/login" onClick={() => trackUmamiEvent('click-nav-login')}>Login</a>
                 </li>
                 <li>
-                  <a href="/register">Register</a>
+                  <a href="/register" onClick={() => trackUmamiEvent('click-nav-register')}>Register</a>
                 </li>
               </>
             )}

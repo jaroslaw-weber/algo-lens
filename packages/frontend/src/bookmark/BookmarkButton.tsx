@@ -1,5 +1,6 @@
 import React from 'react';
 import { addBookmark, removeBookmark, pb } from '../auth/pocketbase';
+import { trackUmamiEvent } from '../utils/umami';
 
 interface BookmarkButtonProps {
   problemId: string;
@@ -17,10 +18,12 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ problemId, isBookmarked
     try {
       if (isBookmarked) {
         await removeBookmark(problemId);
+        trackUmamiEvent('click-bookmark-remove', { problemId });
         // Note: The parent component (ProblemList) will re-fetch problems
         // and update the isBookmarked prop, triggering a re-render.
       } else {
         await addBookmark(problemId);
+        trackUmamiEvent('click-bookmark-add', { problemId });
         // Note: The parent component (ProblemList) will re-fetch problems
         // and update the isBookmarked prop, triggering a re-render.
       }

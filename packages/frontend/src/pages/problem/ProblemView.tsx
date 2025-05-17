@@ -5,6 +5,8 @@ import { getProblem, getProblemState } from "../../api";
 import { useEffect, useState } from "react"; // Import useState
 import { pb } from "../../auth/pocketbase"; // Import pb
 import BookmarkButton from '../../bookmark/BookmarkButton';
+import { trackUmamiEvent } from "../../utils/umami";
+
 export function useProblemState() {
   const [problem, setProblem] = useAtom(problemAtom);
   const [step, setStep] = useAtom(stepAtom);
@@ -25,6 +27,7 @@ export function useProblemState() {
 
 export default function ProblemView() {
   const [problem, setProblem] = useAtom(problemAtom);
+  const [step] = useAtom(stepAtom);
   const state = useProblemState();
 
   async function init() {
@@ -42,10 +45,19 @@ export default function ProblemView() {
 
     //
     setProblem(p);
+    // Track problem view event
+    trackUmamiEvent('view-problem', { problemId: id });
   }
   useEffect(() => {
     init();
   }, []);
+
+  useEffect(() => {
+    // Track step navigation event
+    if (problem && step) {
+      trackUmamiEvent('navigate-step', { problemId: problem.id, step: step });
+    }
+  }, [step, problem]);
 
   return (
     <div>

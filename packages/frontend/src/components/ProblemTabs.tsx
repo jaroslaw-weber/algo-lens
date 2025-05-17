@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { trackUmamiEvent } from "../utils/umami";
 
 interface ProblemTabsProps {
   activeTab: string;
@@ -11,21 +12,21 @@ function ProblemTabs({ activeTab, setActiveTab }: ProblemTabsProps) {
       <button
         role="tab"
         className={`tab ${activeTab === "visualizer" ? "tab-active" : ""}`}
-        onClick={() => setActiveTab("visualizer")}
+        onClick={() => { setActiveTab("visualizer"); trackUmamiEvent('click-tab-visualizer'); }}
       >
         Visualizer
       </button>
       <button
         role="tab"
         className={`tab ${activeTab === "description" ? "tab-active" : ""}`}
-        onClick={() => setActiveTab("description")}
+        onClick={() => { setActiveTab("description"); trackUmamiEvent('click-tab-description'); }}
       >
         Description
       </button>
       <button
         role="tab"
         className={`tab ${activeTab === "explanation" ? "tab-active" : ""}`}
-        onClick={() => setActiveTab("explanation")}
+        onClick={() => { setActiveTab("explanation"); trackUmamiEvent('click-tab-explanation'); }}
       >
         Explanation
       </button>

@@ -1,5 +1,6 @@
 import React, { useState } from "react"; // Removed useEffect
 import { pb } from "../auth/pocketbase";
+import { trackUmamiEvent } from "../utils/umami";
 // Removed import Cookies from 'js-cookie';
 
 const LoginForm: React.FC = () => {
@@ -14,6 +15,7 @@ const LoginForm: React.FC = () => {
       // authWithPassword automatically updates pb.authStore (which uses localStorage by default)
       await pb.collection("users").authWithPassword(email, password);
       console.log("Login successful");
+      trackUmamiEvent('login-success');
       // Removed Cookies.set('token', pb.authStore.token);
       window.location.href = "/"; // Redirect after successful login
     } catch (error: any) {

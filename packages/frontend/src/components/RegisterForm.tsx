@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { pb } from "../auth/pocketbase";
 import Cookies from 'js-cookie';
+import { trackUmamiEvent } from "../utils/umami";
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ const RegisterForm: React.FC = () => {
       });
       // Store token in cookie and redirect
       console.log("Registration successful");
+      trackUmamiEvent('register-success');
       // Optionally log in the user after registration
       await pb.collection("users").authWithPassword(email, password);
       Cookies.set('token', pb.authStore.token);

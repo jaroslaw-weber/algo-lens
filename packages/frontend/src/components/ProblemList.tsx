@@ -3,6 +3,7 @@ import { getProblemList, type ProblemInfo } from "../api"; // Import ProblemInfo
 import { pb } from "../auth/pocketbase"; // Import pb
 import _ from "lodash";
 import BookmarkButton from "../bookmark/BookmarkButton";
+import { trackUmamiEvent } from "../utils/umami";
 
 function ProblemsList() {
   //
@@ -70,6 +71,7 @@ function ProblemsList() {
                   key={id}
                   href={`/problem/visualize?id=${id}`}
                   className="card border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300 block" // Updated classes for outline style
+                  onClick={() => trackUmamiEvent('click-problem-list-item', { problemId: id, title: title })}
                 >
                   <div className="card-body flex-row justify-between items-center">
                     <h2 className="card-title">
