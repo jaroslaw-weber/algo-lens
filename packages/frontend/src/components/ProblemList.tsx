@@ -3,16 +3,16 @@ import { getProblemList, type ProblemInfo } from "../api"; // Import ProblemInfo
 import type { Problem } from "algo-lens-core";
 import { addBookmark, removeBookmark, pb } from "../auth/pocketbase"; // Import bookmark functions and pb
 import { useAtom } from "jotai"; // Import useAtom
+import _ from "lodash";
 
-// Define props interface
-interface ProblemListProps {
-  tag?: string;
-  title?: string;
-  showBookmarkedOnly?: boolean; // Add new prop for filtering
-}
 
-function ProblemsList({ tag, title, showBookmarkedOnly }: ProblemListProps) {
+function ProblemsList() {
   // 
+  const url = new URL(window.location.href)
+  const tag = url.searchParams.get("tag")
+  const filter = url.searchParams.get("filter")
+  const showBookmarkedOnly = filter == "bookmark"
+  const title = _.capitalize(tag || filter || "problems")
 
   console.log("show bookmarked?", showBookmarkedOnly)
   // Use local state instead of Jotai atom

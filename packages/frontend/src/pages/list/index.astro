@@ -2,19 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import ProblemList from '../../components/ProblemList.tsx';
 import _ from 'lodash';
-const url = new URL(Astro.request.url);
-console.log("url", url)
-const tag = url.searchParams.get('tag');
-const filter = url.searchParams.get("filter")
-// Generate a more user-friendly title
-let pageTitle = 'Problems';
-if(tag){
-  pageTitle = _.capitalize(tag)
-}
 ---
 <Layout>
   <main class="container mx-auto p-6">
     {/* Pass tag and title to the client-side rendered component */}
-    <ProblemList client:load tag={tag!} title={pageTitle} showBookmarkedOnly={filter == "bookmark"}/>
+    <ProblemList client:load client:only />
   </main>
 </Layout>
