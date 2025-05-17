@@ -4,33 +4,30 @@ import type { Problem } from "algo-lens-core";
 import { pb } from "../auth/pocketbase"; // Import pb
 import { useAtom } from "jotai"; // Import useAtom
 import _ from "lodash";
-import BookmarkButton from '../bookmark/BookmarkButton';
-
+import BookmarkButton from "../bookmark/BookmarkButton";
 
 function ProblemsList() {
-  // 
-  const url = new URL(window.location.href)
-  let tag = url.searchParams.get("tag")
-  if(tag == "blind75"){
-  tag = null
+  //
+  const url = new URL(window.location.href);
+  let tag = url.searchParams.get("tag");
+  if (tag == "blind75") {
+    tag = null;
   }
-  const filter = url.searchParams.get("filter")
-  const showBookmarkedOnly = filter == "bookmark"
-  const title = _.capitalize(tag || filter || "problems")
+  const filter = url.searchParams.get("filter");
+  const showBookmarkedOnly = filter == "bookmark";
+  const title = _.capitalize(tag || filter || "problems");
 
-  console.log("show bookmarked?", showBookmarkedOnly)
+  console.log("show bookmarked?", showBookmarkedOnly);
   // Use local state instead of Jotai atom
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [bookmarkedProblemIds, setBookmarkedProblemIds] = useState<string[]>([]); // New state for bookmarked problem IDs
-
   useEffect(() => {
     const fetchProblems = async () => {
       try {
         setLoading(true);
         setError(null);
-        const ps = await getProblemList(tag!); // Pass tag to API call
+        const ps = await getProblemList(tag!, filter!); // Pass tag and filter to API call
         setProblems(ps);
       } catch (err) {
         console.error("Failed to fetch problems:", err);
@@ -40,28 +37,8 @@ function ProblemsList() {
       }
     };
 
-    const fetchBookmarkedProblems = async () => {
-      if (showBookmarkedOnly && pb.authStore.isValid) {
-        try {
-          const bookmarks = await pb.collection('bookmarks').getFullList({
-            filter: `user='${pb.authStore.model?.id}'`,
-            fields: 'problem', // Only fetch the problem ID
-          });
-          const bookmarkedIds = bookmarks.map(bookmark => bookmark.problem);
-          setBookmarkedProblemIds(bookmarkedIds);
-        } catch (error) {
-          console.error("Failed to fetch bookmarked problems:", error);
-          setBookmarkedProblemIds([]);
-        }
-      } else {
-        setBookmarkedProblemIds([]); // Clear bookmarked IDs if not showing bookmarked only or not logged in
-      }
-    };
-
     fetchProblems();
-    fetchBookmarkedProblems(); // Fetch bookmarked problems on effect run
-
-  }, [tag, showBookmarkedOnly, pb.authStore.isValid]); // Re-run effect if tag, showBookmarkedOnly, or auth status changes
+  }, [tag, showBookmarkedOnly]); // Re-run effect if tag or showBookmarkedOnly changes
 
   return (
     <div>
@@ -89,10 +66,8 @@ function ProblemsList() {
               No problems found for this category.
             </p>
           ) : (
-            problems
-              .filter(p => showBookmarkedOnly ? bookmarkedProblemIds.includes(p.id) : true) // Filter based on bookmark status
-              .map((p) => {
-                const { id, title, emoji } = p;
+            problems.map((p) => {
+              const { id, title, emoji } = p;
 
               return (
                 <a
@@ -105,11 +80,12 @@ function ProblemsList() {
                       {emoji && <span className="mr-2">{emoji}</span>}
                       {title}
                     </h2>
-                    
+
                     {/* Bookmark button */}
                     {pb.authStore.isValid && ( // Only show button if user is logged in
                       <BookmarkButton
                         problemId={id}
+                        isBookmarked={p.bookmark} // Pass the isBookmarked flag
                       />
                     )}
                   </div>

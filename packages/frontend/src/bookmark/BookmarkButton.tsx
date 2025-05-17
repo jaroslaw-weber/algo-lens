@@ -1,32 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { addBookmark, removeBookmark, pb } from '../auth/pocketbase';
 
 interface BookmarkButtonProps {
   problemId: string;
+  isBookmarked: boolean; // Receive isBookmarked as a prop
 }
 
-const BookmarkButton: React.FC<BookmarkButtonProps> = ({ problemId }) => {
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkBookmarkStatus = async () => {
-      if (pb.authStore.isValid && problemId) {
-        try {
-          const bookmark = await pb.collection('bookmarks').getFirstListItem(
-            `user='${pb.authStore.model?.id}' && problem='${problemId}'`
-          ).catch(() => null);
-          setIsBookmarked(!!bookmark);
-        } catch (error) {
-          console.error("Failed to check bookmark status:", error);
-          setIsBookmarked(false);
-        }
-      } else {
-        setIsBookmarked(false);
-      }
-    };
-
-    checkBookmarkStatus();
-  }, [problemId, pb.authStore.isValid]);
+const BookmarkButton: React.FC<BookmarkButtonProps> = ({ problemId, isBookmarked }) => {
 
   const handleToggle = async () => {
     if (!pb.authStore.isValid) {
@@ -37,10 +17,12 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ problemId }) => {
     try {
       if (isBookmarked) {
         await removeBookmark(problemId);
-        setIsBookmarked(false);
+        // Note: The parent component (ProblemList) will re-fetch problems
+        // and update the isBookmarked prop, triggering a re-render.
       } else {
         await addBookmark(problemId);
-        setIsBookmarked(true);
+        // Note: The parent component (ProblemList) will re-fetch problems
+        // and update the isBookmarked prop, triggering a re-render.
       }
     } catch (error) {
       console.error("Failed to toggle bookmark:", error);

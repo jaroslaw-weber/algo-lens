@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const problemListQuerySchema = z.object({
   tag: z.string().optional(),
+  filter: z.string().optional(),
 });
 
 export const problemIdParamSchema = z.object({
@@ -19,3 +20,11 @@ export const problemStateParamsSchema = z.object({
 export const problemSizeParamsSchema = z.object({
   problemId: z.string().min(1, "Problem ID is required"),
 });
+
+export const problemSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  isBookmarked: z.boolean(),
+});
+
+export const problemListSchema = z.array(problemSchema);

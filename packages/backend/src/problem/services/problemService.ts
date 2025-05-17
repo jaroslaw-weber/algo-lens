@@ -7,8 +7,31 @@ import { ProblemStateCache } from "../../cache/ProblemStateCache";
 
 const stateCache = new ProblemStateCache();
 
-export async function getAllProblemsService() {
-  return coreGetAllProblems();
+export async function getAllProblemsService(userId?: string, filter?: string) {
+  let allProblems = await coreGetAllProblems();
+  if (userId) {
+    const bookmarks = await pb.collection("bookmarks").getList(1, 50, {
+      // Fetching up to 50 bookmarks, adjust as needed
+      filter: `user='${userId}'`,
+      expand: "problem", // Expand the problem relation
+    });
+    const ids = bookmarks.items
+      .map((bookmark) => (bookmark.expand?.problem as any)?.id)
+      .filter((id) => id);
+
+    let bookmarkedProblemIds = new Set<string>(ids);
+
+    for (const problem of allProblems) {
+      if (bookmarkedProblemIds.has(problem.id)) {
+        problem.bookmark = true;
+      }
+    }
+  }
+
+  if (filter == "bookmark") {
+    allProblems = allProblems.filter((x) => x.bookmark);
+  }
+  return allProblems;
 }
 
 export async function getProblemByIdService(id: string) {
@@ -29,12 +52,11 @@ export async function getProblemStateService(problemId: string, step: number) {
 
 export async function getProblemSizeService(problemId: string) {
   const problem = await coreGetProblemById(problemId);
-   if (!problem) {
+  if (!problem) {
     throw new Error(`Problem not found: ${problemId}`);
   }
   return stateCache.getSize(problem);
 }
-
 
 export function preserialize(state: ProblemState): any {
   const result = cloneDeep(state);
@@ -54,24 +76,8 @@ export function preserialize(state: ProblemState): any {
   return result;
 }
 
-import PocketBase from 'pocketbase';
+import PocketBase from "pocketbase";
 
-const PB_URL = process.env.PUBLIC_POCKETBASE_URL || 'https://db-algolens.jarek-backend.top/';
+const PB_URL =
+  process.env.PUBLIC_POCKETBASE_URL || "https://db-algolens.jarek-backend.top/";
 const pb = new PocketBase(PB_URL);
-
-export async function getBookmarkedProblemsService(userId: string) {
-  try {
-    const bookmarks = await pb.collection('bookmarks').getList(1, 50, { // Fetching up to 50 bookmarks, adjust as needed
-      filter: `user='${userId}'`,
-    });
-
-    // Extract problem details from expanded relation
-    const bookmarkedProblems = bookmarks.items.map(bookmark => bookmark.problem);
-
-    return bookmarkedProblems;
-  } catch (error)
- {
-    console.error(`Error fetching bookmarked problems for user ${userId}:`, error);
-    throw error;
-  }
-}

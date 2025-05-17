@@ -10,7 +10,6 @@ import {
   getProblemStateService,
   getProblemSizeService,
   preserialize,
-  getBookmarkedProblemsService
 } from "./problem/services/problemService";
 
 import { problemListQuerySchema, problemIdParamSchema, problemStateParamsSchema, problemSizeParamsSchema } from "./problem/schemas";
@@ -28,17 +27,27 @@ app.get("/health", (c) => {
   return c.json({ status: "ok" });
 });
 
-app.get("/problem", async (c) => {
-  const { tag } = problemListQuerySchema.parse(c.req.query());
-  const all = await getAllProblemsService();
+app.get("/problem", authMiddleware, async (c: Context<{ Variables: AuthEnv['Variables'] }>) => {
+  const { tag, filter } = problemListQuerySchema.parse(c.req.query());
+  const user = c.get("user"); // Get user object from authMiddleware context
+  const userId = user?.id; // Get user ID if user is authenticated
+
+  const allProblemsWithBookmarkStatus = await getAllProblemsService(userId, filter);
 
   const filteredProblems = tag
-    ? all.filter((p) => p.tags && p.tags.includes(tag))
-    : all;
+    ? allProblemsWithBookmarkStatus.filter((p) => p.tags && p.tags.includes(tag))
+    : allProblemsWithBookmarkStatus;
 
-  const list = filteredProblems.map((x) =>
-    pick(x, ["id", "title", "difficulty", "emoji"])
-  );
+  // The service now returns objects with isBookmarked, so we don't need to pick
+  // We should ensure the returned data conforms to problemListSchema
+  const list = filteredProblems.map(problem => ({
+    id: problem.id,
+    title: problem.title,
+    difficulty: problem.difficulty,
+    emoji: problem.emoji,
+    isBookmarked: problem.isBookmarked,
+  }));
+
   return c.json(list);
 });
 
@@ -112,19 +121,5 @@ app.get("/problem/:problemId/size", async (c) => {
   return c.json({ size });
 });
 
-app.get("/user/bookmarks", authMiddleware, async (c: Context<{ Variables: AuthEnv['Variables'] }>) => {
-  const user = c.get("user"); // Get user object from authMiddleware context
-  if (!user || !user.id) {
-    return c.json({ error: "User not authenticated" }, 401);
-  }
-
-  try {
-    const bookmarkedProblems = await getBookmarkedProblemsService(user.id);
-    return c.json(bookmarkedProblems);
-  } catch (error) {
-    console.error("Error in /user/bookmarks route:", error);
-    return c.json({ error: "Failed to fetch bookmarked problems" }, 500);
-  }
-});
 
 export default app;

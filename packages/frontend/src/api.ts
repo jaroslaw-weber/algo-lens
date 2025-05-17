@@ -9,16 +9,20 @@ export type ProblemInfo = {
   title: string;
   difficulty: string;
   emoji?: string; // Emoji might be optional
+  bookmark?: boolean; // Added isBookmarked flag
 };
 
 // 
 const be = ky.create({ prefixUrl: BACKEND_URL });
 
 // Updated to accept an optional tag and return ProblemInfo array
-export async function getProblemList(tag?: string): Promise<ProblemInfo[]> {
+export async function getProblemList(tag?: string, filter?: string): Promise<ProblemInfo[]> {
   const searchParams: Record<string, string> = {};
   if (tag) {
     searchParams.tag = tag;
+  }
+  if (filter) {
+    searchParams.filter = filter;
   }
   // Use ProblemInfo[] as the expected return type from the endpoint now
   const result = await be.get<ProblemInfo[]>("problem", { searchParams });
@@ -59,7 +63,3 @@ export async function getRandomProblem() {
   return result.json();
 }
 
-export async function getBookmarkedProblems(): Promise<ProblemInfo[]> {
-  const result = await be.get<ProblemInfo[]>("user/bookmarks");
-  return result.json();
-}
