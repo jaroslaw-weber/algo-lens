@@ -1,25 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProblemList from '../../components/ProblemList.tsx';
-// Removed: import { capitalCase } from 'change-case';
-// Parse the URL to get query parameters
+import _ from 'lodash';
 const url = new URL(Astro.request.url);
-const listId = url.searchParams.get('listId');
-// Determine the tag to filter by. Undefined means fetch all.
-const tag = listId === 'all' ? undefined : listId;
+console.log("url", url)
+const tag = url.searchParams.get('tag');
+const filter = url.searchParams.get("filter")
 // Generate a more user-friendly title
 let pageTitle = 'Problems';
-if (listId && listId !== 'all') {
-  // Basic capitalization: "blind75" -> "Blind75"
-  const formattedListId = listId.charAt(0).toUpperCase() + listId.slice(1);
-  pageTitle = formattedListId
-} else if (listId === 'all') {
-  pageTitle = 'All Problems';
+if(tag){
+  pageTitle = _.capitalize(tag)
 }
 ---
 <Layout>
   <main class="container mx-auto p-6">
     {/* Pass tag and title to the client-side rendered component */}
-    <ProblemList client:load tag={tag!} title={pageTitle} />
+    <ProblemList client:load tag={tag!} title={pageTitle} showBookmarkedOnly={filter == "bookmark"}/>
   </main>
 </Layout>

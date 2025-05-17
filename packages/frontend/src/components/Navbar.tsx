@@ -44,9 +44,14 @@ const Navbar = () => {
               <a href="/list">All Problems</a>
             </li>
             {isAuthenticated ? (
-              <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
+              <>
+                <li>
+                  <a href="/list?bookmarked=true">Bookmarked Problems</a>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              </>
             ) : (
               <>
                 <li>

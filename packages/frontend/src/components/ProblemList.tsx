@@ -8,11 +8,13 @@ import { useAtom } from "jotai"; // Import useAtom
 interface ProblemListProps {
   tag?: string;
   title?: string;
+  showBookmarkedOnly?: boolean; // Add new prop for filtering
 }
 
-function ProblemsList({ tag, title }: ProblemListProps) {
+function ProblemsList({ tag, title, showBookmarkedOnly }: ProblemListProps) {
   // 
 
+  console.log("show bookmarked?", showBookmarkedOnly)
   // Use local state instead of Jotai atom
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -106,8 +108,10 @@ function ProblemsList({ tag, title }: ProblemListProps) {
               No problems found for this category.
             </p>
           ) : (
-            problems.map((p) => {
-              const { id, title, emoji } = p;
+            problems
+              .filter(p => showBookmarkedOnly ? bookmarkedProblems.includes(String(p.id)) : true) // Apply filter
+              .map((p) => {
+                const { id, title, emoji } = p;
 
               return (
                 <a
