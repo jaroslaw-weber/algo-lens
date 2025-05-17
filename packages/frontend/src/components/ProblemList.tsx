@@ -1,41 +1,40 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getProblemList, type ProblemInfo } from "../api"; // Import ProblemInfo
-import type { Problem } from "algo-lens-core";
+import { pb } from "../auth/pocketbase"; // Import pb
+import _ from "lodash";
+import BookmarkButton from "../bookmark/BookmarkButton";
 
-// Define props interface
-interface ProblemListProps {
-  tag?: string;
-  title?: string;
-}
-
-function ProblemsList({ tag, title }: ProblemListProps) {
-  // 
+function ProblemsList() {
+  //
+  const url = new URL(window.location.href);
+  let tag = url.searchParams.get("tag");
+  if (tag == "blind75") {
+    tag = null;
+  }
+  const filter = url.searchParams.get("filter");
+  const title = _.capitalize(tag || filter || "problems");
 
   // Use local state instead of Jotai atom
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        // 
         setLoading(true);
         setError(null);
-        const ps = await getProblemList(tag); // Pass tag to API call
-        // 
+        const ps = await getProblemList(tag!, filter!); // Pass tag and filter to API call
         setProblems(ps);
       } catch (err) {
         console.error("Failed to fetch problems:", err);
         setError("Failed to load problems. Please try refreshing.");
       } finally {
         setLoading(false);
-        // 
       }
     };
 
     fetchProblems();
-  }, [tag]); // Re-run effect if tag changes
+  }, [tag, filter]); // Re-run effect if tag or showBookmarkedOnly changes
 
   return (
     <div>
@@ -72,11 +71,19 @@ function ProblemsList({ tag, title }: ProblemListProps) {
                   href={`/problem/visualize?id=${id}`}
                   className="card border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300 block" // Updated classes for outline style
                 >
-                  <div className="card-body">
+                  <div className="card-body flex-row justify-between items-center">
                     <h2 className="card-title">
                       {emoji && <span className="mr-2">{emoji}</span>}
                       {title}
                     </h2>
+
+                    {/* Bookmark button */}
+                    {pb.authStore.isValid && ( // Only show button if user is logged in
+                      <BookmarkButton
+                        problemId={id}
+                        isBookmarked={p.bookmark!} // Pass the isBookmarked flag
+                      />
+                    )}
                   </div>
                 </a>
               );

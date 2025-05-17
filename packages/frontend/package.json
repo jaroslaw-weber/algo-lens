@@ -23,9 +23,11 @@
     "enquirer": "^2.4.1",
     "groq-sdk": "^0.3.3",
     "jotai": "^2.12.2",
+    "js-cookie": "^3.0.5",
     "ky": "^1.8.0",
     "lodash": "^4.17.21",
     "next": "^14.1.0",
+    "pocketbase": "^0.26.0",
     "postcss": "^8.4.38",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
@@ -35,11 +37,12 @@
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.1",
     "@types/node": "^20.11.6",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
-    "daisyui": "^5.0.22",
+    "daisyui": "^5.0.35",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "typescript": "^5.3.3"

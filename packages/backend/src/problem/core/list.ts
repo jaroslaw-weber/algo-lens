@@ -1,10 +1,9 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import { Problem, ProblemGroup } from "algo-lens-core";
-import { generateCodeFromSteps } from "./codeGenerator";
 
 // Public API
-import { loadProblemWithId } from "./loadProblemWithId";
+import { loadProblemWithId } from "./load";
 
 //cache problem list
 let problemFiles: string[] = [];

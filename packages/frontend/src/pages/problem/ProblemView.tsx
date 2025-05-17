@@ -2,8 +2,9 @@ import { useAtom } from "jotai";
 import ProblemVisualizer from "../../components/ProblemVisualizer";
 import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../../atom";
 import { getProblem, getProblemState } from "../../api";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react"; // Import useState
+import { pb } from "../../auth/pocketbase"; // Import pb
+import BookmarkButton from '../../bookmark/BookmarkButton';
 export function useProblemState() {
   const [problem, setProblem] = useAtom(problemAtom);
   const [step, setStep] = useAtom(stepAtom);
@@ -27,22 +28,29 @@ export default function ProblemView() {
   const state = useProblemState();
 
   async function init() {
-    // 
+    //
+    
     if (problem) {
       return;
     }
     //get id from url query parameters
     const url = new URL(window.location.href);
     const id = url.searchParams.get("id");
-    // 
+    //
     //fetch problem details from backend
     const p = await getProblem(id!);
 
-    // 
+    //
     setProblem(p);
   }
   useEffect(() => {
     init();
   }, []);
-  return <div>{problem && state && <ProblemVisualizer />}</div>;
+
+  return (
+    <div>
+
+      {problem && state && <ProblemVisualizer />}
+    </div>
+  );
 }

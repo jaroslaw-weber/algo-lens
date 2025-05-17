@@ -44,6 +44,7 @@ export interface Problem<Input, State> {
   codegen?: {
     signature: string;
   };
+  bookmark?:boolean
 }
 
 export type ProblemGroup = {

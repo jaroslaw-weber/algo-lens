@@ -2,9 +2,7 @@ import * as ts from "typescript";
 import { Problem, ProblemState } from "algo-lens-core";
 import { cloneDeep, last, isEqual } from "lodash";
 import { describe, it, expect } from "bun:test";
-import * as fs from "fs";
-import * as path from "path";
-import { loadProblemWithId } from "./loadProblemWithId";
+import { loadProblemWithId } from "./load";
 
 export async function runTests(problem: Problem<any, ProblemState>) {
   const { testcases, metadata } = problem;
