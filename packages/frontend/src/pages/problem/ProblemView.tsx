@@ -4,7 +4,7 @@ import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../../atom
 import { getProblem, getProblemState } from "../../api";
 import { useEffect, useState } from "react"; // Import useState
 import { pb } from "../../auth/pocketbase"; // Import pb
-import BookmarkButton from '../../components/BookmarkButton';
+import BookmarkButton from '../../bookmark/BookmarkButton';
 export function useProblemState() {
   const [problem, setProblem] = useAtom(problemAtom);
   const [step, setStep] = useAtom(stepAtom);

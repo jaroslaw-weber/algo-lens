@@ -4,7 +4,7 @@ import type { Problem } from "algo-lens-core";
 import { pb } from "../auth/pocketbase"; // Import pb
 import { useAtom } from "jotai"; // Import useAtom
 import _ from "lodash";
-import BookmarkButton from './BookmarkButton';
+import BookmarkButton from '../bookmark/BookmarkButton';
 
 
 function ProblemsList() {

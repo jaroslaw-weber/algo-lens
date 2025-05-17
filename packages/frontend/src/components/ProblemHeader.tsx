@@ -1,6 +1,6 @@
 import React from 'react';
 import { pb } from '../auth/pocketbase';
-import BookmarkButton from './BookmarkButton';
+import BookmarkButton from '../bookmark/BookmarkButton';
 
 interface ProblemHeaderProps {
   title: string;
