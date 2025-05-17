@@ -2,8 +2,8 @@ import { useAtom } from "jotai";
 import ProblemVisualizer from "../../components/ProblemVisualizer";
 import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../../atom";
 import { getProblem, getProblemState } from "../../api";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react"; // Import useState
+import { addBookmark, removeBookmark, pb } from "../../auth/pocketbase"; // Import bookmark functions and pb
 export function useProblemState() {
   const [problem, setProblem] = useAtom(problemAtom);
   const [step, setStep] = useAtom(stepAtom);
@@ -25,6 +25,7 @@ export function useProblemState() {
 export default function ProblemView() {
   const [problem, setProblem] = useAtom(problemAtom);
   const state = useProblemState();
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false); // State for bookmark status
 
   async function init() {
     // 
@@ -44,5 +45,71 @@ export default function ProblemView() {
   useEffect(() => {
     init();
   }, []);
-  return <div>{problem && state && <ProblemVisualizer />}</div>;
+
+  useEffect(() => {
+    const checkBookmarkStatus = async () => {
+      if (pb.authStore.isValid && problem) {
+        try {
+          const bookmark = await pb.collection('bookmarks').getFirstListItem(
+            `user='${pb.authStore.model?.id}' && problem='${problem.id}'`
+          ).catch(() => null); // Use catch to handle no record found
+          setIsBookmarked(!!bookmark);
+        } catch (error) {
+          console.error("Failed to check bookmark status:", error);
+          setIsBookmarked(false); // Assume not bookmarked on error
+        }
+      } else {
+        setIsBookmarked(false); // Not bookmarked if user is not logged in
+      }
+    };
+
+    checkBookmarkStatus();
+  }, [problem, pb.authStore.isValid]); // Re-run effect if problem or auth state changes
+
+  const handleBookmarkToggle = async () => {
+    if (!pb.authStore.isValid || !problem) {
+      alert("Please log in to bookmark problems.");
+      return;
+    }
+
+    try {
+      if (isBookmarked) {
+        await removeBookmark(problem.id!);
+        setIsBookmarked(false);
+      } else {
+        await addBookmark(problem.id!);
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      console.error("Failed to toggle bookmark:", error);
+      // Optionally show an error message to the user
+    }
+  };
+
+  return (
+    <div>
+      {/* Start button */}
+      {problem && ( // Only show button if problem is loaded
+        <button
+          className="btn btn-ghost btn-circle"
+          onClick={() => {
+            console.log(`Start problem with ID: ${problem.id}`); // Placeholder functionality
+          }}
+        >
+          <i className="fas fa-play"></i> {/* Play icon for start */}
+        </button>
+      )}
+      {/* Bookmark button */}
+      {problem && pb.authStore.isValid && ( // Only show button if problem is loaded and user is logged in
+        <button className="btn btn-ghost btn-circle" onClick={handleBookmarkToggle}>
+          {isBookmarked ? (
+            <i className="fas fa-star text-yellow-500"></i> // Filled star
+          ) : (
+            <i className="far fa-star"></i> // Outline star
+          )}
+        </button>
+      )}
+      {problem && state && <ProblemVisualizer />}
+    </div>
+  );
 }

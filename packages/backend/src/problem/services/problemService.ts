@@ -53,3 +53,25 @@ export function preserialize(state: ProblemState): any {
 
   return result;
 }
+
+import PocketBase from 'pocketbase';
+
+const PB_URL = process.env.PUBLIC_POCKETBASE_URL || 'https://db-algolens.jarek-backend.top/';
+const pb = new PocketBase(PB_URL);
+
+export async function getBookmarkedProblemsService(userId: string) {
+  try {
+    const bookmarks = await pb.collection('bookmarks').getList(1, 50, { // Fetching up to 50 bookmarks, adjust as needed
+      filter: `user='${userId}'`,
+    });
+
+    // Extract problem details from expanded relation
+    const bookmarkedProblems = bookmarks.items.map(bookmark => bookmark.problem);
+
+    return bookmarkedProblems;
+  } catch (error)
+ {
+    console.error(`Error fetching bookmarked problems for user ${userId}:`, error);
+    throw error;
+  }
+}

@@ -1,7 +1,7 @@
-import { Hono } from "hono";
+import { Hono, Context } from "hono";
 import { pick, sample } from "lodash";
 import { cors } from "hono/cors";
-import { authMiddleware } from './auth/middleware';
+import { authMiddleware, AuthEnv } from './auth/middleware';
 import { z } from 'zod';
 
 import {
@@ -9,12 +9,13 @@ import {
   getProblemByIdService,
   getProblemStateService,
   getProblemSizeService,
-  preserialize
+  preserialize,
+  getBookmarkedProblemsService
 } from "./problem/services/problemService";
 
 import { problemListQuerySchema, problemIdParamSchema, problemStateParamsSchema, problemSizeParamsSchema } from "./problem/schemas";
 
-const app = new Hono();
+const app = new Hono<{ Variables: AuthEnv['Variables'] }>();
 
 app.use(cors());
 app.use(authMiddleware);
@@ -109,6 +110,21 @@ app.get("/problem/:problemId/size", async (c) => {
   const size = await getProblemSizeService(problemId);
 
   return c.json({ size });
+});
+
+app.get("/user/bookmarks", authMiddleware, async (c: Context<{ Variables: AuthEnv['Variables'] }>) => {
+  const user = c.get("user"); // Get user object from authMiddleware context
+  if (!user || !user.id) {
+    return c.json({ error: "User not authenticated" }, 401);
+  }
+
+  try {
+    const bookmarkedProblems = await getBookmarkedProblemsService(user.id);
+    return c.json(bookmarkedProblems);
+  } catch (error) {
+    console.error("Error in /user/bookmarks route:", error);
+    return c.json({ error: "Failed to fetch bookmarked problems" }, 500);
+  }
 });
 
 export default app;

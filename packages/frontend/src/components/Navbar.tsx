@@ -43,9 +43,6 @@ const Navbar = () => {
             <li>
               <a href="/list">All Problems</a>
             </li>
-            <li>
-              <a href="/settings">Settings</a>
-            </li>
             {isAuthenticated ? (
               <li>
                 <button onClick={handleLogout}>Logout</button>

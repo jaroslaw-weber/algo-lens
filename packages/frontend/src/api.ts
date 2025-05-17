@@ -58,3 +58,8 @@ export async function getRandomProblem() {
   // ky automatically throws for non-2xx responses, so we just parse
   return result.json();
 }
+
+export async function getBookmarkedProblems(): Promise<ProblemInfo[]> {
+  const result = await be.get<ProblemInfo[]>("user/bookmarks");
+  return result.json();
+}

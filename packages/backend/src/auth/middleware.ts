@@ -1,7 +1,15 @@
 import { Context, Next } from 'hono';
 import { pb } from '../index'; // Assuming pb is exported from index.ts
+import { RecordModel } from 'pocketbase';
+import { Env } from 'hono';
 
-export const authMiddleware = async (c: Context, next: Next) => {
+export interface AuthEnv extends Env {
+    Variables: {
+        user: RecordModel | undefined;
+    };
+}
+
+export const authMiddleware = async (c: Context<AuthEnv>, next: Next) => {
     
     const authHeader = c.req.header('Authorization');
     const token = authHeader?.split(' ')[1]; // Extract token from "Bearer <token>"
@@ -18,7 +26,12 @@ export const authMiddleware = async (c: Context, next: Next) => {
             // If authentication is successful, the authStore will be updated
             // You can access the authenticated user via pb.authStore.model
             // You might want to attach the user to the context for later use in route handlers
-            c.set('user', pb.authStore.model);
+            // If authentication is successful, the authStore will be updated
+            // You can access the authenticated user via pb.authStore.model
+            // You might want to attach the user to the context for later use in route handlers
+            if (pb.authStore.model) {
+                c.set('user', pb.authStore.model);
+            }
 
             // Proceed to the next middleware or route handler
             await next();
