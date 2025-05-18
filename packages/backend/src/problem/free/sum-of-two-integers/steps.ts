@@ -22,7 +22,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     const prevA = a;
     const prevB = b;
     carry = prevA & prevB;
-    l.binaryOperation("get carry", { a, b }, "AND");
+    l.binaryOperation("get carry", { prevA, prevB }, "AND");
     // State after calculating carry (Breakpoint 2)
     l.binary({ a: prevA }, {}); // Show 'a' before it's updated in the next step
     l.binary({ b: prevB }, {}); // Show 'b' before it's updated
@@ -31,10 +31,10 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.breakpoint(2);
 
     a = prevA ^ prevB;
-    l.binaryOperation("get sum without carry", { a: prevA, b: prevB }, "XOR"); // Add logging for XOR
+    l.binaryOperation("get sum without carry", { prevA, prevB }, "XOR"); // Add logging for XOR
     // State after calculating sum without carry (Breakpoint 3)
     l.binary({ a }); // Show new 'a'
-    l.binary({ b: prevB }); // Show 'b' before it's updated
+    l.binary({ b }); // Show 'b' before it's updated
 
     l.binary({ carry });
     l.comment = `Calculate the sum of the bits without considering the carry by performing a bitwise XOR operation between the current values of a (${prevA.toString(2)}) and b (${prevB.toString(2)}). The XOR operation gives the sum bit when the corresponding bits are different. The result is ${a.toString(2)}.`;
@@ -47,7 +47,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.breakpoint(4);
 
     b = carry << 1;
-    l.binaryOperation("shift carry", { carry, one: 1 }, "<<"); // Add logging for left shift (using 1 as the shift amount)
+    //todo: l.binaryOperation("shift carry", { carry, one: 1 }, "<<"); // Add logging for left shift (using 1 as the shift amount)
     // State after shifting carry (Breakpoint 4)
     l.binary({ a }); // Show 'a' (which is sum without carry)
     l.binary({ b }); // b now holds the shifted carry
