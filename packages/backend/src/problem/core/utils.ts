@@ -181,7 +181,7 @@ export function asIntervals(
   const result: IntervalVariable = {
     label,
     type: "interval",
-    value: deepClone2DArray(arr),
+    value: arr,
     indexes: highlight,
     options: {
       min,
@@ -300,10 +300,6 @@ export function asBinary(
   }
 
   return result;
-}
-
- function deepClone2DArray<T>(array: T[][]): T[][] {
-  return array.map((row) => cloneDeep(row));
 }
 
 export function asStringArray(
