@@ -177,8 +177,8 @@ export function generateSteps(heights: number[][]) {
 
     l.group("pointers", { r, c });
 
-    const neighborsVisited: Pointer2D[] = []; // Store as Pointer2D
-    const currentCellHighlight: Pointer2D = { r, c }; // Single Pointer2D
+    const neighborsVisited: Pointer2D[] = []; // HIDE
+    const currentCellHighlight: Pointer2D = { r, c }; // HIDE
 
     for (const [dr, dc] of [
       [-1, 0],
@@ -202,7 +202,7 @@ export function generateSteps(heights: number[][]) {
       ) {
         atlanticVisited[nr][nc] = true;
         atlanticQueue.push([nr, nc]);
-        neighborsVisited.push({ r: nr, c: nc, label: "reachable" });
+        neighborsVisited.push({ r: nr, c: nc, label: "reachable" }); // HIDE
       }
     }
 
@@ -232,9 +232,7 @@ export function generateSteps(heights: number[][]) {
     for (let c = 0; c < cols; c++) {
       if (pacificVisited[r][c] && atlanticVisited[r][c]) {
         result.push([r, c]);
-        // HIDE_START
-        resultCellsHighlight.push({ r, c, label: "match" });
-        // HIDE_END
+        resultCellsHighlight.push({ r, c, label: "match" }); // HIDE
       }
     }
   }
