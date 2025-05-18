@@ -42,8 +42,8 @@ export function generateSteps(heights: number[][]) {
   );
   const result: [number, number][] = []; // Keep using result for final output
 
-  l.groupOptions.set("size", {min:0,max:Math.max(cols, rows)});
-  l.groupOptions.set("pointers", {min:0, max:Math.max(cols, rows)});
+  l.groupOptions.set("size", { min: 0, max: Math.max(cols, rows) });
+  l.groupOptions.set("pointers", { min: 0, max: Math.max(cols, rows) });
   l.group("size", { cols, rows });
   // Corrected: Remove invalid { group: ... } and label properties from non-existent options object
   l.grid("heights", heights); // Replaced l.array2d with l.grid
@@ -61,14 +61,14 @@ export function generateSteps(heights: number[][]) {
     if (!pacificVisited[r][0]) {
       pacificQueue.push([r, 0]);
       pacificVisited[r][0] = true;
-      initialPacificCells.push({ r, c: 0 });
+      initialPacificCells.push({ r, c: 0, label: "add to queue" });
     }
   }
   for (let c = 1; c < cols; c++) {
     if (!pacificVisited[0][c]) {
       pacificQueue.push([0, c]);
       pacificVisited[0][c] = true;
-      initialPacificCells.push({ r: 0, c });
+      initialPacificCells.push({ r: 0, c, label: "add to queue" });
     }
   }
 
@@ -90,7 +90,7 @@ export function generateSteps(heights: number[][]) {
   while (pacificQueue.length > 0) {
     const [r, c] = pacificQueue.shift()!;
 
-    l.group("pointers", { r, c });
+    l.group("pointers", { r, c, label: "search" });
 
     const neighborsVisited: Pointer2D[] = []; // Store as Pointer2D
     const currentCellHighlight: Pointer2D = { r, c }; // Single Pointer2D
@@ -116,7 +116,7 @@ export function generateSteps(heights: number[][]) {
       ) {
         pacificVisited[nr][nc] = true;
         pacificQueue.push([nr, nc]);
-        neighborsVisited.push({ r: nr, c: nc });
+        neighborsVisited.push({ r: nr, c: nc, label: "reachable" });
       }
     }
 
@@ -146,14 +146,14 @@ export function generateSteps(heights: number[][]) {
     if (!atlanticVisited[r][cols - 1]) {
       atlanticQueue.push([r, cols - 1]);
       atlanticVisited[r][cols - 1] = true;
-      initialAtlanticCells.push({ r, c: cols - 1 });
+      initialAtlanticCells.push({ r, c: cols - 1, label: "add to queue" });
     }
   }
   for (let c = 0; c < cols - 1; c++) {
     if (!atlanticVisited[rows - 1][c]) {
       atlanticQueue.push([rows - 1, c]);
       atlanticVisited[rows - 1][c] = true;
-      initialAtlanticCells.push({ r: rows - 1, c });
+      initialAtlanticCells.push({ r: rows - 1, c, label: "add to queue" });
     }
   }
 
@@ -202,7 +202,7 @@ export function generateSteps(heights: number[][]) {
       ) {
         atlanticVisited[nr][nc] = true;
         atlanticQueue.push([nr, nc]);
-        neighborsVisited.push({ r: nr, c: nc });
+        neighborsVisited.push({ r: nr, c: nc, label: "reachable" });
       }
     }
 
@@ -232,7 +232,9 @@ export function generateSteps(heights: number[][]) {
     for (let c = 0; c < cols; c++) {
       if (pacificVisited[r][c] && atlanticVisited[r][c]) {
         result.push([r, c]);
-        resultCellsHighlight.push({ r, c });
+        // HIDE_START
+        resultCellsHighlight.push({ r, c, label: "match" });
+        // HIDE_END
       }
     }
   }
