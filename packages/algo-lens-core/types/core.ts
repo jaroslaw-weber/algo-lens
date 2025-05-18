@@ -90,7 +90,7 @@ export interface Pointer {
   value: number;
 
   /** Color of the pointer. */
-  color?: 1 | 2 | 3;
+  color?: string
 
   label?: string;
   dir?: string//"left" | "right" | "up" | "bottom"

@@ -15,7 +15,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   // #1 Initialize carry
   l.binary({ a });
   l.binary({ b });
-  l.comment = `Initialize the process with the two integers, a = ${a} (${a.toString( 2 )}) and b = ${b} (${b.toString(2)}). The goal is to calculate their sum using bitwise operations, without using the standard addition (+) and subtraction (-) operators.`;
+  l.comment = `Initialize the process with the two integers, a = ${a} (${a.toString(2)}) and b = ${b} (${b.toString(2)}). The goal is to calculate their sum using bitwise operations, without using the standard addition (+) and subtraction (-) operators.`;
   l.breakpoint(1);
 
   while (b !== 0) {
@@ -23,10 +23,10 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     const prevB = b;
     carry = prevA & prevB;
     // State after calculating carry (Breakpoint 2)
-    l.binary({ a: prevA }); // Show 'a' before it's updated in the next step
-    l.binary({ b: prevB }); // Show 'b' before it's updated
+    l.binary({ a: prevA }, {}); // Show 'a' before it's updated in the next step
+    l.binary({ b: prevB }, {}); // Show 'b' before it's updated
     l.binary({ carry });
-    l.comment = `Calculate the 'carry' bits by performing a bitwise AND operation between the current values of a (${prevA.toString( 2 )}) and b (${prevB.toString(2)}). A carry is generated when both corresponding bits are 1. The result of the AND operation is ${carry.toString(2)}.`;
+    l.comment = `Calculate the 'carry' bits by performing a bitwise AND operation between the current values of a (${prevA.toString(2)}) and b (${prevB.toString(2)}). A carry is generated when both corresponding bits are 1. The result of the AND operation is ${carry.toString(2)}.`;
     l.breakpoint(2);
 
     a = prevA ^ prevB;
@@ -35,7 +35,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.binary({ b: prevB }); // Show 'b' before it's updated
 
     l.binary({ carry });
-    l.comment = `Calculate the sum of the bits without considering the carry by performing a bitwise XOR operation between the current values of a (${prevA.toString( 2 )}) and b (${prevB.toString(2)}). The XOR operation gives the sum bit when the corresponding bits are different. The result is ${a.toString(2)}.`;
+    l.comment = `Calculate the sum of the bits without considering the carry by performing a bitwise XOR operation between the current values of a (${prevA.toString(2)}) and b (${prevB.toString(2)}). The XOR operation gives the sum bit when the corresponding bits are different. The result is ${a.toString(2)}.`;
     l.breakpoint(3);
 
     // #4 Calculate sum bits (without carry)
@@ -49,14 +49,14 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.binary({ a }); // Show 'a' (which is sum without carry)
     l.binary({ b }); // b now holds the shifted carry
     // l.binary({ carry }); // carry here is the value *before* b = carry << 1
-    l.comment = `Shift the 'carry' bits one position to the left (carry << 1). This prepares the carry to be added to the next significant bit position in the next iteration. The shifted carry value is ${b.toString( 2 )}. The new values for the next iteration are a = ${a.toString(2)} and b = ${b.toString( 2 )}.`;
+    l.comment = `Shift the 'carry' bits one position to the left (carry << 1). This prepares the carry to be added to the next significant bit position in the next iteration. The shifted carry value is ${b.toString(2)}. The new values for the next iteration are a = ${a.toString(2)} and b = ${b.toString(2)}.`;
     l.breakpoint(4);
   }
 
   // #6 Loop finished (no more carry)
   l.binary({ a }); // Final sum is in a
   l.binary({ b }); // b is 0
-  if (carry!==undefined) {
+  if (carry !== undefined) {
     l.binary({ carry }); // carry from the last iteration (could be 0 or the last non-zero carry)
   }
   l.breakpoint(6);
@@ -67,7 +67,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
   l.binary({ b }); // b should be 0 here
   // Optionally log the final carry if it was defined in the last iteration
   // For the explanation, we'll assume carry might be relevant if b was non-zero in the last iteration
-  l.comment = `The loop continues as long as there is a carry (b !== 0). When b becomes 0, it means there are no more carries to process. The final sum is stored in a = ${a} (${a.toString( 2 )}).`;
+  l.comment = `The loop continues as long as there is a carry (b !== 0). When b becomes 0, it means there are no more carries to process. The final sum is stored in a = ${a} (${a.toString(2)}).`;
   if (carry !== undefined) {
     // if carry was calculated in the loop
 
