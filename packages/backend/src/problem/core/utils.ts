@@ -302,7 +302,7 @@ export function asBinary(
   return result;
 }
 
-export function deepClone2DArray<T>(array: T[][]): T[][] {
+ function deepClone2DArray<T>(array: T[][]): T[][] {
   return array.map((row) => cloneDeep(row));
 }
 
