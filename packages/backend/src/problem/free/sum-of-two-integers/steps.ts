@@ -22,6 +22,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     const prevA = a;
     const prevB = b;
     carry = prevA & prevB;
+    l.binaryOperation("carry calculation", { a, b }, "AND");
     // State after calculating carry (Breakpoint 2)
     l.binary({ a: prevA }, {}); // Show 'a' before it's updated in the next step
     l.binary({ b: prevB }, {}); // Show 'b' before it's updated

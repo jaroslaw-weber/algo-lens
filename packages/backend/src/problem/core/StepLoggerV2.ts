@@ -9,6 +9,8 @@ import {
   ProblemState,
   Variable,
   VariableMetadata,
+  BinaryOperationVariable,
+  BinaryPointer,
 } from "algo-lens-core";
 import {
   as2dArray,
@@ -49,7 +51,8 @@ export class StepLoggerV2 {
 
   /** explanation of the current step */
   comment?: string;
-  groupOptions: Map<string, {min?:number, max?:number, reverse?:boolean}> = new Map();
+  groupOptions: Map<string, { min?: number; max?: number; reverse?: boolean }> =
+    new Map();
   constructor() {
     // Initialize the array to store the history of problem states (steps).
     this.steps = [];
@@ -148,6 +151,69 @@ export class StepLoggerV2 {
   }
 
   /**
+   * Logs the state of a binary operation.
+   * @param label - The name of the variable.
+   * @param operandA - The first operand.
+   * @param operandB - The second operand.
+   * @param operator - The binary operator (e.g., "AND", "OR", "XOR", "ADD").
+   * @param highlightA - Optional highlighting for operand A.
+   * @param highlightB - Optional highlighting for operand B.
+   * @param highlightResult - Optional highlighting for the result.
+   */
+  public binaryOperation(
+    label: string,
+    values: Record<string, number>,
+    operator: string
+  ) {
+    const [v1, v2] = _.values(values);
+    const [label1, label2] = _.keys(values);
+
+    // Calculate the result based on the operator (basic implementation for now)
+    let resultValue: number;
+    switch (operator) {
+      case "AND":
+        resultValue = v1 & v2;
+        break;
+      case "OR":
+        resultValue = v1 | v2;
+        break;
+      case "XOR":
+        resultValue = v1 ^ v2;
+        break;
+      case "ADD":
+        resultValue = v1 + v2;
+        break;
+      default:
+        resultValue = 0; // Or throw an error for unsupported operator
+    }
+    //todo: generate pointers based on the operation
+
+    const pointers: BinaryPointer[] = [];
+
+    const variable: BinaryOperationVariable = {
+      label,
+      type: "binary-operation",
+      v1: {
+        value: v1,
+        label: label1,
+      },
+
+      v2: {
+        value: v2,
+        label: label2,
+      },
+      result: {
+        value: resultValue,
+        label: "result",
+      },
+
+      pointers,
+      operator,
+    };
+    this.upsert(variable);
+  }
+
+  /**
    * Logs the state of a 1-dimensional array variable.
    * Uses `asArray` to format the data and `upsert` to add/update it.
    * @param name - The name of the variable.
@@ -191,7 +257,7 @@ export class StepLoggerV2 {
     const v: ArrayVariable = {
       label: arrayKey,
       type: "array",
-      value: values.map(item => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
+      value: values.map((item) => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
       pointers: fixedPointers,
     };
     ////
@@ -205,9 +271,13 @@ export class StepLoggerV2 {
    * @param node - The head node of the linked list.
    * @param highlight - Optional array of node highlights.
    */
-  public list(name: string, node?: ListNode | null, highlight?: NodeHighlight[]) {
+  public list(
+    name: string,
+    node?: ListNode | null,
+    highlight?: NodeHighlight[]
+  ) {
     // Filter out highlights where the node is null or undefined
-    const filteredHighlight = highlight?.filter(h => h.node != null);
+    const filteredHighlight = highlight?.filter((h) => h.node != null);
     const variable = asList(name, node, filteredHighlight);
     this.upsert(variable);
   }
@@ -243,7 +313,7 @@ export class StepLoggerV2 {
     pointer1?: Pointer2D,
     pointer2?: Pointer2D,
     pointer3?: Pointer2D,
-    
+
     pointer4?: Pointer2D
   ) {
     const variable = as2dArray(

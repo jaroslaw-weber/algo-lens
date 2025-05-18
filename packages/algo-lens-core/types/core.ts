@@ -73,7 +73,8 @@ export interface Variable {
     | "tree"
     | "list"
     | "hashset"
-    | "hashmap";
+    | "hashmap"
+    | "binary-operation";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -94,6 +95,13 @@ export interface Pointer {
 
   label?: string;
   dir?: string//"left" | "right" | "up" | "bottom"
+}
+
+/** Represents a pointer for binary values. */
+export interface BinaryPointer {
+  index: number; // The index of the bit to highlight (0-based)
+  color: ThemeColor; // The color to use for highlighting
+  direction: "left" | "right"; // The direction from which the index is counted
 }
 
 /** Represents a 2D pointer for navigating through two-dimensional arrays. */
@@ -127,6 +135,31 @@ export interface BinaryVariable extends Variable {
   type: "binary";
   value: number;
   pointers?: Pointer[];
+}
+
+export interface BinaryOperationVariable extends Variable {
+  type: "binary-operation";
+  label: string;
+    pointers: BinaryPointer[]
+  v1:{
+    value:number,
+    label:string,
+
+  },
+  v2:{
+    value:number
+    ,label:string,
+
+  },
+  result:{
+    value:number,
+    label:string,
+    
+
+  }
+  
+  operator: string; // e.g., "AND", "OR", "XOR", "ADD"
+
 }
 
 /** Extends the Variable interface specifically for numeric values. */
