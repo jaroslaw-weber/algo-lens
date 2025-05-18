@@ -31,6 +31,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.breakpoint(2);
 
     a = prevA ^ prevB;
+    l.binaryOperation("get sum without carry", { a: prevA, b: prevB }, "XOR"); // Add logging for XOR
     // State after calculating sum without carry (Breakpoint 3)
     l.binary({ a }); // Show new 'a'
     l.binary({ b: prevB }); // Show 'b' before it's updated
@@ -46,6 +47,7 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.breakpoint(4);
 
     b = carry << 1;
+    l.binaryOperation("shift carry", { carry, one: 1 }, "<<"); // Add logging for left shift (using 1 as the shift amount)
     // State after shifting carry (Breakpoint 4)
     l.binary({ a }); // Show 'a' (which is sum without carry)
     l.binary({ b }); // b now holds the shifted carry

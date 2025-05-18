@@ -186,9 +186,19 @@ export class StepLoggerV2 {
       default:
         resultValue = 0; // Or throw an error for unsupported operator
     }
-    //todo: generate pointers based on the operation
 
-    const pointers: BinaryPointer[] = [];
+    const resultPointers: BinaryPointer[] = [];
+    const totalBits = 8; // Assuming 8-bit padding as in frontend
+
+    const binaryString = resultValue.toString(2).padStart(totalBits, "0");
+    for (let i = 0; i < totalBits; i++) {
+      const v = binaryString[i];
+      resultPointers.push({
+        index: i,
+        color: v == "1" ? "success" : "error",
+        direction: "right",
+      });
+    }
 
     const variable: BinaryOperationVariable = {
       label,
@@ -207,7 +217,7 @@ export class StepLoggerV2 {
         label: "result",
       },
 
-      pointers,
+      pointers: resultPointers, // Use the generated pointers here
       operator,
     };
     this.upsert(variable);
