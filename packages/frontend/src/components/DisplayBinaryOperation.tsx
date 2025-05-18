@@ -24,24 +24,31 @@ const renderBinaryRow = (value: number, pointers: BinaryPointer[] | undefined, l
   const paddedBits = Array(8).fill('0').map((bit, index) => bits[index] || bit).reverse(); // Pad and reverse back
   const totalBits = paddedBits.length;
 
+  console.log("Value:", value);
+  console.log("Binary String:", binaryString);
+  console.log("Bits:", bits);
+  console.log("Padded Bits:", paddedBits);
+
+  console.log("Value:", value);
+  console.log("Binary String:", binaryString);
+  console.log("Bits:", bits);
+  console.log("Padded Bits:", paddedBits);
+
   return (
-    <div className="flex flex-column">
-      {label && <td className="flex-grow px-2 py-1 font-semibold">{label}</td>}
-      <table>
-    <tr className="flex-1 text-xs items-center border border-gray-200">
+    <tr>
+      {label && <td className="px-2 py-1 font-semibold text-xs border border-gray-200">{label}</td>}
       {paddedBits.map((bit, index) => {
-        // Calculate the original index from the right for highlighting
         const colorClass = getBitColorClass(pointers, index, totalBits);
         return (
           <td
             key={index}
-            className={`px-2 py-1 flex-1 ${colorClass}`}
+            className={`px-2 py-1 flex-1 text-center border border-gray-200 ${colorClass}`}
           >
             {bit}
           </td>
         );
       })}
-    </tr></table></div>
+    </tr>
   );
 };
 
@@ -50,14 +57,16 @@ const DisplayBinaryOperation = ({ data }: { data: BinaryOperationVariable }) => 
 
   return (
     <div className="overflow-x-auto">
-      <p>{operator}</p>
-      
+      <table className="w-full table-auto border-collapse border border-gray-200">
+        <tbody>
           {renderBinaryRow(v1.value, pointers, v1.label)}
-        
+          <tr>
+            <td colSpan={v1.label ? 9 : 8} className="text-center font-bold border border-gray-200">{operator}</td>
+          </tr>
           {renderBinaryRow(v2.value, pointers, v2.label)}
-         
           {renderBinaryRow(result.value, pointers, result.label)}
-        
+        </tbody>
+      </table>
     </div>
   );
 };
