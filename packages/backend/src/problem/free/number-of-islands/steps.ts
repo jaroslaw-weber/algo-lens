@@ -26,11 +26,16 @@ export function generateSteps(grid: string[][]): ProblemState[] {
     { numIslands },
     { max: (rowCount * colCount) / 2, min: 0 }
   );
-  l.comment = "Initialize the island count to 0. This variable will keep track of the number of distinct islands found in the grid. The grid represents the map, where '1' is land and '0' is water.";
+  l.comment =
+    "Initialize the island count to 0. This variable will keep track of the number of distinct islands found in the grid. The grid represents the map, where '1' is land and '0' is water.";
   l.breakpoint(1);
 
   function dfs(i: number, j: number) {
-    l.grid("grid", grid, ...[{ r: i, c: j }]);
+    l.grid(
+      "grid",
+      grid,
+      ...[{ r: i, c: j, label: "current", color: "primary" }]
+    );
     l.group(
       "counter",
       { numIslands },
@@ -46,6 +51,11 @@ export function generateSteps(grid: string[][]): ProblemState[] {
     }
     // Check if the cell is water or already visited ('0' or '2')
     if (grid[i][j] !== "1") {
+      l.grid(
+        "grid",
+        grid,
+        ...[{ r: i, c: j, label: "current", color: "error" }]
+      );
       l.comment = `Check if the current cell is water ('0') or has already been visited ('2'). If it's not land ('1'), stop the DFS traversal for this path to avoid processing water or revisiting land.`;
       l.breakpoint(4); // Breakpoint after water/visited check
       return;
@@ -61,8 +71,8 @@ export function generateSteps(grid: string[][]): ProblemState[] {
         "grid",
         grid,
         ...[
-          { r: i, c: j, color: 1 as const },
-          { r: x, c: y, color: 2 as const },
+          { r: i, c: j, color: "primary", label: "current" },
+          { r: x, c: y, color: "neutral", label: "next" },
         ]
       );
       l.comment = `Explore a neighbor cell of the current cell. Recursively call DFS on this neighbor to continue exploring the connected land cells of the current island.`;
@@ -74,7 +84,11 @@ export function generateSteps(grid: string[][]): ProblemState[] {
 
   for (let i = 0; i < rowCount; i++) {
     for (let j = 0; j < colCount; j++) {
-      l.grid("grid", grid, ...[{ r: i, c: j }]);
+      l.grid(
+        "grid",
+        grid,
+        ...[{ r: i, c: j, label: "current", color: "primary" }]
+      );
       l.group(
         "counter",
         { numIslands },
@@ -83,7 +97,11 @@ export function generateSteps(grid: string[][]): ProblemState[] {
       l.comment = `Iterate through each cell in the grid. Check if the current cell is land ('1') and has not been visited.`;
       l.breakpoint(7);
       if (grid[i][j] === "1") {
-        l.grid("grid", grid, ...[{ r: i, c: j }]);
+        l.grid(
+          "grid",
+          grid,
+          ...[{ r: i, c: j, label: "current", color: "success" }]
+        );
         l.group(
           "counter",
           { numIslands: numIslands + 1 }, // Show the value after increment
