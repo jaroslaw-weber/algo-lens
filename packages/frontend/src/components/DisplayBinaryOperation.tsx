@@ -25,10 +25,10 @@ const renderBinaryRow = (value: number, pointers: BinaryPointer[] | undefined, l
   const totalBits = paddedBits.length;
 
   return (
-    <div>
-      {label && <td className="px-2 py-1 font-semibold">{label}</td>}
+    <div className="flex flex-column">
+      {label && <td className="flex-grow px-2 py-1 font-semibold">{label}</td>}
       <table>
-    <tr className="text-xs items-center border border-gray-200">
+    <tr className="flex-1 text-xs items-center border border-gray-200">
       {paddedBits.map((bit, index) => {
         // Calculate the original index from the right for highlighting
         const colorClass = getBitColorClass(pointers, index, totalBits);
@@ -50,21 +50,14 @@ const DisplayBinaryOperation = ({ data }: { data: BinaryOperationVariable }) => 
 
   return (
     <div className="overflow-x-auto">
-      <table className="mx-auto table-auto border-collapse ">
-        <tbody>
+      <p>{operator}</p>
+      
           {renderBinaryRow(v1.value, pointers, v1.label)}
-          <tr>
-            <td className="px-2 py-1 text-center font-semibold">{operator}</td>
-            {Array(8).fill(null).map((_, index) => <td key={index} className="px-2 py-1 flex-1"></td>)} {/* Placeholder row for operator alignment */}
-          </tr>
+        
           {renderBinaryRow(v2.value, pointers, v2.label)}
-          <tr>
-             <td className="px-2 py-1 text-center font-semibold">={" "}</td>
-             {Array(8).fill(null).map((_, index) => <td key={index} className="px-2 py-1 flex-1"></td>)} {/* Placeholder row for operator alignment */}
-          </tr>
+         
           {renderBinaryRow(result.value, pointers, result.label)}
-        </tbody>
-      </table>
+        
     </div>
   );
 };
