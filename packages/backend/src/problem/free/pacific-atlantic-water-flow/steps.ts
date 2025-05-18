@@ -239,16 +239,16 @@ export function generateSteps(heights: number[][]) {
 
   // Log final state including the result
   // Corrected: Pass single Pointer2D or undefined, remove invalid group/label
-  l.grid("heights", heights, resultCellsHighlight[0]); // Replaced l.array2d with l.grid, Pass first result highlight
+  l.grid("heights", heights, ...resultCellsHighlight); // Replaced l.array2d with l.grid, Pass first result highlight
   l.grid(
     "pacificReachable",
     booleanGridToNumber(pacificVisited),
-    resultCellsHighlight[0]
+    ...resultCellsHighlight
   ); // Replaced l.array2d with l.grid
   l.grid(
     "atlanticReachable",
     booleanGridToNumber(atlanticVisited),
-    resultCellsHighlight[0]
+    ...resultCellsHighlight
   ); // Replaced l.array2d with l.grid
   l.arrayV2({ result: result }); // Replaced l.array with l.arrayV2, Log the result array directly
   l.comment =

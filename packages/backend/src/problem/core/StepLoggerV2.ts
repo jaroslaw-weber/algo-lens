@@ -317,19 +317,11 @@ export class StepLoggerV2 {
     this.upsert(variable);
   }
 
-  public grid(
-    name: string,
-    values: any[][],
-    pointer1?: Pointer2D,
-    pointer2?: Pointer2D,
-    pointer3?: Pointer2D,
-
-    pointer4?: Pointer2D
-  ) {
+  public grid(name: string, values: any[][], ...pointers: Pointer2D[]) {
     const variable = as2dArray(
       name,
       values,
-      [pointer1, pointer2, pointer3, pointer4].filter((x) => !!x)
+      pointers.filter((x) => !!x)
     );
     this.upsert(variable);
   }
