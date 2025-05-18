@@ -25,8 +25,10 @@ const renderBinaryRow = (value: number, pointers: BinaryPointer[] | undefined, l
   const totalBits = paddedBits.length;
 
   return (
-    <tr className="text-xs items-center">
+    <div>
       {label && <td className="px-2 py-1 font-semibold">{label}</td>}
+      <table>
+    <tr className="text-xs items-center border border-gray-200">
       {paddedBits.map((bit, index) => {
         // Calculate the original index from the right for highlighting
         const colorClass = getBitColorClass(pointers, index, totalBits);
@@ -39,31 +41,28 @@ const renderBinaryRow = (value: number, pointers: BinaryPointer[] | undefined, l
           </td>
         );
       })}
-    </tr>
+    </tr></table></div>
   );
 };
 
 const DisplayBinaryOperation = ({ data }: { data: BinaryOperationVariable }) => {
-  const { label, operator, result } = data;
+  const { label, operator, result, v1, v2 , pointers} = data;
 
   return (
     <div className="overflow-x-auto">
-      {label && (
-        <h3 className="pl-2 pb-2 text-xl text-center font-semibold">{label}</h3>
-      )}
-      <table className="mx-auto table-auto border-collapse border border-gray-200">
+      <table className="mx-auto table-auto border-collapse ">
         <tbody>
-          {renderBinaryRow(operandA.value, operandA.pointers, "Operand A")}
+          {renderBinaryRow(v1.value, pointers, v1.label)}
           <tr>
             <td className="px-2 py-1 text-center font-semibold">{operator}</td>
             {Array(8).fill(null).map((_, index) => <td key={index} className="px-2 py-1 flex-1"></td>)} {/* Placeholder row for operator alignment */}
           </tr>
-          {renderBinaryRow(operandB.value, operandB.pointers, "Operand B")}
+          {renderBinaryRow(v2.value, pointers, v2.label)}
           <tr>
              <td className="px-2 py-1 text-center font-semibold">={" "}</td>
              {Array(8).fill(null).map((_, index) => <td key={index} className="px-2 py-1 flex-1"></td>)} {/* Placeholder row for operator alignment */}
           </tr>
-          {renderBinaryRow(result.value, result.pointers, "Result")}
+          {renderBinaryRow(result.value, pointers, result.label)}
         </tbody>
       </table>
     </div>
