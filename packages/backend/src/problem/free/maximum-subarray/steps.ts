@@ -42,7 +42,6 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.comment = `Look at the current number, which is ${num}.`;
     l.breakpoint(2);
 
-
     if (startNew > extendSum) {
       // Log state before updating maxEndingHere
       l.arrayV2({ nums: nums }, { i: i });
@@ -163,7 +162,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       });
       // HIDE_END
       l.comment = `Compare the current maximum sum ending here (${maxEndingHere}) with the overall maximum sum found so far (${maxSoFar}). The overall maximum sum remains ${maxSoFar}.`;
-   
+
       l.breakpoint(10);
     }
     // End of loop iteration
@@ -172,6 +171,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Final state log
   l.arrayV2({ nums: nums }, {});
   l.group("comparision", { maxEndingHere, maxSoFar });
+  const result = maxSoFar;
+  l.simple({ result });
   l.comment = `All numbers processed. The final maximum subarray sum is ${maxSoFar}.`;
   l.breakpoint(11);
 
