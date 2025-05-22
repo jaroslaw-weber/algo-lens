@@ -72,12 +72,15 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   // Use first row and column as markers
   for (let i = 1; i < rows; i++) {
     for (let j = 1; j < cols; j++) {
+      // HIDE_START
       l.grid("matrix", matrix, {
         r: i,
         c: j,
         color: "neutral",
         label: "current",
       });
+
+      // HIDE_END
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.comment = `Iterate through the matrix starting from the second row and second column. For the current cell, check if its value is zero.`;
       l.breakpoint(6);
@@ -120,11 +123,15 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
       if (matrix[i][0] === 0 || matrix[0][j] === 0) {
         matrix[i][j] = 0;
+
+        // HIDE_START
         const updatedPointers: Pointer2D[] = [
           { r: i, c: j, label: "zeroed", color: "primary" },
           { r: i, c: 0, label: "marker", color: "primary" },
           { r: 0, c: j, label: "marker", color: "primary" },
         ];
+
+        // HIDE_END
         l.grid("matrix", matrix, ...updatedPointers); // Show updated matrix with the same pointers
         l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
         l.comment = `Apply markers: Set the current cell to zero because either the marker in the first row or the first column was zero.`;
