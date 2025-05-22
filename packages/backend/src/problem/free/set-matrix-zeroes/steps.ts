@@ -1,7 +1,5 @@
 import { ProblemState, Pointer2D } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
-import { SetMatrixZeroesInput } from "./types";
-import { deepClone2DArray } from "../../core/utils"; // Assuming deepClone2DArray is in core/utils
 // Import groups if needed for logger options, though not strictly necessary for basic logging
 // import { groups } from "./groups";
 
@@ -41,14 +39,29 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
   // Determine if the first row has any zeros
   for (let j = 0; j < cols; j++) {
-    l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
+    // HIDE_START
+    l.grid("matrix", matrix, {
+      r: 0,
+      c: j,
+      color: "neutral",
+      label: "checking rows",
+    }); // Changed from array to object
+    // HIDE_END
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
     l.comment = `Check if any element in the first row is zero. This is done by iterating through each column.`;
     l.breakpoint(4);
 
     if (matrix[0][j] === 0) {
       firstRowHasZero = true;
-      l.array2d("matrix", matrix, { r: 0, c: j }); // Changed from array to object
+      // HIDE_START
+      l.grid("matrix", matrix, {
+        r: 0,
+        c: j,
+        color: "success",
+        label: "found 0!",
+      }); // Changed from array to object
+
+      // HIDE_END
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.comment = `Found a zero in the first row. Set the 'firstRowHasZero' flag to true.`;
       l.breakpoint(5);
@@ -59,7 +72,12 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   // Use first row and column as markers
   for (let i = 1; i < rows; i++) {
     for (let j = 1; j < cols; j++) {
-      l.array2d("matrix", matrix, { r: i, c: j }); // Changed from array to object
+      l.array2d("matrix", matrix, {
+        r: i,
+        c: j,
+        color: "neutral",
+        label: "current",
+      }); // Changed from array to object
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
       l.comment = `Iterate through the matrix starting from the second row and second column. For the current cell, check if its value is zero.`;
       l.breakpoint(6);
@@ -70,7 +88,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
         // Highlight the cell and the markers
         // HIDE_START
         const pointers: Pointer2D[] = [
-          { r: i, c: j },
+          { r: i, c: j, label: "current" },
           { r: i, c: 0 },
           { r: 0, c: j },
         ];

@@ -14,6 +14,7 @@ import type {
   HashsetVariable,
   HashmapVariable,
   VariableMetadata,
+  BinaryOperationVariable,
 } from "algo-lens-core";
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
@@ -23,6 +24,7 @@ import DisplayTree from "./DisplayBinaryTree";
 import DisplayLinkedList from "./DisplayLinkedList";
 import DisplayHashset from "./DisplayHashset";
 import DisplayHashmap from "./DisplayHashmap";
+import DisplayBinaryOperation from "./DisplayBinaryOperation";
 import { type Problem } from "algo-lens-core";
 
 const Wrapper = ({
@@ -230,9 +232,23 @@ function DisplayState({
                   <DisplayLinkedList data={listData} />
                 </Wrapper>
               );
-            default:
-              return null;
-          }
+              case "binary-operation":
+                const binaryOperationData = variable as BinaryOperationVariable;
+                return (
+                  <Wrapper
+                    className={className}
+                    label={binaryOperationData.label}
+                    description={description}
+                    emoji={emoji}
+                    key={binaryOperationData.label}
+                    variable={variable}
+                  >
+                    <DisplayBinaryOperation data={binaryOperationData} />
+                  </Wrapper>
+                );
+              default:
+                return null;
+            }
         })}
       </div>
     </div>

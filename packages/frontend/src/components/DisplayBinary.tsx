@@ -21,9 +21,11 @@ const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
       );
 
       if (pointer) {
-        return `${
-          colors[pointers.indexOf(pointer) % colors.length]
-        } text-white`;
+        const color = pointer.color
+        if(color){
+          return `bg-${color}`
+        }
+        return `bg-primary`
       }
       return "";
     };

@@ -27,7 +27,7 @@ export async function getRandomProblem() {
 }
 
 export async function getProblemById(id: string) {
-  //// 
+  ////
   const all = await getAllProblems();
 
   const problems = all.filter((p) => p.id === id);
@@ -47,7 +47,7 @@ function validate(problem?: Problem<any, any>) {
 
 export function asSimpleValue(o: any): SimpleVariable[] {
   return Object.keys(o).map(
-    (k) => ({ label: k, value: o[k], type: "number" } as SimpleVariable)
+    (k) => ({ label: k, value: o[k], type: "number" }) as SimpleVariable
   );
 }
 
@@ -55,7 +55,7 @@ export function asSimpleValue(o: any): SimpleVariable[] {
 export function asValueGroup(
   label: string,
   o: any,
-  options: { min: number; max: number; reverse?: any },
+  options: { min: number; max: number; reverse?: any }
 ): ValueGroupVariable {
   const result: ValueGroupVariable = {
     data: [],
@@ -181,7 +181,7 @@ export function asIntervals(
   const result: IntervalVariable = {
     label,
     type: "interval",
-    value: deepClone2DArray(arr),
+    value: arr,
     indexes: highlight,
     options: {
       min,
@@ -267,6 +267,7 @@ export function asBinary(
       result.pointers.push({
         value: lastIndex,
         dimension: "column",
+        label: "last",
       });
     }
   }
@@ -278,6 +279,7 @@ export function asBinary(
         result.pointers.push({
           value,
           dimension: "column",
+          label: "left",
         });
       }
     }
@@ -291,16 +293,13 @@ export function asBinary(
         result.pointers.push({
           value: asBinaryString.length - 1 - rightPointerValue,
           dimension: "column",
+          label: "right",
         });
       }
     }
   }
 
   return result;
-}
-
-export function deepClone2DArray<T>(array: T[][]): T[][] {
-  return array.map((row) => cloneDeep(row));
 }
 
 export function asStringArray(
@@ -381,7 +380,7 @@ export function asHashmap(
   };
 }
 
-export function from2dArrayToMap<T,U>(arr: any[][]): Map<T, U> {
+export function from2dArrayToMap<T, U>(arr: any[][]): Map<T, U> {
   const result = new Map();
   for (const row of arr) {
     if (row.length) {
@@ -394,7 +393,7 @@ export function from2dArrayToMap<T,U>(arr: any[][]): Map<T, U> {
       );
     }
   }
- // // 
- // // 
+  // //
+  // //
   return result;
 }

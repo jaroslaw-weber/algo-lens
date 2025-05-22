@@ -54,7 +54,16 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
 
         const tooltipData = pointer?.label;
 
-        let style = tooltipData ? "bg-primary" : "";
+        const color = pointer?.color
+        let style = ""
+        if(color){
+          style = `bg-${color}`
+        }
+        else{
+          if(tooltipData){
+            style = `bg-primary`
+          }
+        }
 
         const tootlipDirection = pointer?.dir;
 
