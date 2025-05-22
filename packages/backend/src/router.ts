@@ -101,6 +101,7 @@ app.get("/problem/:id", async (c) => {
     "metadata",
     "description",
     "explanation",
+    "testcases",
   ]);
   if (Object.keys(rendered).length === 0) {
     throw new Error("invalid problem: " + problem);

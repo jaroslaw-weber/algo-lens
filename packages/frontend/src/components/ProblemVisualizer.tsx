@@ -17,19 +17,20 @@ import {
 } from "../atom";
 import { getProblem, getProblemState, getProblemSize } from "../api";
 import TestCaseSelector from "./TestCaseSelector";
-import type { TestCase } from "algo-lens-core";
+import type {
+  Problem,
+  ProblemMetadata,
+  ProblemState,
+  TestCase,
+} from "algo-lens-core";
 
 interface ProblemVisualizerProps {
-  problem: any; // Accept problem as prop for debugging
-  state: any; // Accept state as prop for debugging
+  state: ProblemState;
 }
 
-function ProblemVisualizer({ problem, state }: ProblemVisualizerProps) {
+function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   const [activeTab, setActiveTab] = useState("visualizer"); // Keep state here for content rendering
-  // Temporarily comment out Jotai state for problem and state
-  // const [state, setProblemState] = useAtom(problemStateAtom); // Get the setter for problemStateAtom
-  // const [problem] = useAtom(problemAtom); // No need to set problem here anymore
-  const setProblem = useSetAtom(problemAtom); // Use useSetAtom to get the setter
+  const [problem] = useAtom(problemAtom); // No need to set problem here anymore
 
   const [step, setStep] = useAtom(stepAtom);
   const [maxStep, setMaxStep] = useAtom(maxStepAtom);
@@ -92,61 +93,6 @@ function ProblemVisualizer({ problem, state }: ProblemVisualizerProps) {
   const handleCopyCode = () => {
     copy(code!);
     alert("Code copied to clipboard!");
-  };
-
-  // Fetch problem size when problem or selected test case changes
-  useEffect(() => {
-    if (problem && selectedTestCaseNumber) {
-      getProblemSize(problem.id!, selectedTestCaseNumber).then((size) =>
-        setMaxStep(size)
-      );
-    }
-  }, [problem, selectedTestCaseNumber, setMaxStep]);
-
-  // Reset step to 1 when selected test case changes
-  useEffect(() => {
-    setStep(1);
-  }, [selectedTestCaseNumber, setStep]);
-
-  // Temporarily use props instead of Jotai atoms for problem and state
-  // const [state, setProblemState] = useAtom(problemStateAtom); // Get the setter for problemStateAtom
-  // const [problem] = useAtom(problemAtom); // No need to set problem here anymore
-  // const setProblem = useSetAtom(problemAtom); // Use useSetAtom to get the setter
-
-  const breakpointToLineMap = new Map<number, number>();
-  // Add a check for code before splitting
-  const lines = code ? code.split("\n") : [];
-  for (let i = 0; i < lines.length; i++) {
-    const loc = lines[i];
-    if (
-      loc.trimStart().startsWith("//#") ||
-      loc.trimStart().startsWith("// #")
-    ) {
-      //get number from this line with regex
-      const no = new RegExp(/\d+/).exec(loc);
-      if (!no) {
-        // console.warn("no breakpoints found in code"); // Use warn instead of throw
-        continue; // Continue to next line if no breakpoint found
-      }
-      if (no![0]) {
-        breakpointToLineMap.set(parseInt(no![0]), i);
-      }
-    }
-  }
-  const breakpoint = state?.breakpoint; // Use optional chaining
-  const line =
-    breakpoint !== undefined ? breakpointToLineMap.get(breakpoint) : undefined; // Check if breakpoint is defined
-
-  const handleSliderChange = (value: number) => {
-    setStep(value);
-  };
-
-  const handleCopyCode = () => {
-    if (code) {
-      // Add check for code
-      copy(code);
-      alert("Code copied to clipboard!");
-    }
   };
 
   // Fetch problem size when problem or selected test case changes

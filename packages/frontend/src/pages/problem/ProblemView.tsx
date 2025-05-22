@@ -74,9 +74,5 @@ export default function ProblemView() {
   console.log("ProblemView - problem:", problem);
   console.log("ProblemView - state:", state);
   // Temporarily remove conditional rendering and pass problem and state directly for debugging
-  return (
-    <div>
-      <ProblemVisualizer problem={problem} state={state} />
-    </div>
-  );
+  return <div>{state && <ProblemVisualizer state={state} />}</div>;
 }
