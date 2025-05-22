@@ -11,7 +11,7 @@ import { SetMatrixZeroesInput } from "./types";
 export const problem: Problem<SetMatrixZeroesInput, ProblemState> = {
   title: "Set Matrix Zeroes",
   emoji: "0️⃣", // Keep the emoji from the original file
-  func: generateSteps,
+  func: (x) => generateSteps(x),
   testcases: testcases,
   id: "set-matrix-zeroes", // Keep the id from the original file
   tags: ["matrix"], // Keep the tags from the original file

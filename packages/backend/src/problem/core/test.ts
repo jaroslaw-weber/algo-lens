@@ -5,7 +5,11 @@ import { describe, it, expect } from "bun:test";
 import { loadProblemWithId } from "./load";
 
 export async function runTests(problem: Problem<any, ProblemState>) {
+  // problem = cloneDeep(problem);
   const { testcases, metadata } = problem;
+  if (problem.id.includes("zeroes")) {
+    console.log("testcases: ", testcases);
+  }
 
   //has metadata check
   if (!metadata) {
@@ -32,40 +36,46 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     const testcase = problem.testcases[i];
     const input = cloneDeep(testcase.input);
     const expected = cloneDeep(testcase.expected);
-    for (const func of [problem.func]) {
-      const states = func(input);
+    const func = problem.func;
+    //for (const func of [problem.func]) {
+    const states = func(input);
 
-      const state = last(states);
-      const variables = state!.variables;
-      const result = variables.find((x) => x.label === "result");
-      if (!result) {
-        throw new Error("No result found in last state");
-      }
-      // Explicitly check for 'value' property existence
-      const value = result.hasOwnProperty("value")
-        ? //@ts-expect-error
-          result.value
-        : //@ts-expect-error
-          result.values;
-      ////
-      if (!isEqual(value, expected)) {
-        console.error(
-          `Test case #${i} failed. Description: ${testcase.description}`
-        );
-      }
-      expect(value).toEqual(expected);
-      const loaded = await loadProblemWithId(problem.id);
-      const code = loaded?.code;
-      expect(code).toBeTruthy();
+    const state = last(states);
+    const variables = state!.variables;
+    const result = variables.find((x) => x.label === "result");
+    if (!result) {
+      throw new Error("No result found in last state");
+    }
+    // Explicitly check for 'value' property existence
+    const value = result.hasOwnProperty("value")
+      ? //@ts-expect-error
+        result.value
+      : //@ts-expect-error
+        result.values;
+    ////
+    if (!isEqual(value, expected)) {
+      console.error(
+        `Test case #${i} failed. Description: ${testcase.description}`
+      );
+      console.log("testcases", testcases);
+      console.log("input", input);
+      console.error("value", value);
+      console.error("expected", expected);
+      console.log("first state", states[0]);
+    }
+    expect(value).toEqual(expected);
+    const loaded = await loadProblemWithId(problem.id);
+    const code = loaded?.code;
+    expect(code).toBeTruthy();
 
-      expect(!code?.includes("FORMATTING ERROR"));
-      /**
+    expect(!code?.includes("FORMATTING ERROR"));
+    /**
     // 
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
         value
       )}`
     );
     **/
-    }
+    //}
   }
 }

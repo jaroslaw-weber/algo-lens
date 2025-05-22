@@ -1,4 +1,5 @@
 import { ProblemState, Problem } from "algo-lens-core";
+import { cloneDeep } from "lodash";
 
 export class ProblemStateCache {
   private cache = new Map<string, ProblemState>();
@@ -38,7 +39,8 @@ export class ProblemStateCache {
       testcaseIndex++
     ) {
       const testcase = testcases[testcaseIndex];
-      const states = problem.func(testcase.input);
+      const input = cloneDeep(testcase.input);
+      const states = problem.func(input);
       sizes.push(states.length);
       for (let i = 0; i < states.length; i++) {
         const state = states[i];
