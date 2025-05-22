@@ -21,10 +21,13 @@ const TestCaseSelector: React.FC<TestCaseSelectorProps> = ({
   };
 
   return (
-    <div>
-      <label htmlFor="testcase-select">Select Test Case:</label>
+    <div className="form-control w-full pb-4">
+      <label className="label" htmlFor="testcase-select">
+        <span className="label-text">Select Test Case:</span>
+      </label>
       <select
         id="testcase-select"
+        className="select select-bordered w-full"
         value={selectedTestCaseNumber}
         onChange={handleSelectChange}
       >

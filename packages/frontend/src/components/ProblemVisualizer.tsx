@@ -132,12 +132,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                     setActiveTab={setActiveTab}
                   />
                   {/* Integrate TestCaseSelector */}
-                  {testcases && testcases.length > 1 && (
-                    <TestCaseSelector
-                      testcases={testcases}
-                      selectedTestCaseNumberAtom={selectedTestCaseNumberAtom}
-                    />
-                  )}
+
                   {/* Add check for state before accessing description */}
                   {state?.description && (
                     <StateDescription description={state.description} />
@@ -149,6 +144,12 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                   )}
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
+                  {testcases && testcases.length > 1 && (
+                    <TestCaseSelector
+                      testcases={testcases}
+                      selectedTestCaseNumberAtom={selectedTestCaseNumberAtom}
+                    />
+                  )}
                   {/* Add check for maxStep before rendering Slider */}
                   {maxStep !== undefined && (
                     <Slider
