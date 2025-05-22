@@ -7,22 +7,62 @@ import DisplayState from "./DisplayState";
 import CodePreview from "./CodePreview";
 import Slider from "./Slider";
 import ProblemTabs from "./ProblemTabs"; // Import the new component
-import { useAtom } from "jotai";
-import { maxStepAtom, problemAtom, problemStateAtom, stepAtom } from "../atom";
-import { getProblem, getProblemSize } from "../api";
+import { useAtom, useSetAtom } from "jotai";
+import {
+  maxStepAtom,
+  problemAtom,
+  problemStateAtom,
+  stepAtom,
+  selectedTestCaseNumberAtom,
+} from "../atom";
+import { getProblem, getProblemState, getProblemSize } from "../api";
+import TestCaseSelector from "./TestCaseSelector";
+import type { TestCase } from "algo-lens-core";
 
-function ProblemVisualizer() {
+interface ProblemVisualizerProps {
+  problem: any; // Accept problem as prop for debugging
+  state: any; // Accept state as prop for debugging
+}
+
+function ProblemVisualizer({ problem, state }: ProblemVisualizerProps) {
   const [activeTab, setActiveTab] = useState("visualizer"); // Keep state here for content rendering
-  const [state] = useAtom(problemStateAtom);
-  const [problem, setProblem] = useAtom(problemAtom);
+  // Temporarily comment out Jotai state for problem and state
+  // const [state, setProblemState] = useAtom(problemStateAtom); // Get the setter for problemStateAtom
+  // const [problem] = useAtom(problemAtom); // No need to set problem here anymore
+  const setProblem = useSetAtom(problemAtom); // Use useSetAtom to get the setter
 
   const [step, setStep] = useAtom(stepAtom);
   const [maxStep, setMaxStep] = useAtom(maxStepAtom);
+  const [selectedTestCaseNumber, setSelectedTestCaseNumber] = useAtom(
+    selectedTestCaseNumberAtom
+  );
 
-  if (!state || !problem) {
+  // Initialize selected test case number when problem changes
+  useEffect(() => {
+    if (problem && problem.testcases && problem.testcases.length > 0) {
+      const defaultIndex = problem.testcases.findIndex(
+        (tc: TestCase<any, any>) => tc.isDefault
+      );
+      setSelectedTestCaseNumber(defaultIndex !== -1 ? defaultIndex + 1 : 1);
+    }
+  }, [problem, setSelectedTestCaseNumber]);
+
+  // Use props instead of Jotai atoms for problem and state during debugging
+  // if (!state || !problem || !problem.testcases) {
+  //   return null;
+  // }
+  // const { title, code, id, testcases } = problem;
+
+  // Add a check for problem and state here as they are now props
+  if (!problem || !state || !problem.testcases) {
+    console.log("ProblemVisualizer - problem or state or testcases is null", {
+      problem,
+      state,
+    });
     return null;
   }
-  const { title, code, id } = problem;
+
+  const { title, code, id, testcases } = problem;
 
   const breakpointToLineMap = new Map<number, number>();
   const lines = code!.split("\n");
@@ -54,9 +94,76 @@ function ProblemVisualizer() {
     alert("Code copied to clipboard!");
   };
 
+  // Fetch problem size when problem or selected test case changes
   useEffect(() => {
-    getProblemSize(problem.id!).then((size) => setMaxStep(size));
-  }, [problem]);
+    if (problem && selectedTestCaseNumber) {
+      getProblemSize(problem.id!, selectedTestCaseNumber).then((size) =>
+        setMaxStep(size)
+      );
+    }
+  }, [problem, selectedTestCaseNumber, setMaxStep]);
+
+  // Reset step to 1 when selected test case changes
+  useEffect(() => {
+    setStep(1);
+  }, [selectedTestCaseNumber, setStep]);
+
+  // Temporarily use props instead of Jotai atoms for problem and state
+  // const [state, setProblemState] = useAtom(problemStateAtom); // Get the setter for problemStateAtom
+  // const [problem] = useAtom(problemAtom); // No need to set problem here anymore
+  // const setProblem = useSetAtom(problemAtom); // Use useSetAtom to get the setter
+
+  const breakpointToLineMap = new Map<number, number>();
+  // Add a check for code before splitting
+  const lines = code ? code.split("\n") : [];
+  for (let i = 0; i < lines.length; i++) {
+    const loc = lines[i];
+    if (
+      loc.trimStart().startsWith("//#") ||
+      loc.trimStart().startsWith("// #")
+    ) {
+      //get number from this line with regex
+      const no = new RegExp(/\d+/).exec(loc);
+      if (!no) {
+        // console.warn("no breakpoints found in code"); // Use warn instead of throw
+        continue; // Continue to next line if no breakpoint found
+      }
+      if (no![0]) {
+        breakpointToLineMap.set(parseInt(no![0]), i);
+      }
+    }
+  }
+  const breakpoint = state?.breakpoint; // Use optional chaining
+  const line =
+    breakpoint !== undefined ? breakpointToLineMap.get(breakpoint) : undefined; // Check if breakpoint is defined
+
+  const handleSliderChange = (value: number) => {
+    setStep(value);
+  };
+
+  const handleCopyCode = () => {
+    if (code) {
+      // Add check for code
+      copy(code);
+      alert("Code copied to clipboard!");
+    }
+  };
+
+  // Fetch problem size when problem or selected test case changes
+  useEffect(() => {
+    if (problem && selectedTestCaseNumber) {
+      getProblemSize(problem.id!, selectedTestCaseNumber).then((size) =>
+        setMaxStep(size)
+      );
+    }
+  }, [problem, selectedTestCaseNumber, setMaxStep]);
+
+  // Reset step to 1 when selected test case changes
+  useEffect(() => {
+    setStep(1);
+  }, [selectedTestCaseNumber, setStep]);
+
+  // Removed state fetching useEffect as it's now in useProblemState
 
   return (
     <div className="mx-8 my-8 flex-1">
@@ -78,18 +185,35 @@ function ProblemVisualizer() {
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
                   />
+                  {/* Integrate TestCaseSelector */}
+                  {testcases && testcases.length > 1 && (
+                    <TestCaseSelector
+                      testcases={testcases}
+                      selectedTestCaseNumberAtom={selectedTestCaseNumberAtom}
+                    />
+                  )}
+                  {/* Add check for state before accessing description */}
+                  {state?.description && (
                     <StateDescription description={state.description} />
-                 
-                  <CodePreview code={code} highlightLineIndex={line} />
+                  )}
+
+                  {/* Add check for code before passing to CodePreview */}
+                  {code && (
+                    <CodePreview code={code} highlightLineIndex={line} />
+                  )}
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">
-                  <Slider
-                    min={1}
-                    max={maxStep}
-                    value={step}
-                    onChange={handleSliderChange}
-                  />
-                  <DisplayState state={state} problem={problem} />
+                  {/* Add check for maxStep before rendering Slider */}
+                  {maxStep !== undefined && (
+                    <Slider
+                      min={1}
+                      max={maxStep}
+                      value={step}
+                      onChange={handleSliderChange}
+                    />
+                  )}
+                  {/* Add check for state before passing to DisplayState */}
+                  {state && <DisplayState state={state} problem={problem} />}
                 </div>
               </div>
             </div>

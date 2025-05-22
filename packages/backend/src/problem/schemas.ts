@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const problemListQuerySchema = z.object({
   tag: z.string().optional(),
@@ -17,8 +17,24 @@ export const problemStateParamsSchema = z.object({
   ),
 });
 
+export const problemStateWithTestcaseParamsSchema =
+  problemStateParamsSchema.extend({
+    testcaseNumber: z.preprocess(
+      (a) => parseInt(z.string().parse(a), 10),
+      z.number().int().positive("Test case number must be a positive integer")
+    ),
+  });
+
 export const problemSizeParamsSchema = z.object({
   problemId: z.string().min(1, "Problem ID is required"),
+});
+
+export const problemSizeWithTestcaseParamsSchema = z.object({
+  problemId: z.string().min(1, "Problem ID is required"),
+  testcaseNumber: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().int().positive("Test case number must be a positive integer")
+  ),
 });
 
 export const problemSchema = z.object({

@@ -9,21 +9,21 @@ import { getPocketbase } from "../../db/pocketbase";
 const stateCache = new ProblemStateCache();
 
 export async function getAllProblemsService(userId?: string, filter?: string) {
-  console.log("info", {userId, filter})
+  console.log("info", { userId, filter });
   let allProblems = await coreGetAllProblems();
   if (userId) {
-    const pb =await  getPocketbase()
-    const pbFilter = `user.id='${userId}'`
-    console.log("pb filter", pbFilter)
+    const pb = await getPocketbase();
+    const pbFilter = `user.id='${userId}'`;
+    console.log("pb filter", pbFilter);
     const bookmarks = await pb.collection("bookmarks").getList(0, 200, {
       // Fetching up to 50 bookmarks, adjust as needed
-      filter: pbFilter
+      filter: pbFilter,
     });
-    console.log("bookmarks", bookmarks)
-    const bookmarkIds = bookmarks.items.map(x => x.problem)
+    console.log("bookmarks", bookmarks);
+    const bookmarkIds = bookmarks.items.map((x) => x.problem);
 
     let bookmarkSet = new Set<string>(bookmarkIds);
-console.log("bm set", bookmarkSet)
+    console.log("bm set", bookmarkSet);
     for (const problem of allProblems) {
       if (bookmarkSet.has(problem.id)) {
         problem.bookmark = true;
@@ -45,20 +45,28 @@ export async function loadProblemWithIdService(problemId: string) {
   return coreLoadProblemWithId(problemId);
 }
 
-export async function getProblemStateService(problemId: string, step: number) {
+export async function getProblemStateService(
+  problemId: string,
+  testcaseIndex: number,
+  step: number
+) {
   const problem = await coreLoadProblemWithId(problemId);
   if (!problem) {
     throw new Error(`Problem not found: ${problemId}`);
   }
-  return stateCache.get(problem, step);
+  // Assuming stateCache.get can handle test case index
+  return stateCache.get(problem, testcaseIndex, step);
 }
 
-export async function getProblemSizeService(problemId: string) {
+export async function getProblemSizeService(
+  problemId: string,
+  testcaseIndex: number
+) {
   const problem = await coreGetProblemById(problemId);
   if (!problem) {
     throw new Error(`Problem not found: ${problemId}`);
   }
-  return stateCache.getSize(problem);
+  return stateCache.getSize(problem, testcaseIndex);
 }
 
 export function preserialize(state: ProblemState): any {
