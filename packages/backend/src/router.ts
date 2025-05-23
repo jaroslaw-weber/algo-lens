@@ -66,17 +66,7 @@ app.get("/problem/random", async (c) => {
 
   const problem = await getProblemByIdService(randomProblemId);
 
-  const rendered = pick(problem, [
-    "id",
-    "title",
-    "difficulty",
-    "code",
-    "url",
-    "tags",
-    "metadata",
-  ]);
-
-  return c.json(rendered);
+  return c.json(problem);
 });
 
 app.get("/problem/:id", async (c) => {
