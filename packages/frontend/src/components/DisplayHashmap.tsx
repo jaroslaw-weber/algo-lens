@@ -2,7 +2,7 @@ import React from "react";
 import type { HashmapVariable, Pointer } from "algo-lens-core";
 
 const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
-  const { value, label, highlight } = data;
+  const { value, label, highlight, keyLabel, valueLabel } = data;
   if (!value) {
     throw new Error("No data provided for the hashmap display");
   }
@@ -15,8 +15,8 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Key</th>
-            <th>Value</th>
+            <th>{keyLabel || "Key"}</th>
+            <th>{valueLabel || "Value"}</th>
           </tr>
         </thead>
         <tbody>
@@ -30,9 +30,7 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
               }
             >
               <td>{key}</td>
-              <td>
-                {Array.isArray(val) ? `[${val.join(', ')}]` : val}
-              </td>
+              <td>{Array.isArray(val) ? `[${val.join(", ")}]` : val}</td>
             </tr>
           ))}
         </tbody>

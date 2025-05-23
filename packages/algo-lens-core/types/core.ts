@@ -200,6 +200,8 @@ export interface HashmapVariable extends Variable {
   type: "hashmap";
   label: string;
   value: Map<any, any> | Record<string, any>;
+  keyLabel?: string;
+  valueLabel?: string;
   highlight?: HashHighlight;
 }
 
