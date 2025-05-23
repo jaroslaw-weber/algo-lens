@@ -7,9 +7,6 @@ import { loadProblemWithId } from "./load";
 export async function runTests(problem: Problem<any, ProblemState>) {
   // problem = cloneDeep(problem);
   const { testcases, metadata } = problem;
-  if (problem.id.includes("zeroes")) {
-    console.log("testcases: ", testcases);
-  }
 
   //has metadata check
   if (!metadata) {
