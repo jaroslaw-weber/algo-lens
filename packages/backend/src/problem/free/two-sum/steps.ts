@@ -22,7 +22,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
   for (let i = 0; i < nums.length; i++) {
     const num = nums[i]; // num defined here to be used in explanation for breakpoint 2
-    l.comment = `Start iterating through the 'nums' array. The current number being processed is ${num}.`;
+    l.comment = `Iterate nums array. Current number: ${num}.`;
     l.breakpoint(2); // Corresponds to #2 Start loop iteration
     const complement = target - num;
 
@@ -31,7 +31,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       { value: i, label: "current", color: "primary" },
     ]); // Use inferred label "i"
     l.simple({ complement: complement }); // Corrected l.simple call
-    l.comment = `For the current number (${num}), calculate the 'complement' needed to reach the target sum. The complement is target (${target}) - current number (${num}) = ${complement}. We need to find if this complement exists in the 'seen' map.`;
+    l.comment = `Calculate complement: ${target} - ${num} = ${complement}.`;
     l.breakpoint(3); // Corresponds to #3 Calculate complement
 
     const complementIndex = seen.get(complement);
@@ -60,7 +60,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       ]); // Use inferred labels "i" and "complementIndex"
       // Show the final result
       l.arrayV3({ result: [complementIndex!, i] }, []); // Added non-null assertion for complementIndex
-      l.comment = `Check if the calculated complement (${complement}) exists as a key in the 'seen' map. If it does, it means we have found two numbers in the array that add up to the target: the current number and the complement found in the map. The result is the indices of these two numbers.`;
+      l.comment = `Complement ${complement} found. Result: indices.`;
       l.breakpoint(4); // Corresponds to #4 Found complement
       return l.getSteps();
     }
@@ -77,7 +77,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       valueLabel: "Index",
       highlights: [{ key: num, color: "primary" }],
     });
-    l.comment = `Since the complement (${complement}) was not found in the 'seen' map, add the current number (${num}) and its index to the map. This makes the current number available as a potential complement for subsequent numbers in the array.`;
+    l.comment = `Complement not found. Add ${num} to map.`;
     l.breakpoint(6); // Corresponds to #6 Add current number and index to map
   }
   l.comment =

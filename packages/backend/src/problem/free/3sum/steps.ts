@@ -47,14 +47,14 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV3({ nums: nums }, [{ value: i, label: "i", color: "primary" }]);
     l.simple({ target });
     l.array2d("result", result);
-    l.comment = `Outer loop: Current fixed element is nums[i] = ${nums[i]}.`;
+    l.comment = `Outer loop: fixed element nums[i] = ${nums[i]}.`;
     l.breakpoint(3);
 
     if (i > 0 && nums[i] === nums[i - 1]) {
       l.arrayV3({ nums: nums }, [{ value: i, label: "i", color: "warning" }]);
       l.simple({ target });
       l.array2d("result", result);
-      l.comment = `Skipping duplicate element at index ${i} to avoid duplicate triplets.`;
+      l.comment = `Skip duplicate element at index ${i}.`;
       l.breakpoint(4);
 
       continue; // Skip duplicates
@@ -70,7 +70,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     ]);
     l.simple({ target });
     l.array2d("result", result);
-    l.comment = `Initialize two pointers: left at ${left} and right at ${right}.`;
+    l.comment = `Initialize left (${left}) and right (${right}) pointers.`;
     l.breakpoint(5);
 
     while (left < right) {
@@ -87,7 +87,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       l.group("triplet", tripletMap);
       l.simple({ sum });
       l.array2d("result", result);
-      l.comment = `Two-pointer search: Calculate sum of current triplet (nums[i] + nums[left] + nums[right]) = ${sum}.`;
+      l.comment = `Calculate triplet sum: ${sum}.`;
       l.breakpoint(6);
 
       if (sum === target) {
@@ -128,7 +128,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
-          l.comment = `Skipping duplicate left pointers to avoid duplicate triplets. New left pointer is at index ${left}.`;
+          l.comment = `Skip duplicate left pointers. New left: ${left}.`;
           l.breakpoint(9);
         }
 
@@ -148,7 +148,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           l.group("triplet", triplet);
           l.simple({ sum });
           l.array2d("result", result);
-          l.comment = `Skipping duplicate right pointers to avoid duplicate triplets. New right pointer is at index ${right}.`;
+          l.comment = `Skip duplicate right pointers. New right: ${right}.`;
           l.breakpoint(10);
         }
 
@@ -161,7 +161,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
-        l.comment = `Move both left and right pointers inwards to search for other potential triplets.`;
+        l.comment = `Move pointers inwards.`;
         l.breakpoint(11);
 
         left++;
@@ -178,7 +178,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         // Don't log triplet/sum here as they are recalculated at the start of the next iteration
         l.array2d("result", result);
         l.hide("triplet");
-        l.comment = `Pointers moved: left is now ${left}, right is now ${right}. Continue two-pointer search.`;
+        l.comment = `Pointers moved. Continue search.`;
         l.breakpoint(12);
       } else if (sum < target) {
         l.arrayV3({ nums: nums }, [
@@ -191,7 +191,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.simple({ sum });
         l.array2d("result", result);
 
-        l.comment = `Sum (${sum}) is less than target (0). Increment left pointer to increase the sum.`;
+        l.comment = `Sum ${sum} < target. Increment left.`;
         l.breakpoint(13);
         left++;
       } else {
@@ -206,7 +206,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.group("triplet", triplet);
         l.simple({ sum });
         l.array2d("result", result);
-        l.comment = `Sum (${sum}) is greater than target (0). Decrement right pointer to decrease the sum.`;
+        l.comment = `Sum ${sum} > target. Decrement right.`;
         l.breakpoint(14);
         right--;
       }
@@ -219,7 +219,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     ]);
     l.simple({ target });
     l.array2d("result", result);
-    l.comment = `End of two-pointer search for the current fixed element nums[i] = ${nums[i]}.`;
+    l.comment = `End two-pointer search for nums[i] = ${nums[i]}.`;
     l.breakpoint(15);
   }
 

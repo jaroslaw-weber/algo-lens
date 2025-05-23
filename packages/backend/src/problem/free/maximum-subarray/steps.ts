@@ -17,7 +17,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Log initial state
   l.arrayV3({ nums: nums }, []);
   l.group("comparision", { maxEndingHere, maxSoFar });
-  l.comment = `Start with maxEndingHere and maxSoFar equal to the first number.`;
+  l.comment = `Initialize maxEndingHere and maxSoFar.`;
   l.breakpoint(1);
 
   // Iterate through the array starting from the second element.
@@ -41,7 +41,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       num,
     });
     // HIDE_END
-    l.comment = `Look at the current number, which is ${num}.`;
+    l.comment = `Current number is ${num}.`;
     l.breakpoint(2);
 
     if (startNew > extendSum) {
@@ -63,7 +63,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `Compare starting a new subarray with the current number (${startNew}) to extending the previous one (maxEndingHere + num = ${extendSum}). Starting a new subarray is better.`;
+      l.comment = `New subarray is better.`;
 
       l.breakpoint(3);
       maxEndingHere = startNew;
@@ -86,7 +86,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `maxEndingHere is now ${maxEndingHere}.`;
+      l.comment = `maxEndingHere is ${maxEndingHere}.`;
       l.breakpoint(4);
     } else {
       // Log state before updating maxEndingHere
@@ -107,7 +107,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `Compare starting a new subarray with the current number (${startNew}) to extending the previous one (maxEndingHere + num = ${extendSum}). Extending the previous subarray is better or equal.`;
+      l.comment = `Extend previous subarray.`;
 
       l.breakpoint(5);
       maxEndingHere = extendSum;
@@ -130,7 +130,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `maxEndingHere is now ${maxEndingHere}.`;
+      l.comment = `maxEndingHere is ${maxEndingHere}.`;
       l.breakpoint(6);
     }
 
@@ -148,7 +148,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       num,
     });
     // HIDE_END
-    l.comment = `Check if the current maximum sum ending here (${maxEndingHere}) is greater than the overall maximum sum found so far (${maxSoFar}).`;
+    l.comment = `Compare maxEndingHere with maxSoFar.`;
 
     l.breakpoint(7);
     if (maxEndingHere > maxSoFar) {
@@ -165,7 +165,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `Compare the current maximum sum ending here (${maxEndingHere}) with the overall maximum sum found so far (${maxSoFar}). A new overall maximum sum is found.`;
+      l.comment = `New overall maximum sum found.`;
 
       l.breakpoint(8);
       maxSoFar = maxEndingHere;
@@ -183,7 +183,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `maxSoFar is updated to ${maxSoFar}.`;
+      l.comment = `maxSoFar updated to ${maxSoFar}.`;
       l.breakpoint(9);
     } else {
       // Log state if maxSoFar is not updated
@@ -199,7 +199,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         num,
       });
       // HIDE_END
-      l.comment = `Compare the current maximum sum ending here (${maxEndingHere}) with the overall maximum sum found so far (${maxSoFar}). The overall maximum sum remains ${maxSoFar}.`;
+      l.comment = `Overall maximum sum remains ${maxSoFar}.`;
 
       l.breakpoint(10);
     }
@@ -211,7 +211,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.group("comparision", { maxEndingHere, maxSoFar });
   const result = maxSoFar;
   l.simple({ result });
-  l.comment = `All numbers processed. The final maximum subarray sum is ${maxSoFar}.`;
+  l.comment = `Final max subarray sum is ${maxSoFar}.`;
   l.breakpoint(11);
 
   return l.getSteps();

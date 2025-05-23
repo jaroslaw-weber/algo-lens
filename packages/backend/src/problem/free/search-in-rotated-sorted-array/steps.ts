@@ -38,7 +38,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       { label: "mid", value: mid, color: "primary" },
     ]);
     // We find the middle spot to split the current search area in half.
-    l.comment = `Calculate the middle index ('mid') of the current search range. This divides the search space in half. The value at the middle is ${nums[mid]}.`;
+    l.comment = `Calculate middle index 'mid'. Value: ${nums[mid]}.`;
     l.breakpoint(2);
 
     if (nums[mid] === target) {
@@ -49,7 +49,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         { label: "right", value: right, color: "info" },
         { label: "found", value: mid, color: "success" },
       ]);
-      l.comment = `Check if the value at the middle (${nums[mid]}) is equal to the target (${target}). If it is, the target is found. Set 'result' to the middle index and terminate the search.`;
+      l.comment = `Check if mid value equals target.`;
       l.breakpoint(3);
       return l.getSteps();
     }
@@ -62,7 +62,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       ]);
       // Check if the left side of our current search area (from 'left' to 'mid') is sorted correctly.
       // Check if the left side (from 'left' to 'mid') is sorted.
-      l.comment = `Determine which half of the array is sorted. Check if the value at the 'left' pointer (${nums[left]}) is less than or equal to the value at the 'mid' pointer (${nums[mid]}). If true, the left half is sorted.`;
+      l.comment = `Determine sorted half. Left half sorted?`;
       l.breakpoint(4);
       // If the left side is sorted, we see if the target is in this sorted range.
       if (nums[left] <= target && target < nums[mid]) {
@@ -75,7 +75,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
           { label: "left", value: left, color: "info" },
           { label: "new right", value: right, color: "warning" },
         ]);
-        l.comment = `The left half of the array is sorted. Check if the target (${target}) falls within the range of values in this sorted left half (between ${nums[left]} and ${nums[mid]}). If it does, the target must be in this left half. Discard the right half by moving the 'right' pointer.`;
+        l.comment = `Left half sorted. Target in range. Discard right.`;
         l.breakpoint(5);
       } else {
         // If the target is not in the sorted left part, it must be in the right part (which might be rotated).
@@ -87,7 +87,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
           { label: "new left", value: left, color: "warning" },
           { label: "right", value: right, color: "info" },
         ]);
-        l.comment = `The left half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the right half, which might be rotated. Discard the left half by moving the 'left' pointer.`;
+        l.comment = `Left half sorted. Target not in range. Discard left.`;
         l.breakpoint(6);
       }
     } else {
@@ -111,7 +111,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
           { label: "new left", value: left, color: "warning" },
           { label: "right", value: right, color: "info" },
         ]);
-        l.comment = `The right half of the array is sorted. Check if the target (${target}) falls within the range of values in this sorted right half (between ${nums[mid]} and ${nums[right]}). If it does, the target must be in this right half. Discard the left half by moving the 'left' pointer.`;
+        l.comment = `Right half sorted. Target in range. Discard left.`;
         l.breakpoint(8);
       } else {
         // If the target is NOT in the sorted right part, it must be in the left part (which might be rotated).
@@ -123,7 +123,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
           { label: "left", value: left, color: "info" },
           { label: "new right", value: right, color: "warning" },
         ]);
-        l.comment = `The right half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the left part, which might be rotated. Discard the right half by moving the 'right' pointer.`;
+        l.comment = `Right half sorted. Target not in range. Discard right.`;
         l.breakpoint(9);
       }
     }

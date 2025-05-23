@@ -20,7 +20,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
   l.arrayV3({ prices }, [{ value: 0, label: "current day", color: "primary" }]);
   l.arrayV3({ dp }, []);
   l.group("profit", { minPrice });
-  l.comment = `Start with the first price (${prices[0]}) as the minimum.`;
+  l.comment = `First price ${prices[0]} is minimum.`;
 
   l.breakpoint(1);
 
@@ -38,11 +38,11 @@ export function generateSteps(prices: number[]): ProblemState[] {
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.comment = `Day ${i}: Calculate potential profit if selling today (${price} - ${minPrice} = ${diff}).`;
+    l.comment = `Day ${i}: Potential profit ${diff}.`;
 
     l.breakpoint(2);
 
-    l.comment = `Day ${i}: Compare with previous maximum profit: (${diff} > ${prev} ?). If so, remember that value.`;
+    l.comment = `Day ${i}: Compare with max profit.`;
 
     l.breakpoint(3);
     dp[i] = Math.max(prev, diff);
@@ -56,7 +56,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.comment = `Day ${i}: Update minimum price (${minPrice}) if current price (${price}) is lower.`;
+    l.comment = `Day ${i}: Update minPrice if ${price} is lower.`;
 
     l.breakpoint(4);
 
@@ -71,7 +71,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
-    l.comment = `Day ${i}: Minimum price updated to ${minPrice}. Move to the next day.`;
+    l.comment = `Day ${i}: minPrice updated to ${minPrice}.`;
 
     l.breakpoint(5);
     l.hide("smaller");
@@ -84,7 +84,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
     { value: prices.length - 1, label: "max profit", color: "success" },
   ]);
   l.simple({ result });
-  l.comment = `All days processed. The maximum profit is ${result}.`;
+  l.comment = `All days processed. Max profit: ${result}.`;
 
   l.breakpoint(6);
 

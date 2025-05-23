@@ -55,7 +55,7 @@ export function generateSteps(nums: number[]) {
       currentHouse,
     });
     l.breakpoint(3);
-    l.comment = `Calculate the maximum amount that can be robbed up to the current house. This is the maximum of either skipping the current house (inheriting the max from the previous house, ${skipCurrent}) or including the current house (adding its value, ${currentHouse}, to the max from two houses before, ${twoHousesBefore}). The maximum amount up to this house is ${dp[i]}.`;
+    l.comment = `Max robbed up to current house: ${dp[i]}.`;
   }
 
   const result = dp[n];
@@ -66,7 +66,7 @@ export function generateSteps(nums: number[]) {
   ]); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
   l.breakpoint(4);
-  l.comment = `All houses have been considered. The final result, ${result}, is the maximum amount that can be robbed from all houses.`;
+  l.comment = `All houses considered. Max robbed: ${result}.`;
 
   return l.getSteps(); // Return steps from StepLoggerV2
 }

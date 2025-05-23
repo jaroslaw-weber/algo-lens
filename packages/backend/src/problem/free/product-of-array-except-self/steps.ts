@@ -44,7 +44,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     ]); // Use inferred labels "i" and "i - 1"
     l.arrayV3({ productsRight: productsRight }, []);
     l.arrayV3({ output: output }, []);
-    l.comment = `Calculate the prefix product for the current position. This is done by multiplying the prefix product calculated so far (${prevProductsLeft}) by the value of the previous number (${prevNum}). The resulting prefix product is ${productsLeft[i]}.`;
+    l.comment = `Calculate prefix product for current position.`;
     l.breakpoint(2);
   }
 
@@ -67,7 +67,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
       { dimension: "column", value: i + 1, label: "next", color: "info" },
     ]); // Use inferred labels "i" and "i + 1"
     l.arrayV3({ output: output }, []);
-    l.comment = `Calculate the suffix product for the current position. This is done by multiplying the suffix product calculated so far from the right (${nextProductsRight}) by the value of the next number (${nextNum}). The resulting suffix product is ${productsRight[i]}.`;
+    l.comment = `Calculate suffix product for current position.`;
     l.breakpoint(3);
   }
 
@@ -86,7 +86,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     l.arrayV3({ output: output }, [
       { dimension: "column", value: i, label: "result", color: "success" },
     ]);
-    l.comment = `Calculate the final output for the current position. The product of all elements except the current number is the product of the prefix product to its left (${currentProductsLeft}) and the suffix product to its right (${currentProductsRight}). The result is ${output[i]}.`;
+    l.comment = `Calculate final output: left product * right product.`;
     l.breakpoint(4);
   }
 

@@ -21,7 +21,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     ]);
     l.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Highlight value being checked
     l.simple({ result });
-    l.comment = `Checking if element at index ${i} is in hashSet.`;
+    l.comment = `Check if element ${nums[i]} is in hashSet.`;
     l.breakpoint(2);
 
     if (hashSet.has(nums[i])) {

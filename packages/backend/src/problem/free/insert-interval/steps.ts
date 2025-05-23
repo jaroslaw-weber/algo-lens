@@ -36,7 +36,7 @@ export function generateSteps(
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
 
     l.breakpoint(2);
-    l.comment = `The current interval [${currentInterval.join(", ")}] ends before the new interval starts ([${newInterval.join(", ")}]). Add it to the result.`;
+    l.comment = `Current interval ends before new. Add to result.`;
   }
 
   // Log state before loop 2
@@ -66,7 +66,7 @@ export function generateSteps(
 
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
     l.breakpoint(4);
-    l.comment = `The current interval [${currentInterval.join(", ")}] overlaps with the new interval ([${newInterval.join(", ")}]). Merge them by updating the new interval to [${newInterval.join(", ")}].`;
+    l.comment = `Current interval overlaps. Merge into new interval.`;
   }
 
   result.push(newInterval);
@@ -99,7 +99,7 @@ export function generateSteps(
     l.intervals("result", result, [], minValue, maxValue);
     l.intervals("currentInterval", [currentInterval], [], minValue, maxValue); // Log the interval just processed
     l.breakpoint(7);
-    l.comment = `The current interval [${currentInterval.join(", ")}] starts after the merged new interval. Add it to the result.`;
+    l.comment = `Current interval starts after merged. Add to result.`;
   }
 
   // Final state log (Breakpoint #6)

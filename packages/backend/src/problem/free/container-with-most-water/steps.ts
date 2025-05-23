@@ -8,7 +8,7 @@ export function generateSteps(height: number[]): ProblemState[] {
   let right = height.length - 1;
   let maxArea = 0;
 
-  l.comment = `Initialize left pointer to ${left}, right pointer to ${right}, and maxArea to ${maxArea}.`;
+  l.comment = `Initialize pointers and maxArea.`;
   l.arrayV3({ height }, [
     { value: left, label: "left", color: "info" },
     { value: right, label: "right", color: "info" },
@@ -21,12 +21,12 @@ export function generateSteps(height: number[]): ProblemState[] {
     const width = right - left;
     const minHeight = Math.min(height[left], height[right]);
     const area = width * minHeight;
-    l.comment = `Calculate the area between the lines with heights ${height[left]} and ${height[right]}. Width is ${width}, minimum height is ${minHeight}. Area = ${area}.`;
+    l.comment = `Calculate area: width ${width}, minHeight ${minHeight}. Area ${area}.`;
     l.simple({ area });
     l.breakpoint(2);
 
     if (area > maxArea) {
-      l.comment = `The calculated area (${area}) is greater than the current maxArea (${maxArea}). Update maxArea to ${area}.`;
+      l.comment = `Update maxArea to ${area}.`;
 
       maxArea = area;
       l.simple({ maxArea });
@@ -34,7 +34,7 @@ export function generateSteps(height: number[]): ProblemState[] {
     }
 
     if (height[left] < height[right]) {
-      l.comment = `Since ${height[left]} is less than ${height[right]}, move the left pointer to the right to potentially find a larger area. New left: ${left + 1}, right: ${right}.`;
+      l.comment = `Left height smaller. Move left pointer.`;
 
       l.breakpoint(4);
       left++;
@@ -43,7 +43,7 @@ export function generateSteps(height: number[]): ProblemState[] {
         { value: right, label: "right", color: "info" },
       ]);
     } else {
-      l.comment = `Since ${height[left]} is greater than or equal to ${height[right]}, move the right pointer to the left to potentially find a larger area. New left: ${left}, right: ${right - 1}.`;
+      l.comment = `Right height smaller. Move right pointer.`;
 
       l.breakpoint(5);
       right--;
@@ -56,7 +56,7 @@ export function generateSteps(height: number[]): ProblemState[] {
 
   const result = maxArea;
   l.simple({ result });
-  l.comment = `All possible pairs of lines have been considered. The maximum area found is ${maxArea}.`;
+  l.comment = `All pairs checked. Max area is ${maxArea}.`;
   l.hide("area");
   l.breakpoint(6);
 

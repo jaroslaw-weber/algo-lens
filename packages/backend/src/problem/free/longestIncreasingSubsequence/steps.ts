@@ -40,7 +40,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
         },
         { dimension: "column", value: j, label: "previous dp", color: "info" },
       ]);
-      l.comment = `Comparing the current number (${currentNum}) with a previous number (${previousNum}). We are checking if we can extend an increasing subsequence ending at the previous number.`;
+      l.comment = `Compare ${currentNum} with ${previousNum}. Extend LIS?`;
       l.breakpoint(2); //#2
 
       if (currentNum > previousNum) {
@@ -61,7 +61,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
           },
         ]);
 
-        l.comment = `Since the current number (${currentNum}) is greater than the previous number (${previousNum}), we can potentially extend the longest increasing subsequence ending at the previous number.`;
+        l.comment = `Current number is greater. Extend LIS.`;
         l.breakpoint(3); //#3
 
         l.arrayV3({ nums: nums }, [
@@ -76,7 +76,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
             color: "primary",
           },
         ]);
-        l.comment = `We update the length of the LIS ending at the current number to be the maximum of its current length (${currentDpI}) and the length of the LIS ending at the previous number plus 1 (${newDpI}). The new length is ${dp[i]}.`;
+        l.comment = `Update LIS length for current number.`;
         l.breakpoint(4); //#4
       }
     }
@@ -86,7 +86,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.simple({ result: maxLength });
   l.arrayV3({ dp: dp }, []);
   l.arrayV3({ nums: nums }, []);
-  l.comment = `All numbers have been processed. The final result, ${maxLength}, is the maximum value in the dp array. This value represents the length of the longest increasing subsequence found in the input array.`;
+  l.comment = `All numbers processed. LIS length: ${maxLength}.`;
   l.breakpoint(5); //#5
 
   return l.getSteps();
