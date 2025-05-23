@@ -14,7 +14,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
   // Log initial state
   l.simple({ s: s });
   l.simple({ suffix: undefined });
-  //l.arrayV2({ wordDict });
+  //l.arrayV3({ wordDict });
   l.groupOptions.set("loop", { min: 0, max: s.length });
   //
 
@@ -30,7 +30,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
   const dp = new Array(n + 1).fill(false);
   // Base case: An empty string can always be segmented.
   dp[0] = true;
-  l.arrayV2({ dp });
+  l.arrayV3({ dp });
   l.comment =
     "Initialize a boolean array 'dp' to keep track of whether a prefix of the string 's' can be segmented into words. 'dp[i]' will be true if the first 'i' characters of 's' can be segmented. We set dp[0] to true because an empty string (0 characters) can always be segmented.";
   l.breakpoint(2);
@@ -65,7 +65,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
         // If both conditions are true, then the prefix s[0...i-1] can be segmented.
         dp[i] = true;
         l.hashset("wordSet", wordSet, { value: suffix, color: "primary" });
-        l.arrayV2({ dp }, { i, "can segment?": j }); // Log the updated dp array
+        l.arrayV3({ dp }, { i, "can segment?": j }); // Log the updated dp array
         l.comment = `Both conditions are true: the prefix ending at index 'j' can be segmented (${canSegmentPrefix}) AND the suffix "${suffix}" is a valid word (${isWordInDict}). This means the prefix of length ${i} can be segmented. Set dp[i] to true. We can stop checking other split points for this prefix length.`;
         l.breakpoint(6);
         // Break the inner loop since we've found a way to segment s[0...i-1].
@@ -79,7 +79,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
 
     //
     //l.simple({ suffix: undefined }); // Clear suffix for the next outer loop iteration
-    l.arrayV2({ dp }, { i }); // Log dp state at the end of inner loop checks for i
+    l.arrayV3({ dp }, { i }); // Log dp state at the end of inner loop checks for i
     l.comment = `Finished checking all possible split points for the prefix of length ${i}. dp[i] is now ${dp[i]}, indicating whether this prefix can be segmented.`;
     l.breakpoint(9);
   }
@@ -91,7 +91,7 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
   // The final result is dp[n]
   const result = dp[n];
   l.simple({ result: result }); // Log the final result
-  l.arrayV2({ dp }, { n }); // Log the final dp array state
+  l.arrayV3({ dp }, { n }); // Log the final dp array state
   l.comment = `The final result is dp[n], which is ${result}. This tells us if the entire string 's' can be segmented into words from the dictionary.`;
   l.breakpoint(11);
 

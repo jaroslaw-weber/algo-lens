@@ -13,8 +13,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
   const dp: number[] = new Array(n).fill(1);
 
-  l.arrayV2({ nums: nums });
-  l.arrayV2({ dp: dp });
+  l.arrayV3({ nums: nums });
+  l.arrayV3({ dp: dp });
   l.comment = "Initial state: nums array and dp array (all 1s).";
   l.breakpoint(1); //#1
 
@@ -22,9 +22,13 @@ export function generateSteps(nums: number[]): ProblemState[] {
     for (let j = 0; j < i; j++) {
       const currentNum = nums[i];
       const previousNum = nums[j];
-      l.group("compare", {currentNum, previousNum}, {min: Math.min(...nums), max: Math.max(...nums)})
-      l.arrayV2({ nums: nums }, { i: i, j: j });
-      l.arrayV2({ dp: dp }, { i: i, j: j });
+      l.group(
+        "compare",
+        { currentNum, previousNum },
+        { min: Math.min(...nums), max: Math.max(...nums) }
+      );
+      l.arrayV3({ nums: nums }, { i: i, j: j });
+      l.arrayV3({ dp: dp }, { i: i, j: j });
       l.comment = `Comparing the current number (${currentNum}) with a previous number (${previousNum}). We are checking if we can extend an increasing subsequence ending at the previous number.`;
       l.breakpoint(2); //#2
 
@@ -33,14 +37,14 @@ export function generateSteps(nums: number[]): ProblemState[] {
         const newDpI = dp[j] + 1;
         dp[i] = Math.max(currentDpI, newDpI);
 
-        l.arrayV2({ nums: nums }, { i: i, j: j });
-        l.arrayV2({ dp: dp }, { i: i });
+        l.arrayV3({ nums: nums }, { i: i, j: j });
+        l.arrayV3({ dp: dp }, { i: i });
 
         l.comment = `Since the current number (${currentNum}) is greater than the previous number (${previousNum}), we can potentially extend the longest increasing subsequence ending at the previous number.`;
         l.breakpoint(3); //#3
 
-        l.arrayV2({ nums: nums }, { i: i, j: j });
-        l.arrayV2({ dp: dp }, { i: i });
+        l.arrayV3({ nums: nums }, { i: i, j: j });
+        l.arrayV3({ dp: dp }, { i: i });
         l.comment = `We update the length of the LIS ending at the current number to be the maximum of its current length (${currentDpI}) and the length of the LIS ending at the previous number plus 1 (${newDpI}). The new length is ${dp[i]}.`;
         l.breakpoint(4); //#4
       }
@@ -49,8 +53,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
   const maxLength = n > 0 ? Math.max(...dp) : 0;
   l.simple({ result: maxLength });
-  l.arrayV2({ dp: dp });
-  l.arrayV2({ nums: nums });
+  l.arrayV3({ dp: dp });
+  l.arrayV3({ nums: nums });
   l.comment = `All numbers have been processed. The final result, ${maxLength}, is the maximum value in the dp array. This value represents the length of the longest increasing subsequence found in the input array.`;
   l.breakpoint(5); //#5
 

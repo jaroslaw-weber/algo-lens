@@ -4,15 +4,14 @@ import { getIntervalBounds } from "../../core/utils"; // Import the utility func
 import { Interval } from "./types";
 import _ = require("lodash");
 
-export function generateSteps( 
-  intervals: Interval[], 
-  newInterval: Interval 
+export function generateSteps(
+  intervals: Interval[],
+  newInterval: Interval
 ): ProblemState[] {
-
   const l = new StepLoggerV2();
 
   const allintervals = [...intervals, newInterval];
-  const { min: minValue, max: maxValue } = getIntervalBounds(allintervals); 
+  const { min: minValue, max: maxValue } = getIntervalBounds(allintervals);
 
   let result: Interval[] = [];
   let i = 0;
@@ -51,8 +50,14 @@ export function generateSteps(
   // Loop 2: Merge overlapping intervals (Breakpoint #3)
   while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
     const currentInterval = intervals[i];
-    newInterval[0] = Math.min(currentInterval[0], newInterval[0]);
-    newInterval[1] = Math.max(currentInterval[1], newInterval[1]);
+    const currentStart = currentInterval[0];
+    const currentEnd = currentInterval[1];
+    const newStart = newInterval[0];
+    const newEnd = newInterval[1];
+    newInterval = [
+      Math.min(currentStart, newStart),
+      Math.max(currentEnd, newEnd),
+    ];
     i++;
 
     l.intervals("intervals", intervals, [i - 1], minValue, maxValue); // Highlight the interval just merged
@@ -71,9 +76,8 @@ export function generateSteps(
 
   l.breakpoint(5);
   l.comment = `Inserting the final merged/original newInterval [${newInterval.join(
-    
-    ", " 
-  )}].`; 
+    ", "
+  )}].`;
 
   // Log state before loop 3
   l.intervals("intervals", intervals, [], minValue, maxValue); // Show intervals before loop

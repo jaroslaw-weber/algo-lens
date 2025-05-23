@@ -36,7 +36,7 @@ Here's a breakdown of how it works and how to use it:
 2.  **State Copying:** A key feature of `StepLoggerV2` is that the state logged at a particular step is automatically carried over to the next step. This means you only need to explicitly log a variable when its value changes or when you want to highlight it or show its state alongside other changing variables at a specific breakpoint. If a variable remains the same, you don't need to log it repeatedly.
 
 3.  **Logging Variables:** You use various methods on the `l` instance to log different types of variables. The methods available are:
-    *   `l.arrayV2({ arrayName: arrayVariable }, { highlightIndex: index })`: Logs an array and can highlight a specific index.
+    *   `l.arrayV3({ arrayName: arrayVariable }, { highlightIndex: index })`: Logs an array and can highlight a specific index.
     *   `l.grid({ gridName: gridVariable }, { highlight: { row, col } })`: Logs a grid and can highlight a cell.
     *   `l.simple({ variableName: variableValue })`: Logs a simple value like a number, string, or boolean.
     *   `l.intervals({ intervalsName: intervalsArray })`: Logs an array of intervals.

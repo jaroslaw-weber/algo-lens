@@ -7,7 +7,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const hashSet: Set<number> = new Set();
 
   // Initial state log before the loop starts
-  l.arrayV2({ nums: nums }, {});
+  l.arrayV3({ nums: nums }, {});
   l.hashset("hashSet", hashSet, { value: -1, color: "neutral" }); // Initial empty hashset state
   l.simple({ result }); // Initial result state
   l.comment = "Initial state: empty hashSet, result is false.";
@@ -16,7 +16,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Main loop to check for duplicates
   for (let i = 0; i < nums.length; i++) {
     // Log state before checking hashSet
-    l.arrayV2({ nums: nums }, { i: i });
+    l.arrayV3({ nums: nums }, { i: i });
     l.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Highlight value being checked
     l.simple({ result });
     l.comment = `Checking if element at index ${i} is in hashSet.`;
@@ -25,7 +25,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     if (hashSet.has(nums[i])) {
       result = true; // Set result to true if duplicate found
       // Log duplicate found state
-      l.arrayV2({ nums: nums }, { i: i });
+      l.arrayV3({ nums: nums }, { i: i });
       l.hashset("hashSet", hashSet, { value: nums[i], color: "error" }); // Highlight duplicate
       l.simple({ result }); // Log final true result
       l.comment = "Duplicate found. Set result to true and return.";
@@ -34,7 +34,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     } else {
       hashSet.add(nums[i]);
       // Log state after adding to hashSet
-      l.arrayV2({ nums: nums }, { i: i });
+      l.arrayV3({ nums: nums }, { i: i });
       l.hashset("hashSet", hashSet, { value: nums[i], color: "success" }); // Highlight added value
       l.simple({ result });
       l.comment = "Element not in hashSet. Added element to hashSet.";
@@ -43,7 +43,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   }
 
   // Logs the final state when no duplicate is found
-  l.arrayV2({ nums: nums }, {}); // Final array state
+  l.arrayV3({ nums: nums }, {}); // Final array state
   l.hashset("hashSet", hashSet, { value: -1, color: "neutral" }); // Final hashset state
   l.simple({ result }); // Log final false result
   l.comment =

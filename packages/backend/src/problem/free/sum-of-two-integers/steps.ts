@@ -53,7 +53,8 @@ export function generateSteps(a: number, b: number): ProblemState[] {
     l.binary({ b }); // b now holds the shifted carry
     // l.binary({ carry }); // carry here is the value *before* b = carry << 1
     l.comment = `Shift the 'carry' bits one position to the left (carry << 1). This prepares the carry to be added to the next significant bit position in the next iteration. The shifted carry value is ${b.toString(2)}. The new values for the next iteration are a = ${a.toString(2)} and b = ${b.toString(2)}.`;
-    l.breakpoint(4);
+
+    l.breakpoint(5);
   }
 
   // #6 Loop finished (no more carry)

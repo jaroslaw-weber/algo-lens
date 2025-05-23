@@ -223,54 +223,18 @@ export class StepLoggerV2 {
     this.upsert(variable);
   }
 
-  /**
-   * Logs the state of a 1-dimensional array variable.
-   * Uses `asArray` to format the data and `upsert` to add/update it.
-   * @param name - The name of the variable.
-   * @param values - The array elements.
-   * @param pointer1 - Optional index for the first pointer.
-   * @param pointer2 - Optional index for the second pointer.
-   * @param pointer3 - Optional index for the third pointer.
-   *
-   * @deprecated use arrayV2 instead.
-   */
-  public array(
-    name: string,
-    values: any[],
-    pointer1?: number,
-    pointer2?: number,
-    pointer3?: number
-  ) {
-    const variable = asArray(name, values, pointer1, pointer2, pointer3);
-    this.upsert(variable);
-  }
-
-  public arrayV2(
+  public arrayV3(
     arrayContaner: Record<string, any[]>,
-    pointers?: Record<string, number>
+    pointers: (Pointer | Pointer2D)[]
   ) {
-    const fixedPointers: Pointer[] = [];
-    let i = 0;
-    if (pointers) {
-      for (let [key, value] of Object.entries(pointers)) {
-        i++;
-        fixedPointers.push({
-          dimension: "column",
-          value,
-          label: key,
-        });
-      }
-    }
-
     const arrayKey = Object.keys(arrayContaner)[0];
     const values = arrayContaner[arrayKey];
     const v: ArrayVariable = {
       label: arrayKey,
       type: "array",
       value: values.map((item) => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
-      pointers: fixedPointers,
+      pointers: pointers.filter((x) => !!x),
     };
-    ////
     this.upsert(v);
   }
 

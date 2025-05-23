@@ -10,8 +10,8 @@ export function generateSteps(s1: string, s2: string) {
   );
 
   // Log initial state (optional, could log inputs here)
-  l.arrayV2({ s1: s1.split("") });
-  l.arrayV2({ s2: s2.split("") });
+  l.arrayV3({ s1: s1.split("") });
+  l.arrayV3({ s2: s2.split("") });
   l.groupOptions.set("size", { min: 0, max: Math.max(m, n) });
   l.group("size", { m, n });
   l.array2d("dp", dp); // Log initial empty dp table
@@ -27,7 +27,7 @@ export function generateSteps(s1: string, s2: string) {
   // Initialize the DP table - First Row
   for (let j = 0; j <= n; j++) {
     dp[0][j] = j;
-    l.grid("dp", dp, ...[{ r: 0, c: j , label: "insertion"}]);
+    l.grid("dp", dp, ...[{ r: 0, c: j, label: "insertion" }]);
     l.comment = `Initializing the first row of the DP table. The value represents the number of insertions needed to transform an empty string into a prefix of s2.`;
     l.breakpoint(2);
   }
@@ -37,8 +37,8 @@ export function generateSteps(s1: string, s2: string) {
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      l.arrayV2({ s1: s1.split("") }, { "i - 1": i - 1 }); // Highlight characters being compared
-      l.arrayV2({ s2: s2.split("") }, { "j - 1": j - 1 });
+      l.arrayV3({ s1: s1.split("") }, { "i - 1": i - 1 }); // Highlight characters being compared
+      l.arrayV3({ s2: s2.split("") }, { "j - 1": j - 1 });
 
       let op = 0; // Operation cost
       l.breakpoint(3); // Change breakpoint to 3
@@ -79,7 +79,7 @@ export function generateSteps(s1: string, s2: string) {
             { r: i - 1, c: j, label: "deletion", dir: "right" },
             { r: i - 1, c: j - 1, label: "substitution", dir: "left" },
           ]
-        ); 
+        );
         // HIDE_END
         l.comment = `Characters '${s1[i - 1]}' and '${s2[j - 1]}' do not match. The cost is 1 plus the minimum of the costs for insertion (${insertionCost}), deletion (${deletionCost}), or substitution (${substitutionCost}). The calculated cost is ${op}.`;
         l.breakpoint(5); // Change breakpoint to 6

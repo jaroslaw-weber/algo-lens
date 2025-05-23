@@ -9,7 +9,7 @@ export function generateSteps(height: number[]): ProblemState[] {
   let maxArea = 0;
 
   l.comment = `Initialize left pointer to ${left}, right pointer to ${right}, and maxArea to ${maxArea}.`;
-  l.arrayV2({ height }, { left, right });
+  l.arrayV3({ height }, { left, right });
   l.simple({ maxArea });
   l.breakpoint(1);
 
@@ -35,13 +35,13 @@ export function generateSteps(height: number[]): ProblemState[] {
 
       l.breakpoint(4);
       left++;
-      l.arrayV2({ height }, { left, right });
+      l.arrayV3({ height }, { left, right });
     } else {
       l.comment = `Since ${height[left]} is greater than or equal to ${height[right]}, move the right pointer to the left to potentially find a larger area. New left: ${left}, right: ${right - 1}.`;
 
       l.breakpoint(5);
       right--;
-      l.arrayV2({ height }, { left, right });
+      l.arrayV3({ height }, { left, right });
     }
   }
 
