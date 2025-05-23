@@ -23,8 +23,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     color: "neutral",
   });
   l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
-  l.arrayV3({ inDegree: inDegree }, {});
-  l.arrayV3({ queue: queue }, {});
+  l.arrayV3({ inDegree: inDegree }, []);
+  l.arrayV3({ queue: queue }, []);
   l.simple({ numCourses });
   l.comment =
     "Initial state: numCourses, empty graph, inDegree array, and queue.";
@@ -39,7 +39,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       color: "primary",
     });
     l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
-    l.arrayV3({ inDegree: inDegree }, {});
+    l.arrayV3({ inDegree: inDegree }, []);
     l.comment = `Processing prerequisite: [${course}, ${prereq}]. Highlighting the prerequisite course value in prerequisitesMap.`;
     l.breakpoint(2);
 
@@ -64,7 +64,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
     if (deg === 0) {
       queue.push(index);
-      l.arrayV3({ queue });
+      l.arrayV3({ queue }, []);
       l.comment = `Course '${index}' has inDegree 0. Adding to queue.`;
       l.breakpoint(6);
     }
@@ -87,20 +87,26 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
       // Log before decrementing neighbor inDegree (Breakpoint 8)
       l.hashmap("graphMap", graphMap, { value: current, color: "primary" });
-      l.arrayV3({ inDegree: inDegree }, { neighbor: neighbor });
+      l.arrayV3({ inDegree: inDegree }, [
+        { value: neighbor, label: "neighbor" },
+      ]);
       l.comment = `Processing neighbor of '${current}' course. Highlighting the current node in graphMap and neighbor's inDegree.`;
       l.breakpoint(8);
 
       inDegree[neighbor]--;
 
       // Log after decrementing neighbor inDegree (Breakpoint 11)
-      l.arrayV3({ inDegree: inDegree }, { neighbor: neighbor });
+      l.arrayV3({ inDegree: inDegree }, [
+        { value: neighbor, label: "neighbor" },
+      ]);
       l.comment = `Decremented inDegree for neighbor '${neighbor}'.`;
       l.breakpoint(9);
 
       if (inDegree[neighbor] === 0) {
         // Log before adding neighbor to queue (Breakpoint 12)
-        l.arrayV3({ queue: queue }, { "newly added": queue.length }); // Highlight the newly added element's position
+        l.arrayV3({ queue: queue }, [
+          { value: queue.length, label: "newly added" },
+        ]); // Highlight the newly added element's position
         l.comment = `Neighbor '${neighbor}' inDegree is now 0. Adding to queue.`;
         l.breakpoint(10);
         queue.push(neighbor);
@@ -109,7 +115,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     }
 
     // Log after processing all neighbors of 'current' (Breakpoint 13)
-    l.arrayV3({ queue: queue }, {});
+    l.arrayV3({ queue: queue }, []);
     l.comment = `Finished processing all neighbors of '${current}'.`;
     l.breakpoint(11);
   }

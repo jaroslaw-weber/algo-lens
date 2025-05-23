@@ -11,7 +11,7 @@ export function generateSteps(n: number): ProblemState[] {
 
   // Log initial state before loop
   l.simple({ n }); // n belongs to 'input' group
-  l.arrayV3({ dp: dp }, {}); // dp belongs to 'computation' group
+  l.arrayV3({ dp: dp }, []); // dp belongs to 'computation' group
   l.comment =
     "Initialize base cases: dp[0] = 1 (0 steps, 1 way), dp[1] = 1 (1 step, 1 way).";
   l.breakpoint(1);
@@ -22,14 +22,18 @@ export function generateSteps(n: number): ProblemState[] {
 
     // Log state within the loop
     l.simple({ n });
-    l.arrayV3({ dp: dp }, { i: i, "i - 1": i - 1, "i - 2": i - 2 });
+    l.arrayV3({ dp: dp }, [
+      { value: i, label: "i" },
+      { value: i - 1, label: "i - 1" },
+      { value: i - 2, label: "i - 2" },
+    ]);
     l.comment = `Ways to reach step ${i} is the sum of ways to reach step ${i - 1} and step ${i - 2}. (${dp[i]} = ${dp[i - 1]} + ${dp[i - 2]}).`;
     l.breakpoint(2);
   }
 
   // Log final result
   const result = dp[n];
-  l.arrayV3({ dp: dp }, { n: n });
+  l.arrayV3({ dp: dp }, [{ value: n, label: "n" }]);
   l.simple({ result }); // result belongs to 'computation' group
   l.comment = `The total ways to reach step ${n} is the final result.`;
   l.breakpoint(3);
