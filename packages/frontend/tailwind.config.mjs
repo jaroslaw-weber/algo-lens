@@ -38,7 +38,7 @@ export default {
 			pattern: /text-(primary|error|success|neutral)-content/,
 			variants: ['lg', 'hover', 'focus', 'lg:hover'],
 		},
-		'tooltip-left',"tooltip-right", "tooltip-top", "tooltip-bottom",
+		'tooltip-left', "tooltip-right", "tooltip-top", "tooltip-bottom",
 		'bg-error',
 		'text-error-content',
 		'bg-success',
@@ -48,7 +48,9 @@ export default {
 		'bg-accent',
 		'text-accent-content',
 		'bg-warning',
-		'text-warning-content'
+		'text-warning-content',
+		'bg-neutral',
+		'text-neutral-content'
 	],
 	daisyui: {
 		themes: [

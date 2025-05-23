@@ -13,23 +13,26 @@ export type ProblemInfo = {
   bookmark?: boolean; // Added isBookmarked flag
 };
 
-// 
+//
 const be = ky.create({
   prefixUrl: BACKEND_URL,
   hooks: {
     beforeRequest: [
-      request => {
+      (request) => {
         const token = pb.authStore.token;
         if (token) {
-          request.headers.set('Authorization', `Bearer ${token}`);
+          request.headers.set("Authorization", `Bearer ${token}`);
         }
-      }
-    ]
-  }
+      },
+    ],
+  },
 });
 
 // Updated to accept an optional tag and return ProblemInfo array
-export async function getProblemList(tag?: string, filter?: string): Promise<ProblemInfo[]> {
+export async function getProblemList(
+  tag?: string,
+  filter?: string
+): Promise<ProblemInfo[]> {
   const searchParams: Record<string, string> = {};
   if (tag) {
     searchParams.tag = tag;
@@ -49,22 +52,30 @@ export async function getProblem(id: string) {
 
 const problemStateCache = new Map<string, ProblemState>();
 
-export async function getProblemState(id: string, step: number) {
-  const cacheKey = `${id}-${step}`;
+export async function getProblemState(
+  id: string,
+  testcaseNumber: number,
+  step: number
+) {
+  const cacheKey = `${id}-${testcaseNumber}-${step}`;
   if (problemStateCache.has(cacheKey)) {
     console.log(`Cache hit for ${cacheKey}`);
     return problemStateCache.get(cacheKey)!;
   }
 
   console.log(`Cache miss for ${cacheKey}`);
-  const result = await be.get<ProblemState>(`problem/${id}/state/${step}`);
+  const result = await be.get<ProblemState>(
+    `problem/${id}/testcase/${testcaseNumber}/state/${step}`
+  );
   const problemState = await result.json();
   problemStateCache.set(cacheKey, problemState);
   return problemState;
 }
 
-export async function getProblemSize(id: string) {
-  const result = await be.get<{ size: number }>(`problem/${id}/size`);
+export async function getProblemSize(id: string, testcaseNumber: number) {
+  const result = await be.get<{ size: number }>(
+    `problem/${id}/testcase/${testcaseNumber}/size`
+  );
   const json = await result.json();
   return json.size;
 }
@@ -75,4 +86,3 @@ export async function getRandomProblem() {
   // ky automatically throws for non-2xx responses, so we just parse
   return result.json();
 }
-

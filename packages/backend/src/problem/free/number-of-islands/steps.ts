@@ -96,6 +96,7 @@ export function generateSteps(grid: string[][]): ProblemState[] {
       l.comment = `Iterate through each cell in the grid. Check if the current cell is land ('1') and has not been visited.`;
       l.breakpoint(7);
       if (grid[i][j] === "1") {
+        numIslands++;
         l.grid(
           "grid",
           grid,
@@ -108,13 +109,13 @@ export function generateSteps(grid: string[][]): ProblemState[] {
         );
         l.comment = `Found a land cell that has not been visited. This indicates the discovery of a new island. Increment the island count to ${numIslands + 1} and start a DFS from this cell to mark all connected land cells of this newly found island.`;
         l.breakpoint(8);
-        numIslands++;
         dfs(i, j);
       }
     }
   }
 
   const result = numIslands;
+
   l.simple({ result });
   l.comment = `All cells in the grid have been visited. The total number of distinct islands found is ${result}.`;
   l.breakpoint(9);

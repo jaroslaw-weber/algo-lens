@@ -1,4 +1,3 @@
-
 import { ProblemStateCache } from "../cache/ProblemStateCache";
 import { loadProblemWithId } from "../problem/core/load";
 import { describe, it, expect, afterAll } from "bun:test";
@@ -63,7 +62,6 @@ describe("Problem Loading Performance", () => {
       const secondLoadEndTime = performance.now();
       const secondLoadExecutionTime = secondLoadEndTime - secondLoadStartTime;
 
-
       // Simulate accessing states to trigger caching
       let states = [];
       const stateStartTime = performance.now();
@@ -127,7 +125,9 @@ describe("Problem Loading Performance", () => {
     console.table(results);
 
     console.log("\nSorted by Second Load Execution Time (ms):"); // Added for second load
-    results.sort((a, b) => b.secondLoadExecutionTime - a.secondLoadExecutionTime); // Sort by second load time
+    results.sort(
+      (a, b) => b.secondLoadExecutionTime - a.secondLoadExecutionTime
+    ); // Sort by second load time
     console.table(results);
 
     console.log("\nSorted by State Execution Time (ms):");
@@ -144,6 +144,6 @@ describe("Problem Loading Performance", () => {
     results.sort((a, b) => b.rssMemory - a.rssMemory);
 
     console.table(results);
-    console.log("---------------------------");
+    // console.log("---------------------------");
   });
 });
