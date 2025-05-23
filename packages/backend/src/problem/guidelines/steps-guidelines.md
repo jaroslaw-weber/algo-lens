@@ -42,7 +42,7 @@ Here's a breakdown of how it works and how to use it:
     *   `l.intervals({ intervalsName: intervalsArray })`: Logs an array of intervals.
     *   `l.tree({ treeName: treeNode })`: Logs a tree data structure.
     *   `l.list({ listName: listNode })`: Logs a linked list.
-    *   **Pointer Labels and Colors:** When using `l.arrayV3` to highlight an index, the `label` should be short and in `lowercase`. The `color` property should use DaisyUI color names (e.g., "primary", "success", "warning", "error", "info").
+    *   **Pointer Labels and Colors:** When using `l.arrayV3` or `l.hashmapV2` etc to highlight an index with pointers, the `label` should be short and in `lowercase`. The `color` property should use DaisyUI color names (e.g., "primary", "success", "warning", "error", "neutral").
 
 4.  **Adding Comments and Breakpoints:**
     *   `l.comment = "Your explanation here";`: Assign a string to `l.comment` to provide a textual explanation for the current step. Comments should follow the guidelines in this document, focusing on values and explaining the logic and purpose of the step. ALL COMMENTS NEED TO BE IN THIS FIELD. Also comments should be short. if you need extra comment, just add it with another breakpoint.

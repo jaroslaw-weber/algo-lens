@@ -47,7 +47,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         {
           key: complement,
           color: existsInSet ? "success" : "error",
-          label: "Complement",
+          label: "complement",
         },
       ],
     });
