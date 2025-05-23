@@ -3,6 +3,10 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+
+    "target": "ES2015",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   }
 }
