@@ -20,22 +20,44 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
           </tr>
         </thead>
         <tbody>
-          {Array.from(entries).map(([key, val], index) => (
-            <tr
-              key={index}
-              className={(() => {
-                const matchingHighlight = highlights?.find(
-                  (h) => h.value == key
-                );
-                return matchingHighlight
-                  ? `bg-${matchingHighlight.color} text-${matchingHighlight.color}-content`
-                  : "";
-              })()}
-            >
-              <td>{key}</td>
-              <td>{Array.isArray(val) ? `[${val.join(", ")}]` : val}</td>
-            </tr>
-          ))}
+          {Array.from(entries).map(([key, val], index) => {
+            const matchingHighlight = highlights?.find((h) => {
+              const hKey =
+                typeof h.key === "object" && h.key !== null && "value" in h.key
+                  ? h.key.value
+                  : h.key;
+              const hValue =
+                typeof h.value === "object" &&
+                h.value !== null &&
+                "value" in h.value
+                  ? h.value.value
+                  : h.value;
+              return (
+                (hKey !== undefined && hKey == key) ||
+                (hValue !== undefined && hValue == val)
+              );
+            });
+            return (
+              <tr
+                key={index}
+                className={
+                  matchingHighlight
+                    ? `bg-${matchingHighlight.color} text-${matchingHighlight.color}-content`
+                    : ""
+                }
+              >
+                <td>
+                  {key}
+                  {matchingHighlight?.label && (
+                    <span className="ml-2 badge badge-sm">
+                      {matchingHighlight.label}
+                    </span>
+                  )}
+                </td>
+                <td>{Array.isArray(val) ? `[${val.join(", ")}]` : val}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

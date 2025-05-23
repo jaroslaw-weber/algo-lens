@@ -44,7 +44,11 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       keyLabel: "Number",
       valueLabel: "Index",
       highlights: [
-        { value: complement, color: existsInSet ? "success" : "error" },
+        {
+          key: complement,
+          color: existsInSet ? "success" : "error",
+          label: "Complement",
+        },
       ],
     });
 
@@ -71,7 +75,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       map: seen,
       keyLabel: "Number",
       valueLabel: "Index",
-      highlights: [{ value: num, color: "primary" }],
+      highlights: [{ key: num, color: "primary" }],
     });
     l.comment = `Since the complement (${complement}) was not found in the 'seen' map, add the current number (${num}) and its index to the map. This makes the current number available as a potential complement for subsequent numbers in the array.`;
     l.breakpoint(6); // Corresponds to #6 Add current number and index to map
