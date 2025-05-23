@@ -7,7 +7,6 @@ import { loadProblemWithId } from "./load";
 export async function runTests(problem: Problem<any, ProblemState>) {
   const { testcases, metadata } = problem;
 
-
   //has metadata check
   if (!metadata) {
     throw new Error("No metadata found in problem. ");
@@ -42,19 +41,21 @@ export async function runTests(problem: Problem<any, ProblemState>) {
       if (!result) {
         throw new Error("No result found in last state");
       }
-       // Explicitly check for 'value' property existence
-       //@ts-expect-error
-       const value = result.hasOwnProperty('value') ? result.value : result.values;
-       //// 
+      // Explicitly check for 'value' property existence
+      //@ts-expect-error
+      const value = result.hasOwnProperty("value")
+        ? result.value
+        : result.values;
+      ////
       if (!isEqual(value, expected)) {
         console.error(`Test case #${i} failed.`);
       }
-      expect(value).toEqual(expected)
-      const loaded = await loadProblemWithId(problem.id)
+      expect(value).toEqual(expected);
+      const loaded = await loadProblemWithId(problem.id);
       const code = loaded?.code;
-      expect(code).toBeTruthy()
-      
-      expect(!code?.includes("FORMATTING ERROR"))
+      expect(code).toBeTruthy();
+
+      expect(code?.includes("FORMATTING ERROR")).toBeFalse();
       /**
     // 
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
