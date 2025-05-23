@@ -14,7 +14,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   let actualSum = 0;
 
   // Breakpoint 1: Initial state
-  l.arrayV3({ nums }); // Log initial array
+  l.arrayV3({ nums }, []); // Log initial array
   l.group("sum", { expectedSum, actualSum }); // Log initial sums
 
   l.comment = `Initialize the process by calculating the expected sum of numbers from 0 to n using the formula (n * (n + 1)) / 2. Here, n is the number of elements in the input array (${n}). The expected sum is ${expectedSum}. We also initialize actualSum to 0, which will store the sum of the numbers present in the input array.`;
@@ -25,7 +25,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     actualSum += nums[i];
 
     // Breakpoint 2: Inside loop state
-    l.arrayV3({ nums }, { i }); // Log array, highlighting index i
+    l.arrayV3({ nums }, [{ dimension: "column", value: i, label: "i" }]); // Log array, highlighting index i
     l.group("sum", { expectedSum, actualSum }); // Log current sums
     l.comment = `Iterate through the input array. In this step, we add the current number (${nums[i]}) to the actualSum. The actualSum was previously ${prevActualSum}, and after adding ${nums[i]}, it becomes ${actualSum}. This helps us find the sum of the numbers that are actually present in the array.`;
     l.breakpoint(2);
@@ -35,7 +35,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const result = expectedSum - actualSum;
 
   // Breakpoint 3: Final state
-  l.arrayV3({ nums }); // Log final array state
+  l.arrayV3({ nums }, []); // Log final array state
   l.group("sum", { expectedSum, actualSum, result }); // Log final sums and result
   // Optionally log result as simple value if not included in 'sum' group
   l.simple({ result });

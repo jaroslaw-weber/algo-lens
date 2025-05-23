@@ -233,7 +233,14 @@ export class StepLoggerV2 {
       label: arrayKey,
       type: "array",
       value: values.map((item) => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
-      pointers: pointers.filter((x) => !!x),
+      pointers: pointers
+        .filter((x) => !!x)
+        .map((p) => {
+          if ("dimension" in p && p.dimension === undefined) {
+            return { ...p, dimension: "column" };
+          }
+          return p;
+        }),
     };
     this.upsert(v);
   }

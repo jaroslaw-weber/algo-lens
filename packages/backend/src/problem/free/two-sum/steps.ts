@@ -8,7 +8,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   const seen = new Map<number, number>();
 
   l.simple({ target: target }); // Corrected l.simple call
-  l.arrayV3({ nums: nums }, {});
+  l.arrayV3({ nums: nums }, []);
   l.hashmap("seen", seen, undefined); // Corrected l.hashmap call, added undefined highlight
   l.comment =
     "Initialize the state with the input array 'nums', the 'target' sum, and an empty hash map called 'seen'. The 'seen' map will store numbers from 'nums' as keys and their indices as values to quickly check for complements.";
@@ -21,7 +21,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     const complement = target - num;
 
     // Highlight current element and show complement needed
-    l.arrayV3({ nums: nums }, { i: i }); // Use inferred label "i"
+    l.arrayV3({ nums: nums }, [{ value: i }]); // Use inferred label "i"
     l.simple({ complement: complement }); // Corrected l.simple call
     l.comment = `For the current number (${num}), calculate the 'complement' needed to reach the target sum. The complement is target (${target}) - current number (${num}) = ${complement}. We need to find if this complement exists in the 'seen' map.`;
     l.breakpoint(3); // Corresponds to #3 Calculate complement
@@ -37,9 +37,9 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
     if (existsInSet) {
       // Highlight the found pair in nums array
-      l.arrayV3({ nums: nums }, { i: i, complementIndex: complementIndex }); // Use inferred labels "i" and "complementIndex"
+      l.arrayV3({ nums: nums }, [{ value: i }, { value: complementIndex }]); // Use inferred labels "i" and "complementIndex"
       // Show the final result
-      l.arrayV3({ result: [complementIndex!, i] }, {}); // Added non-null assertion for complementIndex
+      l.arrayV3({ result: [complementIndex!, i] }, []); // Added non-null assertion for complementIndex
       l.comment = `Check if the calculated complement (${complement}) exists as a key in the 'seen' map. If it does, it means we have found two numbers in the array that add up to the target: the current number and the complement found in the map. The result is the indices of these two numbers.`;
       l.breakpoint(4); // Corresponds to #4 Found complement
       return l.getSteps();
@@ -58,7 +58,7 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     "The loop has finished iterating through the entire 'nums' array.";
   l.breakpoint(7); // Corresponds to #7 Loop finished
 
-  l.arrayV3({ result: [] }, {}); // No solution found
+  l.arrayV3({ result: [] }, []); // No solution found
 
   // Original code didn't have a specific step for not found,
   // but we can add one if needed, mirroring the original return pattern.

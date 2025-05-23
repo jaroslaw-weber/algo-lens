@@ -44,7 +44,7 @@ export interface Problem<Input, State> {
   codegen?: {
     signature: string;
   };
-  bookmark?:boolean
+  bookmark?: boolean;
 }
 
 export type ProblemGroup = {
@@ -85,16 +85,16 @@ export interface BooleanGroupVariable extends Variable {
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
 export interface Pointer {
   /** Specifies whether the pointer is for a column or a row in an array. */
-  dimension: "column" | "row";
+  dimension?: "column" | "row";
 
   /** The specific index of the column or row being pointed to. */
   value: number;
 
   /** Color of the pointer. */
-  color?: string
+  color?: string;
 
   label?: string;
-  dir?: string//"left" | "right" | "up" | "bottom"
+  dir?: string; //"left" | "right" | "up" | "bottom"
 }
 
 /** Represents a pointer for binary values. */
@@ -112,11 +112,11 @@ export interface Pointer2D {
   /** Column index. */
   c: number;
 
-  color?: string
+  color?: string;
 
-  label?:string;
+  label?: string;
 
-  dir?: string//"left" | "right" | "up" | "bottom"
+  dir?: string; //"left" | "right" | "up" | "bottom"
 }
 
 /** Extends the Variable interface specifically for arrays. */
@@ -140,26 +140,21 @@ export interface BinaryVariable extends Variable {
 export interface BinaryOperationVariable extends Variable {
   type: "binary-operation";
   label: string;
-    pointers: BinaryPointer[]
-  v1:{
-    value:number,
-    label:string,
+  pointers: BinaryPointer[];
+  v1: {
+    value: number;
+    label: string;
+  };
+  v2: {
+    value: number;
+    label: string;
+  };
+  result: {
+    value: number;
+    label: string;
+  };
 
-  },
-  v2:{
-    value:number
-    ,label:string,
-
-  },
-  result:{
-    value:number,
-    label:string,
-    
-
-  }
-  
   operator: string; // e.g., "AND", "OR", "XOR", "ADD"
-
 }
 
 /** Extends the Variable interface specifically for numeric values. */
@@ -176,7 +171,7 @@ export interface ValueGroupVariable extends Variable {
   data: {
     label: string;
     value: number;
-    description?:string;
+    description?: string;
   }[];
   options: {
     min: number;
@@ -239,7 +234,7 @@ export type ThemeColor =
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node?: BinaryTreeNode | ListNode |null;
+  node?: BinaryTreeNode | ListNode | null;
   color: HighlightColor;
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
