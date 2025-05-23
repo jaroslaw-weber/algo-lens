@@ -26,7 +26,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
     // Log state at the beginning of the loop
     l.arrayV3({ nums: nums }, [
-      { dimension: "column", value: i, label: `Current index: ${i}` },
+      { dimension: "column", value: i, label: `Current`, color: "primary" },
     ]); // Highlight current number
 
     // Kadane's logic: Decide whether to extend the current subarray or start a new one.
@@ -47,7 +47,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
     if (startNew > extendSum) {
       // Log state before updating maxEndingHere
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        {
+          dimension: "column",
+          value: i,
+          label: `starting new`,
+          color: "error",
+        },
       ]);
       // HIDE_START
       l.group("comparision", {
@@ -65,7 +70,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
       // Log state after updating maxEndingHere
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        {
+          dimension: "column",
+          value: i,
+          label: `starting new`,
+          color: "error",
+        },
       ]);
       // HIDE_START
       l.group("comparision", {
@@ -81,7 +91,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
     } else {
       // Log state before updating maxEndingHere
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        {
+          dimension: "column",
+          value: i,
+          label: `extending`,
+          color: "info",
+        },
       ]);
       // HIDE_START
       l.group("comparision", {
@@ -99,7 +114,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
       // Log state after updating maxEndingHere
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        {
+          dimension: "column",
+          value: i,
+          label: `extending`,
+          color: "info",
+        },
       ]);
       // HIDE_START
       l.group("comparision", {
@@ -117,7 +137,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     // Update maxSoFar
     // Log state before updating maxSoFar
     l.arrayV3({ nums: nums }, [
-      { dimension: "column", value: i, label: `Current index: ${i}` },
+      { dimension: "column", value: i, label: `Current`, color: "primary" },
     ]);
     // HIDE_START
     l.group("comparision", {
@@ -134,7 +154,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     if (maxEndingHere > maxSoFar) {
       // Log state before updating maxSoFar
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        { dimension: "column", value: i, label: `New Max`, color: "success" },
       ]);
       // HIDE_START
       l.group("comparision", {
@@ -152,7 +172,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
 
       // Log state after updating maxSoFar
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        { dimension: "column", value: i, label: `New Max`, color: "success" },
       ]);
       // HIDE_START
       l.group("comparision", {
@@ -168,7 +188,7 @@ export function generateSteps(nums: number[]): ProblemState[] {
     } else {
       // Log state if maxSoFar is not updated
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: `Current index: ${i}` },
+        { dimension: "column", value: i, label: `Current`, color: "primary" },
       ]);
       // HIDE_START
       l.group("comparision", {

@@ -17,7 +17,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
   const dp: number[] = new Array(prices.length).fill(0);
   let minPrice = prices[0];
 
-  l.arrayV3({ prices }, [{ value: 0, label: "i" }]);
+  l.arrayV3({ prices }, [{ value: 0, label: "current day", color: "primary" }]);
   l.arrayV3({ dp }, []);
   l.group("profit", { minPrice });
   l.comment = `Start with the first price (${prices[0]}) as the minimum.`;
@@ -29,10 +29,12 @@ export function generateSteps(prices: number[]): ProblemState[] {
     const diff = price - minPrice;
     const prev = dp[i - 1];
 
-    l.arrayV3({ prices }, [{ value: i, label: "i" }]);
+    l.arrayV3({ prices }, [
+      { value: i, label: "current day", color: "primary" },
+    ]);
     l.arrayV3({ dp }, [
-      { value: i, label: "i" },
-      { value: i - 1, label: "i - 1" },
+      { value: i, label: "current day", color: "primary" },
+      { value: i - 1, label: "previous day", color: "info" },
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
@@ -45,10 +47,12 @@ export function generateSteps(prices: number[]): ProblemState[] {
     l.breakpoint(3);
     dp[i] = Math.max(prev, diff);
 
-    l.arrayV3({ prices }, [{ value: i, label: "i" }]);
+    l.arrayV3({ prices }, [
+      { value: i, label: "current day", color: "primary" },
+    ]);
     l.arrayV3({ dp }, [
-      { value: i, label: "i" },
-      { value: i - 1, label: "i - 1" },
+      { value: i, label: "current day", color: "primary" },
+      { value: i - 1, label: "previous day", color: "info" },
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
@@ -58,10 +62,12 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
     minPrice = Math.min(minPrice, price);
 
-    l.arrayV3({ prices }, [{ value: i, label: "i" }]);
+    l.arrayV3({ prices }, [
+      { value: i, label: "current day", color: "primary" },
+    ]);
     l.arrayV3({ dp }, [
-      { value: i, label: "i" },
-      { value: i - 1, label: "i - 1" },
+      { value: i, label: "current day", color: "primary" },
+      { value: i - 1, label: "previous day", color: "info" },
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
@@ -74,7 +80,9 @@ export function generateSteps(prices: number[]): ProblemState[] {
 
   const result = dp[prices.length - 1];
 
-  l.arrayV3({ prices }, [{ value: prices.length - 1, label: "result" }]);
+  l.arrayV3({ prices }, [
+    { value: prices.length - 1, label: "max profit", color: "success" },
+  ]);
   l.simple({ result });
   l.comment = `All days processed. The maximum profit is ${result}.`;
 

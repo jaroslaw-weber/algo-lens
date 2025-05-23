@@ -16,7 +16,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Main loop to check for duplicates
   for (let i = 0; i < nums.length; i++) {
     // Log state before checking hashSet
-    l.arrayV3({ nums: nums }, [{ value: i, label: "i" }]);
+    l.arrayV3({ nums: nums }, [
+      { value: i, label: "current", color: "primary" },
+    ]);
     l.hashset("hashSet", hashSet, { value: nums[i], color: "neutral" }); // Highlight value being checked
     l.simple({ result });
     l.comment = `Checking if element at index ${i} is in hashSet.`;
@@ -25,7 +27,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
     if (hashSet.has(nums[i])) {
       result = true; // Set result to true if duplicate found
       // Log duplicate found state
-      l.arrayV3({ nums: nums }, [{ value: i, label: "i" }]);
+      l.arrayV3({ nums: nums }, [
+        { value: i, label: "duplicate", color: "error" },
+      ]);
       l.hashset("hashSet", hashSet, { value: nums[i], color: "error" }); // Highlight duplicate
       l.simple({ result }); // Log final true result
       l.comment = "Duplicate found. Set result to true and return.";
@@ -34,7 +38,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
     } else {
       hashSet.add(nums[i]);
       // Log state after adding to hashSet
-      l.arrayV3({ nums: nums }, [{ value: i, label: "i" }]);
+      l.arrayV3({ nums: nums }, [
+        { value: i, label: "added", color: "success" },
+      ]);
       l.hashset("hashSet", hashSet, { value: nums[i], color: "success" }); // Highlight added value
       l.simple({ result });
       l.comment = "Element not in hashSet. Added element to hashSet.";

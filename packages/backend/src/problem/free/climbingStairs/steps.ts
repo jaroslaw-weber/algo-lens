@@ -23,9 +23,9 @@ export function generateSteps(n: number): ProblemState[] {
     // Log state within the loop
     l.simple({ n });
     l.arrayV3({ dp: dp }, [
-      { value: i, label: "i" },
-      { value: i - 1, label: "i - 1" },
-      { value: i - 2, label: "i - 2" },
+      { value: i, label: "current step", color: "primary" },
+      { value: i - 1, label: "previous step 1", color: "info" },
+      { value: i - 2, label: "previous step 2", color: "info" },
     ]);
     l.comment = `Ways to reach step ${i} is the sum of ways to reach step ${i - 1} and step ${i - 2}. (${dp[i]} = ${dp[i - 1]} + ${dp[i - 2]}).`;
     l.breakpoint(2);
@@ -33,7 +33,7 @@ export function generateSteps(n: number): ProblemState[] {
 
   // Log final result
   const result = dp[n];
-  l.arrayV3({ dp: dp }, [{ value: n, label: "n" }]);
+  l.arrayV3({ dp: dp }, [{ value: n, label: "total ways", color: "success" }]);
   l.simple({ result }); // result belongs to 'computation' group
   l.comment = `The total ways to reach step ${n} is the final result.`;
   l.breakpoint(3);

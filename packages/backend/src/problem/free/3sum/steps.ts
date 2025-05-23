@@ -44,14 +44,14 @@ export function generateSteps(nums: number[]): ProblemState[] {
   l.breakpoint(2);
 
   for (let i = 0; i < nums.length - 2; i++) {
-    l.arrayV3({ nums: nums }, [{ value: i, label: "i" }]);
+    l.arrayV3({ nums: nums }, [{ value: i, label: "i", color: "primary" }]);
     l.simple({ target });
     l.array2d("result", result);
     l.comment = `Outer loop: Current fixed element is nums[i] = ${nums[i]}.`;
     l.breakpoint(3);
 
     if (i > 0 && nums[i] === nums[i - 1]) {
-      l.arrayV3({ nums: nums }, [{ value: i, label: "i" }]);
+      l.arrayV3({ nums: nums }, [{ value: i, label: "i", color: "warning" }]);
       l.simple({ target });
       l.array2d("result", result);
       l.comment = `Skipping duplicate element at index ${i} to avoid duplicate triplets.`;
@@ -64,9 +64,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
     let right = nums.length - 1;
 
     l.arrayV3({ nums: nums }, [
-      { value: i, label: "i" },
-      { value: left, label: "left" },
-      { value: right, label: "right" },
+      { value: i, label: "i", color: "primary" },
+      { value: left, label: "left", color: "info" },
+      { value: right, label: "right", color: "info" },
     ]);
     l.simple({ target });
     l.array2d("result", result);
@@ -79,9 +79,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
       const tripletMap = { i: nums[i], left: nums[left], right: nums[right] };
 
       l.arrayV3({ nums: nums }, [
-        { value: i, label: "i" },
-        { value: left, label: "left" },
-        { value: right, label: "right" },
+        { value: i, label: "i", color: "primary" },
+        { value: left, label: "left", color: "info" },
+        { value: right, label: "right", color: "info" },
       ]);
       l.simple({ target });
       l.group("triplet", tripletMap);
@@ -120,9 +120,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
         }
         if (skippedLeft) {
           l.arrayV3({ nums: nums }, [
-            { value: i, label: "i" },
-            { value: left, label: "left" },
-            { value: right, label: "right" },
+            { value: i, label: "i", color: "primary" },
+            { value: left, label: "left", color: "warning" },
+            { value: right, label: "right", color: "info" },
           ]);
           l.simple({ target });
           l.group("triplet", triplet);
@@ -140,9 +140,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
         }
         if (skippedRight) {
           l.arrayV3({ nums: nums }, [
-            { value: i, label: "i" },
-            { value: left, label: "left" },
-            { value: right, label: "right" },
+            { value: i, label: "i", color: "primary" },
+            { value: left, label: "left", color: "info" },
+            { value: right, label: "right", color: "warning" },
           ]);
           l.simple({ target });
           l.group("triplet", triplet);
@@ -153,9 +153,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
         }
 
         l.arrayV3({ nums: nums }, [
-          { value: i, label: "i" },
-          { value: left, label: "left" },
-          { value: right, label: "right" },
+          { value: i, label: "i", color: "primary" },
+          { value: left, label: "left", color: "info" },
+          { value: right, label: "right", color: "info" },
         ]);
         l.simple({ target });
         l.group("triplet", triplet);
@@ -168,9 +168,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
         right--;
 
         l.arrayV3({ nums: nums }, [
-          { value: i, label: "i" },
-          { value: left, label: "left" },
-          { value: right, label: "right" },
+          { value: i, label: "i", color: "primary" },
+          { value: left, label: "left", color: "info" },
+          { value: right, label: "right", color: "info" },
         ]);
         l.simple({ target });
         l.group("triplet", triplet);
@@ -182,9 +182,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
         l.breakpoint(12);
       } else if (sum < target) {
         l.arrayV3({ nums: nums }, [
-          { value: i, label: "i" },
-          { value: left, label: "left" },
-          { value: right, label: "right" },
+          { value: i, label: "i", color: "primary" },
+          { value: left, label: "left", color: "info" },
+          { value: right, label: "right", color: "info" },
         ]);
         l.simple({ target });
         l.group("triplet", triplet);
@@ -198,9 +198,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
         // sum > target
 
         l.arrayV3({ nums: nums }, [
-          { value: i, label: "i" },
-          { value: left, label: "left" },
-          { value: right, label: "right" },
+          { value: i, label: "i", color: "primary" },
+          { value: left, label: "left", color: "info" },
+          { value: right, label: "right", color: "info" },
         ]);
         l.simple({ target });
         l.group("triplet", triplet);
@@ -213,9 +213,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
     }
     // Log state at the end of the inner loop for the current 'i'
     l.arrayV3({ nums: nums }, [
-      { value: i, label: "i" },
-      { value: left, label: "left" },
-      { value: right, label: "right" },
+      { value: i, label: "i", color: "primary" },
+      { value: left, label: "left", color: "info" },
+      { value: right, label: "right", color: "info" },
     ]);
     l.simple({ target });
     l.array2d("result", result);

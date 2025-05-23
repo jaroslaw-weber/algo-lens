@@ -28,12 +28,17 @@ export function generateSteps(nums: number[]): ProblemState[] {
         { min: Math.min(...nums), max: Math.max(...nums) }
       );
       l.arrayV3({ nums: nums }, [
-        { dimension: "column", value: i, label: "i" },
-        { dimension: "column", value: j, label: "j" },
+        { dimension: "column", value: i, label: "current", color: "primary" },
+        { dimension: "column", value: j, label: "previous", color: "info" },
       ]);
       l.arrayV3({ dp: dp }, [
-        { dimension: "column", value: i, label: "i" },
-        { dimension: "column", value: j, label: "j" },
+        {
+          dimension: "column",
+          value: i,
+          label: "current dp",
+          color: "primary",
+        },
+        { dimension: "column", value: j, label: "previous dp", color: "info" },
       ]);
       l.comment = `Comparing the current number (${currentNum}) with a previous number (${previousNum}). We are checking if we can extend an increasing subsequence ending at the previous number.`;
       l.breakpoint(2); //#2
@@ -44,19 +49,33 @@ export function generateSteps(nums: number[]): ProblemState[] {
         dp[i] = Math.max(currentDpI, newDpI);
 
         l.arrayV3({ nums: nums }, [
-          { dimension: "column", value: i, label: "i" },
-          { dimension: "column", value: j, label: "j" },
+          { dimension: "column", value: i, label: "current", color: "primary" },
+          { dimension: "column", value: j, label: "previous", color: "info" },
         ]);
-        l.arrayV3({ dp: dp }, [{ dimension: "column", value: i, label: "i" }]);
+        l.arrayV3({ dp: dp }, [
+          {
+            dimension: "column",
+            value: i,
+            label: "current dp",
+            color: "primary",
+          },
+        ]);
 
         l.comment = `Since the current number (${currentNum}) is greater than the previous number (${previousNum}), we can potentially extend the longest increasing subsequence ending at the previous number.`;
         l.breakpoint(3); //#3
 
         l.arrayV3({ nums: nums }, [
-          { dimension: "column", value: i, label: "i" },
-          { dimension: "column", value: j, label: "j" },
+          { dimension: "column", value: i, label: "current", color: "primary" },
+          { dimension: "column", value: j, label: "previous", color: "info" },
         ]);
-        l.arrayV3({ dp: dp }, [{ dimension: "column", value: i, label: "i" }]);
+        l.arrayV3({ dp: dp }, [
+          {
+            dimension: "column",
+            value: i,
+            label: "current dp",
+            color: "primary",
+          },
+        ]);
         l.comment = `We update the length of the LIS ending at the current number to be the maximum of its current length (${currentDpI}) and the length of the LIS ending at the previous number plus 1 (${newDpI}). The new length is ${dp[i]}.`;
         l.breakpoint(4); //#4
       }

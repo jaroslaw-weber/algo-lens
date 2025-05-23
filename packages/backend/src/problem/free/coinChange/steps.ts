@@ -13,7 +13,7 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
   // Log initial state (Breakpoint #1)
   l.simple({ target });
   l.arrayV3({ coins: coins }, []);
-  l.arrayV3({ dp: dp }, [{ value: 0, label: "0" }]);
+  l.arrayV3({ dp: dp }, [{ value: 0, label: "base case", color: "success" }]);
   l.comment = `Initialize dp array of size ${target + 1} with Infinity, representing unreachable amounts. Set dp[0] to 0, as 0 coins are needed for amount 0.`;
   l.breakpoint(1);
 
@@ -33,10 +33,12 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
 
       // Log state before update check (Breakpoint #2)
       l.simple({ target });
-      l.arrayV3({ coins: coins }, [{ value: i, label: "i" }]);
+      l.arrayV3({ coins: coins }, [
+        { value: i, label: "current coin", color: "primary" },
+      ]);
       l.arrayV3({ dp: dp }, [
-        { value: amount, label: "amount" },
-        { value: left, label: "left" },
+        { value: amount, label: "current amount", color: "primary" },
+        { value: left, label: "remaining amount", color: "info" },
       ]);
       // Log loop variables and calculations
       l.simple({ coin: coin }); // Log current coin value
@@ -61,7 +63,9 @@ export function generateSteps(coins: number[], target: number): ProblemState[] {
   const result = dp[target] === Infinity ? -1 : dp[target];
   l.simple({ target });
   l.arrayV3({ coins: coins }, []);
-  l.arrayV3({ dp: dp }, [{ value: target, label: "target" }]); // Highlight final dp[target]
+  l.arrayV3({ dp: dp }, [
+    { value: target, label: "final amount", color: "success" },
+  ]); // Highlight final dp[target]
   l.simple({ result });
   l.comment = `After iterating through all coins, the minimum number of coins to make amount ${target} is stored in dp[${target}]. If dp[${target}] is Infinity, it's impossible to make the amount, so the result is -1.`;
   l.breakpoint(4); // Adjusted breakpoint number to match code comment

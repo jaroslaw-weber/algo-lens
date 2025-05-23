@@ -37,8 +37,12 @@ export function generateSteps(s1: string, s2: string) {
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      l.arrayV3({ s1: s1.split("") }, [{ value: i - 1, label: "i - 1" }]); // Highlight characters being compared
-      l.arrayV3({ s2: s2.split("") }, [{ value: j - 1, label: "j - 1" }]);
+      l.arrayV3({ s1: s1.split("") }, [
+        { value: i - 1, label: "s1 char", color: "primary" },
+      ]); // Highlight characters being compared
+      l.arrayV3({ s2: s2.split("") }, [
+        { value: j - 1, label: "s2 char", color: "primary" },
+      ]);
 
       let op = 0; // Operation cost
       l.breakpoint(3); // Change breakpoint to 3

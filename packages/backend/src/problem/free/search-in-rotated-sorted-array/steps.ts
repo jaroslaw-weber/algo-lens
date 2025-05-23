@@ -19,8 +19,8 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
   // Initial state log before the loop starts
   l.arrayV3({ nums }, [
-    { label: "left", value: left },
-    { label: "right", value: right },
+    { label: "left", value: left, color: "info" },
+    { label: "right", value: right, color: "info" },
   ]);
   l.simple({ target });
   l.simple({ result });
@@ -33,9 +33,9 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     const mid = Math.floor((left + right) / 2);
     l.simple({ mid });
     l.arrayV3({ nums }, [
-      { label: "left", value: left },
-      { label: "right", value: right },
-      { label: "mid", value: mid },
+      { label: "left", value: left, color: "info" },
+      { label: "right", value: right, color: "info" },
+      { label: "mid", value: mid, color: "primary" },
     ]);
     // We find the middle spot to split the current search area in half.
     l.comment = `Calculate the middle index ('mid') of the current search range. This divides the search space in half. The value at the middle is ${nums[mid]}.`;
@@ -45,9 +45,9 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
       result = mid;
       l.simple({ result });
       l.arrayV3({ nums }, [
-        { label: "left", value: left },
-        { label: "right", value: right },
-        { label: "mid", value: mid },
+        { label: "left", value: left, color: "info" },
+        { label: "right", value: right, color: "info" },
+        { label: "found", value: mid, color: "success" },
       ]);
       l.comment = `Check if the value at the middle (${nums[mid]}) is equal to the target (${target}). If it is, the target is found. Set 'result' to the middle index and terminate the search.`;
       l.breakpoint(3);
@@ -56,9 +56,9 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
     if (nums[left] <= nums[mid]) {
       l.arrayV3({ nums }, [
-        { label: "left", value: left },
-        { label: "right", value: right },
-        { label: "mid", value: mid },
+        { label: "left", value: left, color: "info" },
+        { label: "right", value: right, color: "info" },
+        { label: "mid", value: mid, color: "primary" },
       ]);
       // Check if the left side of our current search area (from 'left' to 'mid') is sorted correctly.
       // Check if the left side (from 'left' to 'mid') is sorted.
@@ -72,8 +72,8 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         right = mid - 1;
         l.simple({ right });
         l.arrayV3({ nums: nums }, [
-          { label: "left", value: left },
-          { label: "right", value: right },
+          { label: "left", value: left, color: "info" },
+          { label: "new right", value: right, color: "warning" },
         ]);
         l.comment = `The left half of the array is sorted. Check if the target (${target}) falls within the range of values in this sorted left half (between ${nums[left]} and ${nums[mid]}). If it does, the target must be in this left half. Discard the right half by moving the 'right' pointer.`;
         l.breakpoint(5);
@@ -84,17 +84,17 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         left = mid + 1;
         l.simple({ left: left });
         l.arrayV3({ nums: nums }, [
-          { label: "left", value: left },
-          { label: "right", value: right },
+          { label: "new left", value: left, color: "warning" },
+          { label: "right", value: right, color: "info" },
         ]);
         l.comment = `The left half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the right half, which might be rotated. Discard the left half by moving the 'left' pointer.`;
         l.breakpoint(6);
       }
     } else {
       l.arrayV3({ nums: nums }, [
-        { label: "left", value: left },
-        { label: "right", value: right },
-        { label: "mid", value: mid },
+        { label: "left", value: left, color: "info" },
+        { label: "right", value: right, color: "info" },
+        { label: "mid", value: mid, color: "primary" },
       ]);
       // If the left side is not sorted, the right side (from 'mid' to 'right') must be sorted because the array is rotated.
       l.comment =
@@ -108,8 +108,8 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         left = mid + 1;
         l.simple({ left: left });
         l.arrayV3({ nums: nums }, [
-          { label: "left", value: left },
-          { label: "right", value: right },
+          { label: "new left", value: left, color: "warning" },
+          { label: "right", value: right, color: "info" },
         ]);
         l.comment = `The right half of the array is sorted. Check if the target (${target}) falls within the range of values in this sorted right half (between ${nums[mid]} and ${nums[right]}). If it does, the target must be in this right half. Discard the left half by moving the 'left' pointer.`;
         l.breakpoint(8);
@@ -120,8 +120,8 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
         right = mid - 1;
         l.simple({ right: right });
         l.arrayV3({ nums: nums }, [
-          { label: "left", value: left },
-          { label: "right", value: right },
+          { label: "left", value: left, color: "info" },
+          { label: "new right", value: right, color: "warning" },
         ]);
         l.comment = `The right half of the array is sorted, but the target (${target}) is not within its range. This means the target must be in the left part, which might be rotated. Discard the right half by moving the 'right' pointer.`;
         l.breakpoint(9);
@@ -136,8 +136,8 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
   result = -1; // Explicitly set result to -1 if loop finishes without finding target
   l.simple({ result });
   l.arrayV3({ nums: nums }, [
-    { label: "left", value: left },
-    { label: "right", value: right },
+    { label: "left", value: left, color: "info" },
+    { label: "right", value: right, color: "info" },
   ]);
   l.comment =
     "The loop has finished without finding the target. This occurs when the search range [left, right] becomes empty (left > right). The result remains -1, indicating the target is not present in the array.";
