@@ -392,23 +392,26 @@ export class StepLoggerV2 {
   }
 
   /**
-   * Logs the state of a HashMap (Map) variable with custom key and value labels.
-   * Uses `asHashmap` to format the data and `upsert` to add/update it.
-   * @param label - The name of the variable.
-   * @param map - The Map object.
-   * @param highlight - Optional highlighting information for the hash map.
-   * @param keyLabel - Optional custom label for the key column.
-   * @param valueLabel - Optional custom label for the value column.
+   * Logs the state of a HashMap (Map) variable with custom key and value labels and multiple highlights.
+   * Accepts an options object for easier extension.
+   * @param options - An object containing the hashmap details.
+   * @param options.label - The name of the variable.
+   * @param options.map - The Map object.
+   * @param options.highlights - Optional array of highlighting information for the hash map.
+   * @param options.keyLabel - Optional custom label for the key column.
+   * @param options.valueLabel - Optional custom label for the value column.
    */
-  public hashmapV2(
-    label: string,
-    map: Map<any, any>,
-    highlight?: HashHighlight,
-    keyLabel?: string,
-    valueLabel?: string
-  ) {
+  public hashmapV2(options: {
+    label: string;
+    map: Map<any, any>;
+    highlights?: HashHighlight[];
+    keyLabel?: string;
+    valueLabel?: string;
+  }) {
+    const { label, map, highlights, keyLabel, valueLabel } = options;
     const variable = {
-      ...asHashmap(label, map, highlight),
+      ...asHashmap(label, map), // asHashmap no longer handles highlights
+      highlights,
       keyLabel,
       valueLabel,
     };

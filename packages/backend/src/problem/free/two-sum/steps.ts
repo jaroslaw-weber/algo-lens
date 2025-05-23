@@ -9,7 +9,13 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
   l.simple({ target: target }); // Corrected l.simple call
   l.arrayV3({ nums: nums }, []);
-  l.hashmapV2("seen", seen, undefined, "Number", "Index"); // Use hashmapV2 with custom labels
+  l.hashmapV2({
+    label: "seen",
+    map: seen,
+    keyLabel: "Number",
+    valueLabel: "Index",
+    highlights: [],
+  }); // Use hashmapV2 with custom labels
   l.comment =
     "Initialize the state with the input array 'nums', the 'target' sum, and an empty hash map called 'seen'. The 'seen' map will store numbers from 'nums' as keys and their indices as values to quickly check for complements.";
   l.breakpoint(1); // Corresponds to #1
@@ -32,16 +38,15 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
     const existsInSet = complementIndex !== undefined;
 
     // Log the check against the 'seen' map
-    l.hashmapV2(
-      "seen",
-      seen,
-      {
-        value: complement,
-        color: existsInSet ? "success" : "error",
-      },
-      "Number",
-      "Index"
-    );
+    l.hashmapV2({
+      label: "seen",
+      map: seen,
+      keyLabel: "Number",
+      valueLabel: "Index",
+      highlights: [
+        { value: complement, color: existsInSet ? "success" : "error" },
+      ],
+    });
 
     if (existsInSet) {
       // Highlight the found pair in nums array
@@ -61,13 +66,13 @@ export function generateSteps(nums: number[], target: number): ProblemState[] {
 
     seen.set(num, i);
     // Log adding the current number to 'seen' map
-    l.hashmapV2(
-      "seen",
-      seen,
-      { value: num, color: "primary" },
-      "Number",
-      "Index"
-    );
+    l.hashmapV2({
+      label: "seen",
+      map: seen,
+      keyLabel: "Number",
+      valueLabel: "Index",
+      highlights: [{ value: num, color: "primary" }],
+    });
     l.comment = `Since the complement (${complement}) was not found in the 'seen' map, add the current number (${num}) and its index to the map. This makes the current number available as a potential complement for subsequent numbers in the array.`;
     l.breakpoint(6); // Corresponds to #6 Add current number and index to map
   }

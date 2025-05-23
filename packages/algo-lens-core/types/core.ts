@@ -202,7 +202,7 @@ export interface HashmapVariable extends Variable {
   value: Map<any, any> | Record<string, any>;
   keyLabel?: string;
   valueLabel?: string;
-  highlight?: HashHighlight;
+  highlights?: HashHighlight[];
 }
 
 export interface TreeVariable extends Variable {
