@@ -1,10 +1,7 @@
-import { TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core";
 import { SetMatrixZeroesInput } from "./types";
 
-// Define the expected output type - in this case, it's the modified matrix itself.
-type SetMatrixZeroesOutput = number[][];
-
-export const testcases = [
+export const testcases: TestCase<SetMatrixZeroesInput, ProblemState>[] = [
   {
     input: [
       [1, 1, 1],

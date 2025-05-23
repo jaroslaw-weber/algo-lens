@@ -1,52 +1,66 @@
 import { ProblemState, Problem } from "algo-lens-core";
-
+import { cloneDeep } from "lodash";
 
 export class ProblemStateCache {
   private cache = new Map<string, ProblemState>();
 
-  private size = new Map<string, number>();
+  // Store size per test case
+  private size = new Map<string, number[]>();
 
-  getKey(problem: Problem<any, any>, step: number): string {
-    return problem.id + "-" + step;
+  getKey(problemId: string, testcaseIndex: number, step: number): string {
+    return `${problemId}-${testcaseIndex}-${step}`;
   }
 
-  get(problem: Problem<any, any>, step: number): ProblemState | undefined {
-    const key = this.getKey(problem, step);
+  get(
+    problem: Problem<any, any>,
+    testcaseIndex: number,
+    step: number
+  ): ProblemState | undefined {
+    const key = this.getKey(problem.id!, testcaseIndex, step);
     const cached = this.cache.get(key);
     if (cached) {
       return cached;
     }
+    // If not cached, cache all test cases for this problem
     this.cacheProblem(problem);
     return this.cache.get(key);
   }
 
   private cacheProblem(problem: Problem<any, any>) {
     const { testcases } = problem;
-    if (!testcases) {
+    if (!testcases || testcases.length === 0) {
       throw new Error("no testcases found for problem: " + problem.id!);
     }
-    if (testcases.length === 0) {
-      throw new Error("no testcases found for problem: " + problem.id!);
+
+    const sizes: number[] = [];
+    for (
+      let testcaseIndex = 0;
+      testcaseIndex < testcases.length;
+      testcaseIndex++
+    ) {
+      const testcase = testcases[testcaseIndex];
+      const input = cloneDeep(testcase.input);
+      const states = problem.func(input);
+      sizes.push(states.length);
+      for (let i = 0; i < states.length; i++) {
+        const state = states[i];
+        const key = this.getKey(problem.id!, testcaseIndex, i + 1);
+        this.cache.set(key, state);
+      }
     }
-    const testcase = testcases.find((x) => x.isDefault);
-    if (!testcase) {
-      throw new Error("no default testcase found for problem: " + problem.id!);
-    }
-    // // 
-    const states = problem.func(testcase.input);
-    for (let i = 0; i < states.length; i++) {
-      const state = states[i];
-      const key2 = this.getKey(problem, i + 1);
-      this.cache.set(key2, state);
-    }
-    this.size.set(problem.id!, states.length);
+    this.size.set(problem.id!, sizes);
   }
 
-  getSize(problem: Problem<any, any>): number | undefined {
-    const size = this.size.get(problem.id!);
-    if (!size) {
+  getSize(
+    problem: Problem<any, any>,
+    testcaseIndex: number
+  ): number | undefined {
+    const sizes = this.size.get(problem.id!);
+    if (!sizes) {
       this.cacheProblem(problem);
+      const updatedSizes = this.size.get(problem.id!);
+      return updatedSizes ? updatedSizes[testcaseIndex] : undefined;
     }
-    return this.size.get(problem.id!);
+    return sizes[testcaseIndex];
   }
 }

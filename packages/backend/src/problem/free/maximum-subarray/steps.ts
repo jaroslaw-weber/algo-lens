@@ -209,6 +209,8 @@ export function generateSteps(nums: number[]): ProblemState[] {
   // Final state log
   l.arrayV3({ nums: nums }, []);
   l.group("comparision", { maxEndingHere, maxSoFar });
+  const result = maxSoFar;
+  l.simple({ result });
   l.comment = `All numbers processed. The final maximum subarray sum is ${maxSoFar}.`;
   l.breakpoint(11);
 
