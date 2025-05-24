@@ -52,7 +52,7 @@ export function generateSteps(prices: number[]): ProblemState[] {
     ]);
     l.arrayV3({ dp }, [
       { value: i, label: "current day", color: "primary" },
-      { value: i - 1, label: "previous day", color: "info" },
+      { value: i - 1, label: "previous day", color: "info", dir: "bottom" },
     ]);
     l.group("profit", { price, minPrice, diff });
     l.group("smaller", { diff, prev });
