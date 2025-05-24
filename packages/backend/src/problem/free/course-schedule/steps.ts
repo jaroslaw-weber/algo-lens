@@ -8,6 +8,14 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   // Set group options for value/boolean groups
   l.groupOptions.set("courses finished", { min: 0, max: numCourses });
   l.groupOptions.set("result", {}); // No specific options needed for boolean group
+  l.hashmapOptions.set("prerequisitesMap", {
+    keyLabel: "Course",
+    valueLabel: "Prerequisite",
+  });
+  l.hashmapOptions.set("graphMap", {
+    keyLabel: "Prerequisite",
+    valueLabel: "Courses",
+  });
 
   const inDegree: number[] = new Array(numCourses).fill(0);
   const queue: number[] = [];
@@ -18,13 +26,18 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     graphMap.set(i, []);
   }
   // Initial state log (Breakpoint 1)
-  l.hashmap("prerequisitesMap", prerequisitesMap, {
-    value: -1,
-    color: "neutral",
+  l.hashmapV2({
+    label: "prerequisitesMap",
+    map: prerequisitesMap,
+    highlights: [],
   });
-  l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
-  l.arrayV2({ inDegree: inDegree }, {});
-  l.arrayV2({ queue: queue }, {});
+  l.hashmapV2({
+    label: "graphMap",
+    map: graphMap,
+    highlights: [],
+  });
+  l.arrayV3({ inDegree: inDegree }, []);
+  l.arrayV3({ queue: queue }, []);
   l.simple({ numCourses });
   l.comment =
     "Initial state: numCourses, empty graph, inDegree array, and queue.";
@@ -33,19 +46,38 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   // Initialize the graphMap and in-degree array
   for (const [course, prereq] of prerequisites) {
     // Log before updating graphMap/inDegree (Breakpoint 2)
-    //// 
-    l.hashmap("prerequisitesMap", prerequisitesMap, { value: course, color: "primary" });
-    l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
-    l.arrayV2({ inDegree: inDegree }, {});
-    l.comment = `Processing prerequisite: [${course}, ${prereq}]. Highlighting the prerequisite course value in prerequisitesMap.`;
+    ////
+    l.hashmapV2({
+      label: "prerequisitesMap",
+      map: prerequisitesMap,
+      highlights: [
+        { key: course, color: "primary", label: "course" },
+        { value: prereq, color: "secondary", label: "prereq" },
+      ],
+    });
+    l.hashmapV2({
+      label: "graphMap",
+      map: graphMap,
+      highlights: [],
+    });
+    l.arrayV3({ inDegree: inDegree }, []);
+    l.comment = `Process prerequisite: [${course}, ${prereq}].`;
     l.breakpoint(2);
 
     graphMap.get(prereq)!.push(course);
     inDegree[course]++;
 
     // Log after updating graphMap and inDegree (Breakpoint 3)
-    l.hashmap("graphMap", graphMap, { value: prereq, color: "primary" });
-    l.comment = "Updated graphMap and inDegree for the current prerequisite. Highlighting the prerequisite node in graphMap.";
+    l.hashmapV2({
+      label: "graphMap",
+      map: graphMap,
+      highlights: [
+        { key: prereq, color: "primary", label: "prereq" },
+        { value: course, color: "secondary", label: "course" },
+      ],
+    });
+    l.comment =
+      "Updated graphMap and inDegree for the current prerequisite. Highlighting the prerequisite node in graphMap.";
     l.breakpoint(3);
   }
 
@@ -60,8 +92,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
 
     if (deg === 0) {
       queue.push(index);
-      l.arrayV2({queue})
-      l.comment = `Course '${index}' has inDegree 0. Adding to queue.`;
+      l.arrayV3({ queue }, []);
+      l.comment = `Course '${index}' inDegree 0. Add to queue.`;
       l.breakpoint(6);
     }
   }
@@ -72,7 +104,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     count++;
     l.simple({ numCourses, current });
     l.group("courses finished", { count });
-    l.comment = `Dequeued '${current}' course. Incremented courses finished count.`;
+    l.comment = `Dequeued '${current}'. Incremented finished count.`;
     l.breakpoint(7);
 
     // Log after dequeuing and incrementing count (Breakpoint 9)
@@ -82,23 +114,35 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       const neighbor = neighbors[i];
 
       // Log before decrementing neighbor inDegree (Breakpoint 8)
-      l.hashmap("graphMap", graphMap, { value: current, color: "primary" });
-      l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
-      l.comment = `Processing neighbor of '${current}' course. Highlighting the current node in graphMap and neighbor's inDegree.`;
+      l.hashmapV2({
+        label: "graphMap",
+        map: graphMap,
+        highlights: [
+          { key: current, color: "primary", label: "current" },
+          { value: neighbor, color: "secondary", label: "neighbor" },
+        ],
+      });
+      l.arrayV3({ inDegree: inDegree }, [
+        { value: neighbor, label: "neighbor" },
+      ]);
+      l.comment = `Process neighbor of '${current}'.`;
       l.breakpoint(8);
 
       inDegree[neighbor]--;
 
       // Log after decrementing neighbor inDegree (Breakpoint 11)
-      l.arrayV2({ inDegree: inDegree }, { neighbor: neighbor });
-      l.comment = `Decremented inDegree for neighbor '${neighbor}'.`;
+      l.arrayV3({ inDegree: inDegree }, [
+        { value: neighbor, label: "neighbor" },
+      ]);
+      l.comment = `Decremented inDegree for '${neighbor}'.`;
       l.breakpoint(9);
-
 
       if (inDegree[neighbor] === 0) {
         // Log before adding neighbor to queue (Breakpoint 12)
-        l.arrayV2({ queue: queue }, { "newly added": queue.length }); // Highlight the newly added element's position
-        l.comment = `Neighbor '${neighbor}' inDegree is now 0. Adding to queue.`;
+        l.arrayV3({ queue: queue }, [
+          { value: queue.length, label: "newly added" },
+        ]); // Highlight the newly added element's position
+        l.comment = `Neighbor '${neighbor}' inDegree 0. Add to queue.`;
         l.breakpoint(10);
         queue.push(neighbor);
         // Note: No log immediately after queue.push, next iteration or step 13 will show it
@@ -106,8 +150,8 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     }
 
     // Log after processing all neighbors of 'current' (Breakpoint 13)
-    l.arrayV2({ queue: queue }, {});
-    l.comment = `Finished processing all neighbors of '${current}'.`;
+    l.arrayV3({ queue: queue }, []);
+    l.comment = `Finished processing neighbors of '${current}'.`;
     l.breakpoint(11);
   }
 
@@ -115,7 +159,7 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   const allCoursesTaken = count === numCourses;
   const result = allCoursesTaken;
   l.simple({ result });
-  l.comment = `Final result: Can all courses be finished? ${result}`;
+  l.comment = `Final result: All courses finished? ${result}.`;
   l.breakpoint(12);
 
   // Return the collected steps

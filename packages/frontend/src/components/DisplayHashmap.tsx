@@ -2,7 +2,7 @@ import React from "react";
 import type { HashmapVariable, Pointer } from "algo-lens-core";
 
 const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
-  const { value, label, highlight } = data;
+  const { value, label, highlights, keyLabel, valueLabel } = data;
   if (!value) {
     throw new Error("No data provided for the hashmap display");
   }
@@ -15,26 +15,39 @@ const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Key</th>
-            <th>Value</th>
+            <th>{keyLabel || "Key"}</th>
+            <th>{valueLabel || "Value"}</th>
           </tr>
         </thead>
         <tbody>
-          {Array.from(entries).map(([key, val], index) => (
-            <tr
-              key={index}
-              className={
-                highlight?.value == key
-                  ? `bg-${highlight.color} text-${highlight.color}-content`
-                  : ""
-              }
-            >
-              <td>{key}</td>
-              <td>
-                {Array.isArray(val) ? `[${val.join(', ')}]` : val}
-              </td>
-            </tr>
-          ))}
+          {Array.from(entries).map(([key, val], index) => {
+            const matchingHighlight = highlights?.find((h) => {
+              return (
+                (h.key !== undefined && h.key == key) ||
+                (h.value !== undefined && h.value == val)
+              );
+            });
+            return (
+              <tr
+                key={index}
+                className={
+                  matchingHighlight
+                    ? `bg-${matchingHighlight.color} text-${matchingHighlight.color}-content`
+                    : ""
+                }
+              >
+                <td>
+                  {key}
+                  {matchingHighlight?.label && (
+                    <span className="ml-2 badge badge-sm">
+                      {matchingHighlight.label}
+                    </span>
+                  )}
+                </td>
+                <td>{Array.isArray(val) ? `[${val.join(", ")}]` : val}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

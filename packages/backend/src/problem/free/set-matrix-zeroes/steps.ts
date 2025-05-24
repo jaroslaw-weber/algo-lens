@@ -24,14 +24,14 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
   for (let i = 0; i < rows; i++) {
     l.grid("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-    l.comment = `Check if any element in the first column is zero. This is done by iterating through each row.`;
+    l.comment = `Check first column for zeros.`;
     l.breakpoint(2);
 
     if (matrix[i][0] === 0) {
       firstColHasZero = true;
       l.grid("matrix", matrix, { r: i, c: 0 }); // Changed from array to object
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.comment = `Found a zero in the first column. Set the 'firstColHasZero' flag to true.`;
+      l.comment = `Zero in first column. Set flag.`;
       l.breakpoint(3);
       break;
     }
@@ -48,7 +48,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
     });
     // HIDE_END
     l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-    l.comment = `Check if any element in the first row is zero. This is done by iterating through each column.`;
+    l.comment = `Check first row for zeros.`;
     l.breakpoint(4);
 
     if (matrix[0][j] === 0) {
@@ -63,7 +63,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
       // HIDE_END
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.comment = `Found a zero in the first row. Set the 'firstRowHasZero' flag to true.`;
+      l.comment = `Zero in first row. Set flag.`;
       l.breakpoint(5);
       break;
     }
@@ -82,7 +82,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
 
       // HIDE_END
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.comment = `Iterate through the matrix starting from the second row and second column. For the current cell, check if its value is zero.`;
+      l.comment = `Iterate matrix from second row/col.`;
       l.breakpoint(6);
 
       if (matrix[i][j] === 0) {
@@ -99,7 +99,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
         l.grid("matrix", matrix, ...pointers);
         l.simple({ rows, cols, i, j });
         l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-        l.comment = `Found a zero at the current cell. Mark the corresponding cell in the first row and first column by setting their values to zero. These will act as markers to zero out the entire row and column later.`;
+        l.comment = `Found zero. Mark first row/col.`;
         l.breakpoint(7);
       }
     }
@@ -118,7 +118,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
       // HIDE_END
       l.grid("matrix", matrix, ...pointers);
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.comment = `Apply markers: Check the current cell using the markers in the first row and first column. If either the marker in the first row or the first column is zero, it means the current cell should be set to zero.`;
+      l.comment = `Apply markers. Zero current cell if needed.`;
       l.breakpoint(8);
 
       if (matrix[i][0] === 0 || matrix[0][j] === 0) {
@@ -134,7 +134,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
         // HIDE_END
         l.grid("matrix", matrix, ...updatedPointers); // Show updated matrix with the same pointers
         l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-        l.comment = `Apply markers: Set the current cell to zero because either the marker in the first row or the first column was zero.`;
+        l.comment = `Set current cell to zero.`;
         l.breakpoint(9);
       }
     }
@@ -162,7 +162,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
         label: "zeroing",
       });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.comment = `Set the current cell in the first row to zero. This is part of zeroing out the entire first row because the 'firstRowHasZero' flag was true, indicating that the original matrix had a zero in the first row.`;
+      l.comment = `Zero out first row.`;
       l.breakpoint(12);
     }
   }
@@ -189,7 +189,7 @@ export function generateSteps(matrix: number[][]): ProblemState[] {
         label: "zeroing",
       });
       l.group("zeroFlags", { firstRowHasZero, firstColHasZero });
-      l.comment = `Set the current cell in the first column to zero. This is part of zeroing out the entire first column because the 'firstColHasZero' flag was true, indicating that the original matrix had a zero in the first column.`;
+      l.comment = `Zero out first column.`;
       l.breakpoint(15);
     }
   }

@@ -17,17 +17,19 @@ export function generateSteps(nums: number[]) {
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
 
-  l.arrayV2({ nums });
-  l.arrayV2({ dp }, { here: 0 }); // Highlight dp[0]
+  l.arrayV3({ nums }, []);
+  l.arrayV3({ dp }, [{ value: 0, label: "dp[0]", color: "primary" }]); // Highlight dp[0]
   l.breakpoint(1);
-  l.comment = "Initialize dp array. dp[0] represents the maximum amount that can be robbed from 0 houses, which is 0.";
+  l.comment =
+    "Initialize dp array. dp[0] represents the maximum amount that can be robbed from 0 houses, which is 0.";
 
   dp[1] = nums[0];
 
-  l.arrayV2({ nums }, { here: 0 }); // Highlight nums[0]
-  l.arrayV2({ dp }, { here: 1 }); // Highlight dp[1]
+  l.arrayV3({ nums }, [{ value: 0, label: "house 0", color: "primary" }]); // Highlight nums[0]
+  l.arrayV3({ dp }, [{ value: 1, label: "dp[1]", color: "primary" }]); // Highlight dp[1]
   l.breakpoint(2);
-  l.comment = "Set the base case for dp[1]. dp[1] represents the maximum amount that can be robbed from the first house, which is the value of the first house.";
+  l.comment =
+    "Set the base case for dp[1]. dp[1] represents the maximum amount that can be robbed from the first house, which is the value of the first house.";
 
   for (let i = 2; i <= n; i++) {
     const skipCurrent = dp[i - 1];
@@ -36,8 +38,14 @@ export function generateSteps(nums: number[]) {
     const includeCurrent = twoHousesBefore + currentHouse;
     dp[i] = Math.max(skipCurrent, includeCurrent);
 
-    l.arrayV2({ nums }, { "i - 1": i - 1 }); // Highlight current house
-    l.arrayV2({ dp }, { i, "i - 1": i - 1, "i - 2": i - 2 }); // Highlight relevant dp values
+    l.arrayV3({ nums }, [
+      { value: i - 1, label: "current house", color: "primary" },
+    ]); // Highlight current house
+    l.arrayV3({ dp }, [
+      { value: i, label: "current dp", color: "primary" },
+      { value: i - 1, label: "previous dp", color: "info" },
+      { value: i - 2, label: "two before dp", color: "info" },
+    ]); // Highlight relevant dp values
     l.groupOptions.set(dpCalculationGroup, { min: 0, max: sum(nums) }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
     l.group(dpCalculationGroup, {
       // Use defined group name
@@ -47,16 +55,18 @@ export function generateSteps(nums: number[]) {
       currentHouse,
     });
     l.breakpoint(3);
-    l.comment = `Calculate the maximum amount that can be robbed up to the current house. This is the maximum of either skipping the current house (inheriting the max from the previous house, ${skipCurrent}) or including the current house (adding its value, ${currentHouse}, to the max from two houses before, ${twoHousesBefore}). The maximum amount up to this house is ${dp[i]}.`;
+    l.comment = `Max robbed up to current house: ${dp[i]}.`;
   }
 
   const result = dp[n];
 
-  l.arrayV2({ nums: nums }, {});
-  l.arrayV2({ dp: dp }, { n: n }); // Highlight final result in dp array
+  l.arrayV3({ nums: nums }, []);
+  l.arrayV3({ dp: dp }, [
+    { value: n, label: "final result", color: "success" },
+  ]); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
   l.breakpoint(4);
-  l.comment = `All houses have been considered. The final result, ${result}, is the maximum amount that can be robbed from all houses.`;
+  l.comment = `All houses considered. Max robbed: ${result}.`;
 
   return l.getSteps(); // Return steps from StepLoggerV2
 }

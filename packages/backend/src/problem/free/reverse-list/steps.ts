@@ -21,7 +21,8 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
   l.list("current", current, [{ node: current, color: "neutral" }]);
   l.simple({ prev: null });
   l.simple({ next: null });
-  l.comment = "Initialize three pointers: 'prev' to null (it will point to the previously reversed node), 'current' to the head of the list (the node being processed), and 'next' to null (it will temporarily store the next node).";
+  l.comment =
+    "Initialize three pointers: 'prev' to null (it will point to the previously reversed node), 'current' to the head of the list (the node being processed), and 'next' to null (it will temporarily store the next node).";
   l.breakpoint(1);
 
   while (current != null) {
@@ -32,7 +33,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
     l.list("prev", prev, [{ node: prev, color: "neutral" }]);
     l.list("next", next, [{ node: next, color: "neutral" }]);
-    l.comment = `Before reversing the 'current' node's pointer, save the reference to the next node in the original list by setting 'next' to current.next. This is crucial to avoid losing the rest of the list. Current node value: ${current.val}, Next node value: ${ next ? next.val : "null" }.`;
+    l.comment = `Save next node. Current: ${current.val}. Next: ${next ? next.val : "null"}.`;
     l.breakpoint(2);
 
     // Reverse current node's pointer
@@ -44,7 +45,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
     l.list("prev", prev, [{ node: prev, color: "neutral" }]);
     l.list("next", next, [{ node: next, color: "neutral" }]);
-    l.comment = `Reverse the 'current' node's 'next' pointer to point to 'prev'. This is the core step of reversing the list, changing the direction of the link. Current node value: ${ current.val }, 'current.next' now points to the node previously pointed to by 'prev' (value: ${prev ? prev.val : "null"}).`;
+    l.comment = `Reverse current node's pointer to prev.`;
     l.breakpoint(3);
 
     // Move prev pointer one step forward
@@ -54,7 +55,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     l.list("current", current, [{ node: current, color: "neutral" }]); // Color: neutral
     l.list("prev", prev, [{ node: prev, color: "neutral" }]); // Color: neutral (new prev)
     l.list("next", next, [{ node: next, color: "neutral" }]);
-    l.comment = `Move the 'prev' pointer one step forward by setting 'prev' to 'current'. 'prev' now points to the node that was just reversed. This prepares 'prev' for the next iteration where it will become the 'previous' node for the new 'current'. New 'prev' node value: ${prev.val}.`;
+    l.comment = `Move prev pointer to current. New prev: ${prev.val}.`;
     l.breakpoint(4);
 
     // Move current pointer one step forward
@@ -64,7 +65,7 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
     l.list("current", current, [{ node: current, color: "good" }]);
     l.list("prev", prev, [{ node: prev, color: "neutral" }]); // Highlight prev
     l.list("next", next, [{ node: next, color: "bad" }]);
-    l.comment = `Move the 'current' pointer one step forward by setting 'current' to 'next'. 'current' now points to the next node in the original list that needs to be processed. This advances the loop to the next node. New 'current' node value: ${ current ? current.val : "null" }. If 'current' is null, it means we have reached the end of the original list.`;
+    l.comment = `Move current pointer to next. New current: ${current ? current.val : "null"}.`;
     l.breakpoint(5);
   }
 
@@ -77,7 +78,8 @@ export function generateSteps(input: ReverseListInput): ProblemState[] {
   l.simple({ next: null }); // next is null
   l.list("result", prev, [{ node: prev, color: "neutral" }]);
   // Highlight result (same as prev)
-  l.comment = "The loop has finished because 'current' is null, indicating the end of the original list has been reached. The 'prev' pointer now points to the last node of the original list, which is the new head of the reversed list. The 'result' is the new head.";
+  l.comment =
+    "The loop has finished because 'current' is null, indicating the end of the original list has been reached. The 'prev' pointer now points to the last node of the original list, which is the new head of the reversed list. The 'result' is the new head.";
   l.breakpoint(6);
 
   return l.getSteps();

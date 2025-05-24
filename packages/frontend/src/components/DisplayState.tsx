@@ -75,7 +75,7 @@ function DisplayState({
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
       {/* Display the breakpoint description */}
-     
+
       <div className="grid grid-cols-2 gap-8 w-full">
         {variables.map((variable) => {
           const groupMeta = metadata!.groups?.find(
@@ -86,7 +86,8 @@ function DisplayState({
           );
 
           const meta = variableMeta ?? groupMeta;
-          const description = variableMeta?.description ?? groupMeta?.description;
+          const description =
+            variableMeta?.description ?? groupMeta?.description;
           const emoji = meta?.emoji;
 
           const className = getWrapperClassName();
@@ -131,7 +132,10 @@ function DisplayState({
                   key={groupData.label}
                   variable={variable}
                 >
-                  <DisplayValueGroup data={groupData} variables={metadata!.variables!} />
+                  <DisplayValueGroup
+                    data={groupData}
+                    variables={metadata!.variables!}
+                  />
                 </Wrapper>
               );
             case "binary":
@@ -163,6 +167,7 @@ function DisplayState({
                 </Wrapper>
               );
             case "interval":
+            case "labeled-interval":
               const intervalData = variable as IntervalVariable;
               return (
                 <Wrapper
@@ -196,7 +201,7 @@ function DisplayState({
                 <Wrapper
                   className={className}
                   label={hashsetData.label}
-                  description={description }
+                  description={description}
                   emoji={emoji}
                   key={hashsetData.label}
                   variable={variable}
@@ -232,23 +237,23 @@ function DisplayState({
                   <DisplayLinkedList data={listData} />
                 </Wrapper>
               );
-              case "binary-operation":
-                const binaryOperationData = variable as BinaryOperationVariable;
-                return (
-                  <Wrapper
-                    className={className}
-                    label={binaryOperationData.label}
-                    description={description}
-                    emoji={emoji}
-                    key={binaryOperationData.label}
-                    variable={variable}
-                  >
-                    <DisplayBinaryOperation data={binaryOperationData} />
-                  </Wrapper>
-                );
-              default:
-                return null;
-            }
+            case "binary-operation":
+              const binaryOperationData = variable as BinaryOperationVariable;
+              return (
+                <Wrapper
+                  className={className}
+                  label={binaryOperationData.label}
+                  description={description}
+                  emoji={emoji}
+                  key={binaryOperationData.label}
+                  variable={variable}
+                >
+                  <DisplayBinaryOperation data={binaryOperationData} />
+                </Wrapper>
+              );
+            default:
+              return null;
+          }
         })}
       </div>
     </div>
