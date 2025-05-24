@@ -5,220 +5,142 @@ export interface GenerateCodeParams {
   stepsFileContent: string;
   targetFunctionSignature: string; // e.g., "getSum(a: number, b: number): number"
   problemName: string; // Add problem name parameter
+  debug?: boolean; //log the regex matches
 }
 
 interface GeneratedCodeOutput {
   content: string;
 }
 
-export async function generateCodeFromSteps(
-  params: GenerateCodeParams
-): Promise<GeneratedCodeOutput> {
-  //
-  let result = params.stepsFileContent;
-  result = replaceGetStepsReturn(result);
-  result = removeManualHideBlocks(result); // Add this line to remove manual hide blocks
-  result = removeImports(result);
-  result = replaceProblemStateSignature(result, params.targetFunctionSignature);
+export class CodeGenerator {
+  private result: string;
+  private debug: boolean;
+  private targetFunctionSignature: string;
 
-  result = removeUnwantedLines(result);
+  constructor(params: GenerateCodeParams) {
+    this.result = params.stepsFileContent;
+    this.debug = params.debug || false;
+    this.targetFunctionSignature = params.targetFunctionSignature;
+  }
 
-  result = removeJSDocComments(result);
-  result = removeExtraEmptyLines(result);
-  result = removeComments(result); // Add this line to call removeComments
+  private fix(
+    regex: RegExp,
+    replacement: string | ((substring: string, ...args: any[]) => string),
+    functionName: string
+  ): void {
+    if (this.debug) {
+      if (functionName == "removeExtraEmptyLines") {
+        //
+      } else {
+        let match;
+        regex.lastIndex = 0;
+        while ((match = regex.exec(this.result)) !== null) {
+          console.log(`--[${functionName}]--`);
+          console.log(`Found: ${match[0]}`);
+        }
+        console.log("\n-------\n");
+      }
+    }
+    this.result = this.result.replace(regex, replacement as any);
+  }
 
-  result = replaceBreakpointWithNumber(result);
-  result = removeStepLoggerLog(result);
-  const content = result;
-  //
-  try {
-    const formattedContent = await prettier.format(content, {
-      parser: "typescript",
-    });
-    ////
-    return { content: formattedContent };
-  } catch (e) {
-    return {
-      content: `FORMATTING ERROR:
-${content}`,
-    };
+  private remove(regex: RegExp, functionName: string): void {
+    this.fix(regex, "", functionName);
+  }
+
+  private removeImports(): void {
+    const regex = /^import[\s\S]*?;\s*/gm;
+    this.remove(regex, "removeImports");
+  }
+
+  private removeJSDocComments(): void {
+    const regex = /\/\*\*[\s\S]*?\*\/\n?/g;
+    this.remove(regex, "removeJSDocComments");
+  }
+
+  private removeComments(): void {
+    const regex = /\s*\/\/.*$/gm;
+    this.remove(regex, "removeComments");
+  }
+
+  private removeExtraEmptyLines(): void {
+    const regex = /(\n\s*){2,}/g;
+    this.fix(regex, "\n", "removeExtraEmptyLines");
+  }
+
+  private replaceBreakpointWithNumber(): void {
+    const regex = /^.*l\.breakpoint\((\d+)\)[^;]*;\s*$\n/gm;
+    this.fix(regex, "// #$1\n", "replaceBreakpointWithNumber");
+  }
+
+  private removeStepLoggerLog(): void {
+    this.remove(
+      /^\s*l\.comment\s*=\s*[\s\S]*?;\s*$\n/gm,
+      "removeStepLoggerLog (comment)"
+    );
+    this.remove(
+      /^\s*l\.(?!comment\s*=)(?!getSteps\(\))[\s\S]*?;\s*$/gm,
+      "removeStepLoggerLog (other)"
+    );
+  }
+
+  private removeManualHideBlocks(): void {
+    const regex = /\s*\/\/ HIDE_START[\s\S]*?\/\/ HIDE_END\s*/g;
+    this.fix(regex, "\n", "removeManualHideBlocks");
+  }
+
+  private removeUnwantedLines(): void {
+    const regex = /^.*(StepLoggerV2|\/\/ HIDE|Pointer2D).*$/gm;
+    this.fix(regex, "\n", "removeUnwantedLines");
+  }
+
+  private replaceProblemStateSignature(): void {
+    const regex =
+      /^(?:export\s+)?function\s+(\w+)\s*\([\s\S]*?\)\s*:\s*ProblemState\[\]\s*\{\s*$/gm;
+    this.fix(
+      regex,
+      "export function " + this.targetFunctionSignature + " {",
+      "replaceProblemStateSignature"
+    );
+  }
+
+  private replaceGetStepsReturn(): void {
+    const regex = /return l\.getSteps\(\)/gm;
+    this.fix(regex, "return result;", "replaceGetStepsReturn");
+  }
+
+  public async generate(): Promise<GeneratedCodeOutput> {
+    this.replaceGetStepsReturn();
+    this.removeManualHideBlocks();
+    this.removeImports();
+    this.replaceProblemStateSignature();
+    this.removeUnwantedLines();
+    this.removeJSDocComments();
+    this.removeExtraEmptyLines();
+    this.removeComments();
+    this.replaceBreakpointWithNumber();
+    this.removeStepLoggerLog();
+
+    try {
+      const formattedContent = await prettier.format(this.result, {
+        parser: "typescript",
+      });
+      if (this.debug) {
+        console.log(`generated code: ${formattedContent}`);
+      }
+      return { content: formattedContent };
+    } catch (e) {
+      return {
+        content: `FORMATTING ERROR:
+${this.result}`,
+      };
+    }
   }
 }
 
-export function removeImports(result: string) {
-  // Updated regex to handle both single and multi-line imports
-  result = result.replace(/^import[\s\S]*?;\s*/gm, "");
-  return result;
-}
-
-export function removeJSDocComments(result: string) {
-  result = result.replace(/\/\*\*[\s\S]*?\*\/\n?/g, "");
-  return result;
-}
-
-export function removeComments(result: string) {
-  result = result.replace(/\s*\/\/.*$/gm, "");
-  return result;
-}
-
-export function removeExtraEmptyLines(result: string) {
-  result = result.replace(/(\n\s*){2,}/g, "\n");
-  return result;
-}
-
-export function replaceBreakpointWithNumber(result: string) {
-  result = result.replace(
-    /^.*l\.breakpoint\((\d+)\)[^;]*;\s*$\n/gm,
-    "// #$1\n"
-  );
-  return result;
-}
-
-export function removeStepLoggerLog(result: string) {
-  //
-  // Remove l.comment and other l. calls, handling multi-line comments
-  result = result.replace(/^\s*l\.comment\s*=\s*[\s\S]*?;\s*$\n/gm, "");
-  // Remove other single-line l. calls, but keep the newline
-  result = result.replace(
-    /^\s*l\.(?!comment\s*=)(?!getSteps\(\))[\s\S]*?;\s*$/gm,
-    ""
-  ); // Removed \n from the end of the regex
-  //
-  return result;
-}
-
-/**
- * Removes lines between // HIDE_START and // HIDE_END markers.
- * @param result The input string content.
- * @returns The content with manual hide blocks removed.
- */
-export function removeManualHideBlocks(result: string): string {
-  const regex = /\s*\/\/ HIDE_START[\s\S]*?\/\/ HIDE_END\s*/g;
-  return result.replace(regex, "\n");
-}
-
-/**
- * Removes lines containing StepLoggerV2, // HIDE, Pointer2D, or starting with //.
- * @param result The input string content.
- * @returns The content with unwanted lines removed.
- * @example
- * const input = `
- * const logger = new StepLoggerV2(); // Remove this
- * // HIDE this line
- * // This is a comment
- * const ptr: Pointer2D = { x: 0, y: 0 }; // Remove this
- * function myFunction() {
- *   // Some code
- * }
- * `;
- * const output = removeUnwantedLines(input);
- * // Expected output:
- * // `
- * //
- * //
- * //
- * // function myFunction() {
- * //   // Some code
- * // }
- * // `
- */
-export function removeUnwantedLines(result: string): string {
-  //
-  // Replaces lines containing StepLoggerV2, // HIDE, or Pointer2D with a newline.
-  const newResult = result.replace(
-    /^.*(StepLoggerV2|\/\/ HIDE|Pointer2D).*$/gm,
-    "\n"
-  );
-  //
-  return newResult;
-}
-
-/**
- * Replaces the function signature and handles the ProblemState[] return type.
- * @param result The input string content.
- * @param targetFunctionSignature The function signature to insert.
- * @returns The content with the signature replaced.
- * @example
- * const input = `
- * export function generateSteps(
- *   intervals: Interval[],
- *   newInterval: Interval
- * ): ProblemState[] {
- *   // Some code
- * }
- * `;
- * const targetSignature = "mySolution(arr: number[]): number[]";
- * const output = replaceProblemStateSignature(input, targetSignature);
- * // Expected output:
- * // `
- * // function mySolution(arr: number[]): number[] {
- * //   // Some code
- * // }
- * // `
- */
-/**
- * Replaces the function signature and handles the ProblemState[] return type.
- * @param result The input string content.
- * @param targetFunctionSignature The function signature to insert.
- * @returns The content with the signature replaced.
- * @example
- * const input = `
- * export function generateSteps(
- *   intervals: Interval[],
- *   newInterval: Interval
- * ): ProblemState[] {
- *   // Some code
- * }
- * `;
- * const targetSignature = "mySolution(arr: number[]): number[]";
- * const output = replaceProblemStateSignature(input, targetSignature);
- * // Expected output:
- * // `
- * // function mySolution(arr: number[]): number[] {
- * //   // Some code
- * // }
- * // `
- */
-export function replaceProblemStateSignature(
-  result: string,
-  targetFunctionSignature: string // This parameter seems to be unused with the new regex approach
-): string {
-  //
-  // Replace the function declaration with the correct signature and opening brace
-  result = result.replace(
-    /^(?:export\s+)?function\s+(\w+)\s*\([\s\S]*?\)\s*:\s*ProblemState\[\]\s*\{\s*$/gm,
-    "export function " + targetFunctionSignature + " {"
-  );
-  //
-  return result;
-}
-
-/**
- * Replaces lines containing "return l.getSteps" with "return result;".
- * @param result The input string content.
- * @returns The content with the return statement replaced.
- * @example
- * const input = `
- * function solve(): ProblemState[] {
- *   // Some code
- *   return l.getSteps();
- * }
- * `;
- * const output = replaceGetStepsReturn(input);
- * // Expected output:
- * // `
- * // function solve(): ProblemState[] {
- * //   // Some code
- * //   return result;
- * // }
- * // `
- */
-export function replaceGetStepsReturn(result: string): string {
-  //
-  let newResult = result.replace(
-    /^\s*return l\.getSteps.*;\s*$/gm,
-    "return result;"
-  );
-
-  return newResult;
+export async function generateCodeFromSteps(
+  params: GenerateCodeParams
+): Promise<GeneratedCodeOutput> {
+  const generator = new CodeGenerator(params);
+  return generator.generate();
 }

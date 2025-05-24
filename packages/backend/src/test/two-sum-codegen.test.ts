@@ -105,6 +105,9 @@ it("two sum codegen", async () => {
     stepsFileContent: input,
     targetFunctionSignature: `sth():void`,
     problemName: "twoSum",
+    debug: true,
   });
+  console.log("parsed", parsed);
   expect(parsed.content.includes("l.getSteps")).toBeFalse();
+  expect(parsed.content.includes("return result;")).toBeTrue;
 });
