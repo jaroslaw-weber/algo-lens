@@ -11,6 +11,8 @@ import {
   VariableMetadata,
   BinaryOperationVariable,
   BinaryPointer,
+  LabeledInterval,
+  LabeledIntervalVariable,
 } from "algo-lens-core";
 import {
   as2dArray,
@@ -19,6 +21,7 @@ import {
   asHashmap,
   asHashset,
   asIntervals,
+  asLabeledIntervals,
   asList,
   asSimpleValue,
   asTree,
@@ -343,6 +346,26 @@ export class StepLoggerV2 {
   }
 
   /**
+   * Logs the state of an array of labeled intervals.
+   * Uses `asLabeledIntervals` to format the data and `upsert` to add/update it.
+   * @param label - The name of the variable.
+   * @param arr - The array of labeled intervals (each interval is an object with interval and optional label).
+   * @param highlight - Optional array of indices to highlight.
+   * @param min - The minimum value for the visualization range.
+   * @param max - The maximum value for the visualization range.
+   */
+  public intervalsV2(
+    label: string,
+    arr: LabeledInterval[],
+    highlight: number[],
+    min: number,
+    max: number
+  ) {
+    const variable = asLabeledIntervals(label, arr, highlight, min, max);
+    this.upsert(variable);
+  }
+
+  /**
    * Marks a variable as hidden in the current state.
    * This finds the variable with the given name (label) in the `variables` array
    * and sets its `hide` property to true. The variable will not be displayed
@@ -389,7 +412,7 @@ export class StepLoggerV2 {
    * @param highlight - Optional highlighting information for the hash map.
    */
   public hashmap(label: string, map: Map<any, any>, highlight?: HashHighlight) {
-    const variable = asHashmap(label, map, highlight);
+    const variable = asHashmap(label, map, highlight ? [highlight] : undefined);
     this.upsert(variable);
   }
 

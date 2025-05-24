@@ -74,7 +74,8 @@ export interface Variable {
     | "list"
     | "hashset"
     | "hashmap"
-    | "binary-operation";
+    | "binary-operation"
+    | "labeled-interval";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -182,6 +183,21 @@ export interface ValueGroupVariable extends Variable {
 export interface IntervalVariable extends Variable {
   type: "interval";
   value: number[][];
+  indexes: number[];
+  options: {
+    min: number;
+    max: number;
+  };
+}
+
+export interface LabeledInterval {
+  interval: number[];
+  label?: string; // Optional label for each interval
+}
+
+export interface LabeledIntervalVariable extends Variable {
+  type: "labeled-interval"; // A new type
+  value: LabeledInterval[];
   indexes: number[];
   options: {
     min: number;
