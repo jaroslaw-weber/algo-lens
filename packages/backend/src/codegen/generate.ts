@@ -220,11 +220,5 @@ export function replaceGetStepsReturn(result: string): string {
     "return result;"
   );
 
-  // Remove any other lines containing 'l.getSteps()' that are not return statements
-  newResult = newResult.replace(
-    /^\s*(?!return\s)l\.getSteps.*;\s*$/gm,
-    "" // Replace with empty string to remove the line
-  );
-  //
   return newResult;
 }
