@@ -8,6 +8,14 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   // Set group options for value/boolean groups
   l.groupOptions.set("courses finished", { min: 0, max: numCourses });
   l.groupOptions.set("result", {}); // No specific options needed for boolean group
+  l.hashmapOptions.set("prerequisitesMap", {
+    keyLabel: "Course",
+    valueLabel: "Prerequisite",
+  });
+  l.hashmapOptions.set("graphMap", {
+    keyLabel: "Prerequisite",
+    valueLabel: "Courses",
+  });
 
   const inDegree: number[] = new Array(numCourses).fill(0);
   const queue: number[] = [];
@@ -18,11 +26,16 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     graphMap.set(i, []);
   }
   // Initial state log (Breakpoint 1)
-  l.hashmap("prerequisitesMap", prerequisitesMap, {
-    value: -1,
-    color: "neutral",
+  l.hashmapV2({
+    label: "prerequisitesMap",
+    map: prerequisitesMap,
+    highlights: [],
   });
-  l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
+  l.hashmapV2({
+    label: "graphMap",
+    map: graphMap,
+    highlights: [],
+  });
   l.arrayV3({ inDegree: inDegree }, []);
   l.arrayV3({ queue: queue }, []);
   l.simple({ numCourses });
@@ -34,11 +47,19 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
   for (const [course, prereq] of prerequisites) {
     // Log before updating graphMap/inDegree (Breakpoint 2)
     ////
-    l.hashmap("prerequisitesMap", prerequisitesMap, {
-      value: course,
-      color: "primary",
+    l.hashmapV2({
+      label: "prerequisitesMap",
+      map: prerequisitesMap,
+      highlights: [
+        { key: course, color: "primary", label: "course" },
+        { value: prereq, color: "secondary", label: "prereq" },
+      ],
     });
-    l.hashmap("graphMap", graphMap, { value: -1, color: "neutral" });
+    l.hashmapV2({
+      label: "graphMap",
+      map: graphMap,
+      highlights: [],
+    });
     l.arrayV3({ inDegree: inDegree }, []);
     l.comment = `Process prerequisite: [${course}, ${prereq}].`;
     l.breakpoint(2);
@@ -47,7 +68,14 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
     inDegree[course]++;
 
     // Log after updating graphMap and inDegree (Breakpoint 3)
-    l.hashmap("graphMap", graphMap, { value: prereq, color: "primary" });
+    l.hashmapV2({
+      label: "graphMap",
+      map: graphMap,
+      highlights: [
+        { key: prereq, color: "primary", label: "prereq" },
+        { value: course, color: "secondary", label: "course" },
+      ],
+    });
     l.comment =
       "Updated graphMap and inDegree for the current prerequisite. Highlighting the prerequisite node in graphMap.";
     l.breakpoint(3);
@@ -86,7 +114,14 @@ export function generateSteps(numCourses: number, prerequisites: number[][]) {
       const neighbor = neighbors[i];
 
       // Log before decrementing neighbor inDegree (Breakpoint 8)
-      l.hashmap("graphMap", graphMap, { value: current, color: "primary" });
+      l.hashmapV2({
+        label: "graphMap",
+        map: graphMap,
+        highlights: [
+          { key: current, color: "primary", label: "current" },
+          { value: neighbor, color: "secondary", label: "neighbor" },
+        ],
+      });
       l.arrayV3({ inDegree: inDegree }, [
         { value: neighbor, label: "neighbor" },
       ]);

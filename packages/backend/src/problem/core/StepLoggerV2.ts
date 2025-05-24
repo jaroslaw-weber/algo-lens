@@ -53,6 +53,8 @@ export class StepLoggerV2 {
   comment?: string;
   groupOptions: Map<string, { min?: number; max?: number; reverse?: boolean }> =
     new Map();
+  hashmapOptions: Map<string, { keyLabel?: string; valueLabel?: string }> =
+    new Map();
   constructor() {
     // Initialize the array to store the history of problem states (steps).
     this.steps = [];
@@ -408,12 +410,16 @@ export class StepLoggerV2 {
     keyLabel?: string;
     valueLabel?: string;
   }) {
-    const { label, map, highlights, keyLabel, valueLabel } = options;
+    const { label, map, highlights } = options;
+    const storedOptions = this.hashmapOptions.get(label);
+    const finalKeyLabel = options.keyLabel ?? storedOptions?.keyLabel;
+    const finalValueLabel = options.valueLabel ?? storedOptions?.valueLabel;
+
     const variable = {
       ...asHashmap(label, map), // asHashmap no longer handles highlights
       highlights,
-      keyLabel,
-      valueLabel,
+      keyLabel: finalKeyLabel,
+      valueLabel: finalValueLabel,
     };
     this.upsert(variable);
   }
