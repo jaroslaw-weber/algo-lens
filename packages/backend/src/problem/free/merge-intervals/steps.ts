@@ -15,7 +15,7 @@ export function generateSteps(intervals: number[][]) {
     // Let's use 0, 0 or handle as appropriate for the logger if it supports undefined bounds.
     // Assuming the logger needs numbers, we'll pass 0, 0 for the empty case.
     l.intervals("intervals", [], [], 0, 0);
-    l.intervalsV2("allIntervalsState.merged", [], [], 0, 0);
+    l.intervalsV2("merged", [], [], 0, 0);
     l.breakpoint(6); // Directly to final state
     return l.getSteps();
   }
@@ -32,7 +32,7 @@ export function generateSteps(intervals: number[][]) {
     min, // Use calculated min
     max // Use calculated max
   ); // Log copy before sort
-  l.intervalsV2("allIntervalsState.merged", [], [], min, max);
+  l.intervalsV2("merged", [], [], min, max);
   l.comment =
     "Record the initial state of the intervals before sorting. Sorting is necessary to efficiently merge overlapping intervals by processing them in order of their start times.";
   l.breakpoint(1);
@@ -42,7 +42,7 @@ export function generateSteps(intervals: number[][]) {
 
   // Log state after sort
   l.intervals("intervals", intervals, [], min, max);
-  l.intervalsV2("allIntervalsState.merged", [], [], min, max);
+  l.intervalsV2("merged", [], [], min, max);
   l.breakpoint(2);
 
   // Initialize the variable for merged intervals using the correct variable name 'merged'
@@ -52,7 +52,7 @@ export function generateSteps(intervals: number[][]) {
   // Log state after adding the first interval
   l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
   l.intervalsV2(
-    "allIntervalsState.merged",
+    "merged",
     merged.map((i) => ({ interval: i })),
     [0],
     min,
@@ -123,6 +123,13 @@ export function generateSteps(intervals: number[][]) {
     } else {
       // No overlap: Add the current interval to 'merged'
       merged.push([...currentInterval]); // Push a copy
+      l.intervalsV2(
+        "merged",
+        merged.map((x) => ({ interval: x })),
+        [],
+        min,
+        max
+      );
 
       // Log state after adding a new interval
       // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
@@ -152,9 +159,10 @@ export function generateSteps(intervals: number[][]) {
 
   // Log final state
   l.intervals("intervals", intervals, [], min, max);
+  const result = merged;
   l.intervalsV2(
     "result",
-    merged.map((i) => ({ interval: i })),
+    result.map((i) => ({ interval: i })),
     [],
     min,
     max
