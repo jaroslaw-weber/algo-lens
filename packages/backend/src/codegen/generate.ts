@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as prettier from "prettier";
 
 export interface GenerateCodeParams {
@@ -18,8 +19,9 @@ export async function generateCodeFromSteps(
   result = replaceGetStepsReturn(result);
   result = removeManualHideBlocks(result); // Add this line to remove manual hide blocks
   result = removeImports(result);
-  result = removeUnwantedLines(result);
   result = replaceProblemStateSignature(result, params.targetFunctionSignature);
+
+  result = removeUnwantedLines(result);
 
   result = removeJSDocComments(result);
   result = removeExtraEmptyLines(result);
@@ -77,7 +79,10 @@ export function removeStepLoggerLog(result: string) {
   // Remove l.comment and other l. calls, handling multi-line comments
   result = result.replace(/^\s*l\.comment\s*=\s*[\s\S]*?;\s*$\n/gm, "");
   // Remove other single-line l. calls, but keep the newline
-  result = result.replace(/^\s*l\.(?!comment\s*=)[\s\S]*?;\s*$/gm, ""); // Removed \n from the end of the regex
+  result = result.replace(
+    /^\s*l\.(?!comment\s*=)(?!getSteps\(\))[\s\S]*?;\s*$/gm,
+    ""
+  ); // Removed \n from the end of the regex
   //
   return result;
 }
@@ -210,10 +215,15 @@ export function replaceProblemStateSignature(
  */
 export function replaceGetStepsReturn(result: string): string {
   //
-  // No replacement needed, as we want to keep 'return l.getSteps();'
-  const newResult = result.replace(
+  let newResult = result.replace(
     /^\s*return l\.getSteps.*;\s*$/gm,
     "return result;"
+  );
+
+  // Remove any other lines containing 'l.getSteps()' that are not return statements
+  newResult = newResult.replace(
+    /^\s*(?!return\s)l\.getSteps.*;\s*$/gm,
+    "" // Replace with empty string to remove the line
   );
   //
   return newResult;

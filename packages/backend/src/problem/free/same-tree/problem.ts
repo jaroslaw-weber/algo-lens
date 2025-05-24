@@ -20,7 +20,6 @@ export const problem: Problem<SameTreeInput, ProblemState> = {
     variables,
   },
   codegen: {
-    signature:
-      "function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean",
+    signature: "isSameTree(p: TreeNode | null, q: TreeNode | null): boolean",
   },
 };

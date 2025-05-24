@@ -25,10 +25,10 @@ function something(): ProblemState[] {
     l.comment = "something";
     l.breakpoint(1);
     const a = 1;
-    const b = 2;
+    const b = 2; // something
     const c = a + b;
     l.simple({ a, b, c});
-    l.breakpoint(2);
+    l.breakpoint(2); //
 
     return l.getSteps();
 }`,
@@ -183,6 +183,21 @@ describe("replaceProblemStateSignature", () => {
     const expected = `export function solve(): any {\n  // code\n}`;
     // @ts-ignore // Accessing private function for testing
     expect(replaceProblemStateSignature(input, "solve(): any")).toEqual(
+      expected
+    );
+  });
+  it("should replace sameTree signature with any", () => {
+    const input = `export function sameTree(
+  p: BinaryTreeNode | null,
+  q: BinaryTreeNode | null
+): ProblemState[] {
+  // code
+}`;
+    const expected = `export function sameTree(): any {
+  // code
+}`;
+    // @ts-ignore // Accessing private function for testing
+    expect(replaceProblemStateSignature(input, "sameTree(): any")).toEqual(
       expected
     );
   });
