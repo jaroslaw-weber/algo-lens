@@ -15,7 +15,7 @@ export function generateSteps(intervals: number[][]) {
     // Let's use 0, 0 or handle as appropriate for the logger if it supports undefined bounds.
     // Assuming the logger needs numbers, we'll pass 0, 0 for the empty case.
     l.intervals("intervals", [], [], 0, 0);
-    l.intervalsV2("merged", [], [], 0, 0);
+    l.intervalsV2({ label: "merged", arr: [], highlight: [], min: 0, max: 0 });
     l.breakpoint(6); // Directly to final state
     return l.getSteps();
   }
@@ -32,7 +32,7 @@ export function generateSteps(intervals: number[][]) {
     min, // Use calculated min
     max // Use calculated max
   ); // Log copy before sort
-  l.intervalsV2("merged", [], [], min, max);
+  l.intervalsV2({ label: "merged", arr: [], highlight: [], min, max });
   l.comment =
     "Record the initial state of the intervals before sorting. Sorting is necessary to efficiently merge overlapping intervals by processing them in order of their start times.";
   l.breakpoint(1);
@@ -42,7 +42,7 @@ export function generateSteps(intervals: number[][]) {
 
   // Log state after sort
   l.intervals("intervals", intervals, [], min, max);
-  l.intervalsV2("merged", [], [], min, max);
+  l.intervalsV2({ label: "merged", arr: [], highlight: [], min, max });
   l.breakpoint(2);
 
   // Initialize the variable for merged intervals using the correct variable name 'merged'
@@ -51,15 +51,15 @@ export function generateSteps(intervals: number[][]) {
 
   // Log state after adding the first interval
   l.intervals("intervals", intervals, [0], min, max); // Highlight first interval
-  l.intervalsV2(
-    "merged",
-    merged.map((i) => ({ interval: i })),
-    [0],
+  l.intervalsV2({
+    label: "merged",
+    arr: merged.map((i) => ({ interval: i })),
+    highlight: [0],
     min,
-    max
-  ); // Highlight the newly added interval
+    max,
+  }); // Highlight the newly added interval
   l.comment = `Intervals sorted. Add first interval to merged.`;
-  l.breakpoint(2); // Maybe a new breakpoint 2.5 or adjust existing ones? Let's reuse 2 for now or add a specific one later if needed.
+  l.breakpoint(2.5);
 
   for (let i = 1; i < intervals.length; i++) {
     const currentInterval = intervals[i]; // Use variable name from variables.ts
@@ -67,9 +67,9 @@ export function generateSteps(intervals: number[][]) {
 
     // Log state at the beginning of the loop iteration (before check)
     // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-    l.intervalsV2(
-      "state", // New label for the combined view
-      [
+    l.intervalsV2({
+      label: "state",
+      arr: [
         { interval: currentInterval, label: "Current" },
         { interval: lastMerged, label: "Last Merged" },
         ...merged.map((int, idx) => ({
@@ -77,10 +77,10 @@ export function generateSteps(intervals: number[][]) {
           label: `Merged ${idx}`,
         })),
       ],
-      [0, 1, merged.length + 1], // Highlight current, last merged, and the last merged interval in the combined list
+      highlight: [0, 1],
       min,
-      max
-    );
+      max,
+    });
     l.intervals("intervals", intervals, [i], min, max); // Highlight current interval being checked
     l.comment = `Compare current interval with last merged.`;
     l.breakpoint(3);
@@ -103,9 +103,9 @@ export function generateSteps(intervals: number[][]) {
 
       // Log state after merging
       // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-      l.intervalsV2(
-        "state", // New label for the combined view
-        [
+      l.intervalsV2({
+        label: "state",
+        arr: [
           { interval: currentInterval, label: "Current" },
           { interval: lastMerged, label: "Last Merged" },
           ...merged.map((int, idx) => ({
@@ -113,29 +113,29 @@ export function generateSteps(intervals: number[][]) {
             label: `Merged ${idx}`,
           })),
         ],
-        [0, 1, merged.length + 1], // Highlight current, last merged, and the last merged interval in the combined list
+        highlight: [1],
         min,
-        max
-      ); // Highlight updated merged interval and show previous end
+        max,
+      }); // Highlight updated merged interval and show previous end
       l.intervals("intervals", intervals, [i], min, max);
       l.comment = `Overlap found. Update last merged interval.`;
       l.breakpoint(4);
     } else {
       // No overlap: Add the current interval to 'merged'
       merged.push([...currentInterval]); // Push a copy
-      l.intervalsV2(
-        "merged",
-        merged.map((x) => ({ interval: x })),
-        [],
+      l.intervalsV2({
+        label: "merged",
+        arr: merged.map((x) => ({ interval: x })),
+        highlight: [],
         min,
-        max
-      );
+        max,
+      });
 
       // Log state after adding a new interval
       // Corrected l.simple call to match signature: simple(value: Record&lt;string, any&gt;)
-      l.intervalsV2(
-        "state", // New label for the combined view
-        [
+      l.intervalsV2({
+        label: "state",
+        arr: [
           { interval: currentInterval, label: "Current" },
           { interval: lastMerged, label: "Last Merged" },
           ...merged.map((int, idx) => ({
@@ -143,10 +143,10 @@ export function generateSteps(intervals: number[][]) {
             label: `Merged ${idx}`,
           })),
         ],
-        [0, 1, merged.length + 1], // Highlight current, last merged, and the newly added interval in the combined list
+        highlight: [0], // Highlight current interval (which was added)
         min,
-        max
-      ); // Highlight the newly added interval
+        max,
+      }); // Highlight the newly added interval
       l.intervals("intervals", intervals, [i], min, max);
       l.comment = `No overlap. Add current interval to merged.`;
       l.breakpoint(5);
@@ -160,13 +160,13 @@ export function generateSteps(intervals: number[][]) {
   // Log final state
   l.intervals("intervals", intervals, [], min, max);
   const result = merged;
-  l.intervalsV2(
-    "result",
-    result.map((i) => ({ interval: i })),
-    [],
+  l.intervalsV2({
+    label: "result",
+    arr: result.map((i) => ({ interval: i })),
+    highlight: [],
     min,
-    max
-  ); // Changed "merged" to "result"
+    max,
+  }); // Changed "merged" to "result"
   l.comment =
     "All intervals have been processed. The 'merged' list now contains the final set of non-overlapping intervals that cover all the original intervals.";
   l.breakpoint(6);

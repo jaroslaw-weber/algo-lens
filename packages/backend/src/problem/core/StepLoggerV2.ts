@@ -333,6 +333,7 @@ export class StepLoggerV2 {
    * @param highlight - Optional array of indices to highlight.
    * @param min - The minimum value for the visualization range.
    * @param max - The maximum value for the visualization range.
+   * @deprecated use intervalsV2
    */
   public intervals(
     label: string,
@@ -354,13 +355,14 @@ export class StepLoggerV2 {
    * @param min - The minimum value for the visualization range.
    * @param max - The maximum value for the visualization range.
    */
-  public intervalsV2(
-    label: string,
-    arr: LabeledInterval[],
-    highlight: number[],
-    min: number,
-    max: number
-  ) {
+  public intervalsV2(p: {
+    label: string;
+    arr: LabeledInterval[];
+    highlight: number[];
+    min: number;
+    max: number;
+  }) {
+    const { label, arr, highlight, min, max } = p;
     const variable = asLabeledIntervals(label, arr, highlight, min, max);
     this.upsert(variable);
   }
