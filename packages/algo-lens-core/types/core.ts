@@ -95,7 +95,7 @@ export interface Pointer {
   color?: string;
 
   label?: string;
-  dir?: "left" | "right" | "up" | "bottom";
+  dir?: "left" | "right" | "top" | "bottom";
 }
 
 /** Represents a pointer for binary values. */

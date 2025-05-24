@@ -1,4 +1,4 @@
-import { ProblemState } from "algo-lens-core";
+import { ProblemState, Pointer } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 import { WordBreakInput } from "./types"; // Assuming types.ts defines these
 
@@ -65,7 +65,22 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
         // If both conditions are true, then the prefix s[0...i-1] can be segmented.
         dp[i] = true;
         l.hashset("wordSet", wordSet, { value: suffix, color: "primary" });
-        l.arrayV3({ dp }, [{ value: i }, { value: j, label: "can segment?" }]); // Log the updated dp array
+        l.arrayV3({ dp }, [
+          {
+            value: i,
+            label: "current prefix length",
+            color: "primary",
+            dir: "top",
+            dimension: "column",
+          } as Pointer,
+          {
+            value: j,
+            label: "can segment?",
+            color: "primary",
+            dir: "bottom",
+            dimension: "column",
+          } as Pointer,
+        ]); // Log the updated dp array
         l.comment = `Prefix and suffix valid. Set dp[i] to true.`;
         l.breakpoint(6);
         // Break the inner loop since we've found a way to segment s[0...i-1].
@@ -79,7 +94,15 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
 
     //
     //l.simple({ suffix: undefined }); // Clear suffix for the next outer loop iteration
-    l.arrayV3({ dp }, [{ value: i }]); // Log dp state at the end of inner loop checks for i
+    l.arrayV3({ dp }, [
+      {
+        value: i,
+        label: "current prefix length",
+        color: "primary",
+        dir: "top",
+        dimension: "column",
+      } as Pointer,
+    ]); // Log dp state at the end of inner loop checks for i
     l.comment = `Finished split points for length ${i}. dp[i] is ${dp[i]}.`;
     l.breakpoint(9);
   }
@@ -91,7 +114,15 @@ export function generateSteps(p: WordBreakInput): ProblemState[] {
   // The final result is dp[n]
   const result = dp[n];
   l.simple({ result: result }); // Log the final result
-  l.arrayV3({ dp }, [{ value: n }]); // Log the final dp array state
+  l.arrayV3({ dp }, [
+    {
+      value: n,
+      label: "final result",
+      color: "primary",
+      dir: "top",
+      dimension: "column",
+    } as Pointer,
+  ]); // Log the final dp array state
   l.comment = `Final result: dp[n] is ${result}.`;
   l.breakpoint(11);
 
