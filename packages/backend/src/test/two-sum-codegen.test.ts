@@ -1,9 +1,8 @@
-import { generateCodeFromSteps } from "../codegen/generate"
-import {it, expect} from 'bun:test'
+import { generateCodeFromSteps } from "../codegen/generate";
+import { it, expect } from "bun:test";
 
-it('two sum codegen', ()=>{
-
-	const input = `import { ProblemState } from "algo-lens-core";
+it("two sum codegen", async () => {
+  const input = `import { ProblemState } from "algo-lens-core";
 	import { StepLoggerV2 } from "../../core/StepLoggerV2";
 	import { TwoSumInput } from "./types"; // Assuming types.ts will be created later
 	import _ = require("lodash"); // Added lodash, might not be needed but good practice based on 3sum
@@ -27,7 +26,7 @@ it('two sum codegen', ()=>{
 	
 	  for (let i = 0; i < nums.length; i++) {
 		const num = nums[i]; // num defined here to be used in explanation for breakpoint 2
-		l.comment = `Iterate nums array. Current number: ${num}.`;
+		l.comment = \`Iterate nums array. Current number: \${num}.\`;
 		l.breakpoint(2); // Corresponds to #2 Start loop iteration
 		const complement = target - num;
 	
@@ -36,7 +35,7 @@ it('two sum codegen', ()=>{
 		  { value: i, label: "current", color: "primary" },
 		]); // Use inferred label "i"
 		l.simple({ complement: complement }); // Corrected l.simple call
-		l.comment = `Calculate complement: ${target} - ${num} = ${complement}.`;
+		l.comment = \`Calculate complement: \${target} - \${num} = \${complement}.\`;
 		l.breakpoint(3); // Corresponds to #3 Calculate complement
 	
 		const complementIndex = seen.get(complement);
@@ -65,7 +64,7 @@ it('two sum codegen', ()=>{
 		  ]); // Use inferred labels "i" and "complementIndex"
 		  // Show the final result
 		  l.arrayV3({ result: [complementIndex!, i] }, []); // Added non-null assertion for complementIndex
-		  l.comment = `Complement ${complement} found. Result: indices.`;
+		  l.comment = \`Complement \${complement} found. Result: indices.\`;
 		  l.breakpoint(4); // Corresponds to #4 Found complement
 		  return l.getSteps();
 		}
@@ -82,7 +81,7 @@ it('two sum codegen', ()=>{
 		  valueLabel: "Index",
 		  highlights: [{ key: num, color: "primary" }],
 		});
-		l.comment = `Complement not found. Add ${num} to map.`;
+		l.comment = \`Complement not found. Add \${num} to map.\`;
 		l.breakpoint(6); // Corresponds to #6 Add current number and index to map
 	  }
 	  l.comment =
@@ -100,14 +99,12 @@ it('two sum codegen', ()=>{
 	
 	  return l.getSteps(); // Return steps even if no solution is found during the loop
 	}
-	`
+	`;
 
-	const expected = ``
-	const parsed = generateCodeFromSteps({
-		stepsFileContent: input,
-		targetFunctionSignature: `sth():void`,
-		problemName: 'twoSum'
-	})
-	expected(parsed).toEqual(expected)
-	
-})
+  const parsed = await generateCodeFromSteps({
+    stepsFileContent: input,
+    targetFunctionSignature: `sth():void`,
+    problemName: "twoSum",
+  });
+  expect(parsed.content.includes("l.getSteps")).toBeFalse();
+});
