@@ -100,7 +100,7 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
       },
       title: {
         display: true,
-        text: data.label,
+        // text: data.label,
       },
     },
   };
