@@ -1,5 +1,17 @@
 import { describe, it, expect } from "bun:test";
-import { generateCodeFromSteps, removeImports, removeJSDocComments, removeComments, removeExtraEmptyLines, replaceBreakpointWithNumber, removeStepLoggerLog, removeUnwantedLines, replaceProblemStateSignature, replaceGetStepsReturn, removeManualHideBlocks } from "../codegen/generate";
+import {
+  generateCodeFromSteps,
+  removeImports,
+  removeJSDocComments,
+  removeComments,
+  removeExtraEmptyLines,
+  replaceBreakpointWithNumber,
+  removeStepLoggerLog,
+  removeUnwantedLines,
+  replaceProblemStateSignature,
+  replaceGetStepsReturn,
+  removeManualHideBlocks,
+} from "../codegen/generate";
 import * as fs from "fs";
 import * as path from "path";
 import { loadProblemWithId } from "../problem/core/load";
@@ -23,7 +35,7 @@ function something(): ProblemState[] {
       targetFunctionSignature: `something(): number`,
       problemName: "something",
     });
-    //// 
+    ////
     const expected = `export function something(): number {
   // #1
   const a = 1;
@@ -34,7 +46,7 @@ function something(): ProblemState[] {
   return result;
 }
 `;
-    // 
+    //
     expect(generated.content).toEqual(expected);
   });
 });
@@ -67,7 +79,6 @@ describe("removeImports", () => {
     // @ts-ignore // Accessing private function for testing
     expect(removeImports(input)).toEqual(expected);
   });
-
 });
 
 describe("removeJSDocComments", () => {
@@ -171,14 +182,19 @@ describe("replaceProblemStateSignature", () => {
     const input = `function solve(a: number): ProblemState[] {\n  // code\n}`;
     const expected = `export function solve(): any {\n  // code\n}`;
     // @ts-ignore // Accessing private function for testing
-    expect(replaceProblemStateSignature(input, "solve(): any")).toEqual(expected);
+    expect(replaceProblemStateSignature(input, "solve(): any")).toEqual(
+      expected
+    );
   });
 });
 
 describe("replaceGetStepsReturn", () => {
   it("should replace return l.getSteps() with return result;", () => {
-    const input = `return l.getSteps();\n}`;
-    const expected = `return result;\n}`;
+    const input = `
+    return l.getSteps();
+    }`;
+    const expected = `return result;
+    }`;
     // @ts-ignore // Accessing private function for testing
     expect(replaceGetStepsReturn(input)).toEqual(expected);
   });
@@ -203,9 +219,8 @@ const b = 2;
   });
 });
 
-
-it("real world example:",async ()=>{
-  const generated = await loadProblemWithId("3sum")
-  const lines = generated?.code?.split("\n")
-  expect(lines?.length).toBeGreaterThan(4)
-})
+it("real world example:", async () => {
+  const generated = await loadProblemWithId("3sum");
+  const lines = generated?.code?.split("\n");
+  expect(lines?.length).toBeGreaterThan(4);
+});
