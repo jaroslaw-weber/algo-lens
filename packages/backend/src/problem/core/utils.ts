@@ -207,11 +207,11 @@ export function asLabeledIntervals(
   max: number
 ): LabeledIntervalVariable {
   const value = arr.map((x) => x.interval);
-  const labels = arr.map((x) => x.label);
+  const labels: string[] = arr.map((x) => x.label!);
   const result: LabeledIntervalVariable = {
     label,
     type: "labeled-interval",
-    value: arr.map((x) => x.interval),
+    value,
     indexes: highlight,
     options: {
       min,
