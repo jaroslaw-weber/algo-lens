@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
+import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 
 const CodePreview = ({ code, highlightLineIndex }) => {
   const preRef = useRef(null);
 
+  const SyntaxHighlighter =
+    Prism as typeof React.Component<SyntaxHighlighterProps>;
   useEffect(() => {
     if (preRef.current) {
       const highlightedLine = preRef.current.querySelector(".highlighted");
@@ -18,6 +21,20 @@ const CodePreview = ({ code, highlightLineIndex }) => {
 
   return (
     <div className="overflow-hidden">
+      <SyntaxHighlighter
+        language="javascript"
+        showLineNumbers={true}
+        wrapLines={true}
+        lineProps={(lineNumber) => {
+          const style: React.CSSProperties = { display: "block" };
+          if (lineNumber === highlightLineIndex + 1) {
+            style.backgroundColor = "#ffffcc"; // Example highlight color
+          }
+          return { style };
+        }}
+      >
+        {code}
+      </SyntaxHighlighter>
       <pre
         ref={preRef}
         className="mockup-code rounded-lg text-xs font-code leading-none overflow-auto"
@@ -26,7 +43,8 @@ const CodePreview = ({ code, highlightLineIndex }) => {
         {code.split("\n").map((line, index) => (
           <p
             key={index}
-            className={`px-4 py-1 transition-all duration-100 ${ // Reduced py padding from 2 to 1
+            className={`px-4 py-1 transition-all duration-100 ${
+              // Reduced py padding from 2 to 1
               index === highlightLineIndex
                 ? "text-primary-content bg-primary highlighted"
                 : ""
