@@ -3,7 +3,7 @@ import { ThreeSumInput } from "./types";
 
 export const testcases = [
   {
-    name: "Standard Input",
+    name: "Example 1",
     input: [-1, 0, 1, 2, -1, -4],
     expected: [
       [-1, -1, 2],
@@ -11,22 +11,15 @@ export const testcases = [
     ],
   },
   {
-    name: "No Solution",
+    name: "No Triplet Found",
     input: [0, 1, 1],
     expected: [],
   },
   {
     // Original: [0, 0, 0] - Changed to a medium size input
-    name: "Medium Input",
-    input: [-1, 0, 1, 2, -1, -4, 5, -2, 3],
-    expected: [
-      [-4, -1, 5],
-      [-4, 1, 3],
-      [-2, -1, 3],
-      [-2, 0, 2],
-      [-1, -1, 2],
-      [-1, 0, 1],
-    ],
+    name: "Contains Zeroes",
+    input: [0, 0, 0],
+    expected: [[0, 0, 0]],
     isDefault: true,
   },
   {
