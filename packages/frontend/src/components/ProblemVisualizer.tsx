@@ -30,6 +30,7 @@ interface ProblemVisualizerProps {
 
 function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   const [activeTab, setActiveTab] = useState("visualizer"); // Keep state here for content rendering
+  const [showHeader, setShowHeader] = useState(true); // New state for controlling visibility
   const [problem] = useAtom(problemAtom); // No need to set problem here anymore
 
   const [step, setStep] = useAtom(stepAtom);
@@ -111,6 +112,10 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
 
   // Removed state fetching useEffect as it's now in useProblemState
 
+  const handleCloseProblemView = () => {
+    setShowHeader(false);
+  };
+
   return (
     <div className="mx-8 my-8 flex-1">
       <div className="">
@@ -122,16 +127,21 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
               {/* Moved original content here */}
               <div className="flex flex-col lg:flex-row  lg:gap-20">
                 <div className="flex-1 p-2  lg:w-1/2">
-                  <ProblemHeader
-                    title={title}
-                    id={id}
-                    problem={problem}
-                    handleCopyCode={handleCopyCode}
-                  />
-                  <ProblemTabs
-                    activeTab={activeTab}
-                    setActiveTab={setActiveTab}
-                  />
+                  {showHeader && (
+                    <ProblemHeader
+                      title={title}
+                      id={id}
+                      problem={problem}
+                      handleCopyCode={handleCopyCode}
+                      onClose={handleCloseProblemView} // Pass the new close handler
+                    />
+                  )}
+                  {showHeader && (
+                    <ProblemTabs
+                      activeTab={activeTab}
+                      setActiveTab={setActiveTab}
+                    />
+                  )}
                   {/* Integrate TestCaseSelector */}
 
                   {/* Add check for state before accessing description */}

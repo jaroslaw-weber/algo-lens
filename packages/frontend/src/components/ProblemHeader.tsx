@@ -8,6 +8,7 @@ interface ProblemHeaderProps {
   id: string;
   handleCopyCode: () => void;
   problem: Problem<any, any>;
+  onClose: () => void; // Add onClose prop
 }
 
 const ProblemHeader: React.FC<ProblemHeaderProps> = ({
@@ -15,6 +16,7 @@ const ProblemHeader: React.FC<ProblemHeaderProps> = ({
   id,
   problem,
   handleCopyCode,
+  onClose, // Destructure onClose
 }) => {
   return (
     <div className="flex items-center gap-6">
@@ -43,6 +45,13 @@ const ProblemHeader: React.FC<ProblemHeaderProps> = ({
             isBookmarked={problem?.bookmark ?? false}
           />
         )}
+      <button
+        className="button button-primary hover:opacity-80 tooltip tooltip-top"
+        onClick={onClose} // Add onClose handler
+        data-tip="Close"
+      >
+        <i className="fas fa-times"></i> {/* Close icon */}
+      </button>
     </div>
   );
 };
