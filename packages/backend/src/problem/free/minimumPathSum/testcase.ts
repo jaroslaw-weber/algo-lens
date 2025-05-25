@@ -14,11 +14,13 @@ export const testcases = [
       ],
     },
     expected: 7,
+    name: "Standard 3x3 grid",
     description: "Standard 3x3 grid",
   },
   {
     input: { grid: [[1, 2, 3]] },
     expected: 6,
+    name: "Single row grid",
     description: "Single row grid",
   },
   {
@@ -31,6 +33,7 @@ export const testcases = [
       ],
     },
     expected: 7,
+    name: "Standard 3x3 grid",
     description: "Standard 3x3 grid",
     isDefault: true,
   },
@@ -42,6 +45,7 @@ export const testcases = [
       ],
     },
     expected: 3,
+    name: "Simple 2x2 grid",
     description: "Simple 2x2 grid",
   },
 ];

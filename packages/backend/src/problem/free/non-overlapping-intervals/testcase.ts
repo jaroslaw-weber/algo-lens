@@ -3,6 +3,7 @@ import { EraseOverlapIntervalsInput } from "./types"; // Assuming types file exi
 
 export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
   {
+    name: "Overlapping Intervals",
     input: [
       [1, 2],
       [2, 3],
@@ -13,6 +14,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 1,
   },
   {
+    name: "Identical Intervals",
     input: [
       [1, 2],
       [1, 2],
@@ -21,6 +23,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 1,
   },
   {
+    name: "Multiple Overlaps",
     input: [
       [1, 5],
       [1, 5],
@@ -30,6 +33,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 2,
   },
   {
+    name: "Default Overlap",
     input: [
       [1, 5],
       [2, 3],
@@ -40,14 +44,17 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     isDefault: true,
   },
   {
+    name: "Empty Input",
     input: [],
     expected: 0,
   },
   {
+    name: "Single Interval",
     input: [[1, 2]],
     expected: 0,
   },
   {
+    name: "Negative Intervals",
     input: [
       [-3, -1],
       [-2, 0],
@@ -56,14 +63,16 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 1,
   },
   {
+    name: "Touching Intervals",
     input: [
       [1, 2],
       [2, 2],
       [2, 3],
     ],
-    expected:0,
+    expected: 0,
   },
   {
+    name: "Nested Intervals",
     input: [
       [1, 6],
       [2, 4],
@@ -72,6 +81,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 2,
   },
   {
+    name: "Non-overlapping Touching",
     input: [
       [1, 3],
       [3, 5],
@@ -80,6 +90,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 0,
   },
   {
+    name: "Unsorted Non-overlapping",
     input: [
       [3, 4],
       [1, 2],
@@ -88,6 +99,7 @@ export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [
     expected: 0,
   },
   {
+    name: "Duplicate and Non-overlapping",
     input: [
       [1, 3],
       [1, 3],

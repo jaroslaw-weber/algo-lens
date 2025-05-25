@@ -3,9 +3,13 @@ import { HouseRobberInput } from "./types";
 
 // Updated TestCase signature to use tuple input type [number[]]
 export const testcases = [
-  { input: [1, 2, 3, 1], expected: 4 },
-  { input: [2, 7, 9, 3, 1], expected: 12 },
-  { input: [1, 2, 3, 5, 6, 7, 10], expected: 20 ,
-    isDefault: true},
-  { input: [0, 0, 0, 0], expected: 0 }
+  { name: "Standard Input", input: [1, 2, 3, 1], expected: 4 },
+  { name: "Larger Values", input: [2, 7, 9, 3, 1], expected: 12 },
+  {
+    name: "Default Input",
+    input: [1, 2, 3, 5, 6, 7, 10],
+    expected: 20,
+    isDefault: true,
+  },
+  { name: "All Zeros", input: [0, 0, 0, 0], expected: 0 },
 ];

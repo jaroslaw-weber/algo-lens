@@ -6,6 +6,7 @@ export interface ProblemMetadata {
 export interface TestCase<Input, State> {
   input: Input;
   expected: any;
+  name?: string;
   description?: string;
   isDefault?: boolean;
 }
