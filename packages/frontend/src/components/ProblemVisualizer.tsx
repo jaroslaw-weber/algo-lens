@@ -125,6 +125,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                   <ProblemHeader
                     title={title}
                     id={id}
+                    problem={problem}
                     handleCopyCode={handleCopyCode}
                   />
                   <ProblemTabs
@@ -140,7 +141,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
 
                   {/* Add check for code before passing to CodePreview */}
                   {code && (
-                    <CodePreview code={code} highlightLineIndex={line} />
+                    <CodePreview code={code} highlightLineIndex={line!} />
                   )}
                 </div>
                 <div className="lg:pl-6 flex-1 lg:w-1/2  lg:p-2 space-y-4">

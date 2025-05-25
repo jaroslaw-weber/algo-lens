@@ -1,14 +1,21 @@
-import React from 'react';
-import { pb } from '../auth/pocketbase';
-import BookmarkButton from '../bookmark/BookmarkButton';
+import React from "react";
+import { pb } from "../auth/pocketbase";
+import BookmarkButton from "../bookmark/BookmarkButton";
+import type { Problem } from "algo-lens-core";
 
 interface ProblemHeaderProps {
   title: string;
   id: string;
   handleCopyCode: () => void;
+  problem: Problem<any, any>;
 }
 
-const ProblemHeader: React.FC<ProblemHeaderProps> = ({ title, id, handleCopyCode }) => {
+const ProblemHeader: React.FC<ProblemHeaderProps> = ({
+  title,
+  id,
+  problem,
+  handleCopyCode,
+}) => {
   return (
     <div className="flex items-center gap-6">
       {/* Adjust the gap as needed */}
@@ -20,10 +27,7 @@ const ProblemHeader: React.FC<ProblemHeaderProps> = ({ title, id, handleCopyCode
         target="_blank"
         rel="noopener noreferrer"
       >
-        <i
-          className="fas fa-external-link-alt"
-          aria-hidden="true"
-        ></i>
+        <i className="fas fa-external-link-alt" aria-hidden="true"></i>
       </a>
       <button
         className="button button-primary hover:opacity-80 tooltip tooltip-top"
@@ -32,11 +36,13 @@ const ProblemHeader: React.FC<ProblemHeaderProps> = ({ title, id, handleCopyCode
       >
         <i className="fas fa-copy"></i>
       </button>
-      {id && pb.authStore.isValid && ( // Only show button if problem is loaded and user is logged in
-        <BookmarkButton
-          problemId={id!}
-        />
-      )}
+      {id &&
+        pb.authStore.isValid && ( // Only show button if problem is loaded and user is logged in
+          <BookmarkButton
+            problemId={id!}
+            isBookmarked={problem?.bookmark ?? false}
+          />
+        )}
     </div>
   );
 };
