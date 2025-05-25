@@ -350,7 +350,6 @@ export class StepLoggerV2 {
    * Logs the state of an array of labeled intervals.
    * Uses `asLabeledIntervals` to format the data and `upsert` to add/update it.
    * @param label - The name of the variable.
-   * @param arr - The array of labeled intervals (each interval is an object with interval and optional label).
    * @param highlight - Optional array of indices to highlight.
    * @param min - The minimum value for the visualization range.
    * @param max - The maximum value for the visualization range.

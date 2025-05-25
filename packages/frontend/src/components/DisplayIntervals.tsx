@@ -40,8 +40,8 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
   let chartLabels: string[];
 
   if (data.type === "labeled-interval") {
-    intervalsToDisplay = data.value.map((item) => item.interval);
-    chartLabels = data.value.map((item) => item.label || ""); // Use label if present, else empty string
+    intervalsToDisplay = data.value.map((item) => item);
+    chartLabels = data.labels?.map((item) => item || "") ?? []; // Use label if present, else empty string
   } else {
     intervalsToDisplay = data.value;
     chartLabels = data.value.map(() => ""); // Original behavior for unlabeled intervals

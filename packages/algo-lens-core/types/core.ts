@@ -197,12 +197,13 @@ export interface LabeledInterval {
 
 export interface LabeledIntervalVariable extends Variable {
   type: "labeled-interval"; // A new type
-  value: LabeledInterval[];
+  value: number[][];
   indexes: number[];
   options: {
     min: number;
     max: number;
   };
+  labels?: string[];
 }
 
 export interface HashsetVariable extends Variable {
