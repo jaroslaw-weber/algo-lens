@@ -67,6 +67,8 @@ export async function runTests(problem: Problem<any, ProblemState>) {
 
     expect(code!.includes("FORMATTING ERROR")).toBeFalse();
     expect(code!.includes("l.getSteps")).toBeFalse();
+    expect(code!.includes(`l.array`)).toBeFalse();
+    expect(code!.includes("l.comment")).toBeFalse();
     /**
     // 
       `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
