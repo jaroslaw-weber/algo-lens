@@ -1,11 +1,11 @@
-import React, { useState } from "react"; // Removed useEffect
+import React, { useRef } from "react"; // Removed useEffect
 import { pb } from "../auth/pocketbase";
 import { trackUmamiEvent } from "../utils/umami";
 // Removed import Cookies from 'js-cookie';
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   // Removed useEffect for reading cookie
 
@@ -13,9 +13,14 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     try {
       // authWithPassword automatically updates pb.authStore (which uses localStorage by default)
-      await pb.collection("users").authWithPassword(email, password);
+      await pb
+        .collection("users")
+        .authWithPassword(
+          emailRef.current?.value || "",
+          passwordRef.current?.value || ""
+        );
       console.log("Login successful");
-      trackUmamiEvent('login-success');
+      trackUmamiEvent("login-success");
       // Removed Cookies.set('token', pb.authStore.token);
       window.location.href = "/"; // Redirect after successful login
     } catch (error: any) {
@@ -43,8 +48,7 @@ const LoginForm: React.FC = () => {
                 name="email"
                 autoComplete="email"
                 className="input input-bordered w-full"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                ref={emailRef}
                 required
               />
             </div>
@@ -61,15 +65,11 @@ const LoginForm: React.FC = () => {
                 name="password"
                 autoComplete="current-password"
                 className="input input-bordered w-full"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                ref={passwordRef}
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="btn btn-primary w-full"
-            >
+            <button type="submit" className="btn btn-primary w-full">
               Login
             </button>
           </form>
