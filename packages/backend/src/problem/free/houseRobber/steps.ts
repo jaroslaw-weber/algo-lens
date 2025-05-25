@@ -65,8 +65,9 @@ export function generateSteps(nums: number[]) {
     { value: n, label: "final result", color: "success" },
   ]); // Highlight final result in dp array
   l.simple({ result }); // Log result in its group
-  l.breakpoint(4);
   l.comment = `All houses considered. Max robbed: ${result}.`;
+  l.breakpoint(4);
+  //
 
-  return l.getSteps(); // Return steps from StepLoggerV2
+  return l.getSteps();
 }
