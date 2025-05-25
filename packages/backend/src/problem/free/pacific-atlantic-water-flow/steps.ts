@@ -25,7 +25,7 @@ export function generateSteps(heights: number[][]) {
   if (!heights || heights.length === 0 || heights[0].length === 0) {
     // Corrected: Remove invalid { group: ... }
     l.grid("heights", []); // Replaced l.array2d with l.grid
-    l.arrayV2({ result: [] }); // Replaced l.array with l.arrayV2
+    l.arrayV3({ result: [] }, []); // Replaced l.array with l.arrayV3
     l.breakpoint(1); // Initial state
     return l.getSteps();
   }
@@ -49,8 +49,8 @@ export function generateSteps(heights: number[][]) {
   l.grid("heights", heights); // Replaced l.array2d with l.grid
   l.grid("pacificReachable", booleanGridToNumber(pacificVisited)); // Replaced l.array2d with l.grid
   l.grid("atlanticReachable", booleanGridToNumber(atlanticVisited)); // Replaced l.array2d with l.grid
-  l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
-  l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
+  l.arrayV3({ pacificQueue: formatQueue(pacificQueue) }, []); // Replaced l.array with l.arrayV3
+  l.arrayV3({ atlanticQueue: formatQueue(atlanticQueue) }, []); // Replaced l.array with l.arrayV3
   l.comment =
     "Initialize the state with the heights grid, two boolean grids to track cells reachable by the Pacific and Atlantic oceans (initially all false), and two empty queues for BFS traversal starting from the coasts.";
   l.breakpoint(2); // Initialize state
@@ -79,7 +79,7 @@ export function generateSteps(heights: number[][]) {
     booleanGridToNumber(pacificVisited),
     initialPacificCells[0]
   ); // Replaced l.array2d with l.grid, Pass first highlight if exists
-  l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
+  l.arrayV3({ pacificQueue: formatQueue(pacificQueue) }, []); // Replaced l.array with l.arrayV3
   l.grid("heights", heights); // Replaced l.array2d with l.grid, Optionally show heights again
   l.comment =
     "Identify and add all cells on the Pacific coast (top row and leftmost column) to the Pacific queue. Mark these cells as reachable by the Pacific ocean in the pacificReachable grid. These coastal cells are the starting points for the BFS to find all cells that can flow to the Pacific.";
@@ -129,11 +129,11 @@ export function generateSteps(heights: number[][]) {
       currentCellHighlight,
       neighborsVisited[0]
     ); // Replaced l.array2d with l.grid
-    l.arrayV2({ pacificQueue: formatQueue(pacificQueue) }); // Replaced l.array with l.arrayV2
+    l.arrayV3({ pacificQueue: formatQueue(pacificQueue) }, []); // Replaced l.array with l.arrayV3
     // Reset neighbor indices?
     // Corrected: Use object format for l.simple and remove invalid group arg
 
-    l.comment = `Process the current cell from the front of the Pacific queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Pacific BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Pacific queue and mark it as reachable by the Pacific. Update the pacificReachable grid and the pacificQueue.`;
+    l.comment = `Process Pacific queue cell. Explore neighbors.`;
     l.breakpoint(4); // Breakpoint inside Pacific BFS loop
 
     pacificStepCounter++;
@@ -164,7 +164,7 @@ export function generateSteps(heights: number[][]) {
     booleanGridToNumber(atlanticVisited),
     initialAtlanticCells[0]
   ); // Replaced l.array2d with l.grid, Pass first highlight
-  l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
+  l.arrayV3({ atlanticQueue: formatQueue(atlanticQueue) }, []); // Replaced l.array with l.arrayV3
   l.grid("pacificReachable", booleanGridToNumber(pacificVisited)); // Replaced l.array2d with l.grid, Show final pacific state
   l.comment =
     "Identify and add all cells on the Atlantic coast (bottom row and rightmost column) to the Atlantic queue. Mark these cells as reachable by the Atlantic ocean in the atlanticReachable grid. These coastal cells are the starting points for the BFS to find all cells that can flow to the Atlantic.";
@@ -215,11 +215,11 @@ export function generateSteps(heights: number[][]) {
       currentCellHighlight,
       neighborsVisited[0]
     ); // Replaced l.array2d with l.grid
-    l.arrayV2({ atlanticQueue: formatQueue(atlanticQueue) }); // Replaced l.array with l.arrayV2
+    l.arrayV3({ atlanticQueue: formatQueue(atlanticQueue) }, []); // Replaced l.array with l.arrayV3
     // Reset neighbor indices?
     // Corrected: Use object format for l.simple and remove invalid group arg
 
-    l.comment = `Process the current cell from the front of the Atlantic queue. Explore its adjacent neighbors. If a neighbor is within bounds, has not been visited by the Atlantic BFS, and its height is greater than or equal to the current cell's height (allowing water to flow), add it to the Atlantic queue and mark it as reachable by the Atlantic. Update the atlanticReachable grid and the atlanticQueue.`;
+    l.comment = `Process Atlantic queue cell. Explore neighbors.`;
     l.breakpoint(6); // Breakpoint inside Atlantic BFS loop
 
     atlanticStepCounter++;
@@ -250,7 +250,7 @@ export function generateSteps(heights: number[][]) {
     booleanGridToNumber(atlanticVisited),
     ...resultCellsHighlight
   ); // Replaced l.array2d with l.grid
-  l.arrayV2({ result: result }); // Replaced l.array with l.arrayV2, Log the result array directly
+  l.arrayV3({ result: result }, []); // Replaced l.array with l.arrayV3, Log the result array directly
   l.comment =
     "After completing BFS from both the Pacific and Atlantic coasts, iterate through all cells in the grid. If a cell is marked as reachable by *both* the Pacific and Atlantic oceans, it means water can flow from this cell to both oceans. Collect these cells as the final result.";
   l.breakpoint(7); // Final breakpoint

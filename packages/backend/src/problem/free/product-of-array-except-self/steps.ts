@@ -17,11 +17,12 @@ export function generateSteps(nums: number[]): ProblemState[] {
   const productsRight: number[] = new Array(length).fill(1);
 
   // Log the initial state
-  l.arrayV2({ nums: nums }, {});
-  l.arrayV2({ productsLeft: productsLeft }, {});
-  l.arrayV2({ productsRight: productsRight }, {});
-  l.arrayV2({ output: output }, {});
-  l.comment = "Initialize the output array and two temporary arrays, productsLeft and productsRight, all filled with 1s. productsLeft will store the product of all elements to the left of the current index, and productsRight will store the product of all elements to the right.";
+  l.arrayV3({ nums: nums }, []);
+  l.arrayV3({ productsLeft: productsLeft }, []);
+  l.arrayV3({ productsRight: productsRight }, []);
+  l.arrayV3({ output: output }, []);
+  l.comment =
+    "Initialize the output array and two temporary arrays, productsLeft and productsRight, all filled with 1s. productsLeft will store the product of all elements to the left of the current index, and productsRight will store the product of all elements to the right.";
   l.breakpoint(1);
 
   // Fill productsLeft array (prefix products)
@@ -29,11 +30,21 @@ export function generateSteps(nums: number[]): ProblemState[] {
     const prevProductsLeft = productsLeft[i - 1];
     const prevNum = nums[i - 1];
     productsLeft[i] = prevProductsLeft * prevNum;
-    l.arrayV2({ nums: nums }, { "i - 1": i - 1 }); // Use inferred label "i - 1"
-    l.arrayV2({ productsLeft: productsLeft }, { i: i, "i - 1": i - 1 }); // Use inferred labels "i" and "i - 1"
-    l.arrayV2({ productsRight: productsRight }, {});
-    l.arrayV2({ output: output }, {});
-    l.comment = `Calculate the prefix product for the current position. This is done by multiplying the prefix product calculated so far (${prevProductsLeft}) by the value of the previous number (${prevNum}). The resulting prefix product is ${productsLeft[i]}.`;
+    l.arrayV3({ nums: nums }, [
+      {
+        dimension: "column",
+        value: i - 1,
+        label: "current num",
+        color: "primary",
+      },
+    ]); // Use inferred label "i - 1"
+    l.arrayV3({ productsLeft: productsLeft }, [
+      { dimension: "column", value: i, label: "current", color: "primary" },
+      { dimension: "column", value: i - 1, label: "previous", color: "info" },
+    ]); // Use inferred labels "i" and "i - 1"
+    l.arrayV3({ productsRight: productsRight }, []);
+    l.arrayV3({ output: output }, []);
+    l.comment = `Calculate prefix product for current position.`;
     l.breakpoint(2);
   }
 
@@ -42,11 +53,21 @@ export function generateSteps(nums: number[]): ProblemState[] {
     const nextProductsRight = productsRight[i + 1];
     const nextNum = nums[i + 1];
     productsRight[i] = nextProductsRight * nextNum;
-    l.arrayV2({ nums: nums }, { "i + 1": i + 1 }); // Use inferred label "i + 1"
-    l.arrayV2({ productsLeft: productsLeft }, {});
-    l.arrayV2({ productsRight: productsRight }, { i: i, "i + 1": i + 1 }); // Use inferred labels "i" and "i + 1"
-    l.arrayV2({ output: output }, {});
-    l.comment = `Calculate the suffix product for the current position. This is done by multiplying the suffix product calculated so far from the right (${nextProductsRight}) by the value of the next number (${nextNum}). The resulting suffix product is ${productsRight[i]}.`;
+    l.arrayV3({ nums: nums }, [
+      {
+        dimension: "column",
+        value: i + 1,
+        label: "current num",
+        color: "primary",
+      },
+    ]); // Use inferred label "i + 1"
+    l.arrayV3({ productsLeft: productsLeft }, []);
+    l.arrayV3({ productsRight: productsRight }, [
+      { dimension: "column", value: i, label: "current", color: "primary" },
+      { dimension: "column", value: i + 1, label: "next", color: "info" },
+    ]); // Use inferred labels "i" and "i + 1"
+    l.arrayV3({ output: output }, []);
+    l.comment = `Calculate suffix product for current position.`;
     l.breakpoint(3);
   }
 
@@ -55,21 +76,28 @@ export function generateSteps(nums: number[]): ProblemState[] {
     const currentProductsLeft = productsLeft[i];
     const currentProductsRight = productsRight[i];
     output[i] = currentProductsLeft * currentProductsRight;
-    l.arrayV2({ nums: nums }, {});
-    l.arrayV2({ productsLeft: productsLeft }, { i: i });
-    l.arrayV2({ productsRight: productsRight }, { i: i });
-    l.arrayV2({ output: output }, { i: i });
-    l.comment = `Calculate the final output for the current position. The product of all elements except the current number is the product of the prefix product to its left (${currentProductsLeft}) and the suffix product to its right (${currentProductsRight}). The result is ${output[i]}.`;
+    l.arrayV3({ nums: nums }, []);
+    l.arrayV3({ productsLeft: productsLeft }, [
+      { dimension: "column", value: i, label: "left product", color: "info" },
+    ]);
+    l.arrayV3({ productsRight: productsRight }, [
+      { dimension: "column", value: i, label: "right product", color: "info" },
+    ]);
+    l.arrayV3({ output: output }, [
+      { dimension: "column", value: i, label: "result", color: "success" },
+    ]);
+    l.comment = `Calculate final output: left product * right product.`;
     l.breakpoint(4);
   }
 
   // Log the final state with the result
-  l.arrayV2({ result: output }, {});
+  l.arrayV3({ result: output }, []);
   l.hide("nums");
   l.hide("productsLeft");
   l.hide("productsRight");
   l.hide("output");
-  l.comment = "All elements have been processed. The output array now contains the product of all elements except self for each index of the original input array.";
+  l.comment =
+    "All elements have been processed. The output array now contains the product of all elements except self for each index of the original input array.";
   l.breakpoint(5);
 
   return l.getSteps();

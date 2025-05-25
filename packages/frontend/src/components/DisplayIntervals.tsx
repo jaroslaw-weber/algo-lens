@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
-import type { IntervalVariable } from "algo-lens-core";
+import type { IntervalVariable, LabeledIntervalVariable } from "algo-lens-core";
 
 // Constants for chart height calculation
 const BAR_HEIGHT = 30;
@@ -27,14 +27,27 @@ ChartJS.register(
 );
 
 interface DisplayBarChartProps {
-  data: IntervalVariable;
+  data: IntervalVariable | LabeledIntervalVariable;
 }
 
 const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
   const backgroundColor = [];
   const borderColor = [];
   const indexes = new Set(data.indexes);
-  for (let i = 0; i < data.value.length; i++) {
+
+  // Determine the actual intervals and labels based on the type
+  let intervalsToDisplay: number[][];
+  let chartLabels: string[];
+
+  if (data.type === "labeled-interval") {
+    intervalsToDisplay = data.value.map((item) => item);
+    chartLabels = data.labels?.map((item) => item || "") ?? []; // Use label if present, else empty string
+  } else {
+    intervalsToDisplay = data.value;
+    chartLabels = data.value.map(() => ""); // Original behavior for unlabeled intervals
+  }
+
+  for (let i = 0; i < intervalsToDisplay.length; i++) {
     if (indexes.has(i)) {
       backgroundColor.push("rgba(255, 99, 132, 0.2)");
       borderColor.push("rgba(255, 99, 132, 1)");
@@ -43,11 +56,12 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
       borderColor.push("rgba(54, 162, 235, 1)");
     }
   }
+
   const chartData = {
-    labels: data.value.map(() => ""), // Adjust label generation as necessary
+    labels: chartLabels, // Use the dynamically generated labels
     datasets: [
       {
-        data: data.value.map((x) => x),
+        data: intervalsToDisplay, // Use the dynamically determined intervals
         backgroundColor,
         borderColor,
         borderWidth: 1,
@@ -56,9 +70,11 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
   };
 
   // Calculate dynamic chart height
-  const numDataPoints = data.value.length;
-  const chartHeight = numDataPoints === 0 ? BASE_PADDING : (numDataPoints * BAR_HEIGHT) + BASE_PADDING;
-
+  const numDataPoints = intervalsToDisplay.length;
+  const chartHeight =
+    numDataPoints === 0
+      ? BASE_PADDING
+      : numDataPoints * BAR_HEIGHT + BASE_PADDING;
 
   const options = {
     maintainAspectRatio: false,
@@ -84,7 +100,7 @@ const DisplayIntervals: React.FC<DisplayBarChartProps> = ({ data }) => {
       },
       title: {
         display: true,
-        text: data.label,
+        // text: data.label,
       },
     },
   };

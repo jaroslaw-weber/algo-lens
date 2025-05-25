@@ -33,6 +33,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18.2.0",
+    "react-syntax-highlighter": "^15.6.1",
     "reagraph": "^4.17.4",
     "tailwindcss": "^4.1.4"
   },

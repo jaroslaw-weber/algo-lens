@@ -18,6 +18,8 @@ import {
   ListNode,
   Problem,
   VariableMetadata,
+  LabeledInterval,
+  LabeledIntervalVariable,
 } from "algo-lens-core";
 import { getAllProblems } from "./list";
 
@@ -197,6 +199,29 @@ export function getIntervalBounds(arr: number[][]) {
   return { min, max };
 }
 
+export function asLabeledIntervals(
+  label: string,
+  arr: LabeledInterval[],
+  highlight: number[],
+  min: number,
+  max: number
+): LabeledIntervalVariable {
+  const value = arr.map((x) => x.interval);
+  const labels: string[] = arr.map((x) => x.label!);
+  const result: LabeledIntervalVariable = {
+    label,
+    type: "labeled-interval",
+    value,
+    indexes: highlight,
+    options: {
+      min,
+      max,
+    },
+    labels,
+  };
+  return result;
+}
+
 export function asArray(
   label: string,
   arr: any[],
@@ -366,7 +391,7 @@ export function asHashset<T>(
 export function asHashmap(
   label: string,
   map: Map<any, any>,
-  highlight?: HashHighlight
+  highlights?: HashHighlight[]
 ): HashmapVariable {
   const obj: { [key: string]: any } = {};
   map.forEach((value, key) => {
@@ -376,7 +401,7 @@ export function asHashmap(
     label,
     type: "hashmap",
     value: obj, // Convert Map to object for serialization
-    highlight,
+    highlights,
   };
 }
 

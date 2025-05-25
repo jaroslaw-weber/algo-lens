@@ -11,6 +11,8 @@ import {
   VariableMetadata,
   BinaryOperationVariable,
   BinaryPointer,
+  LabeledInterval,
+  LabeledIntervalVariable,
 } from "algo-lens-core";
 import {
   as2dArray,
@@ -19,6 +21,7 @@ import {
   asHashmap,
   asHashset,
   asIntervals,
+  asLabeledIntervals,
   asList,
   asSimpleValue,
   asTree,
@@ -52,6 +55,8 @@ export class StepLoggerV2 {
   /** explanation of the current step */
   comment?: string;
   groupOptions: Map<string, { min?: number; max?: number; reverse?: boolean }> =
+    new Map();
+  hashmapOptions: Map<string, { keyLabel?: string; valueLabel?: string }> =
     new Map();
   constructor() {
     // Initialize the array to store the history of problem states (steps).
@@ -223,54 +228,25 @@ export class StepLoggerV2 {
     this.upsert(variable);
   }
 
-  /**
-   * Logs the state of a 1-dimensional array variable.
-   * Uses `asArray` to format the data and `upsert` to add/update it.
-   * @param name - The name of the variable.
-   * @param values - The array elements.
-   * @param pointer1 - Optional index for the first pointer.
-   * @param pointer2 - Optional index for the second pointer.
-   * @param pointer3 - Optional index for the third pointer.
-   *
-   * @deprecated use arrayV2 instead.
-   */
-  public array(
-    name: string,
-    values: any[],
-    pointer1?: number,
-    pointer2?: number,
-    pointer3?: number
-  ) {
-    const variable = asArray(name, values, pointer1, pointer2, pointer3);
-    this.upsert(variable);
-  }
-
-  public arrayV2(
+  public arrayV3(
     arrayContaner: Record<string, any[]>,
-    pointers?: Record<string, number>
+    pointers: (Pointer | Pointer2D)[]
   ) {
-    const fixedPointers: Pointer[] = [];
-    let i = 0;
-    if (pointers) {
-      for (let [key, value] of Object.entries(pointers)) {
-        i++;
-        fixedPointers.push({
-          dimension: "column",
-          value,
-          label: key,
-        });
-      }
-    }
-
     const arrayKey = Object.keys(arrayContaner)[0];
     const values = arrayContaner[arrayKey];
     const v: ArrayVariable = {
       label: arrayKey,
       type: "array",
       value: values.map((item) => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
-      pointers: fixedPointers,
+      pointers: pointers
+        .filter((x) => !!x)
+        .map((p) => {
+          if ("dimension" in p && p.dimension === undefined) {
+            return { ...p, dimension: "column" };
+          }
+          return p;
+        }),
     };
-    ////
     this.upsert(v);
   }
 
@@ -357,6 +333,7 @@ export class StepLoggerV2 {
    * @param highlight - Optional array of indices to highlight.
    * @param min - The minimum value for the visualization range.
    * @param max - The maximum value for the visualization range.
+   * @deprecated use intervalsV2
    */
   public intervals(
     label: string,
@@ -366,6 +343,26 @@ export class StepLoggerV2 {
     max: number
   ) {
     const variable = asIntervals(label, arr, highlight, min, max);
+    this.upsert(variable);
+  }
+
+  /**
+   * Logs the state of an array of labeled intervals.
+   * Uses `asLabeledIntervals` to format the data and `upsert` to add/update it.
+   * @param label - The name of the variable.
+   * @param highlight - Optional array of indices to highlight.
+   * @param min - The minimum value for the visualization range.
+   * @param max - The maximum value for the visualization range.
+   */
+  public intervalsV2(p: {
+    label: string;
+    arr: LabeledInterval[];
+    highlight: number[];
+    min: number;
+    max: number;
+  }) {
+    const { label, arr, highlight, min, max } = p;
+    const variable = asLabeledIntervals(label, arr, highlight, min, max);
     this.upsert(variable);
   }
 
@@ -416,7 +413,38 @@ export class StepLoggerV2 {
    * @param highlight - Optional highlighting information for the hash map.
    */
   public hashmap(label: string, map: Map<any, any>, highlight?: HashHighlight) {
-    const variable = asHashmap(label, map, highlight);
+    const variable = asHashmap(label, map, highlight ? [highlight] : undefined);
+    this.upsert(variable);
+  }
+
+  /**
+   * Logs the state of a HashMap (Map) variable with custom key and value labels and multiple highlights.
+   * Accepts an options object for easier extension.
+   * @param options - An object containing the hashmap details.
+   * @param options.label - The name of the variable.
+   * @param options.map - The Map object.
+   * @param options.highlights - Optional array of highlighting information for the hash map.
+   * @param options.keyLabel - Optional custom label for the key column.
+   * @param options.valueLabel - Optional custom label for the value column.
+   */
+  public hashmapV2(options: {
+    label: string;
+    map: Map<any, any>;
+    highlights?: HashHighlight[];
+    keyLabel?: string;
+    valueLabel?: string;
+  }) {
+    const { label, map, highlights } = options;
+    const storedOptions = this.hashmapOptions.get(label);
+    const finalKeyLabel = options.keyLabel ?? storedOptions?.keyLabel;
+    const finalValueLabel = options.valueLabel ?? storedOptions?.valueLabel;
+
+    const variable = {
+      ...asHashmap(label, map), // asHashmap no longer handles highlights
+      highlights,
+      keyLabel: finalKeyLabel,
+      valueLabel: finalValueLabel,
+    };
     this.upsert(variable);
   }
 

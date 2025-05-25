@@ -44,7 +44,7 @@ export interface Problem<Input, State> {
   codegen?: {
     signature: string;
   };
-  bookmark?:boolean
+  bookmark?: boolean;
 }
 
 export type ProblemGroup = {
@@ -74,7 +74,8 @@ export interface Variable {
     | "list"
     | "hashset"
     | "hashmap"
-    | "binary-operation";
+    | "binary-operation"
+    | "labeled-interval";
 }
 export interface BooleanGroupVariable extends Variable {
   data: Array<{ label: string; value: boolean }>;
@@ -85,16 +86,16 @@ export interface BooleanGroupVariable extends Variable {
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
 export interface Pointer {
   /** Specifies whether the pointer is for a column or a row in an array. */
-  dimension: "column" | "row";
+  dimension?: "column" | "row";
 
   /** The specific index of the column or row being pointed to. */
   value: number;
 
   /** Color of the pointer. */
-  color?: string
+  color?: string;
 
   label?: string;
-  dir?: string//"left" | "right" | "up" | "bottom"
+  dir?: "left" | "right" | "top" | "bottom";
 }
 
 /** Represents a pointer for binary values. */
@@ -112,11 +113,11 @@ export interface Pointer2D {
   /** Column index. */
   c: number;
 
-  color?: string
+  color?: string;
 
-  label?:string;
+  label?: string;
 
-  dir?: string//"left" | "right" | "up" | "bottom"
+  dir?: string; //"left" | "right" | "up" | "bottom"
 }
 
 /** Extends the Variable interface specifically for arrays. */
@@ -140,26 +141,21 @@ export interface BinaryVariable extends Variable {
 export interface BinaryOperationVariable extends Variable {
   type: "binary-operation";
   label: string;
-    pointers: BinaryPointer[]
-  v1:{
-    value:number,
-    label:string,
+  pointers: BinaryPointer[];
+  v1: {
+    value: number;
+    label: string;
+  };
+  v2: {
+    value: number;
+    label: string;
+  };
+  result: {
+    value: number;
+    label: string;
+  };
 
-  },
-  v2:{
-    value:number
-    ,label:string,
-
-  },
-  result:{
-    value:number,
-    label:string,
-    
-
-  }
-  
   operator: string; // e.g., "AND", "OR", "XOR", "ADD"
-
 }
 
 /** Extends the Variable interface specifically for numeric values. */
@@ -176,7 +172,7 @@ export interface ValueGroupVariable extends Variable {
   data: {
     label: string;
     value: number;
-    description?:string;
+    description?: string;
   }[];
   options: {
     min: number;
@@ -194,6 +190,22 @@ export interface IntervalVariable extends Variable {
   };
 }
 
+export interface LabeledInterval {
+  interval: number[];
+  label?: string; // Optional label for each interval
+}
+
+export interface LabeledIntervalVariable extends Variable {
+  type: "labeled-interval"; // A new type
+  value: number[][];
+  indexes: number[];
+  options: {
+    min: number;
+    max: number;
+  };
+  labels?: string[];
+}
+
 export interface HashsetVariable extends Variable {
   type: "hashset";
   label: string;
@@ -205,7 +217,9 @@ export interface HashmapVariable extends Variable {
   type: "hashmap";
   label: string;
   value: Map<any, any> | Record<string, any>;
-  highlight?: HashHighlight;
+  keyLabel?: string;
+  valueLabel?: string;
+  highlights?: HashHighlight[];
 }
 
 export interface TreeVariable extends Variable {
@@ -223,8 +237,10 @@ export interface ListVariable extends Variable {
 }
 
 export type HashHighlight = {
+  key?: string | number;
   value?: string | number;
   color: ThemeColor;
+  label?: string;
 };
 
 export type ThemeColor =
@@ -239,7 +255,7 @@ export type ThemeColor =
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node?: BinaryTreeNode | ListNode |null;
+  node?: BinaryTreeNode | ListNode | null;
   color: HighlightColor;
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */

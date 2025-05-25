@@ -1,41 +1,48 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
+import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
 
-const CodePreview = ({ code, highlightLineIndex }) => {
-  const preRef = useRef(null);
+interface CodePreviewProps {
+  code: string;
+  highlightLineIndex: number;
+}
 
+const CodePreview: React.FC<CodePreviewProps> = ({
+  code,
+  highlightLineIndex,
+}) => {
+  const SyntaxHighlighter =
+    Prism as any as typeof React.Component<SyntaxHighlighterProps>;
+
+  const [codeStyle, setStyle] = useState({});
   useEffect(() => {
-    if (preRef.current) {
-      const highlightedLine = preRef.current.querySelector(".highlighted");
-      if (highlightedLine) {
-        // Smooth scrolling within the <pre> element
-        preRef.current.scrollTo({
-          top: highlightedLine.offsetTop - preRef.current.offsetTop,
-          behavior: "smooth",
-        });
-      }
-    }
-  }, [highlightLineIndex]);
-
+    import("react-syntax-highlighter/dist/esm/styles/prism/coy").then((mod) =>
+      setStyle(mod.default)
+    );
+  });
   return (
-    <div className="overflow-hidden">
-      <pre
-        ref={preRef}
-        className="mockup-code rounded-lg text-xs font-code leading-none overflow-auto"
-        style={{ maxHeight: "70vh" }} // Adjust the maxHeight as needed
+    <div
+      className="mockup-code rounded-lg text-xs font-code leading-none overflow-auto"
+      style={{ maxHeight: "70vh" }}
+    >
+      <SyntaxHighlighter
+        language="javascript"
+        showLineNumbers={true}
+        wrapLines={true}
+        style={codeStyle}
+        customStyle={{
+          backgroundColor: "transparent",
+        }}
+        lineProps={(lineNumber) => {
+          const style: React.CSSProperties = { display: "block" };
+          if (lineNumber === highlightLineIndex + 1) {
+            style.backgroundColor = "oklch(92% 0.12 95.746)"; // Light highlight color
+            style.borderRadius = "0.5rem";
+          }
+          return { style };
+        }}
       >
-        {code.split("\n").map((line, index) => (
-          <p
-            key={index}
-            className={`px-4 py-1 transition-all duration-100 ${ // Reduced py padding from 2 to 1
-              index === highlightLineIndex
-                ? "text-primary-content bg-primary highlighted"
-                : ""
-            }`}
-          >
-            {line}
-          </p>
-        ))}
-      </pre>
+        {code}
+      </SyntaxHighlighter>
     </div>
   );
 };
