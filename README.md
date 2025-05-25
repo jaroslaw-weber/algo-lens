@@ -44,18 +44,11 @@ See our progress on implementing popular DSA problems (like the Blind 75 list) i
 
 ## Preview
 
-https://github.com/jaroslaw-weber/algo-lens/assets/9774233/c4e639e5-ebf0-4a46-84fc-0bfbe9698cad
 
 
-https://github.com/jaroslaw-weber/algo-lens/assets/9774233/cf24f697-dc33-42ed-a768-50002247c346
+https://github.com/user-attachments/assets/3e116275-0c40-4bb5-8a98-33ce40696248
 
 
-https://github.com/jaroslaw-weber/algo-lens/assets/9774233/94f5b974-b3f6-498b-a781-b90c09225dc7
-
-
-## Screenshots
-
-![Screenshot (11)](https://github.com/jaroslaw-weber/algo-lens/assets/9774233/d26c35cc-0353-44e4-89b2-9208daed4ef0)
 
 ## Adding New Problem Guidelines
 
