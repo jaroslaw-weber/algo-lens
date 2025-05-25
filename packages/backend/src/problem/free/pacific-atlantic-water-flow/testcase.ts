@@ -22,11 +22,13 @@ export const testcases = [
       [3, 1],
       [4, 0],
     ],
+    name: "Standard Complex",
     description: "Standard complex case",
   },
   {
     input: [[1]], // Corrected input structure
     expected: [[0, 0]],
+    name: "Single Cell",
     description: "Single cell grid",
   },
   {
@@ -47,6 +49,7 @@ export const testcases = [
       [3, 1],
       [4, 0],
     ],
+    name: "Default Complex",
     description: "Standard complex case",
     isDefault: true,
   },
@@ -61,6 +64,7 @@ export const testcases = [
       [1, 0],
       [1, 1],
     ],
+    name: "Small 2x2",
     description: "Small 2x2 grid",
   },
 ];
