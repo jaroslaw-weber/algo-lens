@@ -9,10 +9,6 @@ export function generateSteps(nums: number[]) {
   // Renamed function
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
-  // Safely find group names
-  const dpCalculationGroup =
-    groups.find((g) => g.name === "dpCalculation")?.name || "dpCalculation";
-
   const n = nums.length;
   const dp: number[] = new Array(n + 1).fill(0);
   dp[0] = 0;
@@ -46,8 +42,8 @@ export function generateSteps(nums: number[]) {
       { value: i - 1, label: "previous dp", color: "info" },
       { value: i - 2, label: "two before dp", color: "info" },
     ]); // Highlight relevant dp values
-    l.groupOptions.set(dpCalculationGroup, { min: 0, max: sum(nums) }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
-    l.group(dpCalculationGroup, {
+    l.groupOptions.set("dpCalculation", { min: 0, max: sum(nums) }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
+    l.group("dpCalculation", {
       // Use defined group name
       skipCurrent,
       includeCurrent,
