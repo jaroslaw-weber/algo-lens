@@ -23,8 +23,8 @@ export function generateSteps(n: number): ProblemState[] {
     // Log state within the loop
     l.simple({ n });
     l.arrayV3({ dp: dp }, [
-      { value: i, label: "current step", color: "primary" },
-      { value: i - 1, label: "previous step 1", color: "info" },
+      { value: i, label: "current step", color: "primary", dir: "right" },
+      { value: i - 1, label: "previous step 1", color: "info", dir: "bottom" },
       { value: i - 2, label: "previous step 2", color: "info" },
     ]);
     l.comment = `Ways to reach step ${i}: dp[i-1] + dp[i-2].`;
