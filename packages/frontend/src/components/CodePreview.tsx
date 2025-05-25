@@ -35,10 +35,8 @@ const CodePreview: React.FC<CodePreviewProps> = ({
         lineProps={(lineNumber) => {
           const style: React.CSSProperties = { display: "block" };
           if (lineNumber === highlightLineIndex + 1) {
-            style.backgroundColor = "oklch(0.7 0.165 254.624)"; // Light highlight color
+            style.backgroundColor = "oklch(92% 0.12 95.746)"; // Light highlight color
             style.borderRadius = "0.5rem";
-            style.color = "#fff";
-            style.color;
           }
           return { style };
         }}
