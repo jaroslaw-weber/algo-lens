@@ -39,43 +39,43 @@ function buildTree(nodes: (number | null)[]): TreeNode | null {
 
 export const testcases: TestCase<Input, Output>[] = [
   {
-    id: 0,
+    name: "Example case from problem description",
     description: "Example case from problem description",
     input: { root: buildTree([3, 9, 20, null, null, 15, 7]) },
     expected: 3,
   },
   {
-    id: 1,
+    name: "Empty tree",
     description: "Empty tree",
     input: { root: buildTree([]) },
     expected: 0,
   },
   {
-    id: 2,
+    name: "Single node tree",
     description: "Single node tree",
     input: { root: buildTree([1]) },
     expected: 1,
   },
   {
-    id: 3,
+    name: "Skewed tree (left)",
     description: "Skewed tree (left)",
     input: { root: buildTree([1, 2, null, 3, null, 4]) },
     expected: 4,
   },
   {
-    id: 4,
+    name: "Skewed tree (right)",
     description: "Skewed tree (right)",
     input: { root: buildTree([1, null, 2, null, 3, null, 4]) },
     expected: 4,
   },
   {
-    id: 5,
+    name: "Complete binary tree",
     description: "Complete binary tree",
     input: { root: buildTree([1, 2, 3, 4, 5, 6, 7]) },
     expected: 3,
   },
   {
-    id: 6,
+    name: "Tree with nulls in between",
     description: "Tree with nulls in between",
     input: { root: buildTree([1, 2, 3, null, 4, null, 5]) },
     expected: 3,

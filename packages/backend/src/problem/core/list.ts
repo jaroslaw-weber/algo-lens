@@ -27,7 +27,6 @@ export async function getAllProblems(): Promise<Problem<any, any>[]> {
       problems.push(problem);
     }
   }
-  problems.push(validAnagramProblem);
 
   return problems;
 }
