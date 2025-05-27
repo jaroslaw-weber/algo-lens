@@ -1,4 +1,4 @@
-import { TestCase } from "../../../../algo-lens-core/types/core";
+import { TestCase } from "algo-lens-core";
 import { ListNode } from "./types";
 
 // Helper function to create a linked list with a cycle
@@ -21,37 +21,37 @@ function createLinkedList(arr: number[], pos: number): ListNode | null {
 
 export const testcases: TestCase<any, any>[] = [
   {
-    id: 0,
+    name: "No cycle, single node",
     description: "No cycle, single node",
     input: { head: createLinkedList([1], -1) },
     expected: false,
   },
   {
-    id: 1,
+    name: "No cycle, multiple nodes",
     description: "No cycle, multiple nodes",
     input: { head: createLinkedList([1, 2, 3, 4, 5], -1) },
     expected: false,
   },
   {
-    id: 2,
+    name: "Cycle, two nodes, cycle at head",
     description: "Cycle, two nodes, cycle at head",
     input: { head: createLinkedList([1, 2], 0) },
     expected: true,
   },
   {
-    id: 3,
+    name: "Cycle, multiple nodes, cycle in middle",
     description: "Cycle, multiple nodes, cycle in middle",
     input: { head: createLinkedList([3, 2, 0, -4], 1) },
     expected: true,
   },
   {
-    id: 4,
+    name: "Cycle, multiple nodes, cycle at tail",
     description: "Cycle, multiple nodes, cycle at tail",
     input: { head: createLinkedList([1, 2, 3, 4], 3) },
     expected: true,
   },
   {
-    id: 5,
+    name: "Empty list",
     description: "Empty list",
     input: { head: createLinkedList([], -1) },
     expected: false,
