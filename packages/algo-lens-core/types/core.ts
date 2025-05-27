@@ -4,10 +4,11 @@ export interface ProblemMetadata {
 }
 
 export interface TestCase<Input, State> {
+  id: number; // Added based on testcase-guidelines.md
   input: Input;
   expected: any;
   name?: string;
-  description?: string;
+  description: string; // Changed to required based on testcase-guidelines.md
   isDefault?: boolean;
 }
 
