@@ -26,8 +26,8 @@ export const variables: VariableMetadata[] = [
     description: "The set of unique characters in the current window.",
   },
   {
-    name: "maxLength",
-    label: "Max Length",
+    name: "result",
+    label: "result",
     emoji: "🏆",
     description: "The maximum length of a substring found so far.",
   },

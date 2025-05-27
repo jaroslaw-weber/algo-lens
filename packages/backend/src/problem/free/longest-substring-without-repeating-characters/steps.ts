@@ -92,8 +92,12 @@ export function generateSteps(input: LongestSubstringInput): ProblemState[] {
     color: "neutral",
     value: "",
   });
+  const result = maxLength;
   l.simple({ maxLength: maxLength });
+  l.simple({ result });
   l.breakpoint(4);
+
+  //
 
   return l.getSteps();
 }

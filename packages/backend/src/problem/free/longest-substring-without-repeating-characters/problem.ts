@@ -3,6 +3,7 @@ import { generateSteps } from "./steps";
 import { LongestSubstringInput } from "./types";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
+import { groups } from "./groups";
 
 export const problem: Problem<LongestSubstringInput, ProblemState> = {
   id: "longest-substring-without-repeating-characters",
@@ -16,5 +17,9 @@ export const problem: Problem<LongestSubstringInput, ProblemState> = {
   difficulty: "medium",
   metadata: {
     variables: variables,
+    groups: groups,
+  },
+  codegen: {
+    signature: "function lengthOfLongestSubstring(s: string): number",
   },
 };
