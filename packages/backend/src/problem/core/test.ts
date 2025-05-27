@@ -65,7 +65,10 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     const code = loaded?.code;
     expect(code).toBeTruthy();
 
-    expect(code!.includes("FORMATTING ERROR")).toBeFalse();
+    expect(
+      code!.includes("FORMATTING ERROR"),
+      "formatting error! code: \n" + code
+    ).toBeFalse();
     expect(code!.includes("l.getSteps")).toBeFalse();
     expect(code!.includes(`l.array`)).toBeFalse();
     expect(code!.includes("l.comment")).toBeFalse();

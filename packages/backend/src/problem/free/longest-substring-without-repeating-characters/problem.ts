@@ -20,6 +20,6 @@ export const problem: Problem<LongestSubstringInput, ProblemState> = {
     groups: groups,
   },
   codegen: {
-    signature: "function lengthOfLongestSubstring(s: string): number",
+    signature: "lengthOfLongestSubstring(s: string): number",
   },
 };

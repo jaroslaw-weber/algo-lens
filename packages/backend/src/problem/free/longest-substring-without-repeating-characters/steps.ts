@@ -3,8 +3,7 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 import { LongestSubstringInput } from "./types";
 
-export function generateSteps(input: LongestSubstringInput): ProblemState[] {
-  const s = input.s;
+export function generateSteps({ s }: LongestSubstringInput): ProblemState[] {
   const l = new StepLoggerV2();
   let i = 0;
   let j = 0;
@@ -33,6 +32,7 @@ export function generateSteps(input: LongestSubstringInput): ProblemState[] {
       maxLength = Math.max(maxLength, j - i + 1);
 
       l.comment = `Character '${currentChar}' is not in charSet. Add it and expand window.`;
+      // HIDE_START
       const windowPointers: Pointer[] = [];
       for (let k = i; k <= j; k++) {
         windowPointers.push({
@@ -41,6 +41,7 @@ export function generateSteps(input: LongestSubstringInput): ProblemState[] {
           label: "window",
         });
       }
+      // HIDE_END
       l.arrayV3({ s: s.split("") }, [
         { value: i, color: "red", label: "i", dir: "top" },
         { value: j, color: "blue", label: "j", dir: "bottom" },
@@ -60,6 +61,8 @@ export function generateSteps(input: LongestSubstringInput): ProblemState[] {
       i++;
 
       l.comment = `Character '${currentChar}' is already in charSet. Remove '${charToRemove}' and contract window.`;
+
+      // HIDE_START
       const windowPointers: Pointer[] = [];
       for (let k = i; k <= j; k++) {
         windowPointers.push({
@@ -68,6 +71,7 @@ export function generateSteps(input: LongestSubstringInput): ProblemState[] {
           label: "window",
         });
       }
+      // HIDE_END
       l.arrayV3({ s: s.split("") }, [
         { value: i, color: "red", label: "i", dir: "top" },
         { value: j, color: "blue", label: "j", dir: "bottom" },
