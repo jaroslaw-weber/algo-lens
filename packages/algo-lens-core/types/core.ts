@@ -93,7 +93,7 @@ export interface Pointer {
   value: number;
 
   /** Color of the pointer. */
-  color?: string;
+  color?: "primary" | "neutral" | "success" | "warning" | "error" | "accent";
 
   label?: string;
   dir?: "left" | "right" | "top" | "bottom";

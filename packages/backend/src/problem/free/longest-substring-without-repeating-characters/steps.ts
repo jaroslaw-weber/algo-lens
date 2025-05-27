@@ -67,15 +67,14 @@ export function generateSteps({ s }: LongestSubstringInput): ProblemState[] {
       for (let k = i; k <= j; k++) {
         windowPointers.push({
           value: k,
-          color: "green",
-          label: "window",
+          color: "primary",
         });
       }
       // HIDE_END
       l.arrayV3({ s: s.split("") }, [
         { value: i, color: "red", label: "i", dir: "top" },
         { value: j, color: "blue", label: "j", dir: "bottom" },
-        ...windowPointers,
+        //...windowPointers,
       ]);
       l.hashset("Current Window Characters", charSet, {
         color: "error",
