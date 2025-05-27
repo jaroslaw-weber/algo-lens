@@ -1,4 +1,4 @@
-import { ProblemState, StepLoggerV2 } from "algo-lens-core";
+import { ProblemState } from "algo-lens-core";
 import { TreeNode } from "./types";
 
 export function generateSteps(input: {

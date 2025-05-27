@@ -18,6 +18,6 @@ export const problem: Problem<ValidAnagramInput, ValidAnagramOutput> = {
     groups,
   },
   codegen: {
-    signature: "function isAnagram(s: string, t: string): boolean",
+    signature: "isAnagram(s: string, t: string): boolean",
   },
 };

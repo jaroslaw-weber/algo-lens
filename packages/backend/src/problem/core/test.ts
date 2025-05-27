@@ -65,6 +65,8 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     const code = loaded?.code;
     expect(code).toBeTruthy();
 
+    expect(code?.includes(" function function")).toBeFalse();
+
     expect(
       code!.includes("FORMATTING ERROR"),
       "formatting error! code: \n" + code
