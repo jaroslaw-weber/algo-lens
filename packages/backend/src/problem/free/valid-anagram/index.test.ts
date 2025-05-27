@@ -1,16 +1,7 @@
-import { generateSteps } from "./steps";
-import { testcases } from "./testcase";
+import { problem } from "./problem";
+import { runTests } from "../../core/test";
+import { it } from "bun:test";
 
-describe("Valid Anagram", () => {
-  testcases.forEach((testcase, index) => {
-    it(`Testcase ${index + 1}: ${testcase.description}`, () => {
-      const input = testcase.input;
-      const steps = generateSteps(input);
-      const finalState = steps[steps.length - 1];
-      const resultVariable = finalState.variables.find(
-        (v) => (v as any).name === "result"
-      );
-      expect((resultVariable as any).value).toBe(testcase.expected);
-    });
-  });
+it(problem.id, async () => {
+  await runTests(problem);
 });
