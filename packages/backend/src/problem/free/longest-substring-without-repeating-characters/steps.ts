@@ -1,4 +1,4 @@
-import { ProblemState, Pointer } from "algo-lens-core";
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 import { LongestSubstringInput } from "./types";
@@ -13,8 +13,8 @@ export function generateSteps({ s }: LongestSubstringInput): ProblemState[] {
   // 1. Initialization
   l.comment = "Initialize variables: i=0, j=0, maxLength=0, charSet={}";
   l.arrayV3({ s: s.split("") }, [
-    { value: i, color: "red", label: "i", dir: "top" },
-    { value: j, color: "blue", label: "j", dir: "bottom" },
+    { value: i, color: "error", label: "i", dir: "top" },
+    { value: j, color: "primary", label: "j", dir: "bottom" },
   ]);
   l.hashset("Current Window Characters", charSet, {
     color: "neutral",
@@ -32,21 +32,17 @@ export function generateSteps({ s }: LongestSubstringInput): ProblemState[] {
       maxLength = Math.max(maxLength, j - i + 1);
 
       l.comment = `Character '${currentChar}' is not in charSet. Add it and expand window.`;
-      // HIDE_START
-      const windowPointers: Pointer[] = [];
-      for (let k = i; k <= j; k++) {
-        windowPointers.push({
-          value: k,
-          color: "green",
-          label: "window",
-        });
-      }
-      // HIDE_END
       l.arrayV3({ s: s.split("") }, [
-        { value: i, color: "red", label: "i", dir: "top" },
-        { value: j, color: "blue", label: "j", dir: "bottom" },
-        ...windowPointers,
+        { value: i, color: "error", label: "i", dir: "top" },
+        { value: j, color: "primary", label: "j", dir: "bottom" },
       ]);
+      l.intervalsV2({
+        label: "Window",
+        arr: [{ interval: [i, j], label: "window" }],
+        highlight: [],
+        min: 0,
+        max: s.length - 1,
+      });
       l.hashset("Current Window Characters", charSet, {
         color: "success",
         value: currentChar,
@@ -62,20 +58,17 @@ export function generateSteps({ s }: LongestSubstringInput): ProblemState[] {
 
       l.comment = `Character '${currentChar}' is already in charSet. Remove '${charToRemove}' and contract window.`;
 
-      // HIDE_START
-      const windowPointers: Pointer[] = [];
-      for (let k = i; k <= j; k++) {
-        windowPointers.push({
-          value: k,
-          color: "primary",
-        });
-      }
-      // HIDE_END
       l.arrayV3({ s: s.split("") }, [
-        { value: i, color: "red", label: "i", dir: "top" },
-        { value: j, color: "blue", label: "j", dir: "bottom" },
-        //...windowPointers,
+        { value: i, color: "error", label: "i", dir: "top" },
+        { value: j, color: "primary", label: "j", dir: "bottom" },
       ]);
+      l.intervalsV2({
+        label: "Window",
+        arr: [{ interval: [i, j], label: "window" }],
+        highlight: [],
+        min: 0,
+        max: s.length - 1,
+      });
       l.hashset("Current Window Characters", charSet, {
         color: "error",
         value: charToRemove,
@@ -88,8 +81,8 @@ export function generateSteps({ s }: LongestSubstringInput): ProblemState[] {
   // Final state
   l.comment = `Algorithm finished. Final maxLength is ${maxLength}.`;
   l.arrayV3({ s: s.split("") }, [
-    { value: i, color: "red", label: "i", dir: "top" },
-    { value: j, color: "blue", label: "j", dir: "bottom" },
+    { value: i, color: "error", label: "i", dir: "top" },
+    { value: j, color: "primary", label: "j", dir: "bottom" },
   ]);
   l.hashset("Current Window Characters", charSet, {
     color: "neutral",
