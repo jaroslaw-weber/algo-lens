@@ -1,51 +1,159 @@
 # Steps Guidelines
 
-This document guides writing clear `l.comment` in `steps.ts` files and using `StepLoggerV2`. These comments generate visualizations for users.
+This guide explains how to write clear `l.comment` entries in `steps.ts` files and use `StepLoggerV2` for generating user-friendly algorithm visualizations.
 
-## Comment Guidelines for `steps.ts`
+---
 
-Here are the key principles for `l.comment`:
+## 1. Writing Comments in `steps.ts`
 
-1.  **Be Concise:** Keep comments brief (max 7 words or two short sentences).
-2.  **Use Plain English:** Write simply, avoiding jargon.
-3.  **Focus on Values:** Refer to values, not array indexes (e.g., "current number" instead of `arr[i]`).
-4.  **Explain Logic & Why:** Describe what the code does and its purpose.
-5.  **Reference Variables:** Use variable names (e.g., `left`, `right`).
-6.  **Target Beginners:** Assume readers are new to algorithms.
-7.  **Add Breakpoints:** Use `l.breakpoint()` for important steps. Breakpoints must be unique, increasing natural numbers.
+**Principles for `l.comment`:**
+- **Be concise:** Max 7 words or two short sentences.
+- **Use plain English:** Avoid jargon.
+- **Focus on values:** Refer to values, not indexes (e.g., "current number" not `arr[i]`).
+- **Explain logic and purpose:** State what the code does and why.
+- **Reference variables:** Use variable names (e.g., `left`, `right`).
+- **Target beginners:** Assume the reader is new to algorithms.
+- **Add breakpoints:** Use `l.breakpoint()` for key steps. Each breakpoint number must be unique and increasing.
 
-By following these guidelines, visualizations from `steps.ts` will be clear and informative.
+Following these ensures clear, informative visualizations.
 
-## Using `StepLoggerV2`
+---
 
-`StepLoggerV2` records variable states and comments for interactive algorithm visualizations.
+## 2. Using `StepLoggerV2`
 
-Here's how it works:
+`StepLoggerV2` records variable states and comments for interactive visualizations.
 
-1.  **Instantiation:** Create `const l = new StepLoggerV2();`.
-2.  **State Copying:** Logged state carries over. Only log variables when they change or need highlighting.
-3.  **Logging Variables:** Use `l` methods to log different variable types:
-    *   `l.arrayV3(arrayContainer: Record<string, any[]>, pointers: (Pointer | Pointer2D)[])`: Logs an array with pointers.
-    *   `l.binary(o: Record<string, number>, options?: { highlightLast?: boolean; pointersLeft?: number[]; pointersRight?: number[]; })`: Logs binary representations.
-    *   `l.binaryOperation(label: string, values: Record<string, number>, operator: string)`: Logs binary operations.
-    *   `l.grid(name: string, values: any[][], ...pointers: Pointer2D[])`: Logs a 2D grid with pointers.
-    *   `l.group(name: string, values: Record<string, any>, options?: { min?: number; max?: number; reverse?: any })`: Logs a group of simple values.
-    *   `l.hashmap(label: string, map: Map<any, any>, highlight?: HashHighlight)`: Logs a hash map.
-    *   `l.hashmapV2(options: { label: string; map: Map<any, any>; highlights?: HashHighlight[]; keyLabel?: string; valueLabel?: string; })`: Logs a hash map with advanced options.
-    *   `l.hashset(label: string, set: Set<any>, highlight: HashHighlight)`: Logs a hash set.
-    *   `l.hide(name: string)`: Hides a variable from display.
-    *   `l.intervals(label: string, arr: number[][], highlight: number[], min: number, max: number)`: Logs an array of intervals.
-    *   `l.list(name: string, node?: ListNode | null, highlight?: NodeHighlight[])`: Logs a linked list.
-    *   `l.simple(value: Record<string, any>)`: Logs one or more simple key-value pairs.
-    *   `l.setMeta(name: string, metadata: VariableMetadata)`: Stores metadata for a variable.
-    *   `l.tree(label: string, value: BinaryTreeNode | null, highlight: NodeHighlight[] = [])`: Logs a binary tree.
+### Basic Workflow
 
-4. **Pointer Labels and Colors:** For `l.arrayV3` or `l.hashmapV2` pointers, `label` should be short and `lowercase`. `color` uses DaisyUI names (e.g., "primary", "success").
+1. **Instantiate:**
+   ```js
+   const l = new StepLoggerV2();
+   ```
+2. **State Copying:**
+   - State is carried over automatically.
+   - Only log variables when they change or need highlighting.
 
-5.  **Adding Comments and Breakpoints:**
-    *   `l.comment = "Your explanation here";`: Provide a concise explanation for the current step.
-    *   `l.breakpoint(breakpointNumber);`: Mark a step for visualization. Always set `l.comment` *before* `l.breakpoint()`.
+3. **Logging Variables:**
+   - Use the following methods as needed:
+     - `l.arrayV3(arrayContainer, pointers)`
+     - `l.binary(o, options?)`
+     - `l.binaryOperation(label, values, operator)`
+     - `l.grid(name, values, ...pointers)`
+     - `l.group(name, values, options?)`
+     - `l.hashmap(label, map, highlight?)`
+     - `l.hashmapV2(options)`
+     - `l.hashset(label, set, highlight)`
+     - `l.hide(name)`
+     - `l.intervals(label, arr, highlight, min, max)`
+     - `l.list(name, node?, highlight?)`
+     - `l.simple(value)`
+     - `l.setMeta(name, metadata)`
+     - `l.tree(label, value, highlight?)`
 
-6.  **Including Result:** Include a `result` variable in a logging call, typically at the end.
+4. **Pointer Labels and Colors:**
+   - For `l.arrayV3`/`l.hashmapV2` pointers:
+     - Use short, lowercase `label`.
+     - Use DaisyUI color names (e.g., "primary", "success") for `color`.
 
-7.  **Retrieving Steps:** Call `l.getSteps()` to get the `ProblemState` array for visualization.
+5. **Comments and Breakpoints:**
+   - Set a comment before each breakpoint:
+     ```js
+     l.comment = "Your explanation here";
+     l.breakpoint(breakpointNumber);
+     ```
+   - Breakpoint numbers must be unique and increasing.
+
+6. **Include Result:**
+   - Log the `result` variable (usually at the end).
+
+7. **Retrieve Steps:**
+   - Use `l.getSteps()` to obtain the `ProblemState[]` for visualization.
+
+---
+
+## 3. Examples & Advanced Usage
+
+### Example: Climbing Stairs
+
+```js
+export function generateSteps(n: number): ProblemState[] {
+  const l = new StepLoggerV2();
+
+  // Initialize dp array
+  const dp: number[] = new Array(n + 1).fill(0);
+  dp[0] = 1;
+  dp[1] = 1;
+
+  // Log initial state
+  l.simple({ n });
+  l.arrayV3({ dp: dp }, []);
+  l.comment = "Initialize base cases: dp[0] = 1 (0 steps, 1 way), dp[1] = 1 (1 step, 1 way).";
+  l.breakpoint(1);
+
+  // Loop through steps
+  for (let i = 2; i <= n; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+
+    l.simple({ n });
+    l.arrayV3({ dp: dp }, [
+      { value: i, label: "current step", color: "primary", dir: "right" },
+      { value: i - 1, label: "previous step 1", color: "info", dir: "bottom" },
+      { value: i - 2, label: "previous step 2", color: "info" },
+    ]);
+    l.comment = `Ways to reach step ${i}: dp[i-1] + dp[i-2].`;
+    l.breakpoint(2);
+  }
+
+  // Log final result
+  const result = dp[n];
+  l.arrayV3({ dp: dp }, [{ value: n, label: "total ways", color: "success" }]);
+  l.simple({ result });
+  l.comment = `Total ways to reach step ${n} is result.`;
+  l.breakpoint(3);
+
+  return l.getSteps();
+}
+```
+
+**Key points in this example:**
+- Log only changed or relevant variables at each step.
+- Use meaningful pointer labels and colors.
+- Always set `l.comment` before `l.breakpoint`.
+- Use concise, beginner-friendly explanations.
+
+---
+
+### Advanced Features
+
+- **Metadata:**  
+  Use `l.setMeta(name, metadata)` to attach display options or extra info to a variable (e.g., custom min/max for charts).
+
+- **Group Options:**  
+  `l.groupOptions` allows you to set display options for value groups (e.g., min/max/reverse for arrays).
+
+- **Hashmap Options:**  
+  `l.hashmapOptions` lets you customize key/value labels for hashmaps.
+
+- **Immutability:**  
+  Each call to `l.breakpoint()` deep-clones the current state, ensuring previous steps are never mutated.
+
+---
+
+### Best Practices
+
+- Log variables only when they change or need to be highlighted.
+- Use unique, increasing numbers for breakpoints.
+- Keep comments short and focused on the current step.
+- Use pointer labels and colors to clarify what each pointer represents.
+- Use metadata and group/hashmap options for advanced display needs.
+
+### Common Pitfalls
+
+- Forgetting to set `l.comment` before `l.breakpoint` (results in missing explanations).
+- Logging unchanged variables unnecessarily (clutters the visualization).
+- Using unclear or overly technical language in comments.
+- Reusing breakpoint numbers (causes confusion in step order).
+
+---
+
+By following these guidelines and leveraging the advanced features of `StepLoggerV2`, you can create clear, educational, and visually effective algorithm step visualizations.
