@@ -4,10 +4,7 @@ import { LongestSubstringInput } from "./types";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
 
-export const longestSubstringProblem: Problem<
-  LongestSubstringInput,
-  ProblemState
-> = {
+export const problem: Problem<LongestSubstringInput, ProblemState> = {
   id: "longest-substring-without-repeating-characters",
   title: "Longest Substring Without Repeating Characters",
   description:
