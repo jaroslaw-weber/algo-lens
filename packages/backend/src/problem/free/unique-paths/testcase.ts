@@ -1,10 +1,10 @@
-import { TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core";
 import { UniquePathsInput } from "./types";
 
 // The expected output type needs to be determined. The function returns ProblemState[],
 // but the actual result is the final number. Let's assume the test case checks the final result number.
 // If the framework requires checking the ProblemState[], this needs adjustment.
-export const testcases = [
+export const testcases: TestCase<UniquePathsInput, ProblemState>[] = [
   {
     input: { m: 3, n: 7 },
     expected: 28, // Calculated as C(3+7-2, 3-1) = C(8, 2) = 28

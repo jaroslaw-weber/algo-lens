@@ -18,6 +18,6 @@ export const problem: Problem<Input, Output> = {
     groups,
   },
   codegen: {
-    signature: "function maxDepth(root: TreeNode | null): number",
+    signature: "maxDepth(root: TreeNode | null): number",
   },
 };
