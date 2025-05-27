@@ -1,0 +1,47 @@
+import { ProblemState } from "algo-lens-core";
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { Input, ListNode } from "./types";
+
+export function generateSteps({ head }: Input): ProblemState[] {
+  const l = new StepLoggerV2();
+
+  let slow: ListNode | null = head;
+  let fast: ListNode | null = head;
+
+  l.list("head", head);
+  l.list("slow", slow, [{ node: slow, color: "neutral" }]);
+  l.list("fast", fast, [{ node: fast, color: "neutral" }]);
+  l.comment =
+    "Initialize slow and fast pointers to the head of the linked list.";
+  l.breakpoint(1);
+
+  while (fast !== null && fast.next !== null) {
+    slow = slow!.next;
+    fast = fast.next.next;
+
+    l.list("head", head);
+    l.list("slow", slow, [{ node: slow, color: "neutral" }]);
+    l.list("fast", fast, [{ node: fast, color: "neutral" }]);
+    l.comment = "Move slow pointer one step and fast pointer two steps.";
+    l.breakpoint(2);
+
+    if (slow === fast) {
+      l.list("head", head);
+      l.list("slow", slow, [{ node: slow, color: "good" }]);
+      l.list("fast", fast, [{ node: fast, color: "good" }]);
+      l.simple({ result: true });
+      l.comment = "Slow and fast pointers met, a cycle is detected.";
+      l.breakpoint(3);
+      return l.getSteps();
+    }
+  }
+
+  l.list("head", head);
+  l.list("slow", slow, [{ node: slow, color: "bad" }]);
+  l.list("fast", fast, [{ node: fast, color: "bad" }]);
+  l.simple({ result: false });
+  l.comment = "Fast pointer reached the end, no cycle is detected.";
+  l.breakpoint(4);
+
+  return l.getSteps();
+}
