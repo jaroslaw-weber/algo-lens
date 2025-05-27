@@ -71,8 +71,16 @@ describe("Problem Loading Performance", () => {
         );
         if (defaultTestcase) {
           for (let i = 1; i < 4; i++) {
-            const state = stateCache.get(loadedProblem, i);
-            const state2 = stateCache.get(loadedProblem, i);
+            const state = stateCache.get(
+              loadedProblem,
+              defaultTestcase.input,
+              i
+            );
+            const state2 = stateCache.get(
+              loadedProblem,
+              defaultTestcase.input,
+              i
+            );
             states.push(state, state2);
           }
         }

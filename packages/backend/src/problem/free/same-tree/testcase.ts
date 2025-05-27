@@ -42,23 +42,27 @@ function arrayToTree(arr: (number | null)[] | null): BinaryTreeNode | null {
 export const testcases: TestCase<SameTreeInput, ProblemState>[] = [
   {
     name: "Different Structure",
+    description: "Trees with different structures.",
     input: [arrayToTree([1, 2, 3]), arrayToTree([1, 3, 2])],
     expected: false,
   },
   {
     name: "Identical Trees",
+    description: "Two identical binary trees.",
     input: [arrayToTree([1, 2, 3]), arrayToTree([1, 2, 3])],
     expected: true,
   },
   {
     // Changed from [1, 2] vs [1, null, 2] to slightly larger trees with different structure
     name: "Default Different Size",
+    description: "Two trees with different sizes, one larger than the other.",
     input: [arrayToTree([1, 2, 3, 4, 5]), arrayToTree([1, 2, 3, 4])],
     expected: false,
     isDefault: true,
   },
   {
     name: "One Tree Larger",
+    description: "One tree is larger than the other.",
     input: [arrayToTree([1, 2]), arrayToTree([1, 2, 3])],
     expected: false,
   },
