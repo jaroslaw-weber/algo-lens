@@ -3,13 +3,13 @@
 ### Array
 - [x] Two Sum
 - [x] Best Time to Buy and Sell Stock
-- [ ] Contains Duplicate
+- [x] Contains Duplicate
 - [x] Product of Array Except Self
 - [x] Maximum Subarray
 - [ ] Maximum Product Subarray
 - [ ] Find Minimum in Rotated Sorted Array
 - [ ] Search in Rotated Sorted Array
-- [ ] 3 Sum
+- [x] 3 Sum
 - [x] Container With Most Water
 
 ### Binary
@@ -22,7 +22,7 @@
 ### Dynamic Programming
 - [x] Climbing Stairs
 - [x] Coin Change
-- [ ] Longest Increasing Subsequence
+- [x] Longest Increasing Subsequence
 - [ ] Longest Common Subsequence
 - [x] Word Break Problem
 - [ ] Combination Sum
@@ -34,7 +34,7 @@
 
 ### Graph
 - [ ] Clone Graph
-- [ ] Course Schedule
+- [x] Course Schedule
 - [ ] Pacific Atlantic Water Flow
 - [x] Number of Islands
 - [ ] Longest Consecutive Sequence
