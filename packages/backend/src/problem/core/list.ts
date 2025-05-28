@@ -12,14 +12,16 @@ async function getProblemFiles() {
   if (!problemFiles?.length) {
     console.log("reading files");
     problemFiles = await fs.readdir(path.join(__dirname, "../free"), "utf8");
+    console.log("files read");
   }
+
   return problemFiles;
 }
 
 export async function getAllProblems(): Promise<Problem<any, any>[]> {
   const problems: Problem<any, any>[] = [];
   const files = await getProblemFiles();
-  console.log("files", files);
+  // console.log("files", files);
 
   for (const problemFile of files) {
     const problem = await loadProblemWithId(problemFile);

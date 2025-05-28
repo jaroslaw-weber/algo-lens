@@ -1,2 +1,2 @@
 export { ListNode } from "../types/core";
-export { LinkedListSerializer } from "./LinkedListSerializer";
+export { LinkedListSerializer } from "../types/LinkedListSerializer";

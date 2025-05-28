@@ -108,7 +108,9 @@ app.get(
     // Convert 1-based testcaseNumber to 0-based index
     const testcaseIndex = testcaseNumber - 1;
 
+    console.log("getting state");
     const state = await getProblemStateService(problemId, testcaseIndex, step);
+    console.log("got state");
 
     const preserialized = preserialize(state!);
     return c.json(preserialized);

@@ -75,13 +75,5 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     expect(code!.includes(`l.array`)).toBeFalse();
     expect(code!.includes("l.comment")).toBeFalse();
     expect(code!.includes("return result")).toBeTrue();
-    /**
-    // 
-      `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
-        value
-      )}`
-    );
-    **/
-    //}
   }
 }

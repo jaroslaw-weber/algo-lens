@@ -1,3 +1,4 @@
+export { LinkedListSerializer } from "./LinkedListSerializer";
 export interface ProblemMetadata {
   variables: VariableMetadata[];
   groups?: GroupMetadata[];

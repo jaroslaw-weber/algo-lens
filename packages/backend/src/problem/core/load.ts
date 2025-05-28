@@ -8,6 +8,9 @@ const problemCache: { [id: string]: Problem<any, any> } = {};
 export async function loadProblemWithId(
   id: string
 ): Promise<Problem<any, any> | null> {
+  if (id == "detect-cycle-in-a-linked-list") {
+    return null; //todo: fix serializing on backend
+  }
   if (problemCache[id]) {
     return problemCache[id];
   }

@@ -30,14 +30,18 @@ export async function getRandomProblem() {
 
 export async function getProblemById(id: string) {
   ////
+  console.log("get problem by id");
   const all = await getAllProblems();
+  console.log("all problems read");
 
   const problems = all.filter((p) => p.id === id);
   if (problems.length > 1) {
     throw new Error("duplicate!");
   }
   const problem = problems[0];
+  console.log("validating");
   validate(problem);
+  console.log("validated");
   return problem;
 }
 
