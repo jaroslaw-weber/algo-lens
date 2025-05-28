@@ -1,7 +1,14 @@
 import { getAllProblems as coreGetAllProblems } from "../core/list";
 import { getProblemById as coreGetProblemById } from "../core/utils";
 import { loadProblemWithId as coreLoadProblemWithId } from "../core/load";
-import { ProblemState, HashmapVariable, HashsetVariable } from "algo-lens-core";
+import { LinkedListSerializer } from "algo-lens-core";
+import {
+  ProblemState,
+  HashmapVariable,
+  HashsetVariable,
+  ListNode,
+  ListVariable,
+} from "algo-lens-core";
 import { cloneDeep } from "lodash";
 import { ProblemStateCache } from "../../cache/ProblemStateCache";
 import { getPocketbase } from "../../db/pocketbase";
@@ -81,6 +88,11 @@ export function preserialize(state: ProblemState): any {
     const set = v as HashsetVariable;
     if (set.value instanceof Set) {
       set.value = Array.from(set?.value);
+    }
+    //serialize ListNode
+    const list = v as ListVariable;
+    if (list.value instanceof ListNode) {
+      list.value = LinkedListSerializer.serialize(list.value);
     }
   }
 

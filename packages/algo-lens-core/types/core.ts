@@ -284,6 +284,12 @@ export interface GroupMetadata {
   description?: string;
 }
 
+export interface SerializedListNode {
+  id: string;
+  val: number;
+  nextId: string | null; // ID of the next node, or null
+}
+
 export class ListNode {
   id?: string;
   val: number;
