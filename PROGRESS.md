@@ -68,7 +68,7 @@
 - [ ] Longest Repeating Character Replacement
 - [x] Minimum Window Substring
 - [x] Valid Anagram
-- [ ] Group Anagrams
+- [x] Group Anagrams
 - [ ] Valid Parentheses
 - [ ] Valid Palindrome
 - [ ] Longest Palindromic Substring
