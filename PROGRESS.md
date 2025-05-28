@@ -8,7 +8,7 @@
 - [x] Maximum Subarray
 - [ ] Maximum Product Subarray
 - [ ] Find Minimum in Rotated Sorted Array
-- [ ] Search in Rotated Sorted Array
+- [x] Search in Rotated Sorted Array
 - [x] 3 Sum
 - [x] Container With Most Water
 
@@ -46,7 +46,7 @@
 - [ ] Insert Interval
 - [x] Merge Intervals
 - [x] Non-overlapping Intervals
-- [ ] Meeting Rooms (Leetcode Premium)
+- [x] Meeting Rooms (Leetcode Premium)
 - [ ] Meeting Rooms II (Leetcode Premium)
 
 ### Linked List
@@ -64,10 +64,10 @@
 - [ ] Word Search
 
 ### String
-- [ ] Longest Substring Without Repeating Characters
+- [x] Longest Substring Without Repeating Characters
 - [ ] Longest Repeating Character Replacement
-- [ ] Minimum Window Substring
-- [ ] Valid Anagram
+- [x] Minimum Window Substring
+- [x] Valid Anagram
 - [ ] Group Anagrams
 - [ ] Valid Parentheses
 - [ ] Valid Palindrome
@@ -76,13 +76,13 @@
 - [ ] Encode and Decode Strings (Leetcode Premium)
 
 ### Tree
-- [ ] Maximum Depth of Binary Tree
+- [x] Maximum Depth of Binary Tree
 - [x] Same Tree
-- [ ] Invert/Flip Binary Tree
+- [x] Invert/Flip Binary Tree
 - [ ] Binary Tree Maximum Path Sum
 - [ ] Binary Tree Level Order Traversal
 - [ ] Serialize and Deserialize Binary Tree
-- [ ] Subtree of Another Tree
+- [x] Subtree of Another Tree
 - [ ] Construct Binary Tree from Preorder and Inorder Traversal
 - [ ] Validate Binary Search Tree
 - [ ] Kth Smallest Element in a BST
