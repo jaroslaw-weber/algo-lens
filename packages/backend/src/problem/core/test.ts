@@ -64,6 +64,7 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     const loaded = await loadProblemWithId(problem.id);
     const code = loaded?.code;
     expect(code).toBeTruthy();
+    expect(code?.includes("logger."), "use l. instead of logger.").toBeFalse();
 
     expect(code?.includes(" function function")).toBeFalse();
 

@@ -18,9 +18,8 @@ export const problem: Problem<[BinaryTree, BinaryTree], boolean> = {
     variables,
     groups,
   },
-  codeGenerationSignature: {
+  codegen: {
     signature:
       "function isSubtree(root: TreeNode | null, subRoot: TreeNode | null): boolean",
-    name: "isSubtree",
   },
 };

@@ -60,7 +60,7 @@ export const testcases: TestCase<[BinaryTree, BinaryTree], boolean>[] = [
   },
   {
     input: [buildTree([1, 2]), buildTree([1])],
-    expected: true,
+    expected: false,
     name: "Subtree is Root",
     description: "subRoot is the root of the main tree.",
   },
