@@ -40,7 +40,46 @@ export const problemSizeWithTestcaseParamsSchema = z.object({
 export const problemSchema = z.object({
   id: z.string(),
   title: z.string(),
-  isBookmarked: z.boolean(),
+  emoji: z.string().optional(),
+  difficulty: z.enum(["Easy", "Medium", "Hard"]),
+  category: z.string().optional(),
+  tags: z.array(z.string()),
+  isBookmarked: z.boolean().default(false),
+  repl: z
+    .object({
+      args: z.array(
+        z.object({
+          name: z.string(),
+          type: z.string(),
+        })
+      ),
+      returns: z.object({
+        type: z.string(),
+      }),
+    })
+    .optional(),
+  tests: z
+    .array(
+      z.object({
+        id: z.string(),
+        argValues: z.array(z.any()),
+        expectedResult: z.any(),
+      })
+    )
+    .optional(),
+  generateSteps: z.any().optional(), // Function type, can be refined
+  testcases: z.any().optional(), // Array of test cases, can be refined
+  explanation: z.any().optional(), // Markdown content
+  variables: z.any().optional(), // Problem-specific variables
+  groups: z.any().optional(), // Problem-specific groups
+  codeGenerationSignature: z
+    .object({
+      signature: z.string(),
+      name: z.string(),
+    })
+    .optional(),
 });
+
+export type Problem = z.infer<typeof problemSchema>;
 
 export const problemListSchema = z.array(problemSchema);
