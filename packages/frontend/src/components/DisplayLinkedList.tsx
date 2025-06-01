@@ -15,6 +15,7 @@ import popperjs, {
 } from "cytoscape-popper";
 
 import { computePosition, flip, shift, limitShift } from "@floating-ui/dom";
+import _ from "lodash";
 
 // Define a custom type for Popper options to include offset
 interface CustomPopperOptions extends PopperOptions {
@@ -63,23 +64,24 @@ cytoscape.use(popper);
 
 export const transformListToGraph = (
   nodes: SerializedListNode[],
-  highlight: Map<string, NodeHighlight>
+  highlight: NodeHighlight[]
 ) => {
   const elements: cytoscape.ElementDefinition[] = [];
   const nodeMap = new Map<string, SerializedListNode>();
+  const highlightMap = _.groupBy(highlight, (x) => x.node?.id);
 
   // First pass: Create a map for quick lookup and add nodes
   for (const node of nodes) {
     nodeMap.set(node.id, node);
-    const nodeHighlight = highlight.get(node.id);
+
+    const nodeHighlights = highlightMap[node?.id];
+    const nodeHighlight = nodeHighlights?.[0];
     const nodeClass = nodeHighlight?.color || "";
-    const topLabel = nodeHighlight?.label || ""; // Get the label from highlight
     elements.push({
       data: {
         id: node.id,
         label: node.value.toString(),
-        topLabel: topLabel,
-        tooltipPosition: nodeHighlight?.tooltipPosition || "top",
+        highlights: nodeHighlights,
       }, // Add topLabel and tooltipPosition to node data
       classes: nodeClass,
     });
@@ -180,24 +182,29 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
       for (const node of cyRef.current.nodes()) {
         console.log("nodeee");
 
-        const tooltip = node.data("topLabel");
-        const position = node.data("tooltipPosition");
-        console.log("positon", position, tooltip);
-        const offset = position == "bottom" ? -30 : 30;
-        if (tooltip) {
-          const pop = node.popper({
-            content: () => {
-              let div = document.createElement("div");
-              div.innerHTML = tooltip;
-              // Apply the offset directly to the div's style
-              div.style.marginTop = `${offset}px`;
-              popperDivs.current.push(div);
-              document.body.appendChild(div); // Append the div to the body
-              div.offset;
-              return div;
-            },
-          });
-          poppers.current.push(pop);
+        const nhl = node.data("highlights");
+        if (nhl?.length) {
+          for (const hl of nhl) {
+            const text = hl.label;
+            const position = hl.tooltip.position;
+            const offset = position == "bottom" ? -30 : 30;
+            if (text) {
+              const pop = node.popper({
+                content: () => {
+                  let div = document.createElement("div");
+                  div.innerHTML = text;
+                  // Apply the offset directly to the div's style
+                  div.style.marginTop = `${offset}px`;
+                  popperDivs.current.push(div);
+                  document.body.appendChild(div); // Append the div to the body
+                  //@ts-expect-error
+                  div.offset;
+                  return div;
+                },
+              });
+              poppers.current.push(pop);
+            }
+          }
         }
       }
 

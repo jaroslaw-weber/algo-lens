@@ -18,7 +18,14 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
   let fast: ListNode | null = head;
 
   l.list("head", head, [
-    { node: slow, color: "good", label: "slow", tooltipPosition: "bottom" },
+    {
+      node: slow,
+      color: "good",
+      label: "slow",
+      tooltip: {
+        position: "bottom",
+      },
+    },
     { node: fast, color: "neutral", label: "fast", tooltipPosition: "top" },
   ]);
   l.list("slow", slow, [{ node: slow, color: "neutral" }]);
