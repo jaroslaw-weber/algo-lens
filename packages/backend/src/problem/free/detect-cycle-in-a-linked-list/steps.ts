@@ -18,8 +18,8 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
   let fast: ListNode | null = head;
 
   l.list("head", head, [
-    { node: slow, color: "good", label: "slow" },
-    { node: fast, color: "neutral", label: "fast" },
+    { node: slow, color: "good", label: "slow", tooltipPosition: "bottom" },
+    { node: fast, color: "neutral", label: "fast", tooltipPosition: "top" },
   ]);
   l.list("slow", slow, [{ node: slow, color: "neutral" }]);
   l.list("fast", fast, [{ node: fast, color: "neutral" }]);
@@ -32,8 +32,8 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
     fast = fast.next.next;
 
     l.list("head", head, [
-      { node: slow, color: "good", label: "slow" },
-      { node: fast, color: "neutral", label: "fast" },
+      { node: slow, color: "good", label: "slow", tooltipPosition: "bottom" },
+      { node: fast, color: "neutral", label: "fast", tooltipPosition: "top" },
     ]);
     l.list("slow", slow, [{ node: slow, color: "neutral", label: "slow" }]);
     l.list("fast", fast, [{ node: fast, color: "neutral", label: "fast" }]);
@@ -42,8 +42,8 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
 
     if (slow === fast) {
       l.list("head", head, [
-        { node: slow, color: "good", label: "slow" },
-        { node: fast, color: "neutral", label: "fast" },
+        { node: slow, color: "good", label: "slow", tooltipPosition: "bottom" },
+        { node: fast, color: "neutral", label: "fast", tooltipPosition: "top" },
       ]);
       l.list("slow", slow, [{ node: slow, color: "good" }]);
       l.list("fast", fast, [{ node: fast, color: "good" }]);

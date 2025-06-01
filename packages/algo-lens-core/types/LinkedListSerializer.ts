@@ -116,6 +116,7 @@ export class LinkedListSerializer {
         color: h.color,
         label: h.label,
         node: sn,
+        tooltipPosition: h.tooltipPosition,
       };
       result.push(nh);
     }

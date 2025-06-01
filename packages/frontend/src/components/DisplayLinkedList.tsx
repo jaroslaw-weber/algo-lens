@@ -9,17 +9,23 @@ import type {
   LinkedListSerializer, // Add this import
 } from "algo-lens-core"; // Assuming you have similar types for the linked list
 import popperjs, {
-  RefElement,
   type PopperFactory,
   type PopperInstance,
+  type PopperOptions, // Import PopperOptions
 } from "cytoscape-popper";
 
 import { computePosition, flip, shift, limitShift } from "@floating-ui/dom";
+
+// Define a custom type for Popper options to include offset
+interface CustomPopperOptions extends PopperOptions {
+  offset?: number;
+}
 
 interface DisplayLinkedListProps {
   data: ListVariable;
 }
 
+// Use the custom type for the factory function
 const factory: PopperFactory = (node, content, opts) => {
   // see https://floating-ui.com/docs/computePosition#options
   const popperOptions = {
@@ -28,17 +34,22 @@ const factory: PopperFactory = (node, content, opts) => {
     middleware: [flip(), shift({ limiter: limitShift() })],
     ...opts,
   };
-  console.log("creating popper", content);
+  console.log("creating popper", content, node, opts);
+
+  // Access the offset from opts
+  const offset = content.offset;
 
   function update() {
     computePosition(node, content, popperOptions).then(({ x, y }) => {
       console.log("x", x);
       const bounding = node.getBoundingClientRect();
       console.log(bounding);
+
       Object.assign(content.style, {
         left: `${bounding.left}px`,
-        top: `${bounding.top - 30}px`,
+        top: `${bounding.top}px`, // Apply offset based on position
         position: "absolute",
+        marginTop: `${offset}px`, // Apply the calculated offset as margin-top
       });
     });
   }
@@ -64,7 +75,12 @@ export const transformListToGraph = (
     const nodeClass = nodeHighlight?.color || "";
     const topLabel = nodeHighlight?.label || ""; // Get the label from highlight
     elements.push({
-      data: { id: node.id, label: node.value.toString(), topLabel: topLabel }, // Add topLabel to node data
+      data: {
+        id: node.id,
+        label: node.value.toString(),
+        topLabel: topLabel,
+        tooltipPosition: nodeHighlight?.tooltipPosition || "top",
+      }, // Add topLabel and tooltipPosition to node data
       classes: nodeClass,
     });
   }
@@ -165,13 +181,19 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
         console.log("nodeee");
 
         const tooltip = node.data("topLabel");
+        const position = node.data("tooltipPosition");
+        console.log("positon", position, tooltip);
+        const offset = position == "bottom" ? -30 : 30;
         if (tooltip) {
           const pop = node.popper({
             content: () => {
               let div = document.createElement("div");
               div.innerHTML = tooltip;
+              // Apply the offset directly to the div's style
+              div.style.marginTop = `${offset}px`;
               popperDivs.current.push(div);
               document.body.appendChild(div); // Append the div to the body
+              div.offset;
               return div;
             },
           });

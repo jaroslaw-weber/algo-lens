@@ -267,6 +267,7 @@ export interface NodeHighlight {
   node?: BinaryTreeNode | ListNode | null | SerializedListNode;
   color: HighlightColor;
   label?: string;
+  tooltipPosition?: "top" | "bottom";
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
 export interface ProblemState {
