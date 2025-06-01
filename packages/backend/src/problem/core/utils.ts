@@ -134,11 +134,13 @@ export function asList(
 ): ListVariable {
   const serialized = LinkedListSerializer.serialize(value ?? null);
   console.log("serialized list: " + serialized);
+  const serializedHighlights =
+    LinkedListSerializer.serializeHighlights(highlight);
   return {
     type: "list",
     label,
     value: serialized,
-    highlight: highlight?.filter((x) => x.node) ?? [],
+    highlight: serializedHighlights,
   };
 }
 

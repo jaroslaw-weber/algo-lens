@@ -6,6 +6,7 @@ import type {
   ListVariable,
   NodeHighlight,
   SerializedListNode,
+  LinkedListSerializer, // Add this import
 } from "algo-lens-core"; // Assuming you have similar types for the linked list
 
 interface DisplayLinkedListProps {
@@ -17,45 +18,33 @@ export const transformListToGraph = (
   highlight: Map<string, NodeHighlight>
 ) => {
   const elements: cytoscape.ElementDefinition[] = [];
-  const visited = new Set<SerializedListNode>();
-  let currentNode = node;
+  const nodeMap = new Map<string, SerializedListNode>();
 
-  while (currentNode != null) {
-    if (visited.has(currentNode)) {
-      // If we encounter a node we've already seen, add an edge back to it and stop processing
-      elements.push({
-        data: {
-          id: `${currentNode.id}->cycle`,
-          source: currentNode.id.toString(),
-          target: currentNode.id.toString(),
-        },
-        classes: "cycle",
-      });
-      break;
-    }
-
-    visited.add(currentNode);
-
-    const nodeClass = highlight.get(currentNode.id)?.color || "";
+  // First pass: Create a map for quick lookup and add nodes
+  for (const node of nodes) {
+    nodeMap.set(node.id, node);
+    const nodeClass = highlight.get(node.id)?.color || "";
     elements.push({
-      data: { id: currentNode.id, label: currentNode.value.toString() },
+      data: { id: node.id, label: node.value.toString() },
       classes: nodeClass,
     });
-
-    if (currentNode.next) {
-      elements.push({
-        data: {
-          id: `${currentNode.id}->${currentNode.next.id}`,
-          source: currentNode.id.toString(),
-          target: currentNode.next.id.toString(),
-        },
-      });
-    }
-
-    currentNode = currentNode.next;
   }
 
-  console.log("serialized");
+  // Second pass: Add edges
+  for (const node of nodes) {
+    if (node.next) {
+      // Ensure the next node exists in our map (handles cases where next might point outside the current set of nodes)
+      if (nodeMap.has(node.next)) {
+        elements.push({
+          data: {
+            id: `${node.id}->${node.next}`,
+            source: node.id.toString(),
+            target: node.next.toString(),
+          },
+        });
+      }
+    }
+  }
   return elements;
 };
 
@@ -63,15 +52,20 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const highlight = new Map(
-    data.highlight?.filter((x) => x.node).map((x) => [x.node.id, x])
+  const highlights = data.highlight;
+  const nodes = data.value as SerializedListNode[];
+
+  const highlightMap = new Map<string, NodeHighlight>(
+    highlights?.filter((x) => x.node?.id).map((x) => [x.node!.id!, x])
   );
 
   useEffect(() => {
     if (containerRef.current) {
+      let nodesToDisplay: SerializedListNode[] = nodes;
+
       cyRef.current = cytoscape({
         container: containerRef.current,
-        elements: transformListToGraph(data.value, highlight),
+        elements: transformListToGraph(nodesToDisplay, highlightMap),
         style: [
           {
             selector: "node",
@@ -84,8 +78,7 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
               "background-color": "white",
               "border-width": 2,
               "border-color": "black",
-              "user-select": "none",
-              "user-drag": "none",
+              // "user-drag": "none",
             },
           },
           // Retaining the node highlighting styles from previous component
@@ -135,7 +128,7 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
         cyRef.current.destroy();
       }
     };
-  }, [data]);
+  }, [nodes]);
 
   return (
     <div className="w-full">

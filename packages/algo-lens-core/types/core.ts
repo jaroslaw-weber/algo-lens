@@ -241,7 +241,7 @@ export interface SerializedListNode {
 export interface ListVariable extends Variable {
   type: "list"; // Specify the variable type as "list"
   label: string; // Descriptive label for the variable
-  value: ListNode | SerializedListNode | null; // The head node of the linked list
+  value: ListNode | SerializedListNode[] | null; // nodes or head node
   highlight: NodeHighlight[]; // Array of nodes to be highlighted with specific colors
 }
 
@@ -264,7 +264,7 @@ export type ThemeColor =
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node?: BinaryTreeNode | ListNode | null;
+  node?: BinaryTreeNode | ListNode | null | SerializedListNode;
   color: HighlightColor;
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */

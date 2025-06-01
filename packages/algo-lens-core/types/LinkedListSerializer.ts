@@ -1,4 +1,4 @@
-import { ListNode, SerializedListNode } from "./core";
+import { ListNode, NodeHighlight, SerializedListNode } from "./core";
 
 export class LinkedListSerializer {
   /**
@@ -58,8 +58,7 @@ export class LinkedListSerializer {
       currentNode = currentNode.next;
       serializedNodeIndex++;
     }
-
-    console.log("serialized");
+    console.log("sernodes", serializedNodes);
     return serializedNodes;
   }
 
@@ -97,5 +96,28 @@ export class LinkedListSerializer {
 
     // The head is the first node in the serialized array
     return nodeMap.get(serializedNodes[0].id) || null;
+  }
+
+  public static serializeHighlights(
+    highlights: NodeHighlight[]
+  ): NodeHighlight[] {
+    const result: NodeHighlight[] = [];
+    if (!highlights) {
+      return [];
+    }
+    for (const h of highlights) {
+      const ln = h.node as ListNode;
+      const sn: SerializedListNode = {
+        id: ln?.id!,
+        value: ln?.val!,
+        next: ln?.next?.id!,
+      };
+      const nh: NodeHighlight = {
+        color: h.color,
+        node: sn,
+      };
+      result.push(nh);
+    }
+    return result;
   }
 }

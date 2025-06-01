@@ -89,6 +89,7 @@ export function preserialize(state: ProblemState): any {
     if (set.value instanceof Set) {
       set.value = Array.from(set?.value);
     }
+
     //serialize ListNode
     const list = v as ListVariable;
     if (list.value instanceof ListNode) {
