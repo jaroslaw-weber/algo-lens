@@ -114,6 +114,7 @@ export class LinkedListSerializer {
       };
       const nh: NodeHighlight = {
         color: h.color,
+        label: h.label,
         node: sn,
       };
       result.push(nh);

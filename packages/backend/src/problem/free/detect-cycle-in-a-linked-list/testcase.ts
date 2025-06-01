@@ -1,5 +1,6 @@
 import { LinkedListSerializer, ProblemState, TestCase } from "algo-lens-core";
-import { DetectCycleInput, ListNode } from "./types";
+import { DetectCycleInput } from "./types";
+import { ListNode } from "algo-lens-core";
 
 // Helper function to create a linked list with a cycle
 function createLinkedList(arr: number[], pos: number): ListNode | null {
@@ -18,7 +19,6 @@ function createLinkedList(arr: number[], pos: number): ListNode | null {
 
   return nodes[0];
 }
-
 
 export const testcases: TestCase<DetectCycleInput, ProblemState>[] = [
   {
@@ -48,6 +48,7 @@ export const testcases: TestCase<DetectCycleInput, ProblemState>[] = [
     input: createLinkedList([3, 2, 0, -4], 1),
     serializer: "linked-list",
     expected: true,
+    isDefault: true,
   },
   {
     name: "Cycle, multiple nodes, cycle at tail",

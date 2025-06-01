@@ -1,6 +1,7 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
-import { DetectCycleInput, ListNode } from "./types";
+import { DetectCycleInput } from "./types";
+import { ListNode } from "algo-lens-core";
 
 export function generateSteps(head: DetectCycleInput): ProblemState[] {
   const l = new StepLoggerV2();
@@ -17,8 +18,8 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
   let fast: ListNode | null = head;
 
   l.list("head", head, [
-    { node: slow, color: "good" },
-    { node: fast, color: "neutral" },
+    { node: slow, color: "good", label: "slow" },
+    { node: fast, color: "neutral", label: "fast" },
   ]);
   l.list("slow", slow, [{ node: slow, color: "neutral" }]);
   l.list("fast", fast, [{ node: fast, color: "neutral" }]);
@@ -31,18 +32,18 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
     fast = fast.next.next;
 
     l.list("head", head, [
-      { node: slow, color: "good" },
-      { node: fast, color: "neutral" },
+      { node: slow, color: "good", label: "slow" },
+      { node: fast, color: "neutral", label: "fast" },
     ]);
-    l.list("slow", slow, [{ node: slow, color: "neutral" }]);
-    l.list("fast", fast, [{ node: fast, color: "neutral" }]);
+    l.list("slow", slow, [{ node: slow, color: "neutral", label: "slow" }]);
+    l.list("fast", fast, [{ node: fast, color: "neutral", label: "fast" }]);
     l.comment = "Move slow pointer one step and fast pointer two steps.";
     l.breakpoint(2);
 
     if (slow === fast) {
       l.list("head", head, [
-        { node: slow, color: "good" },
-        { node: fast, color: "neutral" },
+        { node: slow, color: "good", label: "slow" },
+        { node: fast, color: "neutral", label: "fast" },
       ]);
       l.list("slow", slow, [{ node: slow, color: "good" }]);
       l.list("fast", fast, [{ node: fast, color: "good" }]);

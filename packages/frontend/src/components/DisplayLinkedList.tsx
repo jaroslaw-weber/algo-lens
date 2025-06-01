@@ -23,9 +23,11 @@ export const transformListToGraph = (
   // First pass: Create a map for quick lookup and add nodes
   for (const node of nodes) {
     nodeMap.set(node.id, node);
-    const nodeClass = highlight.get(node.id)?.color || "";
+    const nodeHighlight = highlight.get(node.id);
+    const nodeClass = nodeHighlight?.color || "";
+    const topLabel = nodeHighlight?.label || ""; // Get the label from highlight
     elements.push({
-      data: { id: node.id, label: node.value.toString() },
+      data: { id: node.id, label: node.value.toString(), topLabel: topLabel }, // Add topLabel to node data
       classes: nodeClass,
     });
   }
@@ -70,7 +72,7 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
           {
             selector: "node",
             style: {
-              label: "data(label)",
+              label: "data(label)", // Node's value
               "text-valign": "center",
               color: "black",
               "text-outline-width": 1,
@@ -78,7 +80,18 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
               "background-color": "white",
               "border-width": 2,
               "border-color": "black",
-              // "user-drag": "none",
+            },
+          },
+          {
+            selector: "node[topLabel != '']", // Apply only if topLabel exists
+            style: {
+              label: "data(topLabel)", // The new label
+              "text-valign": "top",
+              "text-margin-y": -20, // Adjust as needed to position above the node
+              color: "blue", // Example color for the top label
+              "text-outline-color": "white",
+              "text-outline-width": 1,
+              "font-size": 10,
             },
           },
           // Retaining the node highlighting styles from previous component
