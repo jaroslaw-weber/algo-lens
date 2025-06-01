@@ -8,10 +8,39 @@ import type {
   SerializedListNode,
   LinkedListSerializer, // Add this import
 } from "algo-lens-core"; // Assuming you have similar types for the linked list
+import popperjs, { type PopperFactory } from "cytoscape-popper";
+
+import { computePosition, flip, shift, limitShift } from "@floating-ui/dom";
 
 interface DisplayLinkedListProps {
   data: ListVariable;
 }
+
+const factory: PopperFactory = (ref, content, opts) => {
+  // see https://floating-ui.com/docs/computePosition#options
+  const popperOptions = {
+    // matching the default behaviour from Popper@2
+    // https://floating-ui.com/docs/migration#configure-middleware
+    middleware: [flip(), shift({ limiter: limitShift() })],
+    ...opts,
+  };
+  console.log("creating popper", content);
+
+  function update() {
+    computePosition(ref, content, popperOptions).then(({ x, y }) => {
+      Object.assign(content.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+    });
+  }
+  update();
+  return { update };
+};
+
+const popper = popperjs(factory);
+
+cytoscape.use(popper);
 
 export const transformListToGraph = (
   nodes: SerializedListNode[],
@@ -134,6 +163,21 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
           fit: false,
         },
       });
+      for (const node of cyRef.current.nodes()) {
+        console.log("nodeee");
+        const pop = node.popper({
+          content: () => {
+            let div = document.createElement("div");
+
+            div.innerHTML = "Popper content";
+
+            document.body.appendChild(div);
+
+            return div;
+          },
+          renderedPosition: () => ({ x: 100, y: 200 }),
+        });
+      }
     }
 
     return () => {
