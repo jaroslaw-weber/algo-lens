@@ -16,7 +16,7 @@ interface DisplayLinkedListProps {
   data: ListVariable;
 }
 
-const factory: PopperFactory = (ref, content, opts) => {
+const factory: PopperFactory = (node, content, opts) => {
   // see https://floating-ui.com/docs/computePosition#options
   const popperOptions = {
     // matching the default behaviour from Popper@2
@@ -27,10 +27,14 @@ const factory: PopperFactory = (ref, content, opts) => {
   console.log("creating popper", content);
 
   function update() {
-    computePosition(ref, content, popperOptions).then(({ x, y }) => {
+    computePosition(node, content, popperOptions).then(({ x, y }) => {
+      console.log("x", x);
+      const bounding = node.getBoundingClientRect();
+      console.log(bounding);
       Object.assign(content.style, {
-        left: `${x}px`,
-        top: `${y}px`,
+        left: `${bounding.left}px`,
+        top: `${bounding.top - 20}px`,
+        position: "absolute",
       });
     });
   }
@@ -111,18 +115,6 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
               "border-color": "black",
             },
           },
-          {
-            selector: "node[topLabel != '']", // Apply only if topLabel exists
-            style: {
-              label: "data(topLabel)", // The new label
-              "text-valign": "top",
-              "text-margin-y": -20, // Adjust as needed to position above the node
-              color: "blue", // Example color for the top label
-              "text-outline-color": "white",
-              "text-outline-width": 1,
-              "font-size": 10,
-            },
-          },
           // Retaining the node highlighting styles from previous component
           {
             selector: "node.neutral",
@@ -165,19 +157,33 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
       });
       for (const node of cyRef.current.nodes()) {
         console.log("nodeee");
-        const pop = node.popper({
-          content: () => {
-            let div = document.createElement("div");
 
-            div.innerHTML = "Popper content";
+        const tooltip = node.data("topLabel");
+        if (tooltip) {
+          const pop = node.popper({
+            content: () => {
+              let div = document.createElement("div");
+              div.innerHTML = tooltip;
+              document.body.appendChild(div); // Append the div to the body
+              return div;
+            },
 
-            document.body.appendChild(div);
-
-            return div;
-          },
-          renderedPosition: () => ({ x: 100, y: 200 }),
-        });
+            // renderedPosition: (node) => ({ x, y }),
+          });
+          // Store the popper instance on the node data for later updates if needed
+          node.data("popper", pop);
+        }
       }
+
+      // After layout is done, update popper positions
+      cyRef.current.ready(() => {
+        cyRef.current?.nodes().forEach((node) => {
+          const popper = node.data("popper");
+          if (popper) {
+            popper.update();
+          }
+        });
+      });
     }
 
     return () => {
