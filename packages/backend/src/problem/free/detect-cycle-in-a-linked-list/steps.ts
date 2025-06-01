@@ -16,7 +16,10 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
   let slow: ListNode | null = head;
   let fast: ListNode | null = head;
 
-  l.list("head", head);
+  l.list("head", head, [
+    { node: slow, color: "good" },
+    { node: fast, color: "neutral" },
+  ]);
   l.list("slow", slow, [{ node: slow, color: "neutral" }]);
   l.list("fast", fast, [{ node: fast, color: "neutral" }]);
   l.comment =
@@ -27,14 +30,20 @@ export function generateSteps(head: DetectCycleInput): ProblemState[] {
     slow = slow!.next;
     fast = fast.next.next;
 
-    l.list("head", head);
+    l.list("head", head, [
+      { node: slow, color: "good" },
+      { node: fast, color: "neutral" },
+    ]);
     l.list("slow", slow, [{ node: slow, color: "neutral" }]);
     l.list("fast", fast, [{ node: fast, color: "neutral" }]);
     l.comment = "Move slow pointer one step and fast pointer two steps.";
     l.breakpoint(2);
 
     if (slow === fast) {
-      l.list("head", head);
+      l.list("head", head, [
+        { node: slow, color: "good" },
+        { node: fast, color: "neutral" },
+      ]);
       l.list("slow", slow, [{ node: slow, color: "good" }]);
       l.list("fast", fast, [{ node: fast, color: "good" }]);
       l.simple({ result: true });
