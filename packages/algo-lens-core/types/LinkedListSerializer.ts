@@ -7,10 +7,15 @@ export class LinkedListSerializer {
    * @param head The head of the linked list to serialize.
    * @returns An array of SerializedListNode objects.
    */
-  public static serialize(head: ListNode | null): SerializedListNode[] {
+  public static serialize(
+    head: ListNode | null | undefined
+  ): SerializedListNode[] {
+    if (head === undefined || head === null) {
+      return [];
+    }
     const serializedNodes: SerializedListNode[] = [];
     const nodeMap = new Map<ListNode, string>(); // Maps ListNode object to its assigned ID
-    let currentNode = head;
+    let currentNode: ListNode | null = head;
     let idCounter = 0;
 
     // First pass: Assign IDs and collect basic node data
@@ -26,8 +31,8 @@ export class LinkedListSerializer {
 
       serializedNodes.push({
         id: nodeId,
-        val: currentNode.val,
-        nextId: null, // Will be filled in the second pass
+        value: currentNode.val,
+        next: null, // Will be filled in the second pass
       });
 
       currentNode = currentNode.next;
@@ -46,14 +51,15 @@ export class LinkedListSerializer {
       if (currentNode.next !== null) {
         // If the next node is in our map (meaning it was part of the traversed list,
         // either linear or part of a cycle), get its ID.
-        serializedNode.nextId = nodeMap.get(currentNode.next) || null;
+        serializedNode.next = nodeMap.get(currentNode.next) || null;
       } else {
-        serializedNode.nextId = null;
+        serializedNode.next = null;
       }
       currentNode = currentNode.next;
       serializedNodeIndex++;
     }
 
+    console.log("serialized");
     return serializedNodes;
   }
 
@@ -63,9 +69,9 @@ export class LinkedListSerializer {
    * @returns The head of the reconstructed linked list.
    */
   public static deserialize(
-    serializedNodes: SerializedListNode[]
+    serializedNodes: SerializedListNode[] | undefined
   ): ListNode | null {
-    if (serializedNodes.length === 0) {
+    if (serializedNodes === undefined || serializedNodes.length === 0) {
       return null;
     }
 
@@ -73,7 +79,7 @@ export class LinkedListSerializer {
 
     // First pass: Create all ListNode objects and populate the map
     for (const sNode of serializedNodes) {
-      const newNode = new ListNode(sNode.val);
+      const newNode = new ListNode(Number(sNode.value));
       newNode.id = sNode.id; // Preserve the ID
       nodeMap.set(sNode.id, newNode);
     }
@@ -81,8 +87,8 @@ export class LinkedListSerializer {
     // Second pass: Connect the nodes using the nextId
     for (const sNode of serializedNodes) {
       const currentNode = nodeMap.get(sNode.id);
-      if (currentNode && sNode.nextId !== null) {
-        const nextNode = nodeMap.get(sNode.nextId);
+      if (currentNode && sNode.next !== null) {
+        const nextNode = nodeMap.get(sNode.next);
         if (nextNode) {
           currentNode.next = nextNode;
         }

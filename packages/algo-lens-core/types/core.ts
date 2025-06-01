@@ -8,6 +8,7 @@ export interface TestCase<Input, State> {
   input: Input;
   expected: any;
   name: string;
+  serializer?: string;
   description: string; // Changed to required based on testcase-guidelines.md
   isDefault?: boolean;
 }
@@ -231,10 +232,16 @@ export interface TreeVariable extends Variable {
   highlight: NodeHighlight[];
 }
 
+export interface SerializedListNode {
+  id: string; // Unique identifier for the serialized node
+  next: string | null; // ID of the next node in the linked list
+  value: number | string;
+}
+
 export interface ListVariable extends Variable {
   type: "list"; // Specify the variable type as "list"
   label: string; // Descriptive label for the variable
-  value: ListNode | null; // The head node of the linked list
+  value: ListNode | SerializedListNode | null; // The head node of the linked list
   highlight: NodeHighlight[]; // Array of nodes to be highlighted with specific colors
 }
 
@@ -283,12 +290,6 @@ export interface GroupMetadata {
   label?: string;
   emoji?: string;
   description?: string;
-}
-
-export interface SerializedListNode {
-  id: string;
-  val: number;
-  nextId: string | null; // ID of the next node, or null
 }
 
 export class ListNode {

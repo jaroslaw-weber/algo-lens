@@ -1,18 +1,23 @@
 // DisplayLinkedList.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import type { ListNode, ListVariable, NodeHighlight } from "algo-lens-core"; // Assuming you have similar types for the linked list
+import type {
+  ListNode,
+  ListVariable,
+  NodeHighlight,
+  SerializedListNode,
+} from "algo-lens-core"; // Assuming you have similar types for the linked list
 
 interface DisplayLinkedListProps {
   data: ListVariable;
 }
 
 export const transformListToGraph = (
-  node: ListNode,
+  nodes: SerializedListNode[],
   highlight: Map<string, NodeHighlight>
 ) => {
   const elements: cytoscape.ElementDefinition[] = [];
-  const visited = new Set<ListNode>();
+  const visited = new Set<SerializedListNode>();
   let currentNode = node;
 
   while (currentNode != null) {
@@ -33,7 +38,7 @@ export const transformListToGraph = (
 
     const nodeClass = highlight.get(currentNode.id)?.color || "";
     elements.push({
-      data: { id: currentNode.id, label: currentNode.val.toString() },
+      data: { id: currentNode.id, label: currentNode.value.toString() },
       classes: nodeClass,
     });
 
@@ -50,6 +55,7 @@ export const transformListToGraph = (
     currentNode = currentNode.next;
   }
 
+  console.log("serialized");
   return elements;
 };
 

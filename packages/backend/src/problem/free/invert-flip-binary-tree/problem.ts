@@ -18,8 +18,7 @@ export const problem: Problem<BinaryTree, BinaryTree> = {
     variables,
     groups,
   },
-  codeGenerationSignature: {
+  codegen: {
     signature: "function invertTree(root: TreeNode | null): TreeNode | null",
-    name: "invertTree",
   },
 };

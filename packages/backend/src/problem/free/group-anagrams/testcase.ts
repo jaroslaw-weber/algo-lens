@@ -6,9 +6,7 @@ export const testcases: TestCase<GroupAnagramsInput, GroupAnagramsOutput>[] = [
     name: "Example 1",
     description: "Basic example from problem description.",
     input: { strs: ["eat", "tea", "tan", "ate", "nat", "bat"] },
-    expected: [["bat"], ["nat", "tan"], ["ate", "eat", "tea"]].sort((a, b) =>
-      a[0].localeCompare(b[0])
-    ),
+    expected: [["bat"], ["ate", "eat", "tea"], ["nat", "tan"]],
   },
   {
     name: "Example 2",
@@ -26,26 +24,20 @@ export const testcases: TestCase<GroupAnagramsInput, GroupAnagramsOutput>[] = [
     name: "No Anagrams",
     description: "No anagrams in the input array.",
     input: { strs: ["abc", "def", "ghi"] },
-    expected: [["abc"], ["def"], ["ghi"]].sort((a, b) =>
-      a[0].localeCompare(b[0])
-    ),
+    expected: [["abc"], ["def"], ["ghi"]],
   },
   {
     name: "All Anagrams",
     description: "All strings are anagrams of each other.",
     input: { strs: ["listen", "silent", "enlist"] },
-    expected: [["listen", "silent", "enlist"]].sort((a, b) =>
-      a[0].localeCompare(b[0])
-    ),
+    expected: [["enlist", "listen", "silent"]],
   },
   {
     name: "Mixed Case and Empty Strings",
     description:
       "Mixed case and empty strings (assuming lowercase English letters only as per constraints, but testing robustness).",
     input: { strs: ["", "b", "", "a", "b"] },
-    expected: [["", ""], ["a"], ["b", "b"]].sort((a, b) =>
-      a[0].localeCompare(b[0])
-    ),
+    expected: [["", ""], ["a"], ["b", "b"]],
   },
   {
     name: "Long Strings",
@@ -60,8 +52,8 @@ export const testcases: TestCase<GroupAnagramsInput, GroupAnagramsOutput>[] = [
       ],
     },
     expected: [
+      ["abc", "acb", "bca"],
       ["abcdefghijklmnopqrstuvwxyz", "zyxwuvtsrqponmlkjihgfedcba"],
-      ["abc", "bca", "acb"],
-    ].sort((a, b) => a[0].localeCompare(b[0])),
+    ],
   },
 ];

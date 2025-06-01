@@ -1,9 +1,17 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
-import { Input, ListNode } from "./types";
+import { DetectCycleInput, ListNode } from "./types";
 
-export function generateSteps({ head }: Input): ProblemState[] {
+export function generateSteps(head: DetectCycleInput): ProblemState[] {
   const l = new StepLoggerV2();
+
+  if (head === undefined || head === null) {
+    l.list("head", head);
+    l.simple({ result: false });
+    l.comment = "The linked list is empty, so no cycle can exist.";
+    l.breakpoint(1);
+    return l.getSteps();
+  }
 
   let slow: ListNode | null = head;
   let fast: ListNode | null = head;

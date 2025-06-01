@@ -43,7 +43,15 @@ export function generateSteps(input: GroupAnagramsInput): ProblemState[] {
     l.breakpoint(6);
   }
 
-  const result = Array.from(anagramMap.values());
+  // Sort each group of anagrams alphabetically
+  for (const key of anagramMap.keys()) {
+    anagramMap.get(key)!.sort();
+  }
+
+  // Get keys, sort them, and then collect values in that order
+  const sortedKeys = Array.from(anagramMap.keys()).sort();
+  const result = sortedKeys.map((key) => anagramMap.get(key)!);
+
   l.simple({ strs, anagramMap });
   l.hashmap("anagramMap", anagramMap);
   l.simple({ result }); // Log the final result directly

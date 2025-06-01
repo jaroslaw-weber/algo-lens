@@ -20,6 +20,7 @@ import {
   VariableMetadata,
   LabeledInterval,
   LabeledIntervalVariable,
+  LinkedListSerializer,
 } from "algo-lens-core";
 import { getAllProblems } from "./list";
 
@@ -131,14 +132,12 @@ export function asList(
   value?: ListNode | null,
   highlight?: NodeHighlight[]
 ): ListVariable {
-  // Add random IDs starting from 1
-  //clone list
-  const list = value ? cloneList(value) : null;
-  addRandomIdsToList(list, 1);
+  const serialized = LinkedListSerializer.serialize(value ?? null);
+  console.log("serialized list: " + serialized);
   return {
     type: "list",
     label,
-    value: list,
+    value: serialized,
     highlight: highlight?.filter((x) => x.node) ?? [],
   };
 }

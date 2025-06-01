@@ -1,5 +1,5 @@
-import { TestCase } from "algo-lens-core";
-import { ListNode } from "./types";
+import { LinkedListSerializer, ProblemState, TestCase } from "algo-lens-core";
+import { DetectCycleInput, ListNode } from "./types";
 
 // Helper function to create a linked list with a cycle
 function createLinkedList(arr: number[], pos: number): ListNode | null {
@@ -19,41 +19,48 @@ function createLinkedList(arr: number[], pos: number): ListNode | null {
   return nodes[0];
 }
 
-export const testcases: TestCase<any, any>[] = [
+
+export const testcases: TestCase<DetectCycleInput, ProblemState>[] = [
   {
     name: "No cycle, single node",
     description: "No cycle, single node",
-    input: { head: createLinkedList([1], -1) },
+    input: createLinkedList([1], -1),
+    serializer: "linked-list",
     expected: false,
   },
   {
     name: "No cycle, multiple nodes",
     description: "No cycle, multiple nodes",
-    input: { head: createLinkedList([1, 2, 3, 4, 5], -1) },
+    input: createLinkedList([1, 2, 3, 4, 5], -1),
+    serializer: "linked-list",
     expected: false,
   },
   {
     name: "Cycle, two nodes, cycle at head",
     description: "Cycle, two nodes, cycle at head",
-    input: { head: createLinkedList([1, 2], 0) },
+    input: createLinkedList([1, 2], 0),
+    serializer: "linked-list",
     expected: true,
   },
   {
     name: "Cycle, multiple nodes, cycle in middle",
     description: "Cycle, multiple nodes, cycle in middle",
-    input: { head: createLinkedList([3, 2, 0, -4], 1) },
+    input: createLinkedList([3, 2, 0, -4], 1),
+    serializer: "linked-list",
     expected: true,
   },
   {
     name: "Cycle, multiple nodes, cycle at tail",
     description: "Cycle, multiple nodes, cycle at tail",
-    input: { head: createLinkedList([1, 2, 3, 4], 3) },
+    input: createLinkedList([1, 2, 3, 4], 3),
+    serializer: "linked-list",
     expected: true,
   },
   {
     name: "Empty list",
     description: "Empty list",
-    input: { head: createLinkedList([], -1) },
+    input: createLinkedList([], -1),
+    serializer: "linked-list",
     expected: false,
   },
 ];

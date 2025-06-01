@@ -3,6 +3,4 @@ export interface ListNode {
   next: ListNode | null;
 }
 
-export interface Input {
-  head: ListNode | null;
-}
+export type DetectCycleInput = ListNode | null;

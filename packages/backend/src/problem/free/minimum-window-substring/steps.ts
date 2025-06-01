@@ -1,9 +1,9 @@
-import { ProblemState } from "../../../algo-lens-core/types/core";
-import { StepLoggerV2 } from "../core/StepLoggerV2";
+import { ProblemState } from "algo-lens-core";
 import { MinimumWindowSubstringTypes } from "./types";
+import { StepLoggerV2 } from "../../core/StepLoggerV2";
 
 export function generateSteps(s: string, t: string): ProblemState[] {
-  const l = new StepLoggerV2<MinimumWindowSubstringTypes>();
+  const l = new StepLoggerV2();
 
   // Initialize character counts for t
   const tCharCount: Map<string, number> = new Map();

@@ -2,18 +2,18 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2";
 import { BinaryTree, TreeNode } from "./types";
 
 export function getSteps(root: BinaryTree) {
-  const logger = new StepLoggerV2();
+  const l = new StepLoggerV2();
 
   function invertTree(node: BinaryTree): BinaryTree {
     if (!node) {
       return null;
     }
 
-    logger.comment = `Inverting node with value ${node.val}`;
-    logger.tree("root", JSON.parse(JSON.stringify(root)), [
+    l.comment = `Inverting node with value ${node.val}`;
+    l.tree("root", JSON.parse(JSON.stringify(root)), [
       { node: node, color: "neutral" },
     ]);
-    logger.breakpoint(0);
+    l.breakpoint(0);
 
     const left = invertTree(node.left);
     const right = invertTree(node.right);
@@ -21,20 +21,21 @@ export function getSteps(root: BinaryTree) {
     node.left = right;
     node.right = left;
 
-    logger.comment = `Swapped children of node with value ${node.val}`;
-    logger.tree("root", JSON.parse(JSON.stringify(root)), [
+    l.comment = `Swapped children of node with value ${node.val}`;
+    l.tree("root", JSON.parse(JSON.stringify(root)), [
       { node: node, color: "neutral" },
     ]);
-    logger.breakpoint(0);
+    l.breakpoint(0);
 
     return node;
   }
 
   invertTree(root);
 
-  logger.comment = "Tree inversion complete";
-  logger.tree("root", JSON.parse(JSON.stringify(root)));
-  logger.breakpoint(0);
+  const result = root;
+  l.comment = "Tree inversion complete";
+  l.tree("result", result);
+  l.breakpoint(0);
 
-  return logger.getSteps();
+  return l.getSteps();
 }
