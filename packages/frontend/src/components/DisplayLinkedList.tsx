@@ -8,7 +8,11 @@ import type {
   SerializedListNode,
   LinkedListSerializer, // Add this import
 } from "algo-lens-core"; // Assuming you have similar types for the linked list
-import popperjs, { type PopperFactory } from "cytoscape-popper";
+import popperjs, {
+  RefElement,
+  type PopperFactory,
+  type PopperInstance,
+} from "cytoscape-popper";
 
 import { computePosition, flip, shift, limitShift } from "@floating-ui/dom";
 
@@ -33,7 +37,7 @@ const factory: PopperFactory = (node, content, opts) => {
       console.log(bounding);
       Object.assign(content.style, {
         left: `${bounding.left}px`,
-        top: `${bounding.top - 20}px`,
+        top: `${bounding.top - 30}px`,
         position: "absolute",
       });
     });
@@ -86,6 +90,8 @@ export const transformListToGraph = (
 const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const poppers = useRef<PopperInstance[]>([]); // Ref to store popper instances
+  const popperDivs = useRef<HTMLElement[]>([]);
 
   const highlights = data.highlight;
   const nodes = data.value as SerializedListNode[];
@@ -164,14 +170,12 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
             content: () => {
               let div = document.createElement("div");
               div.innerHTML = tooltip;
+              popperDivs.current.push(div);
               document.body.appendChild(div); // Append the div to the body
               return div;
             },
-
-            // renderedPosition: (node) => ({ x, y }),
           });
-          // Store the popper instance on the node data for later updates if needed
-          node.data("popper", pop);
+          poppers.current.push(pop);
         }
       }
 
@@ -189,6 +193,11 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
     return () => {
       if (cyRef.current) {
         cyRef.current.destroy();
+      }
+      if (popperDivs.current) {
+        for (const d of popperDivs.current) {
+          d?.remove();
+        }
       }
     };
   }, [nodes]);
