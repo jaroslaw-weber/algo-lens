@@ -38,6 +38,7 @@ const factory: PopperFactory = (node, content, opts) => {
   console.log("creating popper", content, node, opts);
 
   // Access the offset from opts
+  //@ts-expect-error
   const offset = content.offset;
 
   function update() {
@@ -124,7 +125,7 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
 
       cyRef.current = cytoscape({
         container: containerRef.current,
-        elements: transformListToGraph(nodesToDisplay, highlightMap),
+        elements: transformListToGraph(nodesToDisplay, highlights),
         style: [
           {
             selector: "node",
@@ -186,7 +187,7 @@ const DisplayLinkedList: React.FC<DisplayLinkedListProps> = ({ data }) => {
         if (nhl?.length) {
           for (const hl of nhl) {
             const text = hl.label;
-            const position = hl.tooltip.position;
+            const position = hl.tooltip?.position;
             const offset = position == "bottom" ? -30 : 30;
             if (text) {
               const pop = node.popper({
