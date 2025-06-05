@@ -7,6 +7,7 @@ import { MeetingRoomsInput } from "./types";
 export const problem: Problem<MeetingRoomsInput, ProblemState> = {
   id: "meeting-rooms",
   title: "Meeting Rooms",
+  emoji: "🏢",
   difficulty: "easy",
   tags: ["Array", "Sorting", "Interval"],
 
