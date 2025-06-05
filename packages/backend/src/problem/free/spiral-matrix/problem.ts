@@ -1,10 +1,9 @@
-import { Problem } from "../../types/problem";
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
 import { groups } from "./groups";
-import { explanation } from "./explanation.md";
 import { SpiralMatrixInput, SpiralMatrixOutput } from "./types";
+import { Problem } from "algo-lens-core";
 
 export const problem: Problem<SpiralMatrixInput, SpiralMatrixOutput> = {
   id: "spiral-matrix",
@@ -12,13 +11,13 @@ export const problem: Problem<SpiralMatrixInput, SpiralMatrixOutput> = {
   emoji: "🌀",
   difficulty: "medium",
   tags: ["Array", "Matrix"],
-  generateSteps,
+  func: generateSteps,
   testcases,
-  explanation,
-  variables,
-  groups,
-  codeGenerationSignature: {
+  metadata: {
+    variables,
+    groups,
+  },
+  codegen: {
     signature: "function spiralOrder(matrix: number[][]): number[]",
-    name: "spiralOrder",
   },
 };
