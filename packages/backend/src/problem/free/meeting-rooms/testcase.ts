@@ -1,55 +1,57 @@
 import { TestCase } from "algo-lens-core";
+import { MeetingRoomsInput, Interval } from "./types";
 
-// Define the Interval type
-type Interval = {
-  start: number;
-  end: number;
-};
-
-// Input type is Interval[], output type is boolean
-export const testcases: TestCase<Interval[], boolean>[] = [
+export const testcases: TestCase<MeetingRoomsInput, boolean>[] = [
   {
     name: "Example 1",
-    input: [
-      { start: 0, end: 30 },
-      { start: 5, end: 10 },
-      { start: 15, end: 20 },
-    ],
+    input: {
+      intervals: [
+        [0, 30],
+        [5, 10],
+        [15, 20],
+      ],
+    },
     expected: false,
     description: "Overlapping intervals",
   },
   {
     name: "Example 2",
-    input: [
-      { start: 7, end: 10 },
-      { start: 2, end: 4 },
-    ],
+    input: {
+      intervals: [
+        [7, 10],
+        [2, 4],
+      ],
+    },
     expected: true,
     description: "Non-overlapping intervals",
     isDefault: true,
   },
   {
     name: "Single meeting",
-    input: [{ start: 1, end: 5 }],
+    input: { intervals: [[1, 5]] },
     expected: true,
     description: "Single meeting should always be possible",
   },
   {
     name: "Multiple non-overlapping meetings",
-    input: [
-      { start: 1, end: 3 },
-      { start: 4, end: 6 },
-      { start: 7, end: 9 },
-    ],
+    input: {
+      intervals: [
+        [1, 3],
+        [4, 6],
+        [7, 9],
+      ],
+    },
     expected: true,
     description: "Multiple non-overlapping meetings",
   },
   {
     name: "Meetings with same start time",
-    input: [
-      { start: 1, end: 5 },
-      { start: 1, end: 10 },
-    ],
+    input: {
+      intervals: [
+        [1, 5],
+        [1, 10],
+      ],
+    },
     expected: false,
     description: "Meetings with same start time and overlap",
   },

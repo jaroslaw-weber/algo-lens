@@ -1,161 +1,60 @@
 import { Variable } from "algo-lens-core";
-import { Step, Interval } from "./types";
+import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Correct import path for StepLoggerV2
+import { Step, Interval, MeetingRoomsInput } from "./types";
 
-export function solution(intervals: Interval[]): boolean {
-  if (intervals.length === 0) {
-    return true;
-  }
-
-  intervals.sort((a, b) => a[0] - b[0]);
-
-  for (let i = 1; i < intervals.length; i++) {
-    if (intervals[i][0] < intervals[i - 1][1]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-export function generateSteps(intervals: Interval[]): Step[] {
-  const steps: Step[] = [];
-  const variables: Variable[] = [];
+export function generateSteps(input: MeetingRoomsInput): Step[] {
+  const l = new StepLoggerV2();
+  const intervals = [...input.intervals]; // Create a copy to preserve original input state
+  let breakpointNumber = 1;
 
   // Initial state
-  steps.push({
-    snapshot: {
-      variables: [
-        { name: "intervals", value: intervals, type: "array", group: "input" },
-      ],
-      visualizer: {
-        type: "intervals",
-        data: intervals,
-      },
-    },
-    log: "Initial state: Given intervals.",
-  });
+  l.intervals("intervals", intervals);
+  l.comment = "Initial state: Given intervals.";
+  l.breakpoint(breakpointNumber++);
 
   if (intervals.length === 0) {
-    steps.push({
-      snapshot: {
-        variables: [
-          {
-            name: "intervals",
-            value: intervals,
-            type: "array",
-            group: "input",
-          },
-        ],
-        visualizer: {
-          type: "intervals",
-          data: intervals,
-        },
-      },
-      log: "No meetings, so a person can attend all meetings.",
-    });
-    return steps;
+    l.intervals("intervals", intervals);
+    l.comment =
+      "No meetings, so a person can attend all meetings. Result: true";
+    l.breakpoint(breakpointNumber++);
+    return l.getSteps();
   }
 
   // Sort intervals
   intervals.sort((a, b) => a[0] - b[0]);
-  steps.push({
-    snapshot: {
-      variables: [
-        { name: "intervals", value: intervals, type: "array", group: "input" },
-      ],
-      visualizer: {
-        type: "intervals",
-        data: intervals,
-      },
-    },
-    log: "Sorted intervals by start time.",
-  });
+  l.intervals("intervals", intervals);
+  l.comment = "Sorted intervals by start time.";
+  l.breakpoint(breakpointNumber++);
 
   for (let i = 1; i < intervals.length; i++) {
     const currentInterval = intervals[i];
     const previousInterval = intervals[i - 1];
 
-    steps.push({
-      snapshot: {
-        variables: [
-          {
-            name: "intervals",
-            value: intervals,
-            type: "array",
-            group: "input",
-          },
-          { name: "i", value: i, type: "number", group: "computation" },
-          {
-            name: "currentInterval",
-            value: currentInterval,
-            type: "array",
-            group: "computation",
-          },
-          {
-            name: "previousInterval",
-            value: previousInterval,
-            type: "array",
-            group: "computation",
-          },
-        ],
-        visualizer: {
-          type: "intervals",
-          data: intervals,
-          highlight: [i, i - 1],
-        },
-      },
-      log: `Checking if current meeting [${currentInterval[0]}, ${currentInterval[1]}] overlaps with previous meeting [${previousInterval[0]}, ${previousInterval[1]}].`,
-    });
+    l.intervals("intervals", intervals, [i, i - 1]);
+    l.simple({ i, currentInterval, previousInterval });
+    l.comment = `Checking if current meeting overlaps with previous meeting.`;
+    l.breakpoint(breakpointNumber++);
 
     if (currentInterval[0] < previousInterval[1]) {
-      steps.push({
-        snapshot: {
-          variables: [
-            {
-              name: "intervals",
-              value: intervals,
-              type: "array",
-              group: "input",
-            },
-            { name: "i", value: i, type: "number", group: "computation" },
-            {
-              name: "currentInterval",
-              value: currentInterval,
-              type: "array",
-              group: "computation",
-            },
-            {
-              name: "previousInterval",
-              value: previousInterval,
-              type: "array",
-              group: "computation",
-            },
-          ],
-          visualizer: {
-            type: "intervals",
-            data: intervals,
-            highlight: [i, i - 1],
-            error: true,
-          },
-        },
-        log: `Overlap detected! Meeting [${currentInterval[0]}, ${currentInterval[1]}] starts before previous meeting [${previousInterval[0]}, ${previousInterval[1]}] ends.`,
-      });
-      return steps;
+      l.intervals(
+        "intervals",
+        intervals,
+        [i, i - 1],
+        undefined,
+        undefined,
+        true
+      ); // Highlight with error
+      l.simple({ i, currentInterval, previousInterval, result: false });
+      l.comment = `Overlap detected! Result: false`;
+      l.breakpoint(breakpointNumber++);
+      return l.getSteps();
     }
   }
 
-  steps.push({
-    snapshot: {
-      variables: [
-        { name: "intervals", value: intervals, type: "array", group: "input" },
-      ],
-      visualizer: {
-        type: "intervals",
-        data: intervals,
-      },
-    },
-    log: "No overlaps found. All meetings can be attended.",
-  });
+  l.intervals("intervals", intervals);
+  l.simple({ result: true });
+  l.comment = "No overlaps found. All meetings can be attended. Result: true";
+  l.breakpoint(breakpointNumber++);
 
-  return steps;
+  return l.getSteps();
 }
