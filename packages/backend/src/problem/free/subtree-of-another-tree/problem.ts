@@ -20,6 +20,6 @@ export const problem: Problem<[BinaryTree, BinaryTree], boolean> = {
   },
   codegen: {
     signature:
-      "function isSubtree(root: TreeNode | null, subRoot: TreeNode | null): boolean",
+      "isSubtree(root: TreeNode | null, subRoot: TreeNode | null): boolean",
   },
 };
