@@ -26,10 +26,11 @@ export const testcases = [
     // Expected: 5 -> 4 -> 3 -> 2 -> 1
     // Manually create 5 -> 4 -> 3 -> 2 -> 1
     expected: [
-      {
-        next: null,
-        value: 1,
-      },
+      { value: 5, next: "node_3" },
+      { value: 4, next: "node_2" },
+      { value: 3, next: "node_1" },
+      { value: 2, next: "node_0" },
+      { value: 1, next: null },
     ],
     name: "Default 5 Elements",
     description: "List with 5 elements", // Updated description
@@ -41,10 +42,8 @@ export const testcases = [
     // Expected: 8 -> 5
     // Manually create 8 -> 5
     expected: [
-      {
-        next: null,
-        value: 1,
-      },
+      { value: 8, next: "node_0" },
+      { value: 5, next: null },
     ],
     name: "Two Elements",
     description: "List with multiple elements (5->8)",
@@ -55,10 +54,9 @@ export const testcases = [
     // Expected: 3 -> 2 -> 1
     // Manually create 3 -> 2 -> 1
     expected: [
-      {
-        next: null,
-        value: 1,
-      },
+      { value: 3, next: "node_1" },
+      { value: 2, next: "node_0" },
+      { value: 1, next: null },
     ],
     name: "Three Elements",
     description: "List with three elements (1->2->3)",
