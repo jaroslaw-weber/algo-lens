@@ -133,7 +133,7 @@ export function asList(
   highlight?: NodeHighlight[]
 ): ListVariable {
   const serialized = LinkedListSerializer.serialize(value ?? null);
-  console.log("serialized list: " + serialized);
+  //console.log("serialized list: " + serialized);
   const serializedHighlights =
     LinkedListSerializer.serializeHighlights(highlight);
   return {

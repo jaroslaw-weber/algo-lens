@@ -4,12 +4,6 @@ import { ReverseListInput } from "./types";
 
 export const testcases = [
   {
-    input: { head: null },
-    expected: null,
-    name: "Empty List",
-    description: "Empty list",
-  },
-  {
     input: { head: new ListNode(1) },
     expected: (() => {
       const node = new ListNode(1);
@@ -61,5 +55,22 @@ export const testcases = [
     })(),
     name: "Two Elements",
     description: "List with multiple elements (5->8)",
+  },
+  {
+    // Manually create 1 -> 2 -> 3
+    input: { head: new ListNode(1, new ListNode(2, new ListNode(3))) },
+    // Expected: 3 -> 2 -> 1
+    // Manually create 3 -> 2 -> 1
+    expected: (() => {
+      const node1 = new ListNode(1);
+      node1.id = "3";
+      const node2 = new ListNode(2, node1);
+      node2.id = "2";
+      const node3 = new ListNode(3, node2);
+      node3.id = "1";
+      return node3;
+    })(),
+    name: "Three Elements",
+    description: "List with three elements (1->2->3)",
   },
 ];

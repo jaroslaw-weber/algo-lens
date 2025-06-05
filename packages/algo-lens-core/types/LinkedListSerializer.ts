@@ -58,7 +58,7 @@ export class LinkedListSerializer {
       currentNode = currentNode.next;
       serializedNodeIndex++;
     }
-    console.log("sernodes", serializedNodes);
+    //console.log("sernodes", serializedNodes);
     return serializedNodes;
   }
 
