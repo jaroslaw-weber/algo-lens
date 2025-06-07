@@ -1,8 +1,9 @@
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 // Removed ProblemState, as2dArray, asArray, asSimpleValue
 import { MinPathSumInput } from "./types"; // Import MinPathSumInput
 
-export function generateSteps(p: MinPathSumInput) {
+export function generateSteps(p: MinPathSumInput): ProblemState[] {
   // Renamed and Exported, Return type inferred
   const { grid } = p; // Assuming grid is number[][]
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2

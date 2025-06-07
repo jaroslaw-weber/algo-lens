@@ -2,10 +2,11 @@ import { sum } from "lodash";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { HouseRobberInput } from "./types"; // Ensure this import exists
 import { groups } from "./groups"; // Import groups
+import { ProblemState } from "algo-lens-core";
 
 // Removed ProblemState import and utils imports as StepLoggerV2 handles variable creation
 
-export function generateSteps(nums: number[]) {
+export function generateSteps(nums: number[]): ProblemState[] {
   // Renamed function
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 

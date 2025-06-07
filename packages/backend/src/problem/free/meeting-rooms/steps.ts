@@ -1,7 +1,8 @@
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
-import { Step, MeetingRoomsInput } from "./types";
+import { MeetingRoomsInput } from "./types";
 
-export function generateSteps(input: MeetingRoomsInput): Step[] {
+export function generateSteps(input: MeetingRoomsInput): ProblemState[] {
   const l = new StepLoggerV2();
   const intervals = [...input.intervals]; // Create a copy to preserve original input state
   let breakpointNumber = 1;

@@ -1,6 +1,7 @@
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 
-export function generateSteps(s1: string, s2: string) {
+export function generateSteps(s1: string, s2: string): ProblemState[] {
   // Return type will be inferred or set by StepLoggerV2's output type
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
   const m = s1.length;

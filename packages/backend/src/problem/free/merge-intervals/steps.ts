@@ -1,11 +1,11 @@
 import _ = require("lodash");
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { getIntervalBounds } from "../../core/utils"; // Import getIntervalBounds
-import { LabeledInterval } from "algo-lens-core";
+import { LabeledInterval, ProblemState } from "algo-lens-core";
 // Removed ProblemState, Variable, asIntervals
 import { MergeIntervalsInput } from "./types"; // Import MergeIntervalsInput
 
-export function generateSteps(intervals: number[][]) {
+export function generateSteps(intervals: number[][]): ProblemState[] {
   // Renamed and Exported, Return type inferred
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 

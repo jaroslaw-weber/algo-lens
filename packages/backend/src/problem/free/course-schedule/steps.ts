@@ -1,8 +1,12 @@
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { from2dArrayToMap } from "../../core/utils"; // Keep necessary import
 
 // The core algorithm logic
-export function generateSteps(numCourses: number, prerequisites: number[][]) {
+export function generateSteps(
+  numCourses: number,
+  prerequisites: number[][]
+): ProblemState[] {
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
   // Set group options for value/boolean groups
