@@ -18,6 +18,6 @@ export const problem: Problem<SpiralMatrixInput, SpiralMatrixOutput> = {
     groups,
   },
   codegen: {
-    signature: "function spiralOrder(matrix: number[][]): number[]",
+    signature: "spiralOrder(matrix: number[][]): number[]",
   },
 };

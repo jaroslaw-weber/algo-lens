@@ -19,6 +19,6 @@ export const problem: Problem<BinaryTree, BinaryTree> = {
     groups,
   },
   codegen: {
-    signature: "function invertTree(root: TreeNode | null): TreeNode | null",
+    signature: "invertTree(root: TreeNode | null): TreeNode | null",
   },
 };

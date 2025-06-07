@@ -1,10 +1,11 @@
+import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2";
 import { BinaryTree, TreeNode } from "./types";
 
-export function getSteps(root: BinaryTree) {
+export function getSteps(root: BinaryTree): ProblemState[] {
   const l = new StepLoggerV2();
 
-  function invertTree(node: BinaryTree): BinaryTree {
+  function invert(node: BinaryTree): BinaryTree {
     if (!node) {
       return null;
     }
@@ -13,10 +14,10 @@ export function getSteps(root: BinaryTree) {
     l.tree("root", JSON.parse(JSON.stringify(root)), [
       { node: node, color: "neutral" },
     ]);
-    l.breakpoint(0);
+    l.breakpoint(1);
 
-    const left = invertTree(node.left);
-    const right = invertTree(node.right);
+    const left = invert(node.left);
+    const right = invert(node.right);
 
     node.left = right;
     node.right = left;
@@ -25,17 +26,18 @@ export function getSteps(root: BinaryTree) {
     l.tree("root", JSON.parse(JSON.stringify(root)), [
       { node: node, color: "neutral" },
     ]);
-    l.breakpoint(0);
+
+    l.breakpoint(2);
 
     return node;
   }
 
-  invertTree(root);
+  invert(root);
 
   const result = root;
   l.comment = "Tree inversion complete";
   l.tree("result", result);
-  l.breakpoint(0);
+  l.breakpoint(3);
 
   return l.getSteps();
 }
