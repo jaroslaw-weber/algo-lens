@@ -7,11 +7,13 @@ export function generateSteps(s: string): ProblemState[] {
   let count = 0;
   const n = s.length;
 
-  l.groupOptions.set("palindromeCount", {});
-  l.groupOptions.set("currentSubstring", {});
+  l.groupOptions.set("count", {
+    max: n,
+    min: 0,
+  });
 
   l.arrayV3({ s: s.split("") }, []);
-  l.group("palindromeCount", { count });
+  l.group("count", { count });
   l.comment = "Initial state: The input string and palindrome count.";
   l.breakpoint(1);
 
@@ -20,7 +22,7 @@ export function generateSteps(s: string): ProblemState[] {
     l.arrayV3({ s: s.split("") }, [
       { value: i, color: "primary", label: "center" } as Pointer,
     ]);
-    l.group("palindromeCount", { count });
+    l.group("count", { count });
     l.comment = `Expanding for odd length palindromes around center at index ${i}.`;
     l.breakpoint(2);
     count += expandAroundCenter(s, i, i, l, count);
@@ -31,7 +33,7 @@ export function generateSteps(s: string): ProblemState[] {
         { value: i, color: "primary", label: "center1" } as Pointer,
         { value: i + 1, color: "primary", label: "center2" } as Pointer,
       ]);
-      l.group("palindromeCount", { count });
+      l.group("count", { count });
       l.comment = `Expanding for even length palindromes around centers at indices ${i} and ${i + 1}.`;
       l.breakpoint(3);
       count += expandAroundCenter(s, i, i + 1, l, count);
@@ -39,7 +41,7 @@ export function generateSteps(s: string): ProblemState[] {
   }
 
   l.arrayV3({ s: s.split("") }, []);
-  l.group("palindromeCount", { count });
+  l.group("count", { count });
   l.comment =
     "All possible centers processed. Total palindromic substrings found.";
   l.breakpoint(4);
@@ -68,13 +70,15 @@ function expandAroundCenter(
     tempRight < s.length &&
     s[tempLeft] === s[tempRight]
   ) {
+    // HIDE_START
     const substring = s.substring(tempLeft, tempRight + 1);
+    // HIDE_END
     l.arrayV3({ s: s.split("") }, [
       { value: tempLeft, color: "neutral", label: "left" } as Pointer,
       { value: tempRight, color: "neutral", label: "right" } as Pointer,
     ]);
-    l.group("currentSubstring", { substring });
-    l.group("palindromeCount", { count: initialCount + currentCount + 1 });
+    l.simple({ substring });
+    l.group("count", { count: initialCount + currentCount + 1 });
     l.comment = `Checking substring "${substring}". It is a palindrome.`;
     l.breakpoint(5);
 
