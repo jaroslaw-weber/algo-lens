@@ -14,11 +14,12 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
   let bottom = m - 1;
   let left = 0;
   let right = n - 1;
-  const result: number[][] = [];
+  const result: number[] = [];
 
   l.comment = "Initialize boundaries and result array.";
   l.arrayV3({ result }, []);
-  l.simple({ m, n, top, bottom, left, right, result });
+  l.simple({ m, n, top, bottom, left, right });
+  l.arrayV3({ result }, []);
   l.grid("matrix", matrix);
   l.breakpoint(1);
 
@@ -42,7 +43,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
     for (let j = left; j <= right; j++) {
       result.push(matrix[top][j]);
       l.comment = `Add element matrix[${top}][${j}] (${matrix[top][j]}) to result.`;
-      l.simple({ top, bottom, left, right, result, i: top, j });
+      l.simple({ top, bottom, left, right, i: top, j });
+      l.arrayV3({ result }, []);
       l.grid("matrix", matrix, {
         r: top,
         c: j,
@@ -54,7 +56,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
     }
     top++;
     l.comment = "Move top boundary down.";
-    l.simple({ top, bottom, left, right, result });
+    l.simple({ top, bottom, left, right });
+    l.arrayV3({ result }, []);
     l.breakpoint(4);
 
     // Traverse down
@@ -82,7 +85,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
     for (let i = top; i <= bottom; i++) {
       result.push(matrix[i][right]);
       l.comment = `Add element matrix[${i}][${right}] (${matrix[i][right]}) to result.`;
-      l.simple({ top, bottom, left, right, result, i, j: right });
+      l.simple({ top, bottom, left, right, i, j: right });
+      l.arrayV3({ result }, []);
       l.grid("matrix", matrix, {
         r: i,
         c: right,
@@ -94,7 +98,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
     }
     right--;
     l.comment = "Move right boundary left.";
-    l.simple({ top, bottom, left, right, result });
+    l.simple({ top, bottom, left, right });
+    l.arrayV3({ result }, []);
     l.breakpoint(7);
 
     // Traverse left
@@ -123,7 +128,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
       for (let j = right; j >= left; j--) {
         result.push(matrix[bottom][j]);
         l.comment = `Add element matrix[${bottom}][${j}] (${matrix[bottom][j]}) to result.`;
-        l.simple({ top, bottom, left, right, result, i: bottom, j });
+        l.simple({ top, bottom, left, right, i: bottom, j });
+        l.arrayV3({ result }, []);
         l.grid("matrix", matrix, {
           r: bottom,
           c: j,
@@ -135,7 +141,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
       }
       bottom--;
       l.comment = "Move bottom boundary up.";
-      l.simple({ top, bottom, left, right, result });
+      l.simple({ top, bottom, left, right });
+      l.arrayV3({ result }, []);
       l.breakpoint(10);
     }
 
@@ -159,7 +166,8 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
       for (let i = bottom; i >= top; i--) {
         result.push(matrix[i][left]);
         l.comment = `Add element matrix[${i}][${left}] (${matrix[i][left]}) to result.`;
-        l.simple({ matrix, top, bottom, left, right, result, i, j: left });
+        l.simple({ matrix, top, bottom, left, right, i, j: left });
+        l.arrayV3({ result }, []);
         l.grid("matrix", matrix, {
           r: i,
           c: left,
@@ -171,13 +179,14 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
       }
       left++;
       l.comment = "Move left boundary right.";
-      l.simple({ top, bottom, left, right, result });
+      l.simple({ top, bottom, left, right });
+      l.arrayV3({ result }, []);
       l.breakpoint(13);
     }
   }
 
   l.comment = "All elements traversed. Final result.";
-  l.simple({ result });
+  l.arrayV3({ result }, []);
   l.breakpoint(14);
 
   return l.getSteps();
