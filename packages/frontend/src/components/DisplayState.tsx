@@ -1,4 +1,11 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEye,
+  faEyeSlash,
+  faArrowUp,
+  faArrowDown,
+} from "@fortawesome/free-solid-svg-icons";
 import DisplayArray from "./DisplayArray";
 import DisplaySingleValue from "./DisplaySingleValue";
 import type {
@@ -41,7 +48,12 @@ const Wrapper = ({
   description?: string;
   emoji?: string;
   children: React.ReactNode;
-  variable: Variable;
+  variable: Variable & {
+    onMoveUp?: () => void;
+    onMoveDown?: () => void;
+    isFirst?: boolean;
+    isLast?: boolean;
+  };
   className?: string;
   isMinimized: boolean;
   onToggleMinimize: () => void;
@@ -51,17 +63,23 @@ const Wrapper = ({
       variable.hide ? "opacity-50" : ""
     } ${className || ""} ${isMinimized ? "p-2" : "p-6"}`}
   >
-    <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold flex items-center">
-      {emoji} {label} {variable.hide ? "(not in memory)" : ""}
-      <button
-        onClick={onToggleMinimize}
-        className="ml-2 text-gray-500 hover:text-gray-700"
-        aria-label={isMinimized ? "Expand" : "Minimize"}
-      >
-        {isMinimized ? "➕" : "➖"}
-      </button>
+    <div className="absolute -top-3 left-4 right-4  px-2 text-primary-500 font-semibold flex items-center justify-between">
+      <div className="flex items-center bg-white px-3">
+        {emoji} {label} {variable.hide ? "(not in memory)" : ""}
+      </div>
       {/* Move Up/Down buttons */}
-      <span className="ml-2 flex gap-1">
+      <span className="flex gap-3 bg-white px-3">
+        <button
+          onClick={onToggleMinimize}
+          className="ml-2 text-gray-500 hover:text-gray-700"
+          aria-label={isMinimized ? "Expand" : "Minimize"}
+        >
+          {isMinimized ? (
+            <FontAwesomeIcon icon={faEye} />
+          ) : (
+            <FontAwesomeIcon icon={faEyeSlash} />
+          )}
+        </button>
         <button
           type="button"
           className="text-xs px-1 py-0.5 rounded hover:bg-gray-200"
@@ -69,7 +87,7 @@ const Wrapper = ({
           aria-label="Move Up"
           disabled={variable.isFirst}
         >
-          ↑
+          <FontAwesomeIcon icon={faArrowUp} />
         </button>
         <button
           type="button"
@@ -78,7 +96,7 @@ const Wrapper = ({
           aria-label="Move Down"
           disabled={variable.isLast}
         >
-          ↓
+          <FontAwesomeIcon icon={faArrowDown} />
         </button>
       </span>
     </div>
@@ -178,6 +196,7 @@ function DisplayState({
 
           switch (variable.type) {
             case "number":
+            case "string":
               const numData = variable as SimpleVariable;
               return (
                 <Wrapper

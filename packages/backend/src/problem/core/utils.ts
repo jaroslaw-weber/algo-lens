@@ -53,9 +53,12 @@ function validate(problem?: Problem<any, any>) {
 }
 
 export function asSimpleValue(o: any): SimpleVariable[] {
-  return Object.keys(o).map(
-    (k) => ({ label: k, value: o[k], type: "number" }) as SimpleVariable
-  );
+  return Object.keys(o).map((k) => {
+    const value = o[k];
+    const type = typeof value === "string" ? "string" : "number";
+
+    return { label: k, value, type } as SimpleVariable;
+  });
 }
 
 /** display similar values in a group */

@@ -35,9 +35,15 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
         c: left,
         label: "top row start",
         color: "primary",
-        dir: "right",
+        dir: "top",
       },
-      { r: top, c: right, label: "top row end", color: "primary", dir: "right" }
+      {
+        r: top,
+        c: right,
+        label: "top row end",
+        color: "primary",
+        dir: "bottom",
+      }
     );
     l.breakpoint(2);
     for (let j = left; j <= right; j++) {
@@ -71,7 +77,7 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
         c: right,
         label: "right col start",
         color: "primary",
-        dir: "bottom",
+        dir: "top",
       },
       {
         r: bottom,
@@ -92,7 +98,7 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
         c: right,
         label: "current",
         color: "secondary",
-        dir: "right",
+        dir: "top",
       });
       l.breakpoint(6);
     }
@@ -114,14 +120,14 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
           c: right,
           label: "bottom row start",
           color: "primary",
-          dir: "left",
+          dir: "top",
         },
         {
           r: bottom,
           c: left,
           label: "bottom row end",
           color: "primary",
-          dir: "left",
+          dir: "bottom",
         }
       );
       l.breakpoint(8);
@@ -160,7 +166,13 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
           color: "primary",
           dir: "top",
         },
-        { r: top, c: left, label: "left col end", color: "primary", dir: "top" }
+        {
+          r: top,
+          c: left,
+          label: "left col end",
+          color: "primary",
+          dir: "bottom",
+        }
       );
       l.breakpoint(11);
       for (let i = bottom; i >= top; i--) {
@@ -173,7 +185,7 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
           c: left,
           label: "current",
           color: "secondary",
-          dir: "left",
+          dir: "top",
         });
         l.breakpoint(12);
       }

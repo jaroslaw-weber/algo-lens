@@ -22,7 +22,9 @@ export const variables: VariableMetadata[] = [
     emoji: "👉",
   },
   {
-    name: "currentSubstring",
+    name: "substring",
+    label: "Substring",
+
     description:
       "The substring currently being checked for palindrome property.",
     emoji: "✂️",

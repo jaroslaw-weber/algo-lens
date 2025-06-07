@@ -43,9 +43,9 @@ const factory: PopperFactory = (node, content, opts) => {
 
   function update() {
     computePosition(node, content, popperOptions).then(({ x, y }) => {
-      console.log("x", x);
+      //console.log("x", x);
       const bounding = node.getBoundingClientRect();
-      console.log(bounding);
+      //console.log(bounding);
 
       Object.assign(content.style, {
         left: `${bounding.left}px`,
