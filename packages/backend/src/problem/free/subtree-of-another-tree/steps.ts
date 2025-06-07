@@ -31,11 +31,12 @@ export function getSteps(input: [BinaryTree, BinaryTree]): ProblemState[] {
     function isSameTree(p: BinaryTree, q: BinaryTree): boolean {
       // Log the comparison of two nodes
       l.comment = `Comparing nodes: ${p?.val ?? "null"} and ${q?.val ?? "null"}`;
-      l.tree("root", JSON.parse(JSON.stringify(root)), [
-        { node: p, color: "neutral" },
+      l.tree("root", root, [
+        { node: p, color: "neutral", label: "Root node" },
+        { node: q, color: "neutral", label: "SubRoot node" },
       ]);
-      l.tree("subRoot", JSON.parse(JSON.stringify(subRoot)), [
-        { node: q, color: "neutral" },
+      l.tree("subRoot", subRoot, [
+        { node: q, color: "neutral", label: "SubRoot node" },
       ]);
       l.breakpoint(4);
 
@@ -66,18 +67,20 @@ export function getSteps(input: [BinaryTree, BinaryTree]): ProblemState[] {
       }
 
       l.comment = `Checking if subtree at node ${node.val} matches subRoot.`;
-      l.tree("root", JSON.parse(JSON.stringify(root)), [
-        { node: node, color: "neutral" },
+      l.tree("root", root, [
+        { node: node, color: "neutral", label: "Current node" },
       ]);
-      l.tree("subRoot", JSON.parse(JSON.stringify(subRoot)));
+      l.tree("subRoot", subRoot);
       l.breakpoint(8);
 
       if (isSameTree(node, subRoot)) {
         l.comment = `Found a matching subtree starting at node ${node.val}.`;
-        l.tree("root", JSON.parse(JSON.stringify(root)), [
-          { node: node, color: "good" },
+        l.tree("root", root, [
+          { node: node, color: "good", label: "Match found" },
         ]);
-        l.tree("subRoot", JSON.parse(JSON.stringify(subRoot)));
+        l.tree("subRoot", subRoot, [
+          { node: subRoot, color: "good", label: "Matching subtree" },
+        ]);
         l.breakpoint(9);
         return true;
       }
@@ -100,8 +103,8 @@ export function getSteps(input: [BinaryTree, BinaryTree]): ProblemState[] {
   }
 
   l.comment = `Final result: ${result ? "SubRoot is a subtree." : "SubRoot is NOT a subtree."}`;
-  l.tree("root", JSON.parse(JSON.stringify(root)));
-  l.tree("subRoot", JSON.parse(JSON.stringify(subRoot)));
+  l.tree("root", root);
+  l.tree("subRoot", subRoot);
   l.simple({ result: result }); // Log the final result
   l.breakpoint(11); // Save the state with the final result
   return l.getSteps();
