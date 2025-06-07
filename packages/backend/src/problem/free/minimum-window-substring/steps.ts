@@ -44,7 +44,7 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
 
     l.arrayV3({ s: s.split("") }, [{ value: windowEnd, label: "windowEnd" }]);
     l.comment = `Expand window to include character '${char}' at index ${windowEnd}.`;
-    l.breakpoint(2 + windowEnd * 10); // Unique breakpoint for each expansion
+    l.breakpoint(2); // Unique breakpoint for each expansion
 
     if (tCharCount.has(char)) {
       windowCharCount.set(char, (windowCharCount.get(char) || 0) + 1);
@@ -54,13 +54,13 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
         highlights: [{ key: char, color: "primary" }],
       });
       l.comment = `Character '${char}' is in t. Increment its count in windowCharCount.`;
-      l.breakpoint(3 + windowEnd * 10);
+      l.breakpoint(3);
 
       if (windowCharCount.get(char)! === tCharCount.get(char)!) {
         matchedChars++;
         l.simple({ matchedChars });
         l.comment = `Matched a required character. matchedChars: ${matchedChars}.`;
-        l.breakpoint(4 + windowEnd * 10);
+        l.breakpoint(4);
       }
     }
 
@@ -69,14 +69,14 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
       const currentWindowLength = windowEnd - windowStart + 1;
       l.simple({ currentWindowLength });
       l.comment = `Current window is valid. Length: ${currentWindowLength}.`;
-      l.breakpoint(5 + windowEnd * 10);
+      l.breakpoint(5);
 
       if (currentWindowLength < minLen) {
         minLen = currentWindowLength;
         minWindow = s.substring(windowStart, windowEnd + 1);
         l.simple({ minLen, minWindow });
         l.comment = `Found a new minimum window: "${minWindow}" with length ${minLen}.`;
-        l.breakpoint(6 + windowEnd * 10);
+        l.breakpoint(6);
       }
 
       const leftChar = s[windowStart];
@@ -85,14 +85,14 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
         { value: windowEnd, label: "windowEnd" },
       ]);
       l.comment = `Shrink window from left. Character at windowStart (${windowStart}): '${leftChar}'.`;
-      l.breakpoint(7 + windowEnd * 10);
+      l.breakpoint(7);
 
       if (tCharCount.has(leftChar)) {
         if (windowCharCount.get(leftChar)! === tCharCount.get(leftChar)!) {
           matchedChars--;
           l.simple({ matchedChars });
           l.comment = `Removing '${leftChar}' will break a match. Decrement matchedChars.`;
-          l.breakpoint(8 + windowEnd * 10);
+          l.breakpoint(8);
         }
         windowCharCount.set(leftChar, windowCharCount.get(leftChar)! - 1);
         l.hashmapV2({
@@ -101,18 +101,18 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
           highlights: [{ key: leftChar, color: "warning" }],
         });
         l.comment = `Decrement count of '${leftChar}' in windowCharCount.`;
-        l.breakpoint(9 + windowEnd * 10);
+        l.breakpoint(9);
       }
       windowStart++;
       l.simple({ windowStart });
       l.comment = `Move windowStart to ${windowStart}.`;
-      l.breakpoint(10 + windowEnd * 10);
+      l.breakpoint(10);
     }
   }
 
   l.simple({ result: minWindow });
   l.comment = `Final minimum window substring: "${minWindow}".`;
-  l.breakpoint(999); // Final breakpoint
+  l.breakpoint(11); // Final breakpoint
 
   return l.getSteps();
 }
