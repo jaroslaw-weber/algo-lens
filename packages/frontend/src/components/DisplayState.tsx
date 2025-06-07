@@ -34,6 +34,8 @@ const Wrapper = ({
   children,
   variable,
   className,
+  isMinimized,
+  onToggleMinimize,
 }: {
   label: string;
   description?: string;
@@ -41,23 +43,57 @@ const Wrapper = ({
   children: React.ReactNode;
   variable: Variable;
   className?: string;
+  isMinimized: boolean;
+  onToggleMinimize: () => void;
 }) => (
   <div
-    className={`border border-primary shadow rounded-xl p-6 relative ${
+    className={`border border-primary shadow rounded-xl relative ${
       variable.hide ? "opacity-50" : ""
-    } ${className || ""}`}
+    } ${className || ""} ${isMinimized ? "p-2" : "p-6"}`}
   >
-    <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold">
+    <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold flex items-center">
       {emoji} {label} {variable.hide ? "(not in memory)" : ""}
+      <button
+        onClick={onToggleMinimize}
+        className="ml-2 text-gray-500 hover:text-gray-700"
+        aria-label={isMinimized ? "Expand" : "Minimize"}
+      >
+        {isMinimized ? "➕" : "➖"}
+      </button>
+      {/* Move Up/Down buttons */}
+      <span className="ml-2 flex gap-1">
+        <button
+          type="button"
+          className="text-xs px-1 py-0.5 rounded hover:bg-gray-200"
+          onClick={variable.onMoveUp}
+          aria-label="Move Up"
+          disabled={variable.isFirst}
+        >
+          ↑
+        </button>
+        <button
+          type="button"
+          className="text-xs px-1 py-0 rounded hover:bg-gray-200"
+          onClick={variable.onMoveDown}
+          aria-label="Move Down"
+          disabled={variable.isLast}
+        >
+          ↓
+        </button>
+      </span>
     </div>
-    {description && <p className="text-xs text-gray-500 mb-2">{description}</p>}
-    {children}
+    {description && !isMinimized && (
+      <p className="text-xs text-gray-500 mb-2">{description}</p>
+    )}
+    {!isMinimized && children}
   </div>
 );
 
 function getWrapperClassName() {
   return "col-span-2 lg:col-span-1";
 }
+
+import { useState } from "react";
 
 function DisplayState({
   state,
@@ -66,18 +102,55 @@ function DisplayState({
   state: any;
   problem: Problem<any, any>;
 }) {
+  const [minimizedState, setMinimizedState] = useState<Record<string, boolean>>(
+    {}
+  );
+  const [order, setOrder] = useState<string[]>(() =>
+    (state?.variables as Variable[]).map((v) => v.label)
+  );
+
+  const handleToggleMinimize = (label: string) => {
+    setMinimizedState((prevState) => ({
+      ...prevState,
+      [label]: !prevState[label],
+    }));
+  };
+
+  const handleMove = (label: string, direction: "up" | "down") => {
+    setOrder((prevOrder) => {
+      const idx = prevOrder.indexOf(label);
+      if (idx === -1) return prevOrder;
+      const newOrder = [...prevOrder];
+      if (direction === "up" && idx > 0) {
+        [newOrder[idx - 1], newOrder[idx]] = [newOrder[idx], newOrder[idx - 1]];
+      }
+      if (direction === "down" && idx < newOrder.length - 1) {
+        [newOrder[idx + 1], newOrder[idx]] = [newOrder[idx], newOrder[idx + 1]];
+      }
+      return newOrder;
+    });
+  };
+
   if (!state) {
     return <div>No state provided</div>;
   }
   const metadata = problem.metadata;
   const variables = state.variables as Variable[];
 
+  // Map label to variable for fast lookup
+  const variableMap: Record<string, Variable> = {};
+  variables.forEach((v) => {
+    variableMap[v.label] = v;
+  });
+
   return (
     <div className="lg:flex flex-col min-h-full items-center justify-start">
       {/* Display the breakpoint description */}
 
       <div className="grid grid-cols-2 gap-8 w-full">
-        {variables.map((variable) => {
+        {order.map((label, idx) => {
+          const variable = variableMap[label];
+          if (!variable) return null;
           const groupMeta = metadata!.groups?.find(
             (x) => x.name === variable.label
           );
@@ -91,6 +164,17 @@ function DisplayState({
           const emoji = meta?.emoji;
 
           const className = getWrapperClassName();
+          const isMinimized = minimizedState[variable.label] || false;
+
+          // Add move up/down handlers and flags
+          const isFirst = idx === 0;
+          const isLast = idx === order.length - 1;
+          const moveProps = {
+            onMoveUp: () => handleMove(variable.label, "up"),
+            onMoveDown: () => handleMove(variable.label, "down"),
+            isFirst,
+            isLast,
+          };
 
           switch (variable.type) {
             case "number":
@@ -102,7 +186,9 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={numData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(numData.label)}
                 >
                   <DisplaySingleValue data={numData} />
                 </Wrapper>
@@ -116,7 +202,9 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={arrData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(arrData.label)}
                 >
                   <DisplayArray data={arrData} />
                 </Wrapper>
@@ -130,7 +218,9 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={groupData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(groupData.label)}
                 >
                   <DisplayValueGroup
                     data={groupData}
@@ -147,7 +237,11 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={binaryData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(binaryData.label)
+                  }
                 >
                   <DisplayBinary data={binaryData} />
                 </Wrapper>
@@ -161,7 +255,9 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={boolData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(boolData.label)}
                 >
                   <DisplayBooleanGroup data={boolData} />
                 </Wrapper>
@@ -176,7 +272,11 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={intervalData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(intervalData.label)
+                  }
                 >
                   <DisplayIntervals data={intervalData} />
                 </Wrapper>
@@ -190,7 +290,9 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={treeData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(treeData.label)}
                 >
                   <DisplayTree data={treeData} />
                 </Wrapper>
@@ -204,7 +306,11 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={hashsetData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(hashsetData.label)
+                  }
                 >
                   <DisplayHashset data={hashsetData} />
                 </Wrapper>
@@ -218,7 +324,11 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={hashmapData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(hashmapData.label)
+                  }
                 >
                   <DisplayHashmap data={hashmapData} />
                 </Wrapper>
@@ -232,7 +342,9 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={listData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(listData.label)}
                 >
                   <DisplayLinkedList data={listData} />
                 </Wrapper>
@@ -246,7 +358,11 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={binaryOperationData.label}
-                  variable={variable}
+                  variable={{ ...variable, ...moveProps }}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(binaryOperationData.label)
+                  }
                 >
                   <DisplayBinaryOperation data={binaryOperationData} />
                 </Wrapper>

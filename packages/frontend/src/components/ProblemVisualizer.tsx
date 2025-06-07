@@ -117,7 +117,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   };
 
   return (
-    <div className="mx-8 my-8 flex-1">
+    <div className="mx-2 lg:mx-8 my-8 flex-1">
       <div className="">
         {/* Tab Content Area */}
         <div className="mt-4">
