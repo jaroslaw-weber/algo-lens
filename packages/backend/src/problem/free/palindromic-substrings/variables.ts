@@ -23,6 +23,8 @@ export const variables: VariableMetadata[] = [
   },
   {
     name: "substring",
+    label: "Substring",
+
     description:
       "The substring currently being checked for palindrome property.",
     emoji: "✂️",

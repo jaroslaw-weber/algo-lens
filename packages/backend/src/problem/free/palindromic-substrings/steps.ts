@@ -11,6 +11,7 @@ export function generateSteps(s: string): ProblemState[] {
     max: n * 3,
     min: 0,
   });
+  l.simple({ substring: "" });
 
   l.arrayV3({ s: s.split("") }, []);
   l.group("count", { count });
@@ -25,6 +26,7 @@ export function generateSteps(s: string): ProblemState[] {
     l.group("count", { count });
     l.comment = `Expanding for odd length palindromes around center at index ${i}.`;
     l.breakpoint(2);
+
     expandAroundCenter(s, i, i);
 
     // Even length palindromes (center is s[i] and s[i+1])
@@ -52,6 +54,7 @@ export function generateSteps(s: string): ProblemState[] {
     while (left2 >= 0 && right2 < s.length && s[left2] === s[right2]) {
       // HIDE_START
       const substring = s.substring(left2, right2 + 1);
+      //
       // HIDE_END
       l.arrayV3({ s: s.split("") }, [
         {
@@ -67,10 +70,11 @@ export function generateSteps(s: string): ProblemState[] {
           dir: "bottom",
         } as Pointer,
       ]);
-      l.simple({ substring });
+      l.simple({ substring, isPalindrome: true });
+
       l.group("count", { count }); // Directly use count from outer scope
       l.comment = `Checking substring "${substring}". It is a palindrome.`;
-      l.breakpoint(5);
+      l.breakpoint(4);
 
       count++; // Directly modify count from outer scope
       left2--;
@@ -82,7 +86,7 @@ export function generateSteps(s: string): ProblemState[] {
   l.group("count", { count });
   l.comment =
     "All possible centers processed. Total palindromic substrings found.";
-  l.breakpoint(4);
+  l.breakpoint(5);
 
   // Log the final count as "result" for testing purposes
   l.simple({ result: count });

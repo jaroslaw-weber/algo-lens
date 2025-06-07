@@ -18,8 +18,8 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   // Memoized helper to get pointer info (style and label) for a cell
   const getCellPointerInfo = useMemo(() => {
     return (rowIndex: number, colIndex: number) => {
-      console.log("pointers", pointers);
-      console.log("rowindex:", rowIndex, "colIndex", colIndex)
+      //console.log("pointers", pointers);
+      //console.log("rowindex:", rowIndex, "colIndex", colIndex)
       if (is2D) {
         const pointer = pointers?.find(
           (x) =>

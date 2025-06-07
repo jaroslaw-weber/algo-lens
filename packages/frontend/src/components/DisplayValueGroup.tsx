@@ -113,7 +113,7 @@ const DisplayValueGroup: React.FC<DisplayBarChartProps> = ({
     const bgColor = color[i % color.length];
     const meta = variables.find((v => v.name == x.label));
     const desc = meta?.description
-    console.log("x", x, meta)
+    //console.log("x", x, meta)
     progressBars.push(
       <div className="flex flex-col gap-1 w-full">
         <p className="text-xs text-gray-600">{meta?.emoji} {x.label}</p>

@@ -196,6 +196,7 @@ function DisplayState({
 
           switch (variable.type) {
             case "number":
+            case "string":
               const numData = variable as SimpleVariable;
               return (
                 <Wrapper
