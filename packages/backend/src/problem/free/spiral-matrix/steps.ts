@@ -4,7 +4,9 @@ import { SpiralMatrixInput, SpiralMatrixOutput } from "./types";
 
 export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
   const l = new StepLoggerV2();
+  // HIDE_START
   const matrix = input.matrix;
+  // HIDE_END
   const m = matrix.length;
   const n = matrix[0].length;
 
@@ -12,10 +14,12 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
   let bottom = m - 1;
   let left = 0;
   let right = n - 1;
-  const result: SpiralMatrixOutput = [];
+  const result: number[][] = [];
 
   l.comment = "Initialize boundaries and result array.";
-  l.simple({ matrix, m, n, top, bottom, left, right, result });
+  l.arrayV3({ result }, []);
+  l.simple({ m, n, top, bottom, left, right, result });
+  l.grid("matrix", matrix);
   l.breakpoint(1);
 
   while (top <= bottom && left <= right) {
@@ -38,7 +42,7 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
     for (let j = left; j <= right; j++) {
       result.push(matrix[top][j]);
       l.comment = `Add element matrix[${top}][${j}] (${matrix[top][j]}) to result.`;
-      l.simple({ matrix, top, bottom, left, right, result, i: top, j });
+      l.simple({ top, bottom, left, right, result, i: top, j });
       l.grid("matrix", matrix, {
         r: top,
         c: j,
@@ -78,7 +82,7 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
     for (let i = top; i <= bottom; i++) {
       result.push(matrix[i][right]);
       l.comment = `Add element matrix[${i}][${right}] (${matrix[i][right]}) to result.`;
-      l.simple({ matrix, top, bottom, left, right, result, i, j: right });
+      l.simple({ top, bottom, left, right, result, i, j: right });
       l.grid("matrix", matrix, {
         r: i,
         c: right,
@@ -119,7 +123,7 @@ export function generateSteps(input: SpiralMatrixInput): ProblemState[] {
       for (let j = right; j >= left; j--) {
         result.push(matrix[bottom][j]);
         l.comment = `Add element matrix[${bottom}][${j}] (${matrix[bottom][j]}) to result.`;
-        l.simple({ matrix, top, bottom, left, right, result, i: bottom, j });
+        l.simple({ top, bottom, left, right, result, i: bottom, j });
         l.grid("matrix", matrix, {
           r: bottom,
           c: j,
