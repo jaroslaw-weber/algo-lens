@@ -13,7 +13,7 @@ export const testcases: TestCase<PalindromicSubstringsInput, ProblemState>[] = [
     name: "Level",
     description: "Another simple palindrome.",
     input: "level",
-    expected: 6,
+    expected: 7,
   },
   {
     name: "Madam",
@@ -25,7 +25,7 @@ export const testcases: TestCase<PalindromicSubstringsInput, ProblemState>[] = [
     name: "Aabbaa",
     description: "Contains multiple palindromic substrings.",
     input: "aabbaa",
-    expected: 10,
+    expected: 11,
   },
   {
     name: "Google",
@@ -37,6 +37,6 @@ export const testcases: TestCase<PalindromicSubstringsInput, ProblemState>[] = [
     name: "Banana",
     description: "Contains 'ana' and 'anana'.",
     input: "banana",
-    expected: 8,
+    expected: 10,
   },
 ];
