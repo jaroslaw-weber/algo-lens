@@ -11,9 +11,12 @@ export function getSteps(root: BinaryTree): ProblemState[] {
     }
 
     l.comment = `Inverting node with value ${node.val}`;
-    l.tree("root", JSON.parse(JSON.stringify(root)), [
-      { node: node, color: "neutral" },
+    l.tree("root", root, [
+      { node: node, color: "neutral", label: "current" },
+      { node: node.left, color: "good", label: "left" },
+      { node: node.right, color: "bad", label: "right" },
     ]);
+
     l.breakpoint(1);
 
     const left = invert(node.left);
@@ -23,8 +26,10 @@ export function getSteps(root: BinaryTree): ProblemState[] {
     node.right = left;
 
     l.comment = `Swapped children of node with value ${node.val}`;
-    l.tree("root", JSON.parse(JSON.stringify(root)), [
-      { node: node, color: "neutral" },
+    l.tree("root", root, [
+      { node: node, color: "neutral", label: "current" },
+      { node: node.left, color: "bad", label: "left (swapped)" },
+      { node: node.right, color: "good", label: "right (swapped)" },
     ]);
 
     l.breakpoint(2);
