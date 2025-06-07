@@ -27,11 +27,13 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
   l.hashmapV2({
     map: tCharCount,
     label: "T Character Count",
+    highlights: [],
   });
   l.simple({ minLen, minWindow, matchedChars });
   l.hashmapV2({
     map: windowCharCount,
     label: "Window Character Count",
+    highlights: [],
   });
   l.comment = "Initialize character counts for t and sliding window variables.";
   l.breakpoint(1);
