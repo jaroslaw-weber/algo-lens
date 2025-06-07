@@ -70,15 +70,25 @@ function ProblemsList() {
                 <a
                   key={id}
                   href={`/problem/visualize?id=${id}`}
-                  className="card border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-300 block" // Updated classes for outline style
-                  onClick={() => trackUmamiEvent('click-problem-list-item', { problemId: id, title: title })}
+                  className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-shadow duration-300 text-primary block" // Added subtle hover shadow
+                  onClick={() =>
+                    trackUmamiEvent("click-problem-list-item", {
+                      problemId: id,
+                      title: title,
+                    })
+                  }
                 >
-                  <div className="card-body flex-row justify-between items-center">
-                    <h2 className="card-title">
-                      {emoji && <span className="mr-2">{emoji}</span>}
-                      {title}
-                    </h2>
-
+                  <div className="card-body flex items-center">
+                    {" "}
+                    {/* Adjusted card-body for better layout */}
+                    {emoji && <div className="text-4xl mr-4">{emoji}</div>}{" "}
+                    {/* Increased emoji size and added margin */}
+                    <div className="flex-grow">
+                      {" "}
+                      {/* Container for title, takes available space */}
+                      <p className="">{title}</p>{" "}
+                      {/* Adjusted title size and weight */}
+                    </div>
                     {/* Bookmark button */}
                     {pb.authStore.isValid && ( // Only show button if user is logged in
                       <BookmarkButton
