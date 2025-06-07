@@ -1,3 +1,4 @@
+export { LinkedListSerializer } from "./LinkedListSerializer";
 export interface ProblemMetadata {
   variables: VariableMetadata[];
   groups?: GroupMetadata[];
@@ -6,8 +7,9 @@ export interface ProblemMetadata {
 export interface TestCase<Input, State> {
   input: Input;
   expected: any;
-  name?: string;
-  description?: string;
+  name: string;
+  serializer?: string;
+  description: string; // Changed to required based on testcase-guidelines.md
   isDefault?: boolean;
 }
 
@@ -93,7 +95,7 @@ export interface Pointer {
   value: number;
 
   /** Color of the pointer. */
-  color?: string;
+  color?: "primary" | "neutral" | "success" | "warning" | "error" | "accent";
 
   label?: string;
   dir?: "left" | "right" | "top" | "bottom";
@@ -230,10 +232,16 @@ export interface TreeVariable extends Variable {
   highlight: NodeHighlight[];
 }
 
+export interface SerializedListNode {
+  id: string; // Unique identifier for the serialized node
+  next: string | null; // ID of the next node in the linked list
+  value: number | string;
+}
+
 export interface ListVariable extends Variable {
   type: "list"; // Specify the variable type as "list"
   label: string; // Descriptive label for the variable
-  value: ListNode | null; // The head node of the linked list
+  value: ListNode | SerializedListNode[] | null; // nodes or head node
   highlight: NodeHighlight[]; // Array of nodes to be highlighted with specific colors
 }
 
@@ -256,8 +264,12 @@ export type ThemeColor =
 export type HighlightColor = "good" | "bad" | "neutral";
 
 export interface NodeHighlight {
-  node?: BinaryTreeNode | ListNode | null;
+  node?: BinaryTreeNode | ListNode | null | SerializedListNode;
   color: HighlightColor;
+  label?: string;
+  tooltip?: {
+    position: "top" | "bottom";
+  };
 }
 /** Represents a state in a problem-solving process, containing an array of Variables and a breakpoint identifier. */
 export interface ProblemState {

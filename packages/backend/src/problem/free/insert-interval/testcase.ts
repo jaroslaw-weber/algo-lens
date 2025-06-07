@@ -5,6 +5,8 @@ import { InsertIntervalInput } from "./types";
 // Corrected TestCase signature to use tuple input and number[][] output
 export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
   {
+    name: "Overlap with one interval",
+    description: "New interval overlaps with one existing interval.",
     input: [
       [
         [1, 3],
@@ -18,6 +20,8 @@ export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
     ],
   },
   {
+    name: "Overlap with multiple intervals",
+    description: "New interval overlaps with multiple existing intervals.",
     input: [
       [
         [1, 2],
@@ -35,11 +39,15 @@ export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
     ],
   },
   {
+    name: "Insert into empty intervals",
+    description: "Insert a new interval into an empty list of intervals.",
     input: [[], [5, 7]],
     expected: [[5, 7]],
   },
   {
-    // Changed from [[[1, 5]], [2, 3]] to a more complex case
+    name: "Default: Overlap multiple",
+    description:
+      "Default test case: new interval overlaps with multiple existing intervals.",
     input: [
       [
         [1, 2],
@@ -58,6 +66,9 @@ export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
     isDefault: true,
   },
   {
+    name: "No overlap, insert after",
+    description:
+      "New interval does not overlap and is inserted after existing intervals.",
     input: [[[1, 5]], [6, 8]],
     expected: [
       [1, 5],
@@ -65,6 +76,9 @@ export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
     ],
   },
   {
+    name: "No overlap, insert before",
+    description:
+      "New interval does not overlap and is inserted before existing intervals.",
     input: [[[6, 8]], [1, 5]],
     expected: [
       [1, 5],
@@ -72,6 +86,8 @@ export const testcases: TestCase<InsertIntervalInput, ProblemState>[] = [
     ],
   },
   {
+    name: "Merge touching intervals",
+    description: "New interval merges two touching intervals.",
     input: [
       [
         [1, 5],

@@ -4,6 +4,23 @@ import { cloneDeep, last, isEqual } from "lodash";
 import { describe, it, expect } from "bun:test";
 import { loadProblemWithId } from "./load";
 
+// Helper function to recursively remove 'id' properties
+function stripIds(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(stripIds);
+  }
+  if (typeof obj === "object" && obj !== null) {
+    const newObj: { [key: string]: any } = {};
+    for (const key in obj) {
+      if (key !== "id") {
+        newObj[key] = stripIds(obj[key]);
+      }
+    }
+    return newObj;
+  }
+  return obj;
+}
+
 export async function runTests(problem: Problem<any, ProblemState>) {
   // problem = cloneDeep(problem);
   const { testcases, metadata } = problem;
@@ -32,7 +49,8 @@ export async function runTests(problem: Problem<any, ProblemState>) {
   for (let i = 0; i < problem.testcases.length; i++) {
     const testcase = problem.testcases[i];
     const input = cloneDeep(testcase.input);
-    const expected = cloneDeep(testcase.expected);
+    let expected = cloneDeep(testcase.expected);
+    expected = stripIds(expected); // Apply stripIds to expected as well
     const func = problem.func;
     //for (const func of [problem.func]) {
     const states = func(input);
@@ -50,33 +68,35 @@ export async function runTests(problem: Problem<any, ProblemState>) {
       : //@ts-expect-error
         result.values;
     ////
-    if (!isEqual(value, expected)) {
+    const cleanedValue = stripIds(value); // Apply the helper function
+
+    if (!isEqual(cleanedValue, expected)) {
+      // Compare cleanedValue
       console.error(
         `Test case #${i} failed. Description: ${testcase.description}`
       );
       console.log("testcases", testcases);
       console.log("input", input);
-      console.error("value", value);
+      console.error("value", cleanedValue); // Log cleanedValue
       console.error("expected", expected);
       console.log("first state", states[0]);
     }
-    expect(value).toEqual(expected);
+    expect(cleanedValue).toEqual(expected); // Compare cleanedValue
     const loaded = await loadProblemWithId(problem.id);
     const code = loaded?.code;
     expect(code).toBeTruthy();
+    expect(code?.includes("logger."), "use l. instead of logger.").toBeFalse();
 
-    expect(code!.includes("FORMATTING ERROR")).toBeFalse();
+    expect(code?.includes(" function function")).toBeFalse();
+
+    expect(
+      code!.includes("FORMATTING ERROR"),
+      "formatting error! code: \n" + code
+    ).toBeFalse();
     expect(code!.includes("l.getSteps")).toBeFalse();
+    expect(code!.includes(`function getSteps(`)).toBeFalse();
     expect(code!.includes(`l.array`)).toBeFalse();
     expect(code!.includes("l.comment")).toBeFalse();
     expect(code!.includes("return result")).toBeTrue();
-    /**
-    // 
-      `Test case passed: ${JSON.stringify(input)} -> ${JSON.stringify(
-        value
-      )}`
-    );
-    **/
-    //}
   }
 }

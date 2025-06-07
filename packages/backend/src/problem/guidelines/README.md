@@ -10,6 +10,7 @@ These guidelines cover fundamental aspects of problem definition and visualizati
 
 - [**Steps Guidelines**](./steps-guidelines.md): Comprehensive guide for writing algorithm steps and comments for visualization in `steps.ts`, including `StepLoggerV2` usage, examples, and best practices.
 - [**Variables Guidelines**](./variables-guidelines.md): Best practices for describing and managing variables in `variables.ts`, crucial for accurate visualization.
+- [**Common Issues and Troubleshooting**](./common-issues-guidelines.md): A guide to common errors and their solutions encountered during problem creation and fixing.
 
 ---
 

@@ -20,6 +20,7 @@ import {
   problemStateWithTestcaseParamsSchema,
   problemSizeWithTestcaseParamsSchema,
 } from "./problem/schemas";
+import { TestCase } from "algo-lens-core";
 
 const app = new Hono<{ Variables: AuthEnv["Variables"] }>();
 
@@ -91,13 +92,22 @@ app.get("/problem/:id", async (c) => {
     "metadata",
     "description",
     "explanation",
-    "testcases",
   ]);
+  //@ts-expect-error
+  rendered.testcases = cleanTestcases(problem.testcases);
   if (Object.keys(rendered).length === 0) {
     throw new Error("invalid problem: " + problem);
   }
   return c.json(rendered);
 });
+
+function cleanTestcases(testcases: TestCase<any, any>[]) {
+  return testcases.map((tc) => ({
+    name: tc.name,
+    description: tc.description,
+    isDefault: tc.isDefault,
+  }));
+}
 
 app.get(
   "/problem/:problemId/testcase/:testcaseNumber/state/:step",
@@ -108,7 +118,9 @@ app.get(
     // Convert 1-based testcaseNumber to 0-based index
     const testcaseIndex = testcaseNumber - 1;
 
+    console.log("getting state");
     const state = await getProblemStateService(problemId, testcaseIndex, step);
+    console.log("got state", state);
 
     const preserialized = preserialize(state!);
     return c.json(preserialized);

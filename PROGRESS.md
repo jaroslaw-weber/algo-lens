@@ -3,13 +3,13 @@
 ### Array
 - [x] Two Sum
 - [x] Best Time to Buy and Sell Stock
-- [ ] Contains Duplicate
+- [x] Contains Duplicate
 - [x] Product of Array Except Self
 - [x] Maximum Subarray
 - [ ] Maximum Product Subarray
 - [ ] Find Minimum in Rotated Sorted Array
-- [ ] Search in Rotated Sorted Array
-- [ ] 3 Sum
+- [x] Search in Rotated Sorted Array
+- [x] 3 Sum
 - [x] Container With Most Water
 
 ### Binary
@@ -22,7 +22,7 @@
 ### Dynamic Programming
 - [x] Climbing Stairs
 - [x] Coin Change
-- [ ] Longest Increasing Subsequence
+- [x] Longest Increasing Subsequence
 - [ ] Longest Common Subsequence
 - [x] Word Break Problem
 - [ ] Combination Sum
@@ -34,7 +34,7 @@
 
 ### Graph
 - [ ] Clone Graph
-- [ ] Course Schedule
+- [x] Course Schedule
 - [ ] Pacific Atlantic Water Flow
 - [x] Number of Islands
 - [ ] Longest Consecutive Sequence
@@ -46,7 +46,7 @@
 - [ ] Insert Interval
 - [x] Merge Intervals
 - [x] Non-overlapping Intervals
-- [ ] Meeting Rooms (Leetcode Premium)
+- [x] Meeting Rooms (Leetcode Premium)
 - [ ] Meeting Rooms II (Leetcode Premium)
 
 ### Linked List
@@ -64,25 +64,25 @@
 - [ ] Word Search
 
 ### String
-- [ ] Longest Substring Without Repeating Characters
+- [x] Longest Substring Without Repeating Characters
 - [ ] Longest Repeating Character Replacement
-- [ ] Minimum Window Substring
-- [ ] Valid Anagram
-- [ ] Group Anagrams
+- [x] Minimum Window Substring
+- [x] Valid Anagram
+- [x] Group Anagrams
 - [ ] Valid Parentheses
 - [ ] Valid Palindrome
 - [ ] Longest Palindromic Substring
-- [ ] Palindromic Substrings
+- [x] Palindromic Substrings
 - [ ] Encode and Decode Strings (Leetcode Premium)
 
 ### Tree
-- [ ] Maximum Depth of Binary Tree
+- [x] Maximum Depth of Binary Tree
 - [x] Same Tree
-- [ ] Invert/Flip Binary Tree
+- [x] Invert/Flip Binary Tree
 - [ ] Binary Tree Maximum Path Sum
 - [ ] Binary Tree Level Order Traversal
 - [ ] Serialize and Deserialize Binary Tree
-- [ ] Subtree of Another Tree
+- [x] Subtree of Another Tree
 - [ ] Construct Binary Tree from Preorder and Inorder Traversal
 - [ ] Validate Binary Search Tree
 - [ ] Kth Smallest Element in a BST

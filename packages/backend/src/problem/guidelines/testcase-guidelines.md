@@ -14,7 +14,7 @@ To define the specific input and expected output for each test case, allowing fo
 
 Each test case should be an object with the following properties:
 
-- **`id` (number):** A unique identifier for the test case.
+- **`name` (string):** A unique name for the test case.
 - **`description` (string):** A clear and concise description of what this test case is testing (e.g., "basic positive numbers", "empty array", "large input").
 - **`input` (object):** An object containing the input variables for the problem's function. The keys should match the parameter names of the problem's function.
 - **`expected` (any):** The expected output from the problem's function for the given input.
@@ -24,36 +24,38 @@ Each test case should be an object with the following properties:
 ## 3. Example Template
 
 ```ts
-import { ProblemTestcase } from "../../types/problem"; // Assuming ProblemTestcase is defined
+import { ProblemState, TestCase } from "algo-lens-core";
+import { ThreeSumInput } from "./types";
 
-export const testcases: ProblemTestcase[] = [
+export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [
   {
-    id: 0,
-    description: "Basic case with positive numbers",
+    name: "Basic Positive",
+    description: "This test case covers a fundamental scenario with an array of positive integers and a target sum that can be achieved by summing two elements within the array. It validates the basic functionality of finding the correct indices.",
     input: { nums: [2, 7, 11, 15], target: 9 },
     expected: [0, 1],
+    isDefault: true,
   },
   {
-    id: 1,
-    description: "Case with negative numbers",
+    name: "Negative Numbers",
+    description: "This test case evaluates the solution's ability to handle arrays containing negative numbers. The target sum is also negative, requiring the algorithm to correctly identify two negative numbers that sum up to the target.",
     input: { nums: [-1, -2, -3, -4], target: -3 },
     expected: [0, 1],
   },
   {
-    id: 2,
-    description: "Empty array input",
+    name: "Empty Array",
+    description: "This test case specifically checks the behavior of the solution when provided with an empty input array. It ensures that the algorithm gracefully handles this edge case and returns an empty result as expected.",
     input: { nums: [], target: 0 },
     expected: [],
   },
   {
-    id: 3,
-    description: "Single element array",
+    name: "Single Element",
+    description: "This test case examines the solution's response to an array containing only a single element. It's crucial for verifying edge case handling where a pair cannot be formed.",
     input: { nums: [5], target: 5 },
     expected: [], // Or appropriate expected output for single element
   },
   {
-    id: 4,
-    description: "Large input array",
+    name: "Large Input",
+    description: "This test case is designed to assess the performance and efficiency of the solution when dealing with a very large input array. It helps identify potential bottlenecks or scalability issues.",
     input: { nums: Array.from({ length: 10000 }, (_, i) => i), target: 19999 },
     expected: [9999, 10000],
   },

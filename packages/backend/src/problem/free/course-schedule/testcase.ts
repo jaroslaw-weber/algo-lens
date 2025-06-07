@@ -5,6 +5,7 @@ import { CourseScheduleInput } from "./types";
 // Reverted TestCase signature to use tuple input type - Keeping this comment as it was in the original
 export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
   {
+    name: "Direct Cycle",
     input: [
       2,
       [
@@ -16,6 +17,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 1: Direct cycle (0 -> 1, 1 -> 0)",
   },
   {
+    name: "Self-loop Cycle",
     input: [
       2,
       [
@@ -27,6 +29,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 2: Self-loop cycle (1 -> 1)",
   },
   {
+    name: "Valid DAG",
     input: [
       3,
       [
@@ -39,6 +42,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 3: Valid DAG (0 -> 1, 2 -> 1, 0 -> 2)",
   },
   {
+    name: "Linear Dependency Chain",
     input: [
       4,
       [
@@ -51,16 +55,19 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 4: Linear dependency chain (0 -> 1 -> 2 -> 3)",
   },
   {
+    name: "Edge Case - 0 Courses",
     input: [0, []],
     expected: true,
     description: "Test Case 5: Edge case - 0 courses",
   },
   {
+    name: "Edge Case - 1 Course",
     input: [1, []],
     expected: true,
     description: "Test Case 6: Edge case - 1 course, no prerequisites",
   },
   {
+    name: "Medium Valid DAG",
     // Changed from [3, []] to a more complex DAG
     input: [
       6,
@@ -78,6 +85,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     isDefault: true,
   },
   {
+    name: "Disconnected Components",
     input: [
       5,
       [
@@ -90,6 +98,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 8: Disconnected components",
   },
   {
+    name: "Longer Cycle (3 nodes)",
     input: [
       3,
       [
@@ -102,6 +111,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 9: Longer cycle (3 nodes)",
   },
   {
+    name: "Multiple Cycles Disconnected",
     input: [
       4,
       [
@@ -115,6 +125,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 10: Multiple cycles in disconnected components",
   },
   {
+    name: "Larger Valid DAG",
     input: [
       6,
       [
@@ -130,6 +141,7 @@ export const testcases: TestCase<CourseScheduleInput, ProblemState>[] = [
     description: "Test Case 11: Larger valid DAG",
   },
   {
+    name: "Complex DAG with Multiple Paths",
     input: [
       // Added another complex DAG case
       7,

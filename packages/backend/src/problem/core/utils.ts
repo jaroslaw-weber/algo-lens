@@ -20,6 +20,7 @@ import {
   VariableMetadata,
   LabeledInterval,
   LabeledIntervalVariable,
+  LinkedListSerializer,
 } from "algo-lens-core";
 import { getAllProblems } from "./list";
 
@@ -30,14 +31,18 @@ export async function getRandomProblem() {
 
 export async function getProblemById(id: string) {
   ////
+  console.log("get problem by id");
   const all = await getAllProblems();
+  console.log("all problems read");
 
   const problems = all.filter((p) => p.id === id);
   if (problems.length > 1) {
     throw new Error("duplicate!");
   }
   const problem = problems[0];
+  console.log("validating");
   validate(problem);
+  console.log("validated");
   return problem;
 }
 
@@ -127,15 +132,15 @@ export function asList(
   value?: ListNode | null,
   highlight?: NodeHighlight[]
 ): ListVariable {
-  // Add random IDs starting from 1
-  //clone list
-  const list = value ? cloneList(value) : null;
-  addRandomIdsToList(list, 1);
+  const serialized = LinkedListSerializer.serialize(value ?? null);
+  //console.log("serialized list: " + serialized);
+  const serializedHighlights =
+    LinkedListSerializer.serializeHighlights(highlight);
   return {
     type: "list",
     label,
-    value: list,
-    highlight: highlight?.filter((x) => x.node) ?? [],
+    value: serialized,
+    highlight: serializedHighlights,
   };
 }
 

@@ -1,5 +1,5 @@
 {
-  "include": ["src","types", "../backend/src/problem/core/utils.ts"], // Include the 'src' directory
+  "include": ["src", "types"], // Include the 'src' directory
   "exclude": ["node_modules", "dist"], // Exclude 'node_modules' and 'dist' directories
 
   "compilerOptions": {
