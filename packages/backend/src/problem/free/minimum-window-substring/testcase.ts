@@ -1,7 +1,7 @@
 import { TestCase } from "algo-lens-core";
-import { MinimumWindowSubstringTypes } from "./types";
+import { MinimumWindowSubstringInput } from "./types";
 
-export const testcases: TestCase<MinimumWindowSubstringTypes, string>[] = [
+export const testcases: TestCase<MinimumWindowSubstringInput, string>[] = [
   {
     name: "Example 1",
     description: "Basic case with a clear minimum window.",

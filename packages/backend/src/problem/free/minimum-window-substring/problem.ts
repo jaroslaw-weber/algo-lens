@@ -1,24 +1,23 @@
-import { Problem } from "../../../algo-lens-core/types/core";
+import { Problem, ProblemState } from "algo-lens-core";
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
 import { groups } from "./groups";
-import { explanation } from "./explanation.md";
-import { MinimumWindowSubstringTypes } from "./types";
+import { MinimumWindowSubstringInput } from "./types";
 
-export const minimumWindowSubstring: Problem<MinimumWindowSubstringTypes> = {
+export const problem: Problem<MinimumWindowSubstringInput, ProblemState> = {
   id: "minimum-window-substring",
   title: "Minimum Window Substring",
   emoji: "🪟",
-  difficulty: "Hard",
+  difficulty: "hard",
   tags: ["String", "Hash Map", "Sliding Window"],
-  generateSteps,
+  func: generateSteps,
+  metadata: {
+    variables,
+    groups,
+  },
   testcases,
-  explanation,
-  variables,
-  groups,
-  codeGenerationSignature: {
+  codegen: {
     signature: "function minWindow(s: string, t: string): string",
-    name: "minWindow",
   },
 };

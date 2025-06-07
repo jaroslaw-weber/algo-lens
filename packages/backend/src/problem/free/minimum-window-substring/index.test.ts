@@ -1,7 +1,7 @@
 import { it } from "bun:test";
-import { minimumWindowSubstring } from "./problem";
+import { problem } from "./problem";
 import { runTests } from "../../core/test";
 
-it(minimumWindowSubstring.id, async () => {
-  await runTests(minimumWindowSubstring);
+it(problem.id, async () => {
+  await runTests(problem);
 });
