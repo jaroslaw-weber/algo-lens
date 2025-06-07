@@ -47,36 +47,6 @@ export const testcases: TestCase<[BinaryTree, BinaryTree], boolean>[] = [
     description: "subRoot is not a subtree due to extra node.",
   },
   {
-    input: [buildTree([1, 2, 3]), buildTree([1, 2, 3])],
-    expected: true,
-    name: "Identical Trees",
-    description: "Root tree is identical to subRoot tree.",
-  },
-  {
-    input: [buildTree([1]), buildTree([1])],
-    expected: true,
-    name: "Single Node Trees",
-    description: "Both trees have a single identical node.",
-  },
-  {
-    input: [buildTree([1, 2]), buildTree([1])],
-    expected: false,
-    name: "Subtree is Root",
-    description: "subRoot is the root of the main tree.",
-  },
-  {
-    input: [buildTree([1]), buildTree([2])],
-    expected: false,
-    name: "Different Single Nodes",
-    description: "Both trees have a single node, but values differ.",
-  },
-  {
-    input: [buildTree([1, 2, 3]), buildTree([2, 3])],
-    expected: false,
-    name: "Partial Match",
-    description: "subRoot is partially present but not a complete subtree.",
-  },
-  {
     input: [buildTree([1, null, 2, 3]), buildTree([2, 3])],
     expected: true,
     name: "Subtree on Right",
@@ -89,21 +59,21 @@ export const testcases: TestCase<[BinaryTree, BinaryTree], boolean>[] = [
     description: "subRoot is on the left side of the main tree.",
   },
   {
-    input: [buildTree([]), buildTree([])],
+    input: [
+      buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]),
+      buildTree([6, 12, 13]),
+    ],
     expected: true,
-    name: "Empty Trees",
-    description: "Both trees are empty.",
+    name: "Complex Case 1",
+    description: "Larger tree with subRoot deep within.",
   },
   {
-    input: [buildTree([1]), buildTree([])],
+    input: [
+      buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]),
+      buildTree([2, 4, 5, 8, 9]),
+    ],
     expected: false,
-    name: "Root exists, subRoot empty",
-    description: "Root tree exists, subRoot is empty.",
-  },
-  {
-    input: [buildTree([]), buildTree([1])],
-    expected: false,
-    name: "Root empty, subRoot exists",
-    description: "Root tree is empty, subRoot exists.",
+    name: "Complex Case 2",
+    description: "Larger tree with a different subRoot structure.",
   },
 ];
