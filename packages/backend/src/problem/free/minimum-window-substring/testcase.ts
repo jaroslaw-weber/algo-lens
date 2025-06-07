@@ -33,7 +33,7 @@ export const testcases: TestCase<MinimumWindowSubstringInput, string>[] = [
     description:
       "T contains duplicate characters, requiring all to be matched.",
     input: { s: "ABCA", t: "AAB" },
-    expected: "BCA",
+    expected: "ABCA",
   },
   {
     name: "Longer S, Shorter T",

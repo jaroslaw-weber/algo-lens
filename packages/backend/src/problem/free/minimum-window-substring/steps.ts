@@ -22,21 +22,16 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
 
   const windowCharCount: Map<string, number> = new Map();
 
-  l.simple({ s, t });
+  l.arrayV3({ s: s.split("") }, []);
+  l.arrayV3({ t: t.split("") }, []);
   l.hashmapV2({
-    name: "tCharCount",
     map: tCharCount,
     label: "T Character Count",
-    emoji: "🎯",
-    group: "input",
   });
-  l.simple({ windowStart, minLen, minWindow, matchedChars });
+  l.simple({ minLen, minWindow, matchedChars });
   l.hashmapV2({
-    name: "windowCharCount",
     map: windowCharCount,
     label: "Window Character Count",
-    emoji: "📈",
-    group: "window_state",
   });
   l.comment = "Initialize character counts for t and sliding window variables.";
   l.breakpoint(1);
@@ -45,24 +40,21 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
   for (let windowEnd = 0; windowEnd < s.length; windowEnd++) {
     const char = s[windowEnd];
 
-    l.simple({ windowEnd });
+    l.arrayV3({ s: s.split("") }, [{ value: windowEnd, label: "windowEnd" }]);
     l.comment = `Expand window to include character '${char}' at index ${windowEnd}.`;
     l.breakpoint(2 + windowEnd * 10); // Unique breakpoint for each expansion
 
     if (tCharCount.has(char)) {
       windowCharCount.set(char, (windowCharCount.get(char) || 0) + 1);
       l.hashmapV2({
-        name: "windowCharCount",
         map: windowCharCount,
         label: "Window Character Count",
-        emoji: "📈",
-        group: "window_state",
-        highlight: { key: char, color: "primary" },
+        highlights: [{ key: char, color: "primary" }],
       });
       l.comment = `Character '${char}' is in t. Increment its count in windowCharCount.`;
       l.breakpoint(3 + windowEnd * 10);
 
-      if (windowCharCount.get(char)! <= tCharCount.get(char)!) {
+      if (windowCharCount.get(char)! === tCharCount.get(char)!) {
         matchedChars++;
         l.simple({ matchedChars });
         l.comment = `Matched a required character. matchedChars: ${matchedChars}.`;
@@ -71,7 +63,7 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
     }
 
     // Shrink the window
-    while (matchedChars === t.length) {
+    while (matchedChars === tCharCount.size) {
       const currentWindowLength = windowEnd - windowStart + 1;
       l.simple({ currentWindowLength });
       l.comment = `Current window is valid. Length: ${currentWindowLength}.`;
@@ -86,7 +78,10 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
       }
 
       const leftChar = s[windowStart];
-      l.simple({ windowStart });
+      l.arrayV3({ s: s.split("") }, [
+        { value: windowStart, label: "windowStart" },
+        { value: windowEnd, label: "windowEnd" },
+      ]);
       l.comment = `Shrink window from left. Character at windowStart (${windowStart}): '${leftChar}'.`;
       l.breakpoint(7 + windowEnd * 10);
 
@@ -99,12 +94,9 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
         }
         windowCharCount.set(leftChar, windowCharCount.get(leftChar)! - 1);
         l.hashmapV2({
-          name: "windowCharCount",
           map: windowCharCount,
           label: "Window Character Count",
-          emoji: "📈",
-          group: "window_state",
-          highlight: { key: leftChar, color: "warning" },
+          highlights: [{ key: leftChar, color: "warning" }],
         });
         l.comment = `Decrement count of '${leftChar}' in windowCharCount.`;
         l.breakpoint(9 + windowEnd * 10);

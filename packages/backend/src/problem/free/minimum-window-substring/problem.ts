@@ -18,6 +18,6 @@ export const problem: Problem<MinimumWindowSubstringInput, ProblemState> = {
   },
   testcases,
   codegen: {
-    signature: "function minWindow(s: string, t: string): string",
+    signature: "minWindow(s: string, t: string): string",
   },
 };
