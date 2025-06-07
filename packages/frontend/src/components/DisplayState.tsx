@@ -34,6 +34,8 @@ const Wrapper = ({
   children,
   variable,
   className,
+  isMinimized,
+  onToggleMinimize,
 }: {
   label: string;
   description?: string;
@@ -41,23 +43,35 @@ const Wrapper = ({
   children: React.ReactNode;
   variable: Variable;
   className?: string;
+  isMinimized: boolean;
+  onToggleMinimize: () => void;
 }) => (
   <div
-    className={`border border-primary shadow rounded-xl p-6 relative ${
+    className={`border border-primary shadow rounded-xl relative ${
       variable.hide ? "opacity-50" : ""
-    } ${className || ""}`}
+    } ${className || ""} ${isMinimized ? "p-2" : "p-6"}`}
   >
-    <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold">
+    <div className="absolute -top-3 left-4 bg-white px-2 text-primary-500 font-semibold flex items-center">
       {emoji} {label} {variable.hide ? "(not in memory)" : ""}
+      <button
+        onClick={onToggleMinimize}
+        className="ml-2 text-gray-500 hover:text-gray-700"
+      >
+        {isMinimized ? "➕" : "➖"}
+      </button>
     </div>
-    {description && <p className="text-xs text-gray-500 mb-2">{description}</p>}
-    {children}
+    {description && !isMinimized && (
+      <p className="text-xs text-gray-500 mb-2">{description}</p>
+    )}
+    {!isMinimized && children}
   </div>
 );
 
 function getWrapperClassName() {
   return "col-span-2 lg:col-span-1";
 }
+
+import { useState } from "react";
 
 function DisplayState({
   state,
@@ -66,6 +80,17 @@ function DisplayState({
   state: any;
   problem: Problem<any, any>;
 }) {
+  const [minimizedState, setMinimizedState] = useState<Record<string, boolean>>(
+    {}
+  );
+
+  const handleToggleMinimize = (label: string) => {
+    setMinimizedState((prevState) => ({
+      ...prevState,
+      [label]: !prevState[label],
+    }));
+  };
+
   if (!state) {
     return <div>No state provided</div>;
   }
@@ -91,6 +116,7 @@ function DisplayState({
           const emoji = meta?.emoji;
 
           const className = getWrapperClassName();
+          const isMinimized = minimizedState[variable.label] || false;
 
           switch (variable.type) {
             case "number":
@@ -103,6 +129,8 @@ function DisplayState({
                   emoji={emoji}
                   key={numData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(numData.label)}
                 >
                   <DisplaySingleValue data={numData} />
                 </Wrapper>
@@ -117,6 +145,8 @@ function DisplayState({
                   emoji={emoji}
                   key={arrData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(arrData.label)}
                 >
                   <DisplayArray data={arrData} />
                 </Wrapper>
@@ -131,6 +161,8 @@ function DisplayState({
                   emoji={emoji}
                   key={groupData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(groupData.label)}
                 >
                   <DisplayValueGroup
                     data={groupData}
@@ -148,6 +180,10 @@ function DisplayState({
                   emoji={emoji}
                   key={binaryData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(binaryData.label)
+                  }
                 >
                   <DisplayBinary data={binaryData} />
                 </Wrapper>
@@ -162,6 +198,8 @@ function DisplayState({
                   emoji={emoji}
                   key={boolData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(boolData.label)}
                 >
                   <DisplayBooleanGroup data={boolData} />
                 </Wrapper>
@@ -177,6 +215,10 @@ function DisplayState({
                   emoji={emoji}
                   key={intervalData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(intervalData.label)
+                  }
                 >
                   <DisplayIntervals data={intervalData} />
                 </Wrapper>
@@ -191,6 +233,8 @@ function DisplayState({
                   emoji={emoji}
                   key={treeData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(treeData.label)}
                 >
                   <DisplayTree data={treeData} />
                 </Wrapper>
@@ -205,6 +249,10 @@ function DisplayState({
                   emoji={emoji}
                   key={hashsetData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(hashsetData.label)
+                  }
                 >
                   <DisplayHashset data={hashsetData} />
                 </Wrapper>
@@ -219,6 +267,10 @@ function DisplayState({
                   emoji={emoji}
                   key={hashmapData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(hashmapData.label)
+                  }
                 >
                   <DisplayHashmap data={hashmapData} />
                 </Wrapper>
@@ -233,6 +285,8 @@ function DisplayState({
                   emoji={emoji}
                   key={listData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() => handleToggleMinimize(listData.label)}
                 >
                   <DisplayLinkedList data={listData} />
                 </Wrapper>
@@ -247,6 +301,10 @@ function DisplayState({
                   emoji={emoji}
                   key={binaryOperationData.label}
                   variable={variable}
+                  isMinimized={isMinimized}
+                  onToggleMinimize={() =>
+                    handleToggleMinimize(binaryOperationData.label)
+                  }
                 >
                   <DisplayBinaryOperation data={binaryOperationData} />
                 </Wrapper>
