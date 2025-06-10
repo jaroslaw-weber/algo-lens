@@ -59,7 +59,7 @@
 
 ### Matrix
 - [x] Set Matrix Zeroes
-- [ ] Spiral Matrix
+- [x] Spiral Matrix
 - [ ] Rotate Image
 - [ ] Word Search
 

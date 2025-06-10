@@ -5,7 +5,9 @@ import { StepLoggerV2 } from "../../core/StepLoggerV2";
 export function generateSteps(input: {
   root: TreeNode | null;
 }): ProblemState[] {
-  const { root } = input;
+  const { root } = input; // HIDE
+
+  let result = 0;
   const l = new StepLoggerV2();
 
   l.comment = "Start by initializing the maximum depth to 0.";
@@ -18,16 +20,11 @@ export function generateSteps(input: {
     l.breakpoint(2);
     return l.getSteps();
   }
+  l.tree("tree", root);
 
   l.comment =
     "Initialize a queue for BFS with the root node and its depth (1).";
   const queue: { node: TreeNode; depth: number }[] = [{ node: root, depth: 1 }];
-  l.arrayV3(
-    {
-      queue: queue.map((item) => ({ node: item.node.val, depth: item.depth })),
-    },
-    []
-  );
   l.simple({ maxDepth: 1 }); // Initial maxDepth is 1 if root exists
   l.breakpoint(3);
 
@@ -36,16 +33,8 @@ export function generateSteps(input: {
   while (queue.length > 0) {
     l.comment = "Dequeue the current node and its depth.";
     const { node, depth } = queue.shift()!;
-    l.arrayV3(
-      {
-        queue: queue.map((item) => ({
-          node: item.node.val,
-          depth: item.depth,
-        })),
-      },
-      []
-    );
     l.simple({ node: node.val, depth: depth });
+    l.tree("tree", root, [{ node, color: "bad" }]);
     l.breakpoint(4);
 
     l.comment = "Update the maximum depth if the current depth is greater.";
@@ -57,16 +46,8 @@ export function generateSteps(input: {
       l.comment =
         "If the left child exists, enqueue it with an incremented depth.";
       queue.push({ node: node.left, depth: depth + 1 });
-      l.arrayV3(
-        {
-          queue: queue.map((item) => ({
-            node: item.node.val,
-            depth: item.depth,
-          })),
-        },
-        []
-      );
       l.simple({ node: node.left.val, depth: depth + 1 });
+      l.tree("tree", root, [{ node: node.left, color: "good" }]);
       l.breakpoint(6);
     }
 
@@ -74,22 +55,15 @@ export function generateSteps(input: {
       l.comment =
         "If the right child exists, enqueue it with an incremented depth.";
       queue.push({ node: node.right, depth: depth + 1 });
-      l.arrayV3(
-        {
-          queue: queue.map((item) => ({
-            node: item.node.val,
-            depth: item.depth,
-          })),
-        },
-        []
-      );
       l.simple({ node: node.right.val, depth: depth + 1 });
+      l.tree("tree", root, [{ node: node.right, color: "good" }]);
       l.breakpoint(7);
     }
   }
+  result = maxDepth;
 
   l.comment = "All nodes have been visited. The maximum depth is the result.";
-  l.simple({ result: maxDepth });
+  l.simple({ result });
   l.breakpoint(8);
 
   return l.getSteps();

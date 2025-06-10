@@ -8,7 +8,7 @@ import { ListNode, NodeHighlight, ProblemState } from "algo-lens-core"; // Impor
 
 export function generateSteps(input: ReverseListInput): ProblemState[] {
   // Added return type hint
-  const { head } = input;
+  const { head } = input; // HIDE
   const l = new StepLoggerV2();
 
   // Initialize pointers

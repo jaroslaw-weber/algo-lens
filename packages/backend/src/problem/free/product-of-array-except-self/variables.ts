@@ -3,22 +3,29 @@ import { VariableMetadata } from "algo-lens-core";
 export const variables: VariableMetadata[] = [
   {
     name: "nums",
-    description: "Input array",
+    label: "Input Array",
+    description: "The original array of numbers.",
     emoji: "🔢",
   },
   {
-    name: "productsLeft",
-    description: "Prefix products",
+    name: "leftProducts",
+    label: "Left Products",
+    description:
+      "Array storing the product of all elements to the left of the current index.",
     emoji: "⬅️",
   },
   {
-    name: "productsRight",
-    description: "Suffix products",
+    name: "rightProducts",
+    label: "Right Products",
+    description:
+      "Array storing the product of all elements to the right of the current index.",
     emoji: "➡️",
   },
   {
-    name: "output",
-    description: "Output array",
+    name: "result",
+    label: "Output Array",
+    description:
+      "The resulting array where each element is the product of all elements in the input array except for the element at the current index.",
     emoji: "✅",
   },
 ];
