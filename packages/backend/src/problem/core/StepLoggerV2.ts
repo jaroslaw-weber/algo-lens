@@ -13,8 +13,6 @@ import {
   BinaryPointer,
   LabeledInterval,
   LabeledIntervalVariable,
-} from "algo-lens-core";
-import {
   as2dArray,
   asArray,
   asBinary,
@@ -26,7 +24,8 @@ import {
   asSimpleValue,
   asTree,
   asValueGroup,
-} from "./utils";
+} from "algo-lens-core";
+
 import _ = require("lodash");
 
 /**

@@ -1,6 +1,10 @@
 import { ProblemState, Variable } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
-import { asValueGroup, asIntervals, getIntervalBounds } from "../../core/utils";
+import {
+  asValueGroup,
+  asIntervals,
+  getIntervalBounds,
+} from "algo-lens-core/src/utils";
 import { EraseOverlapIntervalsInput } from "./types"; // Import EraseOverlapIntervalsInput
 
 export function generateSteps(intervals: number[][]): ProblemState[] {

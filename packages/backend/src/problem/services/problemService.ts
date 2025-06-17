@@ -1,5 +1,5 @@
 import { getAllProblems as coreGetAllProblems } from "../core/list";
-import { getProblemById as coreGetProblemById } from "../core/utils";
+import { getProblemById as coreGetProblemById } from "algo-lens-core/src/utils";
 import { loadProblemWithId as coreLoadProblemWithId } from "../core/load";
 import {
   ProblemState,

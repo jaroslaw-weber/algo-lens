@@ -1,6 +1,6 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
-import { getIntervalBounds } from "../../core/utils"; // Import the utility function
+import { getIntervalBounds } from "algo-lens-core/src/utils"; // Import the utility function
 import { Interval } from "./types";
 import { LabeledInterval } from "algo-lens-core";
 import _ = require("lodash");
