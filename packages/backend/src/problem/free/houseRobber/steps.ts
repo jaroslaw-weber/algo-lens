@@ -1,5 +1,5 @@
 import { sum } from "lodash";
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 import { HouseRobberInput } from "./types"; // Ensure this import exists
 import { groups } from "./groups"; // Import groups
 import { ProblemState } from "algo-lens-core";

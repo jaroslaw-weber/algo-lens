@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { TwoSumInput } from "./types"; // Assuming types.ts will be created later
 import _ = require("lodash"); // Added lodash, might not be needed but good practice based on 3sum
 

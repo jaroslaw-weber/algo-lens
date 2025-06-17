@@ -1,7 +1,7 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { ProblemState } from "algo-lens-core"; // Import ProblemState
 import { ProductExceptSelfInput } from "./types"; // Import the interface
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 
 /**
  * Implements the product of array except self algorithm which calculates the product of all numbers in the input array except for the number at each index, generating steps for visualization.

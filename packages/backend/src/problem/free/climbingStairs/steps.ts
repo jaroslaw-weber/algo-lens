@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 
 export function generateSteps(n: number): ProblemState[] {
   const l = new StepLoggerV2();

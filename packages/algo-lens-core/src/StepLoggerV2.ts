@@ -12,9 +12,9 @@ import {
   BinaryOperationVariable,
   BinaryPointer,
   LabeledInterval,
-  LabeledIntervalVariable,
+} from "../types/core";
+import {
   as2dArray,
-  asArray,
   asBinary,
   asHashmap,
   asHashset,
@@ -24,10 +24,9 @@ import {
   asSimpleValue,
   asTree,
   asValueGroup,
-} from "algo-lens-core";
+} from "./utils";
 
-import _ = require("lodash");
-
+import _ from "lodash";
 /**
  * The StepLoggerV2 class is designed to capture the state of variables
  * at different points during an algorithm's execution. It allows logging

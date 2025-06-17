@@ -1,5 +1,4 @@
 import { getAllProblems as coreGetAllProblems } from "../core/list";
-import { getProblemById as coreGetProblemById } from "algo-lens-core/src/utils";
 import { loadProblemWithId as coreLoadProblemWithId } from "../core/load";
 import {
   ProblemState,
@@ -12,6 +11,7 @@ import {
 import { cloneDeep } from "lodash";
 import { ProblemStateCache } from "../../cache/ProblemStateCache";
 import { getPocketbase } from "../../db/pocketbase";
+import { getProblemById } from "../core/utils";
 
 const stateCache = new ProblemStateCache();
 
@@ -45,7 +45,7 @@ export async function getAllProblemsService(userId?: string, filter?: string) {
 }
 
 export async function getProblemByIdService(id: string) {
-  return coreGetProblemById(id);
+  return getProblemById(id);
 }
 
 export async function loadProblemWithIdService(problemId: string) {
@@ -69,7 +69,7 @@ export async function getProblemSizeService(
   problemId: string,
   testcaseIndex: number
 ) {
-  const problem = await coreGetProblemById(problemId);
+  const problem = await getProblemById(problemId);
   if (!problem) {
     throw new Error(`Problem not found: ${problemId}`);
   }

@@ -1,5 +1,5 @@
 import { ProblemState, Pointer2D } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 // Import groups if needed for logger options, though not strictly necessary for basic logging
 // import { groups } from "./groups";
 

@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Adjusted path
 import { MaximumSubarrayInput } from "./types";
 import { groups } from "./groups"; // Import groups
 import _, { sum } from "lodash"; // Import sum for potential range calculation if needed

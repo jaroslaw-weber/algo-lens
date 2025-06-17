@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core/types/core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { ValidAnagramInput } from "./types";
 
 export function generateSteps(input: ValidAnagramInput): ProblemState[] {

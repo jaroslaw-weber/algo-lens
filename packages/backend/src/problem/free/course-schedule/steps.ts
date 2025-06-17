@@ -1,5 +1,5 @@
 import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 import { from2dArrayToMap } from "algo-lens-core/src/utils"; // Keep necessary import
 
 // The core algorithm logic

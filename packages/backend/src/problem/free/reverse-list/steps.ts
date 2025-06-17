@@ -1,4 +1,4 @@
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { ReverseListInput } from "./types"; // Import only ReverseListInput from local types
 import { ListNode, NodeHighlight, ProblemState } from "algo-lens-core"; // Import ListNode and NodeHighlight from core
 
