@@ -3,8 +3,10 @@ import * as path from "path";
 import { Problem } from "algo-lens-core/src/types";
 
 import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate";
+import { problemPaths } from "./ProblemPaths";
 
 const problemCache: { [id: string]: Problem<any, any> } = {};
+
 
 export async function loadProblemWithId(
   id: string
@@ -13,9 +15,13 @@ export async function loadProblemWithId(
     return problemCache[id];
   }
 
-  // Assuming the problem ID corresponds to the directory name
-  const problemDir = path.join(__dirname, "../free", id);
-  const problemFilePath = path.join(problemDir, "problem.ts");
+  const directory = await problemPaths.getProblemFolderInfo(id)
+  if(!directory?.path){
+    throw new Error("directory for problem "+id+" not found")
+  }
+
+  const problemFilePath = path.join(directory.path, "problem.ts")
+
 
   try {
     const exists = await fs.exists(problemFilePath);
@@ -31,7 +37,7 @@ export async function loadProblemWithId(
       return null;
     }
 
-    problem.code = await getProblemCode(problem, problemDir);
+    problem.code = await getProblemCode(problem, directory.path);
     //serialize testcases if necessary
 
     problemCache[id] = problem; // Cache the loaded problem

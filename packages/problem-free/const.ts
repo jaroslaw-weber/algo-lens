@@ -1,0 +1,1 @@
+export const FREE_PROBLEMS_FOLDER = __dirname

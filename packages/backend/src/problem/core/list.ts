@@ -1,31 +1,20 @@
-import * as fs from "fs/promises";
-import * as path from "path";
+
 import { Problem, ProblemGroup } from "algo-lens-core/src/types";
 
 
 // Public API
 import { loadProblemWithId } from "./load";
+import { problemPaths } from "./ProblemPaths";
 
-//cache problem list
-let problemFiles: string[] = [];
-
-async function getProblemFiles() {
-  if (!problemFiles?.length) {
-    console.log("reading files");
-    problemFiles = await fs.readdir(path.join(__dirname, "../free"), "utf8");
-    console.log("files read");
-  }
-
-  return problemFiles;
-}
 
 export async function getAllProblems(): Promise<Problem<any, any>[]> {
+  
   const problems: Problem<any, any>[] = [];
-  const files = await getProblemFiles();
-  // console.log("files", files);
 
-  for (const problemFile of files) {
-    const problem = await loadProblemWithId(problemFile);
+  const list = await problemPaths.getList()
+
+  for (const info of list) {
+    const problem = await loadProblemWithId(info.problemId);
     if (problem) {
       problems.push(problem);
     }
@@ -35,3 +24,5 @@ export async function getAllProblems(): Promise<Problem<any, any>[]> {
 }
 
 export const other: ProblemGroup[] = [];
+
+
