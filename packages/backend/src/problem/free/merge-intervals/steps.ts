@@ -9,19 +9,26 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
   // Renamed and Exported, Return type inferred
   const l = new StepLoggerV2(); // Instantiate StepLoggerV2
 
+  let result: number[][] = [];
   // Handle empty interval case FIRST
   if (!intervals || intervals.length === 0) {
     // For empty input, bounds are irrelevant, but we need some values for logging.
     // Let's use 0, 0 or handle as appropriate for the logger if it supports undefined bounds.
     // Assuming the logger needs numbers, we'll pass 0, 0 for the empty case.
     l.intervals("intervals", [], [], 0, 0);
-    l.intervalsV2({ label: "merged", arr: [], highlight: [], min: 0, max: 0 });
+    l.intervalsV2({
+      label: "merged",
+      arr: result.map((x) => ({ interval: x })),
+      highlight: [],
+      min: 0,
+      max: 0,
+    });
     l.breakpoint(6); // Directly to final state
     return l.getSteps();
   }
 
   // Calculate bounds only if intervals is not empty
-  const { min, max } = getIntervalBounds(intervals); // Use utility function
+  const { min, max } = l.getIntervalBounds(intervals); // Use utility function
 
   l.groupOptions.set("bounds", { min, max });
   // Log initial state (before sort)
@@ -159,7 +166,7 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
 
   // Log final state
   l.intervals("intervals", intervals, [], min, max);
-  const result = merged;
+  result = merged;
   l.intervalsV2({
     label: "result",
     arr: result.map((i) => ({ interval: i })),

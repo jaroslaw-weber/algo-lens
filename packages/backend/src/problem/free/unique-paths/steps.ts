@@ -3,7 +3,7 @@ import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLo
 import { UniquePathsInput } from "./types"; // New import
 
 export function generateSteps(p: UniquePathsInput): ProblemState[] {
-  const { m, n } = p;
+  const { m, n } = p; // HIDE
   const l = new StepLoggerV2();
   l.groupOptions.set("pointer", { min: 0, max: m * n });
 

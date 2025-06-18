@@ -26,6 +26,7 @@ export function generateSteps(n: number): ProblemState[] {
     l.breakpoint(2);
 
     //#3 Check if the least significant bit is 1
+    l.binaryOperation("Bitwise AND", { n, maskingBit }, "AND"); // Log the bitwise AND operation
     if (n & maskingBit) {
       count++;
       l.group("count", { count }); // Update count display
@@ -34,6 +35,7 @@ export function generateSteps(n: number): ProblemState[] {
     }
 
     //#4 Shift the masking bit to the left (corrected from right in comments)
+    l.binaryOperation("Left Shift", { maskingBit, shift: 1 }, "SHIFT_LEFT"); // Log the left shift operation
     maskingBit <<= 1;
     i++;
     l.binary({ n }, { pointersRight: [i] }); // Update 'n' pointer

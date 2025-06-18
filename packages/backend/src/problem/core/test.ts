@@ -87,17 +87,45 @@ export async function runTests(problem: Problem<any, ProblemState>) {
     expect(code).toBeTruthy();
     expect(code?.includes("logger."), "use l. instead of logger.").toBeFalse();
 
-    expect(code?.includes(" function function")).toBeFalse();
+    expect(
+      code?.includes(" function function"),
+      'remove "function" from the codegen.signature'
+    ).toBeFalse();
 
     expect(
       code!.includes("FORMATTING ERROR"),
       "formatting error! code: \n" + code
     ).toBeFalse();
-    expect(code!.includes("l.getSteps")).toBeFalse();
-    expect(code!.includes(`function generateSteps`)).toBeFalse();
-    expect(code!.includes(`function getSteps(`)).toBeFalse();
-    expect(code!.includes(`l.array`)).toBeFalse();
-    expect(code!.includes("l.comment")).toBeFalse();
-    expect(code!.includes("return result")).toBeTrue();
+    expect(
+      code!.includes("l.getSteps"),
+      "step logger related code should now be in the rendered code"
+    ).toBeFalse();
+    expect(
+      code!.includes(`function generateSteps`),
+      "failed to replace the signature correctly"
+    ).toBeFalse();
+    expect(
+      code!.includes(`function getSteps(`),
+      "dont include step logger related code. try adding result type"
+    ).toBeFalse();
+    expect(
+      code!.includes("getIntervalBounds"),
+      "getIntervalBounds is step logger helper, should not be in the rendered code"
+    ).toBeFalse();
+    expect(
+      code!.includes(`l.array`),
+      "dont include step logger related code"
+    ).toBeFalse();
+    expect(
+      code!.includes("l.comment"),
+      "dont include step logger related code"
+    ).toBeFalse();
+    expect(code!.includes("return result"), "always return result").toBeTrue();
+
+    // Add test to throw error when there is code like `const { head } = input;`
+    expect(
+      code!.search(/const\s+\{\s*\w+\s*\}\s*=\s*input;/),
+      "Destructuring assignment from 'input' should not show in generated code."
+    ).toBe(-1);
   }
 }

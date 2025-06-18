@@ -24,6 +24,7 @@ import {
   asSimpleValue,
   asTree,
   asValueGroup,
+  getIntervalBounds,
 } from "./utils";
 
 import _ from "lodash";
@@ -166,7 +167,7 @@ export class StepLoggerV2 {
   public binaryOperation(
     label: string,
     values: Record<string, number>,
-    operator: string
+    operator: "AND" | "OR" | "XOR" | "ADD" | "SHIFT_LEFT" | "SHIFT_RIGHT"
   ) {
     const [v1, v2] = _.values(values);
     const [label1, label2] = _.keys(values);
@@ -185,6 +186,12 @@ export class StepLoggerV2 {
         break;
       case "ADD":
         resultValue = v1 + v2;
+        break;
+      case "SHIFT_LEFT":
+        resultValue = v1 << 1;
+        break;
+      case "SHIFT_RIGHT":
+        resultValue = v1 >> 1;
         break;
       default:
         resultValue = 0; // Or throw an error for unsupported operator
@@ -236,6 +243,34 @@ export class StepLoggerV2 {
       label: arrayKey,
       type: "array",
       value: values.map((item) => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
+      pointers: pointers
+        .filter((x) => !!x)
+        .map((p) => {
+          if ("dimension" in p && p.dimension === undefined) {
+            return { ...p, dimension: "column" };
+          }
+          return p;
+        }),
+    };
+    this.upsert(v);
+  }
+
+  /**
+   * Logs the state of a string variable, automatically splitting it into characters.
+   * Uses `upsert` to add/update it.
+   * @param stringContainer - A record where the key is the label for the string and the value is the string itself.
+   * @param pointers - Optional array of pointers for highlighting or indicating positions within the string.
+   */
+  public string(
+    stringContainer: Record<string, string>,
+    pointers: (Pointer | Pointer2D)[] = []
+  ) {
+    const stringKey = Object.keys(stringContainer)[0];
+    const value = stringContainer[stringKey];
+    const v: ArrayVariable = {
+      label: stringKey,
+      type: "array", // Represent string as an array of characters
+      value: value.split(""), // Split the string into an array of characters
       pointers: pointers
         .filter((x) => !!x)
         .map((p) => {
@@ -469,5 +504,9 @@ export class StepLoggerV2 {
    */
   public getSteps(): ProblemState[] {
     return this.steps;
+  }
+
+  public getIntervalBounds(intervals: number[][]) {
+    return getIntervalBounds(intervals);
   }
 }

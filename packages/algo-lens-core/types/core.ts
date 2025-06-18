@@ -95,9 +95,16 @@ export interface Pointer {
   value: number;
 
   /** Color of the pointer. */
-  color?: "primary" | "neutral" | "success" | "warning" | "error" | "accent";
+  color:
+    | "primary"
+    | "neutral"
+    | "success"
+    | "warning"
+    | "error"
+    | "accent"
+    | "info";
 
-  label?: string;
+  label: string;
   dir?: "left" | "right" | "top" | "bottom";
 }
 
@@ -116,9 +123,9 @@ export interface Pointer2D {
   /** Column index. */
   c: number;
 
-  color?: string;
+  color: string;
 
-  label?: string;
+  label: string;
 
   dir?: string; //"left" | "right" | "up" | "bottom"
 }
@@ -249,7 +256,7 @@ export type HashHighlight = {
   key?: string | number;
   value?: string | number;
   color: ThemeColor;
-  label?: string;
+  label: string;
 };
 
 export type ThemeColor =

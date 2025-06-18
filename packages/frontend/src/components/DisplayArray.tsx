@@ -10,58 +10,44 @@ const DisplayArray = ({ data }: { data: ArrayVariable }) => {
   ////
 
   // Determine if the array is 2D
-  const is2D = useMemo(
-    () => array.some((item) => Array.isArray(item)),
-    [array]
-  );
+  const is2D = array.some((item) => Array.isArray(item));
 
-  // Memoized helper to get pointer info (style and label) for a cell
-  const getCellPointerInfo = useMemo(() => {
-    return (rowIndex: number, colIndex: number) => {
-      //console.log("pointers", pointers);
-      //console.log("rowindex:", rowIndex, "colIndex", colIndex)
-      if (is2D) {
-        const pointer = pointers?.find(
-          (x) =>
-            (x as Pointer2D).c == colIndex && (x as Pointer2D).r == rowIndex
-        );
-        return pointer;
-      } else {
-        const pointer = pointers?.find((x) => (x as Pointer).value == colIndex);
-        return pointer;
-      }
-    };
-  }, [pointers]); // Removed is2D from dependencies as it's no longer directly used in pointer logic
+  // Helper to get pointer info (style and label) for a cell
+  const getCellPointerInfo = (rowIndex: number, colIndex: number) => {
+    //console.log("pointers", pointers);
+    //console.log("rowindex:", rowIndex, "colIndex", colIndex)
+    if (is2D) {
+      const pointer = pointers?.find(
+        (x) => (x as Pointer2D).c == colIndex && (x as Pointer2D).r == rowIndex
+      );
+      return pointer;
+    } else {
+      const pointer = pointers?.find((x) => (x as Pointer).value == colIndex);
+      return pointer;
+    }
+  };
 
   // Calculate number of columns
-  const numCols = useMemo(() => {
-    if (is2D) {
-      return Math.max(
-        0,
-        ...array.map((sub) => (Array.isArray(sub) ? sub.length : 0))
-      );
-    } else {
-      return array.length;
-    }
-  }, [array, is2D]);
+  const numCols = is2D
+    ? Math.max(0, ...array.map((sub) => (Array.isArray(sub) ? sub.length : 0)))
+    : array.length;
 
   // Render a row for 1D or 2D array
   const renderRow = (items: any[], rowIndex: number) => (
     <tr key={rowIndex} className="flex text-xs relative">
       {items.map((item, colIndex) => {
         const pointer = getCellPointerInfo(rowIndex, colIndex);
-        console.log("pointer", pointer);
+        //console.log("pointer", pointer);
 
         const tooltipData = pointer?.label;
 
-        const color = pointer?.color
-        let style = ""
-        if(color){
-          style = `bg-${color}`
-        }
-        else{
-          if(tooltipData){
-            style = `bg-primary`
+        const color = pointer?.color;
+        let style = "";
+        if (color) {
+          style = `bg-${color}`;
+        } else {
+          if (tooltipData) {
+            style = `bg-primary`;
           }
         }
 

@@ -32,6 +32,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   const [activeTab, setActiveTab] = useState("visualizer"); // Keep state here for content rendering
   const [showHeader, setShowHeader] = useState(true); // New state for controlling visibility
   const [problem] = useAtom(problemAtom); // No need to set problem here anymore
+  const [displayStateData, setDisplayStateData] = useState(state);
 
   const [step, setStep] = useAtom(stepAtom);
   const [maxStep, setMaxStep] = useAtom(maxStepAtom);
@@ -48,6 +49,11 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
       setSelectedTestCaseNumber(defaultIndex !== -1 ? defaultIndex + 1 : 1);
     }
   }, [problem, setSelectedTestCaseNumber]);
+
+  // Update local state when the state prop changes
+  useEffect(() => {
+    setDisplayStateData(state);
+  }, [state]);
 
   // Use props instead of Jotai atoms for problem and state during debugging
   // if (!state || !problem || !problem.testcases) {
@@ -171,7 +177,13 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                     />
                   )}
                   {/* Add check for state before passing to DisplayState */}
-                  {state && <DisplayState state={state} problem={problem} />}
+                  {displayStateData && (
+                    <DisplayState
+                      key={displayStateData.breakpoint} // Add key prop based on breakpoint
+                      state={displayStateData}
+                      problem={problem}
+                    />
+                  )}
                 </div>
               </div>
             </div>

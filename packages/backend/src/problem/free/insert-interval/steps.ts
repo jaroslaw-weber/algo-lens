@@ -12,7 +12,7 @@ export function generateSteps(
   const l = new StepLoggerV2();
 
   const allintervals = [...intervals, newInterval];
-  const { min: minValue, max: maxValue } = getIntervalBounds(allintervals);
+  const { min: minValue, max: maxValue } = l.getIntervalBounds(allintervals);
 
   let result: Interval[] = [];
   let i = 0;

@@ -5,6 +5,7 @@ import {
   asIntervals,
   getIntervalBounds,
 } from "algo-lens-core/src/utils";
+import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
 import { EraseOverlapIntervalsInput } from "./types"; // Import EraseOverlapIntervalsInput
 
 export function generateSteps(intervals: number[][]): ProblemState[] {
@@ -15,7 +16,7 @@ export function generateSteps(intervals: number[][]): ProblemState[] {
   const remainingIntervals: number[][] = [];
 
   // Define variable scopes and types for the logger
-  const { min, max } = getIntervalBounds(intervals);
+  const { min, max } = l.getIntervalBounds(intervals);
 
   // Initial state log before the loop starts
   l.intervals("intervals", intervals, [], min, max); // Assuming intervals is number[][]

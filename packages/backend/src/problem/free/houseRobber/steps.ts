@@ -2,7 +2,7 @@ import { sum } from "lodash";
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 import { HouseRobberInput } from "./types"; // Ensure this import exists
 import { groups } from "./groups"; // Import groups
-import { ProblemState } from "algo-lens-core";
+import { Pointer, ProblemState } from "algo-lens-core";
 
 // Removed ProblemState import and utils imports as StepLoggerV2 handles variable creation
 
@@ -40,9 +40,9 @@ export function generateSteps(nums: number[]): ProblemState[] {
     ]); // Highlight current house
     l.arrayV3({ dp }, [
       { value: i, label: "current dp", color: "primary" },
-      { value: i - 1, label: "previous dp", color: "info" },
+      { value: i - 1, label: "previous dp", color: "info", dir: "bottom" },
       { value: i - 2, label: "two before dp", color: "info" },
-    ]); // Highlight relevant dp values
+    ] as Pointer[]); // Highlight relevant dp values
     l.groupOptions.set("dpCalculation", { min: 0, max: sum(nums) }); // Assuming min: 0 is a reasonable default. Adjust if context suggests otherwise.
     l.group("dpCalculation", {
       // Use defined group name
