@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { generateSteps } from "./steps"; // Corrected import name
 import { EditDistanceInput } from "./types";
 import { groups } from "./groups";

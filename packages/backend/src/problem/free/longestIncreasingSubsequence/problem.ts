@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { generateSteps } from "./steps";
 import { LISInput } from "./types";
 import { variables } from "./variables";

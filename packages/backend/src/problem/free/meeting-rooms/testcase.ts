@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { MeetingRoomsInput, Interval } from "./types";
 
 export const testcases: TestCase<MeetingRoomsInput, boolean>[] = [

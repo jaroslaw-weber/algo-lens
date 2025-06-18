@@ -1,4 +1,5 @@
-import { ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core/src/types";
+
 import { PalindromicSubstringsInput } from "./types";
 
 export const testcases: TestCase<PalindromicSubstringsInput, ProblemState>[] = [

@@ -1,5 +1,6 @@
 // Imports specific utility functions and type definitions from the relative paths
-import { Pointer, ProblemState } from "algo-lens-core"; // Import ProblemState
+import { Pointer, ProblemState } from "algo-lens-core/src/types";
+ // Import ProblemState
 import { ProductExceptSelfInput } from "./types"; // Import the interface
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 

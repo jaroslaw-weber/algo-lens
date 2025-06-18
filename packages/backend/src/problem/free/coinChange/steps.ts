@@ -1,4 +1,5 @@
-import { ProblemState } from "algo-lens-core";
+import { ProblemState } from "algo-lens-core/src/types";
+
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Adjusted path
 import { CoinChangeInput } from "./types";
 import { groups } from "./groups"; // Import groups

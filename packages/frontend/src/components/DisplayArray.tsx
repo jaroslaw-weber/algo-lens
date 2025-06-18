@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import type { ArrayVariable, Pointer, Pointer2D } from "algo-lens-core";
+import type { ArrayVariable, Pointer, Pointer2D } from "algo-lens-core/src/types";
+
 
 const colors = ["primary", "secondary"];
 

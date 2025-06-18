@@ -1,4 +1,4 @@
-import { Problem } from "algo-lens-core/types/core";
+import { Problem } from "algo-lens-core/src/types";
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
 import { variables } from "./variables";

@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { ProductExceptSelfInput } from "./types";
 
 export const testcases = [

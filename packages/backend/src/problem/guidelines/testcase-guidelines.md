@@ -24,7 +24,8 @@ Each test case should be an object with the following properties:
 ## 3. Example Template
 
 ```ts
-import { ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core/src/types";
+
 import { ThreeSumInput } from "./types";
 
 export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [

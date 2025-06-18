@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { PacificAtlanticInput } from "./types"; // Corrected import name
 
 // Corrected TestCase parameterization: Input type and Expected output type

@@ -6,11 +6,12 @@ import {
   HashsetVariable,
   ListNode,
   ListVariable,
-} from "algo-lens-core";
+} from "algo-lens-core/src/types";
 import { cloneDeep } from "lodash";
 import { ProblemStateCache } from "../../cache/ProblemStateCache";
 import { getPocketbase } from "../../db/pocketbase";
 import { getProblemById } from "../core/utils";
+import { LinkedListSerializer } from "algo-lens-core/src/LinkedListSerializer";
 
 const stateCache = new ProblemStateCache();
 

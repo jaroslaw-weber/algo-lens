@@ -4,7 +4,8 @@ import { testcases } from "./testcase";
 import { variables } from "./variables";
 import { groups } from "./groups";
 import { DetectCycleInput } from "./types";
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 
 export const problem: Problem<DetectCycleInput, ProblemState> = {
   id: "detect-cycle-in-a-linked-list",

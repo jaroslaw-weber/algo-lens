@@ -1,6 +1,7 @@
 
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
-import { ProblemState, Pointer2D } from "algo-lens-core";
+import { ProblemState, Pointer2D } from "algo-lens-core/src/types";
+
 import { SpiralMatrixInput, SpiralMatrixOutput } from "./types";
 
 // HIDE_START

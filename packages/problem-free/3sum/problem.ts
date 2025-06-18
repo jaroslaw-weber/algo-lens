@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import fs from "fs"; // Add import
 import path from "path"; // Add import
 import { variables } from "./variables";

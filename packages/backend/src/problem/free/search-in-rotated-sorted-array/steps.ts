@@ -1,4 +1,5 @@
-import { ProblemState, Variable } from "algo-lens-core";
+import { ProblemState, Variable } from "algo-lens-core/src/types";
+
 import { asArray, asSimpleValue } from "algo-lens-core/src/utils"; // Assuming path is correct
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { SearchInput } from "./types";

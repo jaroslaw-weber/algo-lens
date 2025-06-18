@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { HouseRobberInput } from "./types";
 
 // Updated TestCase signature to use tuple input type [number[]]

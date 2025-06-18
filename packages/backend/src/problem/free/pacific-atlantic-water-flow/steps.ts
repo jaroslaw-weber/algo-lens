@@ -1,4 +1,5 @@
-import { Pointer2D, ProblemState } from "algo-lens-core"; // Import Pointer2D
+import { Pointer2D, ProblemState } from "algo-lens-core/src/types";
+ // Import Pointer2D
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 // Removed ProblemState, asArray, as2dArray
 import { PacificAtlanticInput } from "./types"; // Import PacificAtlanticInput

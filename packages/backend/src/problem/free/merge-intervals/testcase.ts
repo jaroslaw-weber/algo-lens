@@ -1,4 +1,5 @@
-import { ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core/src/types";
+
 import { MergeIntervalsInput } from "./types";
 
 // Added second generic argument for Output type (number[][])

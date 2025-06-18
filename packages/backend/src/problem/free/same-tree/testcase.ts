@@ -1,4 +1,5 @@
-import { ProblemState, TestCase, BinaryTreeNode } from "algo-lens-core";
+import { ProblemState, TestCase, BinaryTreeNode } from "algo-lens-core/src/types";
+
 import { SameTreeInput } from "./types";
 
 function createBinaryTreeNode(value: number | null): BinaryTreeNode {

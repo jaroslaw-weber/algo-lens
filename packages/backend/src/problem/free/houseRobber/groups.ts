@@ -1,4 +1,5 @@
-import { GroupMetadata } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core/src/types";
+
 
 export const groups: GroupMetadata[] = [
   { name: "dpCalculation", label: "DP Calculation", emoji: "💰" },

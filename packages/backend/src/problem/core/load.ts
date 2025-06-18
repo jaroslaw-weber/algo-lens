@@ -1,6 +1,7 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { Problem } from "algo-lens-core";
+import { Problem } from "algo-lens-core/src/types";
+
 import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate";
 
 const problemCache: { [id: string]: Problem<any, any> } = {};

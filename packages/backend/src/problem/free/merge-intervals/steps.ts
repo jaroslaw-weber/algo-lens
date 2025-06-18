@@ -1,7 +1,8 @@
 import _ = require("lodash");
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 import { getIntervalBounds } from "algo-lens-core/src/utils"; // Import getIntervalBounds
-import { LabeledInterval, ProblemState } from "algo-lens-core";
+import { LabeledInterval, ProblemState } from "algo-lens-core/src/types";
+
 // Removed ProblemState, Variable, asIntervals
 import { MergeIntervalsInput } from "./types"; // Import MergeIntervalsInput
 

@@ -1,5 +1,6 @@
 import * as ts from "typescript";
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { cloneDeep, last, isEqual } from "lodash";
 import { describe, it, expect } from "bun:test";
 import { loadProblemWithId } from "./load";

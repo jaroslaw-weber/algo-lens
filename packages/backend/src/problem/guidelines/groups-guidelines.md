@@ -24,7 +24,8 @@ The `groups.ts` file should export an array of `GroupMetadata` objects. Each `Gr
 ## 3. Example Template
 
 ```ts
-import { GroupMetadata } from 'algo-lens-core';
+import { GroupMetadata } from "algo-lens-core/src/types";
+
 
 export const groups: GroupMetadata[] = [
   {

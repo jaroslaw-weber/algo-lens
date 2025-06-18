@@ -13,7 +13,8 @@ import type {
   Problem,
   ValueGroupVariable,
   VariableMetadata,
-} from "algo-lens-core";
+} from "algo-lens-core/src/types";
+
 import _ from "lodash";
 
 // Register the necessary Chart.js components

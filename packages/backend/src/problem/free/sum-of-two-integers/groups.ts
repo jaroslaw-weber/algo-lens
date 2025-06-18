@@ -1,4 +1,5 @@
-import { GroupMetadata } from "algo-lens-core"; // Corrected import
+import { GroupMetadata } from "algo-lens-core/src/types";
+ // Corrected import
 
 export const groups: GroupMetadata[] = [ // Corrected type annotation
   {

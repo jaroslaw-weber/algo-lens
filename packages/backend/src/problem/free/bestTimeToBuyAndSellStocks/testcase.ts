@@ -1,4 +1,5 @@
-import { ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core/src/types";
+
 import { MaxProfitInput } from "./types"; // Assuming MaxProfitInput is defined in types.ts
 
 export const testcases: TestCase<MaxProfitInput, ProblemState>[] = [

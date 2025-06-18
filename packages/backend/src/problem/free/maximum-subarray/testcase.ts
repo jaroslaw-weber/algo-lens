@@ -1,4 +1,5 @@
-import { TestCase, ProblemState } from "algo-lens-core";
+import { TestCase, ProblemState } from "algo-lens-core/src/types";
+
 import { MaximumSubarrayInput } from "./types";
 
 export const testcases = [

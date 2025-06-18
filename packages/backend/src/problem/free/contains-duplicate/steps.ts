@@ -1,4 +1,5 @@
-import { ProblemState } from "algo-lens-core"; // Keep ProblemState for return type hint
+import { ProblemState } from "algo-lens-core/src/types";
+ // Keep ProblemState for return type hint
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 
 export function generateSteps(nums: number[]): ProblemState[] {

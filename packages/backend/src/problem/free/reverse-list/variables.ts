@@ -1,4 +1,5 @@
-import { VariableMetadata } from "algo-lens-core";
+import { VariableMetadata } from "algo-lens-core/src/types";
+
 // ListNode type is not directly used in VariableMetadata definition,
 // but might be relevant elsewhere in the problem setup.
 

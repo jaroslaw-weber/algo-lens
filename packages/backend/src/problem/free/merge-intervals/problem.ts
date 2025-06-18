@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { MergeIntervalsInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
 import { groups } from "./groups";

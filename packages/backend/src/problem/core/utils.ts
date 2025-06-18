@@ -1,7 +1,9 @@
 import { sample } from "lodash";
 import { getAllProblems } from "./list";
-import * as core from "algo-lens-core";
-import { Problem } from "algo-lens-core";
+import * as core from "algo-lens-core/src/types";
+
+import { Problem } from "algo-lens-core/src/types";
+
 
 export async function getRandomProblem() {
   const all = await getAllProblems();

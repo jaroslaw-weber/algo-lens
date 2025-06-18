@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { ContainerInput } from "./types";
 
 // Input type is number[] (heights), output type is number (max area)

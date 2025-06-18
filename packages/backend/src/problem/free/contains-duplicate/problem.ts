@@ -1,5 +1,6 @@
 // Imports specific utility functions and type definitions
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { ContainsDuplicateInput } from "./types"; // New import
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";

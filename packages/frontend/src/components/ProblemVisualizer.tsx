@@ -22,7 +22,8 @@ import type {
   ProblemMetadata,
   ProblemState,
   TestCase,
-} from "algo-lens-core";
+} from "algo-lens-core/src/types";
+
 
 interface ProblemVisualizerProps {
   state: ProblemState;

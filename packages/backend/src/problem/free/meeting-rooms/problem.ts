@@ -2,7 +2,8 @@ import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
 import { groups } from "./groups";
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { MeetingRoomsInput } from "./types";
 export const problem: Problem<MeetingRoomsInput, ProblemState> = {
   id: "meeting-rooms",

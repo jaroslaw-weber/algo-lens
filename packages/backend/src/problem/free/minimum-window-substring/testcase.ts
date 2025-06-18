@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { MinimumWindowSubstringInput } from "./types";
 
 export const testcases: TestCase<MinimumWindowSubstringInput, string>[] = [

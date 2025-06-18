@@ -1,4 +1,4 @@
-import { TestCase } from "algo-lens-core/types/core";
+import { TestCase } from "algo-lens-core/src/types";
 import { ValidAnagramInput, ValidAnagramOutput } from "./types";
 
 export const testcases: TestCase<ValidAnagramInput, ValidAnagramOutput>[] = [

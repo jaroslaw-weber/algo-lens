@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { generateSteps } from "./steps"; // Import only generateSteps from steps
 import { variables } from "./variables";
 import { groups } from "./groups";

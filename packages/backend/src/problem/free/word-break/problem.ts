@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { WordBreakInput } from "./types"; // Assuming ProblemState might be specific later
 import { generateSteps } from "./steps"; // Import generateSteps instead of wordBreak
 import { code } from "./code/solution";

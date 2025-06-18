@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { Input, Output, TreeNode } from "./types";
 
 // Helper function to build a binary tree from an array representation
