@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core"; // Added ProblemMetadata
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+ // Added ProblemMetadata
 import { generateSteps } from "./steps";
 import { EraseOverlapIntervalsInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";

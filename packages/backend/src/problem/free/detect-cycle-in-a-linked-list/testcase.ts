@@ -1,6 +1,8 @@
-import { LinkedListSerializer, ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core/src/types";
+
 import { DetectCycleInput } from "./types";
-import { ListNode } from "algo-lens-core";
+import { ListNode } from "algo-lens-core/src/types";
+
 
 // Helper function to create a linked list with a cycle
 function createLinkedList(arr: number[], pos: number): ListNode | null {

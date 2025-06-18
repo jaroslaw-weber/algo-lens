@@ -1,4 +1,5 @@
-import { ListNode, TestCase } from "algo-lens-core";
+import { ListNode, TestCase } from "algo-lens-core/src/types";
+
 
 import { ReverseListInput } from "./types";
 

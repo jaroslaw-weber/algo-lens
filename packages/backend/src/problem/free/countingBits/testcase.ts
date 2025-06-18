@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 
 // Define test cases for countingBits (LeetCode #338)
 // Input: n (number)

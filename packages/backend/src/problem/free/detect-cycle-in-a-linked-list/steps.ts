@@ -1,7 +1,9 @@
-import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { ProblemState } from "algo-lens-core/src/types";
+
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { DetectCycleInput } from "./types";
-import { ListNode } from "algo-lens-core";
+import { ListNode } from "algo-lens-core/src/types";
+
 
 export function generateSteps(head: DetectCycleInput): ProblemState[] {
   const l = new StepLoggerV2();

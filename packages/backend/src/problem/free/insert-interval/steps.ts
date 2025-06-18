@@ -1,7 +1,10 @@
-import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Adjusted path
+import { ProblemState } from "algo-lens-core/src/types";
+
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Adjusted path
+import { getIntervalBounds } from "algo-lens-core/src/utils"; // Import the utility function
 import { Interval } from "./types";
-import { LabeledInterval } from "algo-lens-core";
+import { LabeledInterval } from "algo-lens-core/src/types";
+
 import _ = require("lodash");
 
 export function generateSteps(

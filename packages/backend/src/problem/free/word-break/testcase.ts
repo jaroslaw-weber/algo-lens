@@ -1,4 +1,4 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
 import { WordBreakInput } from "./types"; // Assuming types.ts defines this
 
 // Define WordBreakInput if not defined in types.ts

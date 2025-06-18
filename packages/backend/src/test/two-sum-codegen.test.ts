@@ -1,8 +1,9 @@
-import { generateCodeFromSteps } from "../codegen/generate";
+import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate.js";
 import { it, expect } from "bun:test";
 
 it("two sum codegen", async () => {
-  const input = `import { ProblemState } from "algo-lens-core";
+  const input = `import { ProblemState } from "algo-lens-core/src/types";
+
 	import { StepLoggerV2 } from "../../core/StepLoggerV2";
 	import { TwoSumInput } from "./types"; // Assuming types.ts will be created later
 	import _ = require("lodash"); // Added lodash, might not be needed but good practice based on 3sum

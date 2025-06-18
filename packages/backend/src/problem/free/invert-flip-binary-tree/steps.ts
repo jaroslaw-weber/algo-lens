@@ -1,5 +1,6 @@
-import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { ProblemState } from "algo-lens-core/src/types";
+
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { BinaryTree, TreeNode } from "./types";
 
 export function getSteps(root: BinaryTree): ProblemState[] {

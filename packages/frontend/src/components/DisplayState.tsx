@@ -22,7 +22,8 @@ import type {
   HashmapVariable,
   VariableMetadata,
   BinaryOperationVariable,
-} from "algo-lens-core";
+} from "algo-lens-core/src/types";
+
 import DisplayValueGroup from "./DisplayValueGroup";
 import DisplayBinary from "./DisplayBinary";
 import DisplayBooleanGroup from "./DisplayBooleanGroup";
@@ -32,7 +33,8 @@ import DisplayLinkedList from "./DisplayLinkedList";
 import DisplayHashset from "./DisplayHashset";
 import DisplayHashmap from "./DisplayHashmap";
 import DisplayBinaryOperation from "./DisplayBinaryOperation";
-import { type Problem } from "algo-lens-core";
+import { type Problem } from "algo-lens-core/src/types";
+
 
 const Wrapper = ({
   label,

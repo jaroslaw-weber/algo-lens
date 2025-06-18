@@ -1,5 +1,6 @@
 
-import { GroupMetadata } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core/src/types";
+
 
 /**
  * Metadata for the visualizer groups used in the Number of Islands problem.

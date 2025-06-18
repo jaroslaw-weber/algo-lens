@@ -1,5 +1,6 @@
 // Import necessary types and functions
-import { Problem, ProblemState } from "algo-lens-core"; // Keep ProblemState
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+ // Keep ProblemState
 import { ReverseListInput } from "./types"; // Keep ReverseListInput import
 // import { reverseLinkedList as code } from "./code/typescript"; // Remove original code import
 import { generateSteps } from "./steps"; // Import generateSteps

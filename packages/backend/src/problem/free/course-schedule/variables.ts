@@ -1,4 +1,5 @@
-import { VariableMetadata } from "algo-lens-core"; // Updated import
+import { VariableMetadata } from "algo-lens-core/src/types";
+ // Updated import
 
 // Define the core variables used in the Course Schedule algorithm
 export const variables: VariableMetadata[] = [

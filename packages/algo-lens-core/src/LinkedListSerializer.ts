@@ -1,4 +1,4 @@
-import { ListNode, NodeHighlight, SerializedListNode } from "./core";
+import { ListNode, NodeHighlight, SerializedListNode } from "./types";
 
 export class LinkedListSerializer {
   /**

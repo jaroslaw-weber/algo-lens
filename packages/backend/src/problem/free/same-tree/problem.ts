@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { sameTree } from "./steps"; // Assuming steps.ts will export sameTree function
 import { SameTreeInput } from "./types"; // Assuming types.ts will export SameTreeInput
 import { testcases } from "./testcase";

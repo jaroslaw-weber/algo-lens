@@ -1,7 +1,9 @@
 import ky from "ky";
-import type { Problem } from "algo-lens-core";
+import type { Problem } from "algo-lens-core/src/types";
+
 import { BACKEND_URL } from "astro:env/client";
-import type { ProblemState } from "algo-lens-core";
+import type { ProblemState } from "algo-lens-core/src/types";
+
 import { pb } from "./auth/pocketbase";
 
 // Define a type for the random problem response

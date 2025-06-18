@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { HouseRobberInput } from "./types"; // Import from types.ts
 import { generateSteps } from "./steps"; // Import generateSteps from steps.ts
 import { groups } from "./groups"; // Import groups

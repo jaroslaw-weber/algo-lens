@@ -1,5 +1,6 @@
-import { ProblemState, Pointer } from "algo-lens-core/types/core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2";
+import { ProblemState, Pointer } from "algo-lens-core/src/types";
+
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
 import { GroupAnagramsInput } from "./types";
 
 export function generateSteps(input: GroupAnagramsInput): ProblemState[] {

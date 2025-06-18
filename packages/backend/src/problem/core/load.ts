@@ -1,7 +1,8 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { LinkedListSerializer, Problem } from "algo-lens-core";
-import { generateCodeFromSteps } from "../../codegen/generate";
+import { Problem } from "algo-lens-core/src/types";
+
+import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate";
 
 const problemCache: { [id: string]: Problem<any, any> } = {};
 

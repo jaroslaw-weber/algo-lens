@@ -1,4 +1,5 @@
-import { ArrayVariable, ProblemState, TestCase } from "algo-lens-core";
+import { ArrayVariable, ProblemState, TestCase } from "algo-lens-core/src/types";
+
 import { ThreeSumInput } from "./types";
 
 export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [

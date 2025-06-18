@@ -1,8 +1,9 @@
 import { sum } from "lodash";
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 import { HouseRobberInput } from "./types"; // Ensure this import exists
 import { groups } from "./groups"; // Import groups
-import { Pointer, ProblemState } from "algo-lens-core";
+import { Pointer, ProblemState } from "algo-lens-core/src/types";
+
 
 // Removed ProblemState import and utils imports as StepLoggerV2 handles variable creation
 

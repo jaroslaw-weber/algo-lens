@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import type { SimpleVariable } from "algo-lens-core";
+import type { SimpleVariable } from "algo-lens-core/src/types";
+
 
 const DisplaySingleValue = ({ data }: { data: SimpleVariable }) => {
   const [toggle, setToggle] = useState(false);

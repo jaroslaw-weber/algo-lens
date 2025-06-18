@@ -10,7 +10,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
-import type { IntervalVariable, LabeledIntervalVariable } from "algo-lens-core";
+import type { IntervalVariable, LabeledIntervalVariable } from "algo-lens-core/src/types";
+
 
 // Constants for chart height calculation
 const BAR_HEIGHT = 30;

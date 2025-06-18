@@ -20,18 +20,18 @@ import {
   problemStateWithTestcaseParamsSchema,
   problemSizeWithTestcaseParamsSchema,
 } from "./problem/schemas";
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
 
 const app = new Hono<{ Variables: AuthEnv["Variables"] }>();
 
 app.use(cors());
 app.use(authMiddleware);
 
-app.get("/", (c) => {
+app.get("/", (c:Context) => {
   return c.text("Hello Hono!");
 });
 
-app.get("/health", (c) => {
+app.get("/health", (c:Context) => {
   return c.json({ status: "ok" });
 });
 
@@ -56,7 +56,7 @@ app.get("/problem", async (c: Context<{ Variables: AuthEnv["Variables"] }>) => {
   return c.json(list);
 });
 
-app.get("/problem/random", async (c) => {
+app.get("/problem/random", async (c:Context) => {
   const all = await getAllProblemsService();
   if (!all || all.length === 0) {
     console.error("No problems found when fetching for /problem/random");
@@ -70,7 +70,7 @@ app.get("/problem/random", async (c) => {
   return c.json(problem);
 });
 
-app.get("/problem/:id", async (c) => {
+app.get("/problem/:id", async (c:Context) => {
   const { id } = problemIdParamSchema.parse(c.req.param());
 
   const problem = await getProblemByIdService(id);
@@ -111,7 +111,7 @@ function cleanTestcases(testcases: TestCase<any, any>[]) {
 
 app.get(
   "/problem/:problemId/testcase/:testcaseNumber/state/:step",
-  async (c) => {
+  async (c:Context) => {
     const { problemId, testcaseNumber, step } =
       problemStateWithTestcaseParamsSchema.parse(c.req.param());
 
@@ -127,7 +127,7 @@ app.get(
   }
 );
 
-app.get("/problem/:problemId/testcase/:testcaseNumber/size", async (c) => {
+app.get("/problem/:problemId/testcase/:testcaseNumber/size", async (c:Context) => {
   const { problemId, testcaseNumber } =
     problemSizeWithTestcaseParamsSchema.parse(c.req.param());
 

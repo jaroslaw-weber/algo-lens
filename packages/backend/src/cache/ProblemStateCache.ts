@@ -1,4 +1,5 @@
-import { ProblemState, Problem } from "algo-lens-core";
+import { ProblemState, Problem } from "algo-lens-core/src/types";
+
 import { cloneDeep } from "lodash";
 
 export class ProblemStateCache {

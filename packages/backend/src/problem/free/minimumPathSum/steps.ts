@@ -1,5 +1,6 @@
-import { ProblemState } from "algo-lens-core";
-import { StepLoggerV2 } from "../../core/StepLoggerV2"; // Import StepLoggerV2
+import { ProblemState } from "algo-lens-core/src/types";
+
+import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
 // Removed ProblemState, as2dArray, asArray, asSimpleValue
 import { MinPathSumInput } from "./types"; // Import MinPathSumInput
 

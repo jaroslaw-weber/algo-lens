@@ -1,4 +1,4 @@
-import { ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core/src/types";
 import { UniquePathsInput } from "./types";
 
 // The expected output type needs to be determined. The function returns ProblemState[],

@@ -12,11 +12,9 @@ import {
   BinaryOperationVariable,
   BinaryPointer,
   LabeledInterval,
-  LabeledIntervalVariable,
-} from "algo-lens-core";
+} from "./types.js";
 import {
   as2dArray,
-  asArray,
   asBinary,
   asHashmap,
   asHashset,
@@ -27,9 +25,9 @@ import {
   asTree,
   asValueGroup,
   getIntervalBounds,
-} from "./utils";
-import _ = require("lodash");
+} from "./utils.js";
 
+import _ from "lodash";
 /**
  * The StepLoggerV2 class is designed to capture the state of variables
  * at different points during an algorithm's execution. It allows logging
@@ -425,7 +423,7 @@ export class StepLoggerV2 {
    */
   public simple(value: Record<string, any>) {
     const variables = asSimpleValue(value);
-    variables.forEach((variable) => this.upsert(variable));
+    variables.forEach((variable: Variable) => this.upsert(variable));
   }
 
   /**

@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { variableMetadata } from "./variables"; // Renamed import
 import { generateSteps } from "./steps";
 import { groups } from "./groups";

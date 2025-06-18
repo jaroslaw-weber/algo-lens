@@ -1,5 +1,6 @@
 import React from "react";
-import type { BinaryOperationVariable, BinaryPointer, ThemeColor } from "algo-lens-core";
+import type { BinaryOperationVariable, BinaryPointer, ThemeColor } from "algo-lens-core/src/types";
+
 
 const getBitColorClass = (pointers: BinaryPointer[] | undefined, index: number, totalBits: number): string => {
   if (!pointers) return "";

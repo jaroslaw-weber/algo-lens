@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 
 // Define test cases for Contains Duplicate (LeetCode #217)
 export const testcases = [

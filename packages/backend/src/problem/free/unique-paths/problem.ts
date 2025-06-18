@@ -1,4 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core";
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+
 import { generateSteps } from "./steps";
 import { UniquePathsInput, UniquePathsState } from "./types"; // Keeping UniquePathsState for potential future use
 import { variables } from "./variables"; // Import actual variables

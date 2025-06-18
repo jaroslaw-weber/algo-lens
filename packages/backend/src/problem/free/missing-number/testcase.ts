@@ -1,4 +1,5 @@
-import { TestCase, ProblemState } from "algo-lens-core";
+import { TestCase, ProblemState } from "algo-lens-core/src/types";
+
 import { MissingNumberInput } from "./types";
 
 export const testcases = [

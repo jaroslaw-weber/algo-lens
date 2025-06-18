@@ -1,4 +1,5 @@
-import { VariableMetadata } from "algo-lens-core"; // Changed import
+import { VariableMetadata } from "algo-lens-core/src/types";
+ // Changed import
 
 // Changed type annotation and array content
 export const variables: VariableMetadata[] = [

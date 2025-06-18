@@ -1,4 +1,5 @@
-import { GroupMetadata } from "algo-lens-core";
+import { GroupMetadata } from "algo-lens-core/src/types";
+
 
 // Exporting an empty array to make this file a module
 // and satisfy the import in problem.ts.

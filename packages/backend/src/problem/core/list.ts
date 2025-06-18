@@ -1,6 +1,7 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { Problem, ProblemGroup } from "algo-lens-core";
+import { Problem, ProblemGroup } from "algo-lens-core/src/types";
+
 
 // Public API
 import { loadProblemWithId } from "./load";

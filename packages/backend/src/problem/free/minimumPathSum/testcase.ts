@@ -1,4 +1,5 @@
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
+
 import { MinPathSumInput } from "./types";
 
 // Define the type for the test cases using the imported interfaces
