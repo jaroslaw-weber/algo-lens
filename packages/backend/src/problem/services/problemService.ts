@@ -6,7 +6,6 @@ import {
   HashsetVariable,
   ListNode,
   ListVariable,
-  LinkedListSerializer,
 } from "algo-lens-core";
 import { cloneDeep } from "lodash";
 import { ProblemStateCache } from "../../cache/ProblemStateCache";

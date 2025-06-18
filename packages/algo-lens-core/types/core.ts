@@ -125,7 +125,7 @@ export interface Pointer2D {
 
   color: string;
 
-  label: string;
+  label?: string;
 
   dir?: string; //"left" | "right" | "up" | "bottom"
 }
