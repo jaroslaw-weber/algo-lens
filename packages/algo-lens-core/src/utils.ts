@@ -20,7 +20,7 @@ import {
   SimpleVariable,
   TreeVariable,
   ValueGroupVariable,
-} from "../types/core";
+} from "./types";
 import { LinkedListSerializer } from "./LinkedListSerializer";
 
 export function asSimpleValue(o: any): SimpleVariable[] {
