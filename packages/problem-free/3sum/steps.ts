@@ -1,6 +1,6 @@
 import { ProblemState } from "algo-lens-core";
 import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
-import _ = require("lodash");
+import _ from "lodash";
 
 export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2();

@@ -1,4 +1,3 @@
-export { LinkedListSerializer } from "./LinkedListSerializer";
 export interface ProblemMetadata {
   variables: VariableMetadata[];
   groups?: GroupMetadata[];
@@ -68,7 +67,7 @@ export interface Variable {
   /** Type of the variable, determining whether it's a single number or an array. */
   type:
     | "number"
-    |'string'
+    | "string"
     | "array"
     | "value-group"
     | "binary"
@@ -165,7 +164,7 @@ export interface BinaryOperationVariable extends Variable {
 /** Extends the Variable interface specifically for numeric values. */
 export interface SimpleVariable extends Variable {
   /** The type of variable, explicitly a number in this context. */
-  type: "number" | 'string'
+  type: "number" | "string";
 
   /** Numeric value of the variable. */
   value: number | string;

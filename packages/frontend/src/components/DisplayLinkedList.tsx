@@ -6,7 +6,6 @@ import type {
   ListVariable,
   NodeHighlight,
   SerializedListNode,
-  LinkedListSerializer, // Add this import
 } from "algo-lens-core"; // Assuming you have similar types for the linked list
 import popperjs, {
   type PopperFactory,

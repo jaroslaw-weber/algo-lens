@@ -1,4 +1,4 @@
-import { LinkedListSerializer, ProblemState, TestCase } from "algo-lens-core";
+import { ProblemState, TestCase } from "algo-lens-core";
 import { DetectCycleInput } from "./types";
 import { ListNode } from "algo-lens-core";
 

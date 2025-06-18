@@ -12,7 +12,6 @@ import {
   IntervalVariable,
   LabeledInterval,
   LabeledIntervalVariable,
-  LinkedListSerializer,
   ListNode,
   ListVariable,
   NodeHighlight,
@@ -22,6 +21,7 @@ import {
   TreeVariable,
   ValueGroupVariable,
 } from "../types/core";
+import { LinkedListSerializer } from "./LinkedListSerializer";
 
 export function asSimpleValue(o: any): SimpleVariable[] {
   return Object.keys(o).map((k) => {

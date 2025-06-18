@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { generateCodeFromSteps } from "../codegen/generate";
+import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate";
 import * as fs from "fs";
 import * as path from "path";
 import { loadProblemWithId } from "../problem/core/load";
