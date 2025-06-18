@@ -123,7 +123,7 @@ export interface Pointer2D {
   /** Column index. */
   c: number;
 
-  color: string;
+  color?: string;
 
   label?: string;
 

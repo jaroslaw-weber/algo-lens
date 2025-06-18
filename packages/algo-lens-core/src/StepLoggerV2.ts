@@ -423,7 +423,7 @@ export class StepLoggerV2 {
    */
   public simple(value: Record<string, any>) {
     const variables = asSimpleValue(value);
-    variables.forEach((variable) => this.upsert(variable));
+    variables.forEach((variable: Variable) => this.upsert(variable));
   }
 
   /**
