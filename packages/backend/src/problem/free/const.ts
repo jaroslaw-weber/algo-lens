@@ -1,0 +1,1 @@
+export const OLD_PROBLEMS_FOLDER = __dirname
