@@ -1,4 +1,4 @@
-import { Hono } from "hono";
+import { Hono, Context } from "hono";
 import PocketBase from 'pocketbase';
 import 'dotenv/config'; // Assuming dotenv is used for environment variables
 
@@ -12,7 +12,7 @@ import app from "./router"; // Import the configured Hono app from router.ts
 
 export { pb }; // Export the Pocketbase client instance
 
-app.onError((err, c) => {
+app.onError((err:Error, c:Context) => {
   console.error(`${err}`);
   return c.json({
     success: false,

@@ -1,6 +1,6 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { Problem } from "../types/core";
+import { Problem } from "./types";
 import { generateCodeFromSteps } from "./codegen/generate";
 
 export async function loadProblemFromPath(problemFolderPath: string) {

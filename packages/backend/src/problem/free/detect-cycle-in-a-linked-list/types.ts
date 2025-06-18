@@ -1,1 +1,3 @@
-export type DetectCycleInput = import("algo-lens-core").ListNode | null;
+import { ListNode } from "algo-lens-core/src/types";
+
+export type DetectCycleInput = ListNode | null;

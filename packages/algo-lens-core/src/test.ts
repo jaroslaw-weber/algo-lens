@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "../types/core";
+import { Problem, ProblemState } from "algo-lens-core/src/types"
 import { describe, it, expect } from "bun:test";
 
 import _ from "lodash";
