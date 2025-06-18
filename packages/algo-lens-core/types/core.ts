@@ -68,7 +68,7 @@ export interface Variable {
   /** Type of the variable, determining whether it's a single number or an array. */
   type:
     | "number"
-    |'string'
+    | "string"
     | "array"
     | "value-group"
     | "binary"
@@ -96,9 +96,16 @@ export interface Pointer {
   value: number;
 
   /** Color of the pointer. */
-  color?: "primary" | "neutral" | "success" | "warning" | "error" | "accent";
+  color:
+    | "primary"
+    | "neutral"
+    | "success"
+    | "warning"
+    | "error"
+    | "accent"
+    | "info";
 
-  label?: string;
+  label: string;
   dir?: "left" | "right" | "top" | "bottom";
 }
 
@@ -117,9 +124,9 @@ export interface Pointer2D {
   /** Column index. */
   c: number;
 
-  color?: string;
+  color: string;
 
-  label?: string;
+  label: string;
 
   dir?: string; //"left" | "right" | "up" | "bottom"
 }
@@ -165,7 +172,7 @@ export interface BinaryOperationVariable extends Variable {
 /** Extends the Variable interface specifically for numeric values. */
 export interface SimpleVariable extends Variable {
   /** The type of variable, explicitly a number in this context. */
-  type: "number" | 'string'
+  type: "number" | "string";
 
   /** Numeric value of the variable. */
   value: number | string;
@@ -250,7 +257,7 @@ export type HashHighlight = {
   key?: string | number;
   value?: string | number;
   color: ThemeColor;
-  label?: string;
+  label: string;
 };
 
 export type ThemeColor =

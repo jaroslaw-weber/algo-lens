@@ -84,6 +84,13 @@ export class CodeGenerator {
     );
   }
 
+  private removeGetIntervalBoundsLines(): void {
+    this.remove(
+      /^.*l\.getIntervalBounds\(.*\).*$\n/gm,
+      "removeGetIntervalBoundsLines"
+    );
+  }
+
   private removeManualHideBlocks(): void {
     const regex = /\s*\/\/ HIDE_START[\s\S]*?\/\/ HIDE_END\s*/g;
     this.fix(regex, "\n", "removeManualHideBlocks");
@@ -120,6 +127,7 @@ export class CodeGenerator {
     this.removeComments();
     this.replaceBreakpointWithNumber();
     this.removeStepLoggerLog();
+    this.removeGetIntervalBoundsLines();
 
     try {
       const formattedContent = await prettier.format(this.result, {
