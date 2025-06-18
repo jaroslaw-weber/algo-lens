@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
+    "target": "ESNext",                         // More modern than ES2015
+    "module": "NodeNext",                       // For ESM + .js extension support
+    "moduleResolution": "NodeNext",
     "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
     "esModuleInterop": true,
+    
+    "jsx": "react-jsx",                         // Enables JSX transform
+    "jsxImportSource": "hono/jsx",              // Use Hono's JSX runtime
 
-    "target": "ES2015",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "skipLibCheck": true,                       // Optional but useful
+    "forceConsistentCasingInFileNames": true    // Avoid case issues on Windows/macOS
   }
 }

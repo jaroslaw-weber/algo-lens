@@ -1,4 +1,4 @@
-import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate";
+import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate.js";
 import { it, expect } from "bun:test";
 
 it("two sum codegen", async () => {

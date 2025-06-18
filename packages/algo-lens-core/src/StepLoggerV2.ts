@@ -12,7 +12,7 @@ import {
   BinaryOperationVariable,
   BinaryPointer,
   LabeledInterval,
-} from "../types/core";
+} from "./types.js";
 import {
   as2dArray,
   asBinary,
@@ -25,7 +25,7 @@ import {
   asTree,
   asValueGroup,
   getIntervalBounds,
-} from "./utils";
+} from "./utils.js";
 
 import _ from "lodash";
 /**

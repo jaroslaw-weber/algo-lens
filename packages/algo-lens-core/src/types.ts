@@ -95,7 +95,7 @@ export interface Pointer {
   value: number;
 
   /** Color of the pointer. */
-  color:
+  color?:
     | "primary"
     | "neutral"
     | "success"
@@ -104,7 +104,7 @@ export interface Pointer {
     | "accent"
     | "info";
 
-  label: string;
+  label?: string;
   dir?: "left" | "right" | "top" | "bottom";
 }
 
@@ -255,8 +255,8 @@ export interface ListVariable extends Variable {
 export type HashHighlight = {
   key?: string | number;
   value?: string | number;
-  color: ThemeColor;
-  label: string;
+  color?: ThemeColor;
+  label?: string;
 };
 
 export type ThemeColor =

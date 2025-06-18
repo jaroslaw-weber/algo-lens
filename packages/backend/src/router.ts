@@ -20,7 +20,7 @@ import {
   problemStateWithTestcaseParamsSchema,
   problemSizeWithTestcaseParamsSchema,
 } from "./problem/schemas";
-import { TestCase } from "algo-lens-core";
+import { TestCase } from "algo-lens-core/src/types";
 
 const app = new Hono<{ Variables: AuthEnv["Variables"] }>();
 
