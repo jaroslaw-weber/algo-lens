@@ -1,7 +1,6 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import { FREE_PROBLEMS_FOLDER } from "algolens-problem-free/const";
-import { OLD_PROBLEMS_FOLDER } from "../free/const";
 
 interface ProblemFolderInfo {
   problemId: string;
@@ -38,12 +37,6 @@ export class ProblemPaths {
   async init() {
     if (this.initialized) {
       return;
-    }
-    {
-      const dir = OLD_PROBLEMS_FOLDER; 
-      console.log("dir1", dir);
-      const info = await this.loadProblemsFromDirectory(dir);
-      this.add(info);
     }
     {
       const dir = FREE_PROBLEMS_FOLDER; 
