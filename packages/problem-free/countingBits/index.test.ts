@@ -1,7 +1,7 @@
 import { it } from "bun:test";
 import { problem } from "./problem";
-import { runTests } from "../../core/test";
+import { runTests } from "algo-lens-core/src/test";
 
 it(problem.id, async () => {
-  await runTests(problem);
+  await runTests(__dirname);
 });

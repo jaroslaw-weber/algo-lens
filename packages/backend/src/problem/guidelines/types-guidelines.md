@@ -69,8 +69,8 @@ export interface MyProblemInput {
 - **Specificity:**  
   Define types as specifically as possible to leverage TypeScript's type-checking capabilities.
 
-- **Reusability:**  
-  If a type is used across multiple problems, consider defining it in a shared location (e.g., `algo-lens-core/types`).
+- **Reusability:**
+  If a type is used across multiple problems, consider defining it in a shared location (e.g., `algo-lens-core/src/types.ts`). This is the designated location for common problem-related types.
 
 - **Consistency:**  
   Ensure type definitions are consistent with their usage in `problem.ts`, `steps.ts`, and `testcase.ts`.

@@ -5,13 +5,18 @@
 	"private": true,
 	"workspaces": ["packages/*"],
 	"scripts": {
-	  "dev": "concurrently \"npm run dev --workspace=packages/frontend\" \"bun run dev --workspace=packages/backend\" \"npm run dev --workspace=packages/landing-page\""
+		"dev": "concurrently \"npm run dev --workspace=packages/frontend\" \"bun run dev --workspace=packages/backend\" \"npm run dev --workspace=packages/landing-page\""
 	},
 	"devDependencies": {
-	  "concurrently": "^8.0.0"
+		"concurrently": "^8.0.0",
+		"enquirer": "^2.4.1",
+		"plop": "^4.0.1"
 	},
 	"release": {
-	  "codename": "Phoenix"
+		"codename": "Phoenix"
+	},
+	"dependencies": {
+		"cheerio": "^1.1.0",
+		"node-fetch": "^3.3.2"
 	}
-  }
-  
+}
