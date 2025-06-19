@@ -1,0 +1,16 @@
+// Can check how to implement here: packages/backend/src/problem/guidelines/problem-guidelines.md
+import { Problem } from '@algo-lens/algo-lens-core';
+import { variables } from './variables';
+import { steps } from './steps';
+import { testcases } from './testcase';
+import { groups } from './groups';
+import { types } from './types';
+
+export const problem: Problem<typeof variables, typeof steps, typeof testcases, typeof groups, typeof types> = {
+  name: '{{properCase name}}',
+  variables,
+  steps,
+  testcases,
+  groups,
+  types,
+};

@@ -25,8 +25,10 @@ Following these ensures clear, informative visualizations.
 
 ### Basic Workflow
 
-1. **Instantiate:**
+1. **Instantiate:** Import `StepLoggerV2` from `"algo-lens-core/src/StepLoggerV2"` and instantiate it.
    ```js
+   import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+
    const l = new StepLoggerV2();
    ```
 2. **State Copying:**

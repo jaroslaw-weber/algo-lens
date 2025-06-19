@@ -25,6 +25,7 @@ A good `problem.ts` file should define a `Problem` object, typically including:
 -   **`variables`**: Problem-specific variables imported from `variables.ts`.
 -   **`groups`**: Problem-specific groups imported from `groups.ts`.
 -   **`codeGenerationSignature`**: An object defining the function signature for code generation, referencing the function in `steps.ts`.
+-   **Core Imports:** Core problem-related types and utilities (like `Problem`) should be imported from `"algo-lens-core"`.
 
 ---
 
