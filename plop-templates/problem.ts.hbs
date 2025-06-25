@@ -1,0 +1,32 @@
+// Can check how to implement here: packages/backend/src/problem/guidelines/problem-guidelines.md
+import { Problem, ProblemState } from "algo-lens-core/src/types";
+import fs from "fs";
+import path from "path";
+import { variables } from './variables';
+import { getSteps } from './steps';
+import { testcases } from './testcase';
+import { groups } from './groups';
+import { {{properCase name}}Input } from './types';
+
+const explanationMarkdown = fs.readFileSync(
+  path.join(__dirname, "explanation.md"),
+  "utf-8"
+);
+
+export const problem: Problem<{{properCase name}}Input, ProblemState> = {
+  title: '{{properCase name}}',
+  emoji: '💡', // Default emoji, can be changed later
+  func: getSteps,
+  testcases: testcases,
+  difficulty: 'easy', // Default difficulty, can be changed later
+  id: '{{kebabCase name}}',
+  tags: [], // Default tags, can be changed later
+  explanation: explanationMarkdown,
+  metadata: {
+    variables,
+    groups,
+  },
+  codegen: {
+    signature: '{{camelCase name}}({{camelCase name}}Input: {{properCase name}}Input)',
+  },
+};

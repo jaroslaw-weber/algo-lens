@@ -1,0 +1,15 @@
+# Ignore artifacts:
+build
+dist
+.next
+.turbo
+.vercel
+.env
+.env.local
+.env.development.local
+.env.production.local
+coverage
+
+# Ignore directories:
+node_modules
+packages/*/node_modules

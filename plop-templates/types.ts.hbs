@@ -1,0 +1,13 @@
+// Can check how to implement here: packages/backend/src/problem/guidelines/types-guidelines.md
+import { z } from 'zod';
+
+// Define Zod schemas for input and output types
+export const types = {
+  input: z.object({
+    // Define input schema here
+  }),
+  output: z.any(), // Define output schema here
+};
+
+export type {{properCase name}}Input = z.infer<typeof types.input>;
+export type Output = z.infer<typeof types.output>;

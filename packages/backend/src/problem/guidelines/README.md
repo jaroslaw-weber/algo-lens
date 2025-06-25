@@ -30,4 +30,22 @@ This section provides links to detailed guidelines for the various files found w
 
 ---
 
+---
+
+## Contributing New Problems with the Plop Generator
+
+To streamline the process of adding new problems, a Plop generator has been set up. This generator will create the necessary file structure and basic template files for a new problem.
+
+To use the generator, run the following command from the project root:
+
+```bash
+bun plop problem
+```
+
+You will be prompted to enter the name of the problem (e.g., `two-sum`). The generator will then create a new directory for the problem in `packages/problem-free/` with all the required files.
+
+After running the generator, you will need to fill in the details in each of the generated files according to the guidelines provided in the sections above.
+
+---
+
 By following these guidelines, contributors can ensure that new problems are well-defined, thoroughly tested, and effectively visualized within the AlgoLens platform.
