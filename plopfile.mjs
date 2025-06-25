@@ -1,5 +1,8 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import * as cheerio from 'cheerio';
+import fetch from 'node-fetch';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,56 +19,49 @@ export default function (plop) {
 		],
 		actions: [
 			async (data) => {
-				const fetch = (await import('node-fetch')).default;
-				const cheerio = (await import('cheerio')).default;
 
-				try {
-					const response = await fetch(data.url);
-					const html = await response.text();
-					const $ = cheerio.load(html);
+				const response = await fetch(data.url);
+				const html = await response.text();
+				const $ = cheerio.load(html);
 
-					// Attempt to extract problem title and description (selectors might need adjustment)
-					const problemTitle = $('meta[property="og:title"]').attr('content');
-					const problemDescription = $('meta[property="og:description"]').attr('content');
+				// Attempt to extract problem title and description (selectors might need adjustment)
+				const problemTitle = $('meta[property="og:title"]').attr('content');
+				const problemDescription = $('meta[property="og:description"]').attr('content');
 
-					if (problemTitle) {
-						data.name = problemTitle.replace(' - LeetCode', '').trim();
+				if (problemTitle) {
+					data.name = problemTitle.replace(' - LeetCode', '').trim();
+				} else {
+					// Fallback if og:title is not found - try to find h1
+					const h1Title = $('h1').text().trim();
+					if (h1Title) {
+						data.name = h1Title;
 					} else {
-						// Fallback if og:title is not found - try to find h1
-						const h1Title = $('h1').text().trim();
-						if (h1Title) {
-							data.name = h1Title;
-						} else {
-							// Fallback to extracting from URL if no title found
-							const urlParts = data.url.split('/');
-							data.name = urlParts[urlParts.length - 2] || 'new-problem';
-						}
+						// Fallback to extracting from URL if no title found
+						const urlParts = data.url.split('/');
+						data.name = urlParts[urlParts.length - 2] || 'new-problem';
 					}
-
-
-					if (problemDescription) {
-						data.description = problemDescription;
-					} else {
-						// Fallback: try to find the description content on the page
-						// This selector is a guess and might need adjustment based on LeetCode's structure
-						const descriptionElement = $('.problem-statement__content');
-						if (descriptionElement.length > 0) {
-							data.description = descriptionElement.text().trim();
-						} else {
-							data.description = 'Problem description could not be scraped.';
-						}
-					}
-
-
-					console.log(`Scraped Problem Name: ${data.name}`);
-					console.log(`Scraped Problem Description: ${data.description ? data.description.substring(0, 100) + '...' : 'No description'}`);
-
-
-				} catch (error) {
-					console.error('Error fetching or parsing problem URL:', error);
-					data.name = 'new-problem'; // Default name on error
-					data.description = 'Could not fetch problem description.';
 				}
+
+
+				if (problemDescription) {
+					data.description = problemDescription;
+				} else {
+					// Fallback: try to find the description content on the page
+					// This selector is a guess and might need adjustment based on LeetCode's structure
+					const descriptionElement = $('.problem-statement__content');
+					if (descriptionElement.length > 0) {
+						data.description = descriptionElement.text().trim();
+					} else {
+						data.description = 'Problem description could not be scraped.';
+					}
+				}
+
+
+				console.log(`Scraped Problem Name: ${data.name}`);
+				console.log(`Scraped Problem Description: ${data.description ? data.description.substring(0, 100) + '...' : 'No description'}`);
+
+
+
 
 				return 'Problem data fetched and added to context';
 			},

@@ -1,8 +1,7 @@
-// Can check how to implement here: packages/backend/src/problem/guidelines/steps-guidelines.md
-import { StepLoggerV2 } from '@algo-lens/algo-lens-core';
-import { variables } from './variables';
-import { types } from './types';
-
-export const steps = (logger: StepLoggerV2<typeof variables, typeof types>) => {
-  // Define problem steps here
-};
+// Can check how to implement here:
+packages/backend/src/problem/guidelines/steps-guidelines.md import {
+ProblemState } from "algo-lens-core/src/types"; import { StepLoggerV2 } from
+"algo-lens-core/src/StepLoggerV2"; import {
+{{properCase name}}Input } from './types'; export function generateSteps(input:
+{{properCase name}}Input): ProblemState[] { const l = new StepLoggerV2(); //
+Define problem steps here return l.getSteps(); };

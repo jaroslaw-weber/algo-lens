@@ -1,8 +1,9 @@
 # Changelog
 
-## [Unreleased] - 2025-06-10
+## [Unreleased]
 
-### Changed
+### Added
+- Prettier configuration (`.prettierrc.json` and `.prettierignore`) to ensure consistent code formatting, including Handlebars (`.hbs`) files.
 - Changed `l.simple` to `l.arrayV3` for logging the `strs` variable in `group-anagrams/steps.ts` to correctly visualize it as an array.
 - Added descriptive labels to variables in `product-of-array-except-self/variables.ts` for improved visualization.
 - Shortened variable names in `product-of-array-except-self/steps.ts` and updated corresponding names in `variables.ts` for brevity.

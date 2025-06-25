@@ -1,0 +1,15 @@
+{
+	"name": "@algo-lens/problem-premium",
+	"version": "1.0.0",
+	"description": "Premium LeetCode problems for AlgoLens",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@algo-lens/algo-lens-core": "workspace:^"
+	}
+}

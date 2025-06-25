@@ -9,5 +9,5 @@ export const types = {
   output: z.any(), // Define output schema here
 };
 
-export type Input = z.infer<typeof types.input>;
+export type {{properCase name}}Input = z.infer<typeof types.input>;
 export type Output = z.infer<typeof types.output>;
