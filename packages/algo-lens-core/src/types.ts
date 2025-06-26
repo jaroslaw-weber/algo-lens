@@ -88,6 +88,7 @@ export interface BooleanGroupVariable extends Variable {
 
 /** Represents a pointer in an array, useful for highlighting specific indices during algorithm execution. */
 export interface Pointer {
+  id?: string; // Added optional id field
   /** Specifies whether the pointer is for a column or a row in an array. */
   dimension?: "column" | "row";
 
@@ -117,6 +118,7 @@ export interface BinaryPointer {
 
 /** Represents a 2D pointer for navigating through two-dimensional arrays. */
 export interface Pointer2D {
+  id?: string; // Added optional id field
   /** Row index. */
   r: number;
 
