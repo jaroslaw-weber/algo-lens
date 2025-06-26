@@ -33,8 +33,6 @@ A good `problem.ts` file should define a `Problem` object, typically including:
 
 ```ts
 import { Problem, ProblemState } from "algo-lens-core/src/types"; // Adjusted import
-import fs from "fs"; // For reading markdown files
-import path from "path"; // For constructing file paths
 import { generateSteps } from './steps';
 import { testcases } from './testcase';
 import { variables } from './variables';
@@ -42,17 +40,8 @@ import { groups } from './groups';
 // Assuming types.ts defines YourProblemInputType and YourProblemReturnType
 import { YourProblemInputType } from './types';
 
-// Read description and explanation from markdown files
-// This is the current common practice.
-let description = "";
-try {
-  description = fs.readFileSync(path.join(__dirname, 'description.md'), 'utf-8');
-} catch (e) { console.error("Error reading description.md for problem"); }
-
-let explanation = ""; // Optional, but highly recommended
-try {
-  explanation = fs.readFileSync(path.join(__dirname, 'explanation.md'), 'utf-8');
-} catch (e) { /* Explanation file might be missing, handle gracefully */ }
+// description.md and explanation.md are now loaded dynamically by the backend.
+// They no longer need to be read and included in this file.
 
 export const problem: Problem<YourProblemInputType, ProblemState> = {
   // Core Metadata
@@ -61,10 +50,6 @@ export const problem: Problem<YourProblemInputType, ProblemState> = {
   emoji: '💡', // Choose a relevant emoji
   difficulty: 'medium', // 'easy', 'medium', or 'hard'
   tags: ['Array', 'Logic', 'YourProblemTag'], // Relevant algorithm tags
-
-  // Content
-  description, // Loaded from description.md
-  explanation, // Loaded from explanation.md (if exists)
 
   // Core Logic & Test Cases
   func: generateSteps, // Function from steps.ts that generates visualization steps
@@ -92,9 +77,8 @@ export const problem: Problem<YourProblemInputType, ProblemState> = {
 
 -   **`id` Casing**: Use `kebab-case` for problem `id` strings (e.g., "two-sum", "merge-intervals") for consistency with the plop generator and general URL/file naming conventions.
 -   **Markdown Content**:
-    -   Load `description.md` and `explanation.md` content using `fs.readFileSync` as shown in the template. Ensure these files exist or handle potential errors gracefully.
-    -   The `description` property in the `Problem` object is essential.
-    -   The `explanation` property is highly recommended.
+    -   `description.md` and `explanation.md` files should be present in the problem's directory.
+    -   Their content is now dynamically loaded by the backend when a problem is requested. It no longer needs to be manually read in `problem.ts`.
 -   **`metadata` Object**: Place `variables` and `groups` inside the `metadata` object as per common practice.
 -   **`codeGenerationSignature`**:
     -   Use the property name `codeGenerationSignature`.
