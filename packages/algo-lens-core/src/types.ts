@@ -35,12 +35,16 @@ export interface Problem<Input, State> {
 
   difficulty: Difficulty;
 
+  description?: string; // Content from description.md
+  explanation?: string; // Content from explanation.md
+
   metadata: ProblemMetadata;
 
   codegen?: {
     signature: string;
   };
   bookmark?: boolean;
+  podcastUrl?: string;
 }
 
 export type ProblemGroup = {

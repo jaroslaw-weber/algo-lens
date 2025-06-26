@@ -195,8 +195,8 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
             <div className="description-content">
               {/* Display problem description or fallback */}
               <div className="p-4">
-                {(problem as any)?.description ? (
-                  <p>{(problem as any).description}</p> // Assuming description is plain text
+                {problem?.description ? (
+                  <p>{problem.description}</p> // Assuming description is plain text
                 ) : (
                   <p>No description available.</p>
                 )}
@@ -208,10 +208,9 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
           {activeTab === "explanation" && (
             <div className="explanation-content p-4 prose">
               {" "}
-              {/* Added padding and prose class */}
-              {(problem as any)?.explanation ? (
+              {(problem)?.explanation ? (
                 <ReactMarkdown>{(problem as any).explanation}</ReactMarkdown>
-              ) : (
+: (
                 "No explanation available. (Work in progress)"
               )}
             </div>
