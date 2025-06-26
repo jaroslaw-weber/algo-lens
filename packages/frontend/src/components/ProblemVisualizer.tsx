@@ -195,8 +195,8 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
             <div className="description-content">
               {/* Display problem description or fallback */}
               <div className="p-4">
-                {problem?.description ? (
-                  <p>{problem.description}</p> // Assuming description is plain text
+                {(problem as any)?.description ? (
+                  <p>{(problem as any).description}</p> // Assuming description is plain text
                 ) : (
                   <p>No description available.</p>
                 )}
@@ -209,9 +209,11 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
             <div className="explanation-content p-4">
               {" "}
               {/* Added padding */}
-              {
-                "No explanation available. (Work in progress)" // Assuming explanation is plain text
-              }
+              {(problem as any)?.explanation ? (
+                <p>{(problem as any).explanation}</p>
+              ) : (
+                "No explanation available. (Work in progress)"
+              )}
             </div>
           )}
         </div>
