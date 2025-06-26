@@ -6,7 +6,7 @@ A strong explanation helps users understand the reasoning and approach behind a 
 
 ## 1. Purpose
 
-To explain the logic, approach, and reasoning behind the provided solution, making it accessible to users of varying backgrounds.
+To explain the logic, approach, and reasoning behind the provided solution, making it accessible to users of varying backgrounds. The `explanation.md` file is highly recommended for all problems. Even if a problem seems straightforward, a brief explanation of the chosen approach and complexity can be very beneficial for learners.
 
 ---
 

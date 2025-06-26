@@ -1,6 +1,7 @@
 import ProblemHeader from "./ProblemHeader";
 import StateDescription from "./ProblemDescription";
 import React, { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
@@ -126,6 +127,11 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   return (
     <div className="mx-2 lg:mx-8 my-8 flex-1">
       <div className="">
+        {/* Render ProblemTabs once, above the conditional content */}
+        <ProblemTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
         {/* Tab Content Area */}
         <div className="mt-4">
           {/* Visualizer Content Container */}
@@ -141,12 +147,6 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                       problem={problem}
                       handleCopyCode={handleCopyCode}
                       onClose={handleCloseProblemView} // Pass the new close handler
-                    />
-                  )}
-                  {showHeader && (
-                    <ProblemTabs
-                      activeTab={activeTab}
-                      setActiveTab={setActiveTab}
                     />
                   )}
                   {/* Integrate TestCaseSelector */}
@@ -206,12 +206,13 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
 
           {/* Explanation Content Container */}
           {activeTab === "explanation" && (
-            <div className="explanation-content p-4">
+            <div className="explanation-content p-4 prose">
               {" "}
-              {/* Added padding */}
-              {
-                "No explanation available. (Work in progress)" // Assuming explanation is plain text
-              }
+              {(problem)?.explanation ? (
+                <ReactMarkdown>{(problem as any).explanation}</ReactMarkdown>)
+: (
+                "No explanation available. (Work in progress)"
+              )}
             </div>
           )}
         </div>

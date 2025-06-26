@@ -29,7 +29,9 @@ import { problem } from "./problem"; // Import the problem definition
 import { runTests } from "algo-lens-core/src/test"; // Import the test runner utility
 
 it(problem.id, async () => {
-  await runTests(problem);
+  // Pass the directory path to runTests
+  // The runTests utility will dynamically load problem details from this directory
+  await runTests(__dirname);
 });
 ```
 
@@ -37,8 +39,8 @@ it(problem.id, async () => {
 
 ## 4. Explanation
 
-- **`problem.id`:** Used as the name for the test block, ensuring unique and identifiable test runs.
-- **`runTests(problem)`:** This function takes the `problem` object (which contains references to `testcases.ts` and the solution function) and executes all defined test cases against the problem's solution. It handles assertions and reports results.
+- **`problem.id`:** Imported from `./problem` and used as the name for the test block, ensuring unique and identifiable test runs.
+- **`runTests(__dirname)`:** This function takes the current directory path (`__dirname`). The testing utility uses this path to dynamically locate and load the `problem.ts`, `testcase.ts`, and other necessary files for the specific problem being tested. It then executes all defined test cases against the problem's solution logic and handles assertions and results reporting.
 
 ---
 
