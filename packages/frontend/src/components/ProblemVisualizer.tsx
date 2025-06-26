@@ -1,6 +1,7 @@
 import ProblemHeader from "./ProblemHeader";
 import StateDescription from "./ProblemDescription";
 import React, { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import copy from "copy-to-clipboard";
 
 import DisplayState from "./DisplayState";
@@ -205,11 +206,11 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
 
           {/* Explanation Content Container */}
           {activeTab === "explanation" && (
-            <div className="explanation-content p-4">
+            <div className="explanation-content p-4 prose">
               {" "}
-              {/* Added padding */}
+              {/* Added padding and prose class */}
               {(problem as any)?.explanation ? (
-                <p>{(problem as any).explanation}</p>
+                <ReactMarkdown>{(problem as any).explanation}</ReactMarkdown>
               ) : (
                 "No explanation available. (Work in progress)"
               )}
