@@ -126,6 +126,11 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   return (
     <div className="mx-2 lg:mx-8 my-8 flex-1">
       <div className="">
+        {/* Render ProblemTabs once, above the conditional content */}
+        <ProblemTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
         {/* Tab Content Area */}
         <div className="mt-4">
           {/* Visualizer Content Container */}
@@ -141,12 +146,6 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                       problem={problem}
                       handleCopyCode={handleCopyCode}
                       onClose={handleCloseProblemView} // Pass the new close handler
-                    />
-                  )}
-                  {showHeader && (
-                    <ProblemTabs
-                      activeTab={activeTab}
-                      setActiveTab={setActiveTab}
                     />
                   )}
                   {/* Integrate TestCaseSelector */}
