@@ -30,4 +30,5 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
   codegen: {
     signature: "threeSteps(numbers: number[])",
   },
+  podcastUrl: "https://example.com/podcast/3sum.mp3", // Placeholder
 };
