@@ -9,7 +9,4 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"dependencies": {
-		"algo-lens-core": "workspace:^"
-	}
 }
