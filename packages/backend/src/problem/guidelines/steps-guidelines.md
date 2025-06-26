@@ -51,9 +51,10 @@ Following these ensures clear, informative visualizations.
      - `l.simple(value)`
      - `l.setMeta(name, metadata)`
      - `l.tree(label, value, highlight?)`
+     - `l.grid(name, values, ...pointers)`: Note that `l.array2d` was used in some older problems but `l.grid` is the preferred method for 2D array/grid visualizations. If you encounter `l.array2d`, consider updating to `l.grid` if appropriate.
 
 4. **Pointer Labels and Colors:**
-   - For `l.arrayV3`/`l.hashmapV2` pointers:
+   - For `l.arrayV3`/`l.hashmapV2`/`l.grid` pointers:
      - Use short, lowercase `label`.
      - Use DaisyUI color names (e.g., "primary", "success") for `color`.
 
@@ -148,6 +149,7 @@ export function generateSteps(n: number): ProblemState[] {
 - Keep comments short and focused on the current step.
 - Use pointer labels and colors to clarify what each pointer represents.
 - Use metadata and group/hashmap options for advanced display needs.
+- Optionally, for self-documentation within `steps.ts`, you can add comments indicating which logical group a variable might belong to (e.g., `// 'n' belongs to 'input' group`), although the primary definition of groups is in `groups.ts`.
 
 ### Common Pitfalls
 

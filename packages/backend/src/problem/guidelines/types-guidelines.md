@@ -48,35 +48,48 @@ export interface TreeNode {
 /**
  * Represents an interval with a start and end value.
  */
-export type Interval = [number, number];
+export type Interval = [number, number]; // Example of a simple type alias
 
 /**
- * Custom input type for a problem.
+ * Input type for a problem like Two Sum.
+ * Following the best practice of using an object for test case inputs.
  */
-export interface MyProblemInput {
-  data: number[];
-  config: {
-    mode: "strict" | "loose";
-    maxItems: number;
-  };
+export interface TwoSumInput {
+  nums: number[];
+  target: number;
 }
+
+/**
+ * Input type for a problem like Climbing Stairs.
+ * Even for a single parameter, an object is preferred for consistency.
+ */
+export interface ClimbingStairsInput {
+  n: number;
+}
+
+/**
+ * Example of an expected return type, if it's complex.
+ * For simple returns like number or number[], this might not be needed.
+ */
+export type MyProblemReturnType = number[]; // Or more complex object/ProblemState
 ```
 
 ---
 
 ## 4. Best Practices
 
-- **Specificity:**  
-  Define types as specifically as possible to leverage TypeScript's type-checking capabilities.
-
-- **Reusability:**
-  If a type is used across multiple problems, consider defining it in a shared location (e.g., `algo-lens-core/src/types.ts`). This is the designated location for common problem-related types.
-
-- **Consistency:**  
-  Ensure type definitions are consistent with their usage in `problem.ts`, `steps.ts`, and `testcase.ts`.
-
-- **Readability:**  
-  Organize types logically and use proper indentation.
+-   **Input Object Types:**
+    -   Always define an interface or type alias for the `input` object structure used in `testcase.ts`.
+    -   The keys in this type should match the parameter names of your main function in `steps.ts`.
+    -   Example: If `testcase.ts` has `input: { data: number[], limit: number }`, then `types.ts` should have `export interface MyProblemInput { data: number[]; limit: number; }`.
+-   **Specificity:**
+    Define types as specifically as possible to leverage TypeScript's type-checking capabilities.
+-   **Reusability:**
+    If a type is general enough to be used across multiple problems (e.g., `ListNode`, `TreeNode`), it should ideally be defined in the shared `algo-lens-core/src/types.ts` file. Problem-specific types remain in the problem's `types.ts`.
+-   **Consistency:**
+    Ensure type definitions are consistent with their usage in `problem.ts`, `steps.ts`, and `testcase.ts`.
+-   **Readability:**
+    Organize types logically and use proper indentation and JSDoc comments where necessary.
 
 ---
 
