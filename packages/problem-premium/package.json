@@ -10,6 +10,6 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@algo-lens/algo-lens-core": "workspace:^"
+		"algo-lens-core": "workspace:^"
 	}
 }
