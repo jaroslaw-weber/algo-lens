@@ -209,7 +209,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
             <div className="explanation-content p-4 prose">
               {" "}
               {(problem)?.explanation ? (
-                <ReactMarkdown>{(problem as any).explanation}</ReactMarkdown>
+                <ReactMarkdown>{(problem as any).explanation}</ReactMarkdown>)
 : (
                 "No explanation available. (Work in progress)"
               )}
