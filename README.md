@@ -52,4 +52,4 @@ https://github.com/user-attachments/assets/3e116275-0c40-4bb5-8a98-33ce40696248
 
 ## Adding New Problem Guidelines
 
-If you're interested in contributing new problems to AlgoLens, please refer to the [New Problem Guidelines](packages/backend/src/problem/NEW_PROBLEM_GUIDELINES.md) for instructions on file structure, comment guidelines, and more.
+If you're interested in contributing new problems to AlgoLens, please refer to the [Problem Contribution Guidelines](packages/backend/src/problem/guidelines/README.md) for detailed instructions on file structure, how to define steps, test cases, explanations, and more.

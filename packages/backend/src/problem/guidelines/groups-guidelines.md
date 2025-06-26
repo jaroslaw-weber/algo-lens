@@ -58,6 +58,7 @@ export const groups: GroupMetadata[] = [
 - **Consistency:** Maintain consistent group names and labels across different problems where applicable.
 - **Concise Descriptions:** Keep descriptions brief but informative.
 - **Use Emojis:** Emojis can enhance visual appeal and quick recognition.
+- **Avoid Empty Groups:** Do not leave the `groups` array empty. Even for simple problems, consider default groups like "Input", "Computation", and "Output/Result" to maintain consistency.
 
 ---
 
@@ -67,6 +68,7 @@ export const groups: GroupMetadata[] = [
 - Using vague or unhelpful group names/labels.
 - Not assigning variables to appropriate groups in `variables.ts` (or `StepLoggerV2` calls).
 - Overlapping group definitions or redundant groups.
+- Exporting an empty array for `groups`. At a minimum, provide basic groups.
 
 ---
 

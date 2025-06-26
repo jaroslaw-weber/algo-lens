@@ -32,28 +32,56 @@ A good `problem.ts` file should define a `Problem` object, typically including:
 ## 3. Example Template
 
 ```ts
-import { Problem } from '../../types/problem';
+import { Problem, ProblemState } from "algo-lens-core/src/types"; // Adjusted import
+import fs from "fs"; // For reading markdown files
+import path from "path"; // For constructing file paths
 import { generateSteps } from './steps';
 import { testcases } from './testcase';
 import { variables } from './variables';
 import { groups } from './groups';
-import { explanation } from './explanation.md';
-import { ExampleType } from './types'; // Example of importing a type
+// Assuming types.ts defines YourProblemInputType and YourProblemReturnType
+import { YourProblemInputType } from './types';
 
-export const problem: Problem<ExampleType> = {
-  id: 'example-problem',
-  title: 'Example Problem Title',
-  emoji: '💡',
-  difficulty: 'medium',
-  tags: ['Array', 'Logic'],
-  generateSteps,
-  testcases,
-  explanation,
-  variables,
-  groups,
+// Read description and explanation from markdown files
+// This is the current common practice.
+let description = "";
+try {
+  description = fs.readFileSync(path.join(__dirname, 'description.md'), 'utf-8');
+} catch (e) { console.error("Error reading description.md for problem"); }
+
+let explanation = ""; // Optional, but highly recommended
+try {
+  explanation = fs.readFileSync(path.join(__dirname, 'explanation.md'), 'utf-8');
+} catch (e) { /* Explanation file might be missing, handle gracefully */ }
+
+export const problem: Problem<YourProblemInputType, ProblemState> = {
+  // Core Metadata
+  id: 'your-problem-id', // Use kebab-case (e.g., "two-sum", "longest-substring")
+  title: 'Your Problem Title',
+  emoji: '💡', // Choose a relevant emoji
+  difficulty: 'medium', // 'easy', 'medium', or 'hard'
+  tags: ['Array', 'Logic', 'YourProblemTag'], // Relevant algorithm tags
+
+  // Content
+  description, // Loaded from description.md
+  explanation, // Loaded from explanation.md (if exists)
+
+  // Core Logic & Test Cases
+  func: generateSteps, // Function from steps.ts that generates visualization steps
+  testcases,         // Imported from testcase.ts
+
+  // Visualization Metadata
+  metadata: {
+    variables, // Imported from variables.ts
+    groups,    // Imported from groups.ts
+  },
+
+  // Code Generation Signature (for potential future use or external tools)
   codeGenerationSignature: {
-    signature: 'function exampleFunction(input: ExampleType): number[]',
-    name: 'exampleFunction',
+    // Name of the function users would typically implement
+    name: 'yourProblemFunction',
+    // Full TypeScript signature of that function
+    signature: 'function yourProblemFunction(input: YourProblemInputType): YourProblemReturnType',
   },
 };
 ```
@@ -62,17 +90,30 @@ export const problem: Problem<ExampleType> = {
 
 ## 4. Best Practices
 
--   **Modularity:** Keep the `problem.ts` file focused on defining the problem's metadata and linking to other files. The actual step-by-step logic, types, test cases, and variables should reside in their respective dedicated files (`steps.ts`, `types.ts`, `testcase.ts`, `variables.ts`, `groups.ts`).
+-   **`id` Casing**: Use `kebab-case` for problem `id` strings (e.g., "two-sum", "merge-intervals") for consistency with the plop generator and general URL/file naming conventions.
+-   **Markdown Content**:
+    -   Load `description.md` and `explanation.md` content using `fs.readFileSync` as shown in the template. Ensure these files exist or handle potential errors gracefully.
+    -   The `description` property in the `Problem` object is essential.
+    -   The `explanation` property is highly recommended.
+-   **`metadata` Object**: Place `variables` and `groups` inside the `metadata` object as per common practice.
+-   **`codeGenerationSignature`**:
+    -   Use the property name `codeGenerationSignature`.
+    -   Ensure it includes both `name` (the typical function name a user would write, e.g., `twoSum`) and `signature` (the full TypeScript signature of such a function).
+-   **Modularity:** Keep the `problem.ts` file focused on defining the problem's metadata and linking to other files. The actual step-by-step logic (`steps.ts`), types (`types.ts`), test cases (`testcase.ts`), variables (`variables.ts`), and groups (`groups.ts`) should reside in their respective dedicated files.
 -   **Consistency:** Follow established coding conventions and style guides.
--   **Clear Referencing:** Ensure all imported components (steps, testcases, variables, types, explanation) are correctly referenced and aligned with the problem's definition.
+-   **Clear Referencing:** Ensure all imported components are correctly referenced.
 
 ---
 
 ## 5. Common Mistakes
 
--   Placing the entire solution logic or function implementation directly in `problem.ts` instead of delegating to `steps.ts` for visualization.
--   Defining problem-specific types, test cases, or variables directly in `problem.ts` instead of importing them from `types.ts`, `testcase.ts`, or `variables.ts` respectively.
--   Missing or incorrect references to required external files (e.g., `steps.ts`, `testcase.ts`).
+-   Inconsistent `id` casing.
+-   Not including `description` content in the problem object.
+-   Placing `variables` or `groups` at the top level instead of within `metadata`.
+-   Using `codegen` instead of `codeGenerationSignature`, or omitting the `name` field within it.
+-   Typos in the function name within `codeGenerationSignature.name` (e.g., `threeSteps` instead of `threeSum`).
+-   Placing the entire solution logic or function implementation directly in `problem.ts`.
+-   Defining problem-specific types, test cases, or variables directly in `problem.ts`.
 
 ---
 
