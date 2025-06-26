@@ -14,14 +14,14 @@ export function generateSteps(s: string): ProblemState[] {
   });
   l.simple({ substring: "" });
 
-  l.arrayV3({ s: s.split("") }, []);
+  l.string({ s: s }, []);
   l.group("count", { count });
   l.comment = "Initial state: The input string and palindrome count.";
   l.breakpoint(1);
 
   for (let i = 0; i < n; i++) {
     // Odd length palindromes (center is s[i])
-    l.arrayV3({ s: s.split("") }, [
+    l.string({ s: s }, [
       { value: i, color: "primary", label: "center", dir: "top" } as Pointer,
     ]);
     l.group("count", { count });
@@ -32,7 +32,7 @@ export function generateSteps(s: string): ProblemState[] {
 
     // Even length palindromes (center is s[i] and s[i+1])
     if (i + 1 < n) {
-      l.arrayV3({ s: s.split("") }, [
+      l.string({ s: s }, [
         { value: i, color: "primary", label: "center1", dir: "top" } as Pointer,
         {
           value: i + 1,
@@ -57,7 +57,7 @@ export function generateSteps(s: string): ProblemState[] {
       const substring = s.substring(left2, right2 + 1);
       //
       // HIDE_END
-      l.arrayV3({ s: s.split("") }, [
+      l.string({ s: s }, [
         {
           value: left2,
           color: "neutral",
@@ -83,7 +83,7 @@ export function generateSteps(s: string): ProblemState[] {
     }
   }
 
-  l.arrayV3({ s: s.split("") }, []);
+  l.string({ s: s }, []);
   l.group("count", { count });
   l.comment =
     "All possible centers processed. Total palindromic substrings found.";
