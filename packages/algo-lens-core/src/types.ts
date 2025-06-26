@@ -44,6 +44,7 @@ export interface Problem<Input, State> {
     signature: string;
   };
   bookmark?: boolean;
+  podcastUrl?: string;
 }
 
 export type ProblemGroup = {
