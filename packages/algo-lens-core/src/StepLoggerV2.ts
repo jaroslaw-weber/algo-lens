@@ -245,11 +245,12 @@ export class StepLoggerV2 {
       value: values.map((item) => (item === Infinity ? "INFINITY" : item)), // Replace Infinity with placeholder
       pointers: pointers
         .filter((x) => !!x)
-        .map((p) => {
-          if ("dimension" in p && p.dimension === undefined) {
-            return { ...p, dimension: "column" };
+        .map((p, index) => {
+          const pointerWithId = { ...p, id: p.id || `${arrayKey}-pointer-${index}` };
+          if ("dimension" in pointerWithId && pointerWithId.dimension === undefined) {
+            return { ...pointerWithId, dimension: "column" };
           }
-          return p;
+          return pointerWithId;
         }),
     };
     this.upsert(v);
@@ -273,11 +274,12 @@ export class StepLoggerV2 {
       value: value.split(""), // Split the string into an array of characters
       pointers: pointers
         .filter((x) => !!x)
-        .map((p) => {
-          if ("dimension" in p && p.dimension === undefined) {
-            return { ...p, dimension: "column" };
+        .map((p, index) => {
+          const pointerWithId = { ...p, id: p.id || `${stringKey}-pointer-${index}` };
+          if ("dimension" in pointerWithId && pointerWithId.dimension === undefined) {
+            return { ...pointerWithId, dimension: "column" };
           }
-          return p;
+          return pointerWithId;
         }),
     };
     this.upsert(v);
@@ -321,7 +323,9 @@ export class StepLoggerV2 {
     const variable = as2dArray(
       name,
       values,
-      [pointer1, pointer2, pointer3].filter((x) => !!x)
+      [pointer1, pointer2, pointer3]
+        .filter((x) => !!x)
+        .map((p, index) => ({ ...p, id: p.id || `${name}-pointer-${index}` }))
     );
     this.upsert(variable);
   }
@@ -330,7 +334,9 @@ export class StepLoggerV2 {
     const variable = as2dArray(
       name,
       values,
-      pointers.filter((x) => !!x)
+      pointers
+        .filter((x) => !!x)
+        .map((p, index) => ({ ...p, id: p.id || `${name}-pointer-${index}` }))
     );
     this.upsert(variable);
   }
