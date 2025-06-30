@@ -64,6 +64,7 @@ We use dynamic programming to solve this problem efficiently.
 - Use clear, simple language.
 - Explain the "why" behind each step, not just the "how."
 - Use bullet points or numbered lists for clarity.
+- Provide detailed step-by-step explanations, especially for dynamic programming solutions, clearly outlining the state definition, recurrence relation, and base cases.
 - Include diagrams or pseudocode for complex logic.
 - Relate the explanation to the problem statement and examples.
 
@@ -71,11 +72,11 @@ We use dynamic programming to solve this problem efficiently.
 
 ## 5. Common Mistakes
 
-- Jumping into details without an overview.
-- Failing to explain why a particular approach or data structure is used.
-- Omitting complexity analysis.
-- Using jargon or overly technical language without explanation.
+- Jumping into details without a high-level overview.
+- Failing to explain *why* a particular approach or data structure is chosen and is effective.
+- Omitting complexity analysis or explaining it in overly technical terms.
+- Using jargon or overly technical language without simple explanations.
 
 ---
 
-By following these guidelines, you will help users understand not just what the solution does, but why it works and how to apply similar reasoning to other problems.
+By following these guidelines, you will create explanations that are accessible and truly help beginners understand not just *what* the solution does, but *why* it works and *how* to think about similar problems.
