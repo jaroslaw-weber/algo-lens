@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 interface ProblemDescriptionProps {
   description: string | undefined;
@@ -26,9 +27,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({
           >
             &#x2715;
           </button>
-          <p className="text-sm font-semibold text-gray-700 px-4">
-            {description}
-          </p>
+          <MarkdownRenderer markdownContent={description} />
         </div>
       )}
     </div>

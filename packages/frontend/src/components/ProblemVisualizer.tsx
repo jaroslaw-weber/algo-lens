@@ -193,7 +193,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
               {/* Display problem description or fallback */}
               <div className="p-4">
                 {problem?.description ? (
-                  <p>{problem.description}</p> // Assuming description is plain text
+                  <MarkdownRenderer markdownContent={problem.description} />
                 ) : (
                   <p>No description available.</p>
                 )}
