@@ -61,12 +61,12 @@ We use dynamic programming to solve this problem efficiently.
 
 ## 4. Best Practices
 
-- Use clear, simple language.
-- Explain the "why" behind each step, not just the "how."
+- Use clear, simple language, avoiding jargon where possible or explaining it simply. Assume the reader is a beginner.
+- Explain the "why" behind each step and the overall approach, not just the "how." Help the reader understand the reasoning.
 - Use bullet points or numbered lists for clarity.
-- Provide detailed step-by-step explanations, especially for dynamic programming solutions, clearly outlining the state definition, recurrence relation, and base cases.
-- Include diagrams or pseudocode for complex logic.
-- Relate the explanation to the problem statement and examples.
+- Provide detailed step-by-step explanations, especially for dynamic programming solutions, clearly outlining the state definition, recurrence relation, and base cases, explaining *why* these are chosen.
+- Include diagrams or pseudocode if they help clarify the logic for beginners.
+- Relate the explanation to the problem statement and examples, showing how the steps apply.
 
 ---
 
