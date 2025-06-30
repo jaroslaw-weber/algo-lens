@@ -23,8 +23,8 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
 
   const windowCharCount: Map<string, number> = new Map();
 
-  l.arrayV3({ s: s.split("") }, []);
-  l.arrayV3({ t: t.split("") }, []);
+  l.string({ s }, []);
+  l.string({ t }, []);
   l.hashmapV2({
     map: tCharCount,
     label: "T Character Count",
@@ -43,7 +43,7 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
   for (let windowEnd = 0; windowEnd < s.length; windowEnd++) {
     const char = s[windowEnd];
 
-    l.arrayV3({ s: s.split("") }, [{ value: windowEnd, label: "windowEnd" }]);
+    l.string({ s }, [{ value: windowEnd, label: "windowEnd" }]);
     l.comment = `Expand window to include character '${char}' at index ${windowEnd}.`;
     l.breakpoint(2); // Unique breakpoint for each expansion
 
@@ -81,7 +81,7 @@ export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
       }
 
       const leftChar = s[windowStart];
-      l.arrayV3({ s: s.split("") }, [
+      l.string({ s }, [
         { value: windowStart, label: "windowStart" },
         { value: windowEnd, label: "windowEnd" },
       ]);
