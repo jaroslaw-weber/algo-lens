@@ -38,6 +38,33 @@ export async function loadProblemWithId(
     }
 
     problem.code = await getProblemCode(problem, directory.path);
+
+    // Dynamically load description.md
+    try {
+      const descriptionPath = path.join(directory.path, "description.md");
+      if (await fs.exists(descriptionPath)) {
+        (problem as any).description = await fs.readFile(descriptionPath, "utf-8");
+      } else {
+        (problem as any).description = "No description available."; // Default placeholder
+      }
+    } catch (e) {
+      console.error(`Error loading description.md for ${id}:`, e);
+      (problem as any).description = "Error loading description.";
+    }
+
+    // Dynamically load explanation.md
+    try {
+      const explanationPath = path.join(directory.path, "explanation.md");
+      if (await fs.exists(explanationPath)) {
+        (problem as any).explanation = await fs.readFile(explanationPath, "utf-8");
+      } else {
+        (problem as any).explanation = "No explanation available."; // Default placeholder
+      }
+    } catch (e) {
+      console.error(`Error loading explanation.md for ${id}:`, e);
+      (problem as any).explanation = "Error loading explanation.";
+    }
+
     //serialize testcases if necessary
 
     problemCache[id] = problem; // Cache the loaded problem

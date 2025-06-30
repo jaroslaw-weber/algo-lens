@@ -12,47 +12,62 @@ To provide a clear, concise, and complete statement of the algorithmic problem, 
 
 ## 2. Structure
 
-A good problem description should include:
+A good problem description is crucial for user understanding and should clearly include the following sections:
 
-- **Problem Statement:**  
-  Clearly and succinctly state what the user is required to solve. Avoid ambiguity.
-
-- **Examples:**  
-  Provide at least one input/output example, with a brief explanation of how the output is derived.
-
-- **Constraints:**  
-  List any constraints (e.g., input size, value ranges, time/space limits) that affect the solution.
-
-- **Edge Cases:**  
-  Mention any special or tricky cases that users should consider.
-
-- **Language:**  
-  Use simple, direct language. Avoid jargon and overly complex sentences.
+-   **Problem Statement:**
+    -   Clearly and succinctly state what the user is required to solve. Avoid ambiguity.
+-   **Examples:**
+    -   Provide at least one, preferably two, clear input/output examples.
+    -   Include a brief explanation for each example showing how the output is derived from the input.
+    -   Format examples consistently for readability.
+-   **Constraints:**
+    -   List all relevant constraints (e.g., input size, value ranges for numbers, character sets for strings, time/space complexity hints if applicable).
+    -   This helps users understand the scale of the problem and potential edge cases.
+-   **Edge Cases (Optional but Recommended):**
+    -   Briefly mention any common or particularly tricky edge cases that users should consider (e.g., empty arrays, single-element inputs, inputs with all same values).
+-   **Language:**
+    -   Use simple, direct language. Avoid jargon and overly complex sentences.
 
 ---
 
-## 3. Example Template
+## 3. Markdown Template Example
 
-```
-## Problem
+Use the following markdown structure for clarity and consistency:
 
-Given an array of integers, return the maximum sum of any contiguous subarray.
+```markdown
+## Problem Statement
 
-## Example
+Given an array of integers `nums` and an integer `target`, return *indices of the two numbers such that they add up to `target`*.
 
-Input: nums = [-2,1,-3,4,-1,2,1,-5,4]  
-Output: 6  
-Explanation: The subarray [4,-1,2,1] has the largest sum = 6.
+You may assume that each input would have **exactly one solution**, and you may **not** use the same element twice.
+
+You can return the answer in any order.
+
+## Examples
+
+**Example 1:**
+
+-   **Input:** `nums = [2,7,11,15]`, `target = 9`
+-   **Output:** `[0,1]`
+-   **Explanation:** Because `nums[0] + nums[1] == 9`, we return `[0, 1]`.
+
+**Example 2:**
+
+-   **Input:** `nums = [3,2,4]`, `target = 6`
+-   **Output:** `[1,2]`
+-   **Explanation:** `nums[1] + nums[2] == 6`.
 
 ## Constraints
 
-- 1 <= nums.length <= 10^5
-- -10^4 <= nums[i] <= 10^4
+-   `2 <= nums.length <= 10^4`
+-   `-10^9 <= nums[i] <= 10^9`
+-   `-10^9 <= target <= 10^9`
+-   Only one valid answer exists.
 
-## Edge Cases
+## Edge Cases (Considerations)
 
-- All numbers are negative.
-- The array contains only one element.
+-   What if the array is at its minimum allowed length (e.g., 2 elements)?
+-   Input numbers can be negative.
 ```
 
 ---

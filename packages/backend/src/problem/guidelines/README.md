@@ -25,10 +25,18 @@ This section provides links to detailed guidelines for the various files found w
 - [**Problem Guidelines**](./problem-guidelines.md): Guidelines for defining the problem's core structure and function signature in `problem.ts`, including type annotations and JSDoc.
 - [**Testcase Guidelines**](./testcase-guidelines.md): Guidelines for defining diverse and effective test cases in `testcase.ts`, critical for thorough problem validation.
 - [**Types Guidelines**](./types-guidelines.md): Guidelines for defining custom types and interfaces in `types.ts`, ensuring type safety and clarity.
-- [**Code Guidelines**](./code-guidelines.md): General guidelines for code implementation files within the `code/` directory, promoting consistent coding standards.
-- [**Podcast Script Guidelines**](./podcast-script-guidelines.md): Guidelines for writing engaging podcast scripts in `podcast_script.md` (if applicable).
+- [**Code Guidelines (`code/`)**](./code-guidelines.md): Guidelines for the optional `code/` directory, which can house supplementary code like solutions in other languages.
+- [**Podcast Script Guidelines (`podcast_script.md`)**](./podcast-script-guidelines.md): Guidelines for creating optional, engaging podcast-style scripts in `podcast_script.md`.
 
 ---
+
+## General Coding Style and Practices
+
+Across all files related to a problem contribution, please adhere to the following general practices:
+
+-   **Remove Unused Imports:** Ensure that your TypeScript/JavaScript files do not contain any unused imports. Linters and IDEs can usually help identify these.
+-   **Clean Code:** Write clean, readable, and well-commented code, especially within `steps.ts` to make the logic easy to follow.
+-   **Follow Specific Guidelines:** Prioritize adherence to the detailed guidelines provided for each specific file type.
 
 ---
 

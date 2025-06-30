@@ -4,7 +4,8 @@
     "dev": "PORT=4005 bun run --hot src/index.ts",
     "test:watch": "bun test --watch",
     "test": "bun test",
-    "build:check": "tsc --noEmit"
+    "build:check": "tsc --noEmit",
+    "generate-audio": "bun run scripts/generate-audio.ts"
   },
   "dependencies": {
     "dotenv": "^16.5.0",

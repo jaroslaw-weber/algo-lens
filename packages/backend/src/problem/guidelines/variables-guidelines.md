@@ -14,8 +14,8 @@ To define metadata (display name, description, emoji) for each significant varia
 
 The `variables.ts` file should export an array of `VariableMetadata` objects. Each `VariableMetadata` object describes a single variable:
 
-- **`name` (string):** The exact name of the variable as it appears in the code (e.g., `n`, `dp`, `i`, `result`). This is used for internal mapping.
-- **`label` (string):** The display name for the variable, shown in the user interface (e.g., "Target Step", "DP Array", "Loop Counter").
+- **`name` (string):** The exact name of the variable as it appears in the code (e.g., `n`, `dp`, `i`, `result`). This is used for internal mapping and **must** match the code.
+- **`label` (string):** The human-readable display name for the variable, shown in the user interface (e.g., "Target Step", "DP Array", "Current Index"). This field is **highly recommended** for all variables to ensure clarity in the UI, even if it's similar to the `name`.
 - **`description` (string):** A clear and concise explanation of the variable's purpose, what it represents, and how it's used in the algorithm.
 - **`emoji` (string, optional):** An emoji to visually represent the variable in the UI (e.g., "🎯", "🔢", "🔄", "🏁").
 
@@ -59,11 +59,11 @@ export const variables: VariableMetadata[] = [
 
 ## 4. Best Practices
 
-- **Exact `name` Match:** Ensure the `name` property exactly matches the variable name used in `steps.ts` and `problem.ts`.
-- **Clear `label`:** The `label` should be user-friendly and descriptive, even if the `name` is a common abbreviation.
+- **Exact `name` Match:** Ensure the `name` property exactly matches the variable name used in `steps.ts` when logging (e.g., `l.simple({ myVar: ... })` means `name: "myVar"`).
+- **Provide `label`:** Always provide a `label`. While it can be similar to `name` for self-descriptive variable names, it's good practice to define it explicitly for UI consistency.
 - **Comprehensive `description`:** Explain the variable's role, its contents (especially for data structures), and how it contributes to the algorithm.
 - **Relevant `emoji`:** Choose emojis that intuitively represent the variable's meaning or type.
-- **All Key Variables:** Include metadata for all variables that are logged or are crucial for understanding the algorithm's state.
+- **All Logged Variables:** Include metadata for all variables that are logged with `StepLoggerV2` and are intended to be visible and understandable to the user.
 
 ---
 
