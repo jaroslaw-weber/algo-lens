@@ -1,8 +1,9 @@
 import ProblemHeader from "./ProblemHeader";
 import StateDescription from "./ProblemDescription";
 import React, { useState, useRef, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
+
 import copy from "copy-to-clipboard";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 import DisplayState from "./DisplayState";
 import CodePreview from "./CodePreview";
@@ -24,7 +25,6 @@ import type {
   ProblemState,
   TestCase,
 } from "algo-lens-core/src/types";
-
 
 interface ProblemVisualizerProps {
   state: ProblemState;
@@ -128,10 +128,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
     <div className="mx-2 lg:mx-8 my-8 flex-1">
       <div className="">
         {/* Render ProblemTabs once, above the conditional content */}
-        <ProblemTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
+        <ProblemTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         {/* Tab Content Area */}
         <div className="mt-4">
           {/* Visualizer Content Container */}
@@ -208,9 +205,9 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
           {activeTab === "explanation" && (
             <div className="explanation-content p-4 prose">
               {" "}
-              {(problem)?.explanation ? (
-                <ReactMarkdown>{(problem as any).explanation}</ReactMarkdown>)
-: (
+              {problem?.explanation ? (
+                <MarkdownRenderer markdownContent={problem.explanation} />
+              ) : (
                 "No explanation available. (Work in progress)"
               )}
             </div>
