@@ -5,45 +5,35 @@ import {
   problemAtom,
   problemStateAtom,
   stepAtom,
-  selectedTestCaseNumberAtom, // Import selectedTestCaseNumberAtom
+  selectedTestCaseNumberAtom,
+  loadingAtom, // Import selectedTestCaseNumberAtom
 } from "../../atom";
-import { getProblem, getProblemState } from "../../api";
+import {
+  getProblem,
+  getProblemState,
+  getProblemStatesChunk,
+  getProblemSize,
+} from "../../api"; // Import getProblemStatesChunk and getProblemSize
 import { useEffect, useState } from "react"; // Import useState
 import { pb } from "../../auth/pocketbase"; // Import pb
 import BookmarkButton from "../../bookmark/BookmarkButton";
 import { trackUmamiEvent } from "../../utils/umami";
 import PlayIcon from "../../components/icons/PlayIcon"; // Import a play icon
-
-export function useProblemState() {
-  const [problem] = useAtom(problemAtom);
-  const [step] = useAtom(stepAtom);
-  const [selectedTestCaseNumber] = useAtom(selectedTestCaseNumberAtom); // Use selectedTestCaseNumberAtom
-  const [state, setState] = useAtom(problemStateAtom);
-
-  useEffect(() => {
-    if (problem && selectedTestCaseNumber && step) {
-      // Add selectedTestCaseNumber to dependencies
-      const fetchState = async () => {
-        const s = await getProblemState(
-          problem.id!,
-          selectedTestCaseNumber,
-          step
-        ); // Pass selectedTestCaseNumber
-        setState(s);
-      };
-      fetchState();
-    }
-  }, [problem, selectedTestCaseNumber, step, setState]); // Add selectedTestCaseNumber to effect dependencies
-
-  return state;
-}
+import type { HTTPError } from "ky";
+import { AlgolensError, type ProblemState } from "algo-lens-core/src"; // Import ProblemState
 
 export default function ProblemView() {
   const [problem, setProblem] = useAtom(problemAtom);
-  const [step] = useAtom(stepAtom);
-  const state = useProblemState();
+  const [step, setStep] = useAtom(stepAtom); // Added setStep
+  const [loading, setLoading] = useAtom(loadingAtom);
+  const [maxStep, setMaxStep] = useAtom(maxStepAtom); // Added maxStep and setMaxStep
+  const [selectedTestCaseNumber] = useAtom(selectedTestCaseNumberAtom);
+  const [problemState, setProblemState] = useAtom(problemStateAtom); // Renamed state to problemState
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [stateCache, setStateCache] = useState<Map<number, ProblemState>>(
+    new Map()
+  );
 
   // Function to toggle play/pause
   const togglePlayPause = () => {
@@ -56,6 +46,14 @@ export default function ProblemView() {
       setIsPlaying(!isPlaying);
     }
   };
+
+  useEffect(() => {
+    const state = stateCache.get(step);
+    if (!state) {
+      return;
+    }
+    setProblemState(state);
+  }, [step, problem, stateCache]);
 
   useEffect(() => {
     if (problem?.podcastUrl) {
@@ -87,32 +85,45 @@ export default function ProblemView() {
       }
       setIsPlaying(false);
     }
-  }, [problem?.podcastUrl]);
+  }, [problem?.podcastUrl, audio]); // Added audio to dependencies
 
   async function init() {
-    //
-
     if (problem) {
       return;
     }
-    //get id from url query parameters
+    setLoading(true);
     const url = new URL(window.location.href);
     const id = url.searchParams.get("id");
-    //
-    //fetch problem details from backend
     const p = await getProblem(id!);
-
-    //
     setProblem(p);
-    // Track problem view event
     trackUmamiEvent("view-problem", { problemId: id });
+    const totalSize = await getProblemSize(p.id!, selectedTestCaseNumber);
+    setMaxStep(totalSize); // Set maxStep
+    const chunkSize = 10; // Define chunk size
+    for (let i = 1; i <= totalSize; i += chunkSize) {
+      const startStep = i;
+      const endStep = Math.min(i + chunkSize - 1, totalSize);
+      const fetchedStates = await getProblemStatesChunk(
+        p.id!,
+        selectedTestCaseNumber,
+        startStep,
+        endStep
+      );
+      setStateCache((prevCache: Map<number, ProblemState>) => {
+        const newCache = new Map(prevCache);
+        fetchedStates.forEach((s) => {
+          newCache.set(s.number!, s);
+        });
+        return newCache;
+      });
+    }
+    setLoading(false);
   }
   useEffect(() => {
     init();
-  }, []);
+  }, [problem, setProblem]); // Added problem and setProblem to dependencies
 
   useEffect(() => {
-    // Track step navigation event
     if (problem && step) {
       trackUmamiEvent("navigate-step", { problemId: problem.id, step: step });
     }
@@ -150,7 +161,8 @@ export default function ProblemView() {
           </button>
         </div>
       )}
-      {state && <ProblemVisualizer state={state} />}
+      {loading && <p className="text-center my-4 text-lg">please wait...</p>}
+      <ProblemVisualizer state={problemState!} />
     </div>
   );
 }

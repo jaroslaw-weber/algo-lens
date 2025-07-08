@@ -35,7 +35,6 @@ import DisplayHashmap from "./DisplayHashmap";
 import DisplayBinaryOperation from "./DisplayBinaryOperation";
 import { type Problem } from "algo-lens-core/src/types";
 
-
 const Wrapper = ({
   label,
   description,
@@ -50,12 +49,7 @@ const Wrapper = ({
   description?: string;
   emoji?: string;
   children: React.ReactNode;
-  variable: Variable & {
-    onMoveUp?: () => void;
-    onMoveDown?: () => void;
-    isFirst?: boolean;
-    isLast?: boolean;
-  };
+  variable: Variable & {};
   className?: string;
   isMinimized: boolean;
   onToggleMinimize: () => void;
@@ -70,37 +64,7 @@ const Wrapper = ({
         {emoji} {label} {variable.hide ? "(not in memory)" : ""}
       </div>
       {/* Move Up/Down buttons */}
-      <span className="flex gap-3 bg-white px-3">
-        <button
-          onClick={onToggleMinimize}
-          className="ml-2 text-gray-500 hover:text-gray-700"
-          aria-label={isMinimized ? "Expand" : "Minimize"}
-        >
-          {isMinimized ? (
-            <FontAwesomeIcon icon={faEye} />
-          ) : (
-            <FontAwesomeIcon icon={faEyeSlash} />
-          )}
-        </button>
-        <button
-          type="button"
-          className="text-xs px-1 py-0.5 rounded hover:bg-gray-200"
-          onClick={variable.onMoveUp}
-          aria-label="Move Up"
-          disabled={variable.isFirst}
-        >
-          <FontAwesomeIcon icon={faArrowUp} />
-        </button>
-        <button
-          type="button"
-          className="text-xs px-1 py-0 rounded hover:bg-gray-200"
-          onClick={variable.onMoveDown}
-          aria-label="Move Down"
-          disabled={variable.isLast}
-        >
-          <FontAwesomeIcon icon={faArrowDown} />
-        </button>
-      </span>
+      <span className="flex gap-3 bg-white px-3"></span>
     </div>
     {description && !isMinimized && (
       <p className="text-xs text-gray-500 mb-2">{description}</p>
@@ -109,11 +73,14 @@ const Wrapper = ({
   </div>
 );
 
-function getWrapperClassName() {
+function getWrapperClassName(variable: VariableMetadata) {
+  if (variable?.width == 2) {
+    return "col-span-2";
+  }
   return "col-span-2 lg:col-span-1";
 }
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 function DisplayState({
   state,
@@ -125,30 +92,40 @@ function DisplayState({
   const [minimizedState, setMinimizedState] = useState<Record<string, boolean>>(
     {}
   );
-  const [order, setOrder] = useState<string[]>(() =>
-    (state?.variables as Variable[]).map((v) => v.label)
-  );
+
+  const order = useMemo(() => {
+    const currentVariables = state.variables.map((x) => ({
+      name: x.label,
+    }));
+
+    const allVariables = new Map(
+      problem.metadata.variables.map((v) => [v.name, v])
+    );
+    for (const v of currentVariables) {
+      if (allVariables.has(v.name)) {
+        continue;
+      }
+      allVariables.set(v.name!, v as any);
+    }
+
+    console.log("all v ", allVariables.size);
+
+    const sortedVariables = Array.from(allVariables.values()).sort((a, b) => {
+      // Primary Source: Attempt to retrieve the "order" directly from problem.metadata.variables.
+      // Fallback for Missing Order: If v.order is empty, null, or undefined, then use 100 as the default order.
+      const orderA = a.order ?? 100;
+      const orderB = b.order ?? 100;
+      return orderA - orderB;
+    });
+    console.log("sorted", sortedVariables);
+    return sortedVariables.map((v) => v.name);
+  }, [problem, state]);
 
   const handleToggleMinimize = (label: string) => {
     setMinimizedState((prevState) => ({
       ...prevState,
       [label]: !prevState[label],
     }));
-  };
-
-  const handleMove = (label: string, direction: "up" | "down") => {
-    setOrder((prevOrder) => {
-      const idx = prevOrder.indexOf(label);
-      if (idx === -1) return prevOrder;
-      const newOrder = [...prevOrder];
-      if (direction === "up" && idx > 0) {
-        [newOrder[idx - 1], newOrder[idx]] = [newOrder[idx], newOrder[idx - 1]];
-      }
-      if (direction === "down" && idx < newOrder.length - 1) {
-        [newOrder[idx + 1], newOrder[idx]] = [newOrder[idx], newOrder[idx + 1]];
-      }
-      return newOrder;
-    });
   };
 
   if (!state) {
@@ -169,7 +146,7 @@ function DisplayState({
 
       <div className="grid grid-cols-2 gap-8 w-full">
         {order.map((label, idx) => {
-          const variable = variableMap[label];
+          const variable = variableMap[label!];
           if (!variable) return null;
           const groupMeta = metadata!.groups?.find(
             (x) => x.name === variable.label
@@ -183,18 +160,8 @@ function DisplayState({
             variableMeta?.description ?? groupMeta?.description;
           const emoji = meta?.emoji;
 
-          const className = getWrapperClassName();
+          const className = getWrapperClassName(variableMeta!);
           const isMinimized = minimizedState[variable.label] || false;
-
-          // Add move up/down handlers and flags
-          const isFirst = idx === 0;
-          const isLast = idx === order.length - 1;
-          const moveProps = {
-            onMoveUp: () => handleMove(variable.label, "up"),
-            onMoveDown: () => handleMove(variable.label, "down"),
-            isFirst,
-            isLast,
-          };
 
           switch (variable.type) {
             case "number":
@@ -207,7 +174,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={numData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() => handleToggleMinimize(numData.label)}
                 >
@@ -223,7 +190,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={arrData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() => handleToggleMinimize(arrData.label)}
                 >
@@ -239,7 +206,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={groupData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() => handleToggleMinimize(groupData.label)}
                 >
@@ -258,7 +225,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={binaryData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() =>
                     handleToggleMinimize(binaryData.label)
@@ -276,7 +243,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={boolData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() => handleToggleMinimize(boolData.label)}
                 >
@@ -293,7 +260,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={intervalData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() =>
                     handleToggleMinimize(intervalData.label)
@@ -311,7 +278,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={treeData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() => handleToggleMinimize(treeData.label)}
                 >
@@ -327,7 +294,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={hashsetData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() =>
                     handleToggleMinimize(hashsetData.label)
@@ -345,7 +312,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={hashmapData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() =>
                     handleToggleMinimize(hashmapData.label)
@@ -363,7 +330,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={listData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() => handleToggleMinimize(listData.label)}
                 >
@@ -379,7 +346,7 @@ function DisplayState({
                   description={description}
                   emoji={emoji}
                   key={binaryOperationData.label}
-                  variable={{ ...variable, ...moveProps }}
+                  variable={variable}
                   isMinimized={isMinimized}
                   onToggleMinimize={() =>
                     handleToggleMinimize(binaryOperationData.label)

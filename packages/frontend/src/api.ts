@@ -1,10 +1,11 @@
-import ky from "ky";
+import ky, { type KyInstance } from "ky";
 import type { Problem } from "algo-lens-core/src/types";
 
 import { BACKEND_URL } from "astro:env/client";
 import type { ProblemState } from "algo-lens-core/src/types";
 
 import { pb } from "./auth/pocketbase";
+import _ from "lodash";
 
 // Define a type for the random problem response
 export type ProblemInfo = {
@@ -13,10 +14,11 @@ export type ProblemInfo = {
   difficulty: string;
   emoji?: string; // Emoji might be optional
   bookmark?: boolean; // Added isBookmarked flag
+  tags?: string[]; // Added tags
 };
 
 //
-const be = ky.create({
+export const be: KyInstance = ky.create({
   prefixUrl: BACKEND_URL,
   hooks: {
     beforeRequest: [
@@ -27,21 +29,36 @@ const be = ky.create({
         }
       },
     ],
+    beforeError: [
+      async (error) => {
+        const { response } = error;
+        if (response && response.body) {
+          const parsed: any = await response.json();
+          console.log("parsed", parsed);
+          Object.assign(error, parsed);
+          error.message = parsed.error;
+        }
+
+        return error;
+      },
+    ],
   },
 });
 
 // Updated to accept an optional tag and return ProblemInfo array
 export async function getProblemList(
   tag?: string,
-  filter?: string
+  filter?: string,
+  plan?: string
 ): Promise<ProblemInfo[]> {
-  const searchParams: Record<string, string> = {};
-  if (tag) {
-    searchParams.tag = tag;
-  }
-  if (filter) {
-    searchParams.filter = filter;
-  }
+  const searchParams = _.pickBy(
+    {
+      tag,
+      filter,
+      plan,
+    },
+    (x) => x
+  ) as Record<string, string>;
   // Use ProblemInfo[] as the expected return type from the endpoint now
   const result = await be.get<ProblemInfo[]>("problem", { searchParams });
   return result.json();
@@ -52,26 +69,32 @@ export async function getProblem(id: string) {
   return result.json();
 }
 
-const problemStateCache = new Map<string, ProblemState>();
-
 export async function getProblemState(
   id: string,
   testcaseNumber: number,
   step: number
 ) {
-  const cacheKey = `${id}-${testcaseNumber}-${step}`;
-  if (problemStateCache.has(cacheKey)) {
-    console.log(`Cache hit for ${cacheKey}`);
-    return problemStateCache.get(cacheKey)!;
-  }
-
-  console.log(`Cache miss for ${cacheKey}`);
+  // This function will be replaced by getProblemStatesChunk
+  // For now, it remains for compatibility if other parts of the app still use it
+  // It will be removed once all usages are migrated
   const result = await be.get<ProblemState>(
     `problem/${id}/testcase/${testcaseNumber}/state/${step}`
   );
-  const problemState = await result.json();
-  problemStateCache.set(cacheKey, problemState);
-  return problemState;
+  return result.json();
+}
+
+export async function getProblemStatesChunk(
+  id: string,
+  testcaseNumber: number,
+  from: number,
+  to: number
+): Promise<ProblemState[]> {
+  const searchParams = { from: from.toString(), to: to.toString() };
+  const result = await be.get<ProblemState[]>(
+    `problem/${id}/testcase/${testcaseNumber}/states`,
+    { searchParams }
+  );
+  return result.json();
 }
 
 export async function getProblemSize(id: string, testcaseNumber: number) {

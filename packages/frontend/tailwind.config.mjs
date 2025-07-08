@@ -2,6 +2,7 @@
 export default {
 	content: [
 		"./src/**/*.{js,ts,jsx,tsx}",
+		"../frontend-premium/**/*.{js,ts,jsx,tsx}"
 	],
 
 
@@ -50,7 +51,14 @@ export default {
 		'bg-warning',
 		'text-warning-content',
 		'bg-neutral',
-		'text-neutral-content'
+		'text-neutral-content',
+		"text-7xl",
+		"text-5xl",
+		"py-8",
+		"mt-16",
+		'font-extrabold',
+		'mb-16',
+		'text-gray-800'
 	],
 	daisyui: {
 		themes: [

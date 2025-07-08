@@ -12,6 +12,8 @@ export interface TestCase<Input, State> {
   isDefault?: boolean;
 }
 
+export type Plan = "free" | "premium";
+
 /** Defines a generic interface for a problem, parameterized by Input and State types. */
 export interface Problem<Input, State> {
   id: string;
@@ -45,6 +47,8 @@ export interface Problem<Input, State> {
   };
   bookmark?: boolean;
   podcastUrl?: string;
+
+  plan?: "premium" | "free";
 }
 
 export type ProblemGroup = {
@@ -285,6 +289,8 @@ export interface ProblemState {
   breakpoint: number;
 
   description?: string;
+
+  number?: number;
 }
 
 export interface VariableMetadata {
@@ -292,6 +298,11 @@ export interface VariableMetadata {
   label?: string;
   emoji: string;
   description: string;
+
+  //default value is 1, if set to 2, it will be very wide
+  width?: number;
+  /** how to order each variable? */
+  order?: number;
 }
 
 export interface GroupMetadata {

@@ -7,7 +7,6 @@ import { problemPaths } from "./ProblemPaths";
 
 const problemCache: { [id: string]: Problem<any, any> } = {};
 
-
 export async function loadProblemWithId(
   id: string
 ): Promise<Problem<any, any> | null> {
@@ -15,13 +14,12 @@ export async function loadProblemWithId(
     return problemCache[id];
   }
 
-  const directory = await problemPaths.getProblemFolderInfo(id)
-  if(!directory?.path){
-    throw new Error("directory for problem "+id+" not found")
+  const directory = await problemPaths.getProblemFolderInfo(id);
+  if (!directory?.path) {
+    throw new Error("directory for problem " + id + " not found");
   }
 
-  const problemFilePath = path.join(directory.path, "problem.ts")
-
+  const problemFilePath = path.join(directory.path, "problem.ts");
 
   try {
     const exists = await fs.exists(problemFilePath);
@@ -38,12 +36,17 @@ export async function loadProblemWithId(
     }
 
     problem.code = await getProblemCode(problem, directory.path);
+    problem.plan = directory.plan;
+    console.log("problem plan: ", problem.plan);
 
     // Dynamically load description.md
     try {
       const descriptionPath = path.join(directory.path, "description.md");
       if (await fs.exists(descriptionPath)) {
-        (problem as any).description = await fs.readFile(descriptionPath, "utf-8");
+        (problem as any).description = await fs.readFile(
+          descriptionPath,
+          "utf-8"
+        );
       } else {
         (problem as any).description = "No description available."; // Default placeholder
       }
@@ -56,7 +59,10 @@ export async function loadProblemWithId(
     try {
       const explanationPath = path.join(directory.path, "explanation.md");
       if (await fs.exists(explanationPath)) {
-        (problem as any).explanation = await fs.readFile(explanationPath, "utf-8");
+        (problem as any).explanation = await fs.readFile(
+          explanationPath,
+          "utf-8"
+        );
       } else {
         (problem as any).explanation = "No explanation available."; // Default placeholder
       }

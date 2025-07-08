@@ -13,6 +13,7 @@ function ProblemsList() {
     tag = null;
   }
   const filter = url.searchParams.get("filter");
+  const plan = url.searchParams.get("plan");
   const title = _.capitalize(tag || filter || "problems");
 
   // Use local state instead of Jotai atom
@@ -24,7 +25,7 @@ function ProblemsList() {
       try {
         setLoading(true);
         setError(null);
-        const ps = await getProblemList(tag!, filter!); // Pass tag and filter to API call
+        const ps = await getProblemList(tag!, filter!, plan!); // Pass tag and filter to API call
         setProblems(ps);
       } catch (err) {
         console.error("Failed to fetch problems:", err);
@@ -64,7 +65,7 @@ function ProblemsList() {
             </p>
           ) : (
             problems.map((p) => {
-              const { id, title, emoji } = p;
+              const { id, title, emoji, tags } = p;
 
               return (
                 <a
@@ -88,6 +89,18 @@ function ProblemsList() {
                       {/* Container for title, takes available space */}
                       <p className="">{title}</p>{" "}
                       {/* Adjusted title size and weight */}
+                      {tags && tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="badge badge-outline badge-sm"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     {/* Bookmark button */}
                     {pb.authStore.isValid && ( // Only show button if user is logged in

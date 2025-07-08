@@ -1,12 +1,22 @@
 {
-	"name": "@algo-lens/problem-premium",
-	"version": "1.0.0",
-	"description": "Premium LeetCode problems for AlgoLens",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC"
+  "name": "algolens-problem-premium",
+  "scripts": {
+    "dev": "PORT=4005 bun run --hot src/index.ts",
+    "test:watch": "bun test --watch",
+    "test": "bun test",
+    "build:check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "hono": "^4.7.6",
+    "lodash": "^4.17.21",
+    "pocketbase": "^0.26.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/lodash": "^4.17.16",
+    "prettier": "^3.5.3",
+    "typescript": "^5.0.0"
+  }
 }
