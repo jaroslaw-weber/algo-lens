@@ -2,7 +2,7 @@ import { Hono, Context } from "hono";
 import { pick, sample } from "lodash";
 import { cors } from "hono/cors";
 import { authMiddleware, AuthEnv } from "./auth/middleware";
-import { premiumRouter } from "backend-premium/src";
+import premiumRouter from "backend-premium/src/router";
 import { errorMiddleware } from "./errorMiddleware";
 
 import {
