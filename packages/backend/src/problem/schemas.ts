@@ -3,6 +3,7 @@ import { z } from "zod";
 export const problemListQuerySchema = z.object({
   tag: z.string().optional(),
   filter: z.string().optional(),
+  plan: z.string().optional(),
 });
 
 export const problemIdParamSchema = z.object({
@@ -30,6 +31,14 @@ export const problemSizeParamsSchema = z.object({
 });
 
 export const problemSizeWithTestcaseParamsSchema = z.object({
+  problemId: z.string().min(1, "Problem ID is required"),
+  testcaseNumber: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().int().positive("Test case number must be a positive integer")
+  ),
+});
+
+export const problemStatesParamsSchema = z.object({
   problemId: z.string().min(1, "Problem ID is required"),
   testcaseNumber: z.preprocess(
     (a) => parseInt(z.string().parse(a), 10),

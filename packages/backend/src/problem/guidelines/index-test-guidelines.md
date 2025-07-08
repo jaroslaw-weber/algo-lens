@@ -16,7 +16,7 @@ The `index.test.ts` file should be minimal and follow a specific template:
 
 - **Import `it` from `bun:test`:** For defining a test block.
 - **Import `problem`:** The problem definition object from `problem.ts`.
-- **Import `runTests`:** The utility function from `../../core/test`.
+- **Import `runTests`:** The utility function from `algo-lens-core/src/test`.
 - **Single Test Block:** A single `it` block that calls `runTests` with the `problem` object.
 
 ---
@@ -33,6 +33,7 @@ it(problem.id, async () => {
   // The runTests utility will dynamically load problem details from this directory
   await runTests(__dirname);
 });
+
 ```
 
 ---

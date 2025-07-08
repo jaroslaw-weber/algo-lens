@@ -1,10 +1,13 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import { FREE_PROBLEMS_FOLDER } from "algolens-problem-free/const";
+import { PREMIUM_PROBLEMS_FOLDER } from "algolens-problem-premium/const";
+import { Plan } from "algo-lens-core/src/types";
 
 interface ProblemFolderInfo {
   problemId: string;
   path: string;
+  plan: Plan;
 }
 
 export class ProblemPaths {
@@ -18,7 +21,8 @@ export class ProblemPaths {
   }
 
   private async loadProblemsFromDirectory(
-    dir: string
+    dir: string,
+    plan: Plan
   ): Promise<ProblemFolderInfo[]> {
     const problemFolders = await fs.readdir(dir, { withFileTypes: true });
     return problemFolders
@@ -26,6 +30,7 @@ export class ProblemPaths {
       .map((dirent) => ({
         problemId: dirent.name,
         path: path.join(dir, dirent.name),
+        plan,
       }));
   }
 
@@ -39,9 +44,15 @@ export class ProblemPaths {
       return;
     }
     {
-      const dir = FREE_PROBLEMS_FOLDER; 
+      const dir = FREE_PROBLEMS_FOLDER;
       console.log("dir2", dir);
-      const info = await this.loadProblemsFromDirectory(dir);
+      const info = await this.loadProblemsFromDirectory(dir, "free");
+      this.add(info);
+    }
+    {
+      const dir = PREMIUM_PROBLEMS_FOLDER;
+      console.log("dir", dir);
+      const info = await this.loadProblemsFromDirectory(dir, "premium");
       this.add(info);
     }
 

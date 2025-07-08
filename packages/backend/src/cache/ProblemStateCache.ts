@@ -27,6 +27,52 @@ export class ProblemStateCache {
     return this.cache.get(key);
   }
 
+  getAll(
+    problem: Problem<any, any>,
+    testcaseIndex: number,
+    from?: number,
+    to?: number
+  ): ProblemState[] | undefined {
+    // Ensure all states for the problem are cached
+    this.cacheProblem(problem);
+
+    const allStates: ProblemState[] = [];
+    const size = this.getSize(problem, testcaseIndex);
+
+    if (size === undefined) {
+      return undefined;
+    }
+    if (!from) {
+      throw new Error("from is required");
+    }
+    if (!to) {
+      throw new Error("to is required");
+    }
+
+    const start = from;
+    const end = to;
+
+    for (let i = start; i <= end; i++) {
+      // Convert back to 1-based for getKey
+      const key = this.getKey(problem.id!, testcaseIndex, i);
+      const state = this.cache.get(key);
+      if (!state) {
+        continue;
+      }
+      state.number = i;
+
+      if (state) {
+        //console.log("found state", state.breakpoint, i);
+        allStates.push(state);
+      } else {
+        // This should ideally not happen if cacheProblem works correctly
+        //   console.warn(`State not found for ${key} after caching.`);
+        // return undefined; // Or throw an error, depending on desired behavior
+      }
+    }
+    return allStates;
+  }
+
   private cacheProblem(problem: Problem<any, any>) {
     const { testcases } = problem;
     if (!testcases || testcases.length === 0) {
