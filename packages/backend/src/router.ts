@@ -17,14 +17,12 @@ import {
 import {
   problemListQuerySchema,
   problemIdParamSchema,
-  problemStateParamsSchema,
-  problemSizeParamsSchema, // Keep this for now, might be used elsewhere or can be removed later if not needed
   problemStateWithTestcaseParamsSchema,
   problemSizeWithTestcaseParamsSchema,
   problemStatesParamsSchema, // Add this import
 } from "./problem/schemas";
-import { Problem, TestCase } from "algo-lens-core/src/types";
-import { problemAccessCheck } from "./problem/core/access";
+import {  TestCase } from "algo-lens-core/src/types";
+import { problemAccessCheck } from "backend-premium/src/access";
 
 const app = new Hono<{ Variables: AuthEnv["Variables"] }>();
 
@@ -94,7 +92,7 @@ app.get("/problem/:id", async (c: Context) => {
     plan: "premium",
   };
 
-  problemAccessCheck({ subscription: user, problem });
+  problemAccessCheck({ user: user, problem });
 
   const rendered = pick(problem, [
     "id",

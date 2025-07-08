@@ -12,7 +12,7 @@ import { ProblemStateCache } from "../../cache/ProblemStateCache";
 import { getPocketbase } from "../../db/pocketbase";
 import { getProblemById } from "../core/utils";
 import { LinkedListSerializer } from "algo-lens-core/src/LinkedListSerializer";
-import { problemAccessCheck } from "../core/access";
+import { problemAccessCheck } from "backend-premium/src/access";
 
 const stateCache = new ProblemStateCache();
 
@@ -86,7 +86,7 @@ export async function getProblemStateService(
     throw new Error(`Problem not found: ${problemId}`);
   }
 
-  problemAccessCheck({ problem, subscription });
+  problemAccessCheck({ problem, user: subscription });
   // Assuming stateCache.get can handle test case index
   return stateCache.get(problem, testcaseIndex, step);
 }
@@ -105,7 +105,7 @@ export async function getAllProblemStatesService(
     throw new Error(`Problem not found: ${problemId}`);
   }
 
-  problemAccessCheck({ problem, subscription });
+  problemAccessCheck({ problem, user: subscription });
   return stateCache.getAll(problem, testcaseIndex, from, to);
 }
 
