@@ -182,12 +182,11 @@ app.get(
     const end = to ?? start;
 
     if (end - start + 1 > 10) {
-      //allow for now
-      /*
+      
       return c.json(
         { error: "Cannot request more than 10 states at once" },
         400
-      );*/
+      );
     }
 
     const allStates = await getAllProblemStatesService(
