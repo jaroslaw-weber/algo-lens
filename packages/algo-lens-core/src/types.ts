@@ -1,8 +1,6 @@
 export interface ProblemMetadata {
   variables: VariableMetadata[];
   groups?: GroupMetadata[];
-  solutionCode?: string;
-  visualizerCode?: string;
 }
 
 export interface TestCase<Input, State> {
