@@ -12,8 +12,8 @@ export function generateSteps(s1: string, s2: string): ProblemState[] {
   );
 
   // Log initial state (optional, could log inputs here)
-  l.arrayV3({ s1: s1.split("") }, []);
-  l.arrayV3({ s2: s2.split("") }, []);
+  l.string({ s1}, []);
+  l.string({ s2 }, []);
   l.groupOptions.set("size", { min: 0, max: Math.max(m, n) });
   l.group("size", { m, n });
   l.array2d("dp", dp); // Log initial empty dp table
@@ -39,10 +39,10 @@ export function generateSteps(s1: string, s2: string): ProblemState[] {
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      l.arrayV3({ s1: s1.split("") }, [
+      l.string({ s1 }, [
         { value: i - 1, label: "s1 char", color: "primary" },
       ]); // Highlight characters being compared
-      l.arrayV3({ s2: s2.split("") }, [
+      l.string({ s2 }, [
         { value: j - 1, label: "s2 char", color: "primary" },
       ]);
 

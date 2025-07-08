@@ -1,7 +1,9 @@
 import ProblemHeader from "./ProblemHeader";
 import StateDescription from "./ProblemDescription";
 import React, { useState, useRef, useEffect } from "react";
+
 import copy from "copy-to-clipboard";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 import DisplayState from "./DisplayState";
 import CodePreview from "./CodePreview";
@@ -23,7 +25,6 @@ import type {
   ProblemState,
   TestCase,
 } from "algo-lens-core/src/types";
-
 
 interface ProblemVisualizerProps {
   state: ProblemState;
@@ -126,6 +127,8 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   return (
     <div className="mx-2 lg:mx-8 my-8 flex-1">
       <div className="">
+        {/* Render ProblemTabs once, above the conditional content */}
+        <ProblemTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         {/* Tab Content Area */}
         <div className="mt-4">
           {/* Visualizer Content Container */}
@@ -141,12 +144,6 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
                       problem={problem}
                       handleCopyCode={handleCopyCode}
                       onClose={handleCloseProblemView} // Pass the new close handler
-                    />
-                  )}
-                  {showHeader && (
-                    <ProblemTabs
-                      activeTab={activeTab}
-                      setActiveTab={setActiveTab}
                     />
                   )}
                   {/* Integrate TestCaseSelector */}
@@ -196,7 +193,7 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
               {/* Display problem description or fallback */}
               <div className="p-4">
                 {problem?.description ? (
-                  <p>{problem.description}</p> // Assuming description is plain text
+                  <MarkdownRenderer markdownContent={problem.description} />
                 ) : (
                   <p>No description available.</p>
                 )}
@@ -206,12 +203,13 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
 
           {/* Explanation Content Container */}
           {activeTab === "explanation" && (
-            <div className="explanation-content p-4">
+            <div className="explanation-content p-4 prose">
               {" "}
-              {/* Added padding */}
-              {
-                "No explanation available. (Work in progress)" // Assuming explanation is plain text
-              }
+              {problem?.explanation ? (
+                <MarkdownRenderer markdownContent={problem.explanation} />
+              ) : (
+                "No explanation available. (Work in progress)"
+              )}
             </div>
           )}
         </div>

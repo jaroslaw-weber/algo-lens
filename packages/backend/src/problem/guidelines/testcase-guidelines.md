@@ -12,54 +12,55 @@ To define the specific input and expected output for each test case, allowing fo
 
 ## 2. Structure
 
-Each test case should be an object with the following properties:
+Each test case **must** be an object adhering to the `TestCase` type imported from `algo-lens-core/src/types`. It should have the following properties:
 
-- **`name` (string):** A unique name for the test case.
-- **`description` (string):** A clear and concise description of what this test case is testing (e.g., "basic positive numbers", "empty array", "large input").
-- **`input` (object):** An object containing the input variables for the problem's function. The keys should match the parameter names of the problem's function.
-- **`expected` (any):** The expected output from the problem's function for the given input.
+-   **`name` (string):** A unique, descriptive name for the test case (e.g., "Basic positive numbers", "Empty array input").
+-   **`description` (string):** A clear and concise explanation of what this specific test case is testing.
+-   **`input` (object):**
+    -   This **must** be an object where keys are the parameter names of the problem's main function (as defined in `steps.ts` and `types.ts`).
+    -   For example, if the function is `twoSum(nums: number[], target: number)`, the input object should be `{ nums: [...], target: ... }`.
+    -   Even for functions with a single parameter (e.g., `climbStairs(n: number)`), use an object: `{ n: 5 }`. This consistency is important.
+-   **`expected` (any):** The expected output from the problem's function for the given input. The type of this will depend on the problem's return type.
+-   **`isDefault` (boolean, optional):** If `true`, this test case might be preferentially shown or used by default in the UI. Only one test case should be marked as default.
 
 ---
 
 ## 3. Example Template
 
 ```ts
-import { ProblemState, TestCase } from "algo-lens-core/src/types";
+import { TestCase } from "algo-lens-core/src/types";
+// Assuming YourProblemInputType is defined in ./types.ts
+// e.g., interface YourProblemInputType { nums: number[]; target: number; }
+// Assuming YourProblemReturnType is the expected output type, e.g., number[] or ProblemState
+import { YourProblemInputType, YourProblemReturnType } from "./types";
 
-import { ThreeSumInput } from "./types";
-
-export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [
+export const testcases: TestCase<YourProblemInputType, YourProblemReturnType>[] = [
   {
-    name: "Basic Positive",
-    description: "This test case covers a fundamental scenario with an array of positive integers and a target sum that can be achieved by summing two elements within the array. It validates the basic functionality of finding the correct indices.",
-    input: { nums: [2, 7, 11, 15], target: 9 },
+    name: "Example 1: Basic Case",
+    description: "A fundamental scenario testing the primary logic.",
+    input: { nums: [2, 7, 11, 15], target: 9 }, // Input is an object
     expected: [0, 1],
     isDefault: true,
   },
   {
-    name: "Negative Numbers",
-    description: "This test case evaluates the solution's ability to handle arrays containing negative numbers. The target sum is also negative, requiring the algorithm to correctly identify two negative numbers that sum up to the target.",
-    input: { nums: [-1, -2, -3, -4], target: -3 },
-    expected: [0, 1],
+    name: "Example 2: No Solution",
+    description: "Tests behavior when no solution exists.",
+    input: { nums: [1, 2, 3], target: 7 },
+    expected: [], // Or appropriate "no solution" output
   },
   {
-    name: "Empty Array",
-    description: "This test case specifically checks the behavior of the solution when provided with an empty input array. It ensures that the algorithm gracefully handles this edge case and returns an empty result as expected.",
-    input: { nums: [], target: 0 },
+    name: "Edge Case: Empty Array",
+    description: "Tests handling of an empty input array.",
+    input: { nums: [], target: 5 },
     expected: [],
   },
+  // Example for a single argument function like climbStairs(n: number)
   {
-    name: "Single Element",
-    description: "This test case examines the solution's response to an array containing only a single element. It's crucial for verifying edge case handling where a pair cannot be formed.",
-    input: { nums: [5], target: 5 },
-    expected: [], // Or appropriate expected output for single element
-  },
-  {
-    name: "Large Input",
-    description: "This test case is designed to assess the performance and efficiency of the solution when dealing with a very large input array. It helps identify potential bottlenecks or scalability issues.",
-    input: { nums: Array.from({ length: 10000 }, (_, i) => i), target: 19999 },
-    expected: [9999, 10000],
-  },
+    name: "Climbing Stairs: n = 3",
+    description: "Test case for 3 stairs.",
+    input: { n: 3 }, // Input is still an object
+    expected: 3,
+  }
 ];
 ```
 
@@ -67,21 +68,22 @@ export const testcases: TestCase<ThreeSumInput, ProblemState>[] = [
 
 ## 4. Best Practices
 
-- **Variety:**  
-  Include a diverse set of test cases covering:
-    - Basic/typical scenarios.
-    - Edge cases (e.g., empty inputs, single elements, boundary values, nulls/undefineds if applicable).
-    - Large inputs to test performance.
-    - Invalid inputs (if the problem specifies how to handle them).
-
-- **Clarity:**  
-  Ensure the `description` clearly explains the purpose of each test case.
-
-- **Accuracy:**  
-  The `expected` output must be precisely correct for the given `input`.
-
-- **Consistency:**  
-  Maintain consistent naming and typing for `input` variables as defined in `problem.ts`.
+-   **Object Inputs:** Always structure the `input` field as an object, with keys matching the parameter names of your function in `steps.ts`.
+-   **Type Safety:**
+    -   Always import the `TestCase` type from `algo-lens-core/src/types`.
+    -   Explicitly type your `testcases` array: `const testcases: TestCase<MyInputType, MyOutputType>[] = [...]`.
+    -   Ensure `MyInputType` (imported from `./types.ts`) correctly defines the structure of your input object.
+-   **Variety:**
+    Include a diverse set of test cases covering:
+    -   Basic/typical scenarios.
+    -   Edge cases (e.g., empty inputs, single elements, boundary values).
+    -   Cases that test different logical paths in your solution.
+    -   Large inputs if performance is a consideration (though step generation limits might apply).
+-   **Clarity:**
+    Ensure the `name` and `description` clearly explain the purpose and scenario of each test case.
+-   **Accuracy:**
+    The `expected` output must be precisely correct for the given `input`.
+-   **`isDefault`:** Use `isDefault: true` sparingly for one representative test case.
 
 ---
 
