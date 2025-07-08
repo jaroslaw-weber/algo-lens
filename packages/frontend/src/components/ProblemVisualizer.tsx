@@ -17,7 +17,7 @@ import {
   stepAtom,
   selectedTestCaseNumberAtom,
 } from "../atom";
-import { getProblem, getProblemState, getProblemSize } from "../api";
+import { getProblemSize } from "../api";
 import TestCaseSelector from "./TestCaseSelector";
 import type {
   Problem,
@@ -56,6 +56,11 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   useEffect(() => {
     setDisplayStateData(state);
   }, [state]);
+
+  // Reset step to 1 when selected test case changes
+  useEffect(() => {
+    setStep(1);
+  }, [selectedTestCaseNumber, setStep]);
 
   // Use props instead of Jotai atoms for problem and state during debugging
   // if (!state || !problem || !problem.testcases) {
@@ -103,20 +108,6 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
     copy(code!);
     alert("Code copied to clipboard!");
   };
-
-  // Fetch problem size when problem or selected test case changes
-  useEffect(() => {
-    if (problem && selectedTestCaseNumber) {
-      getProblemSize(problem.id!, selectedTestCaseNumber).then((size) =>
-        setMaxStep(size)
-      );
-    }
-  }, [problem, selectedTestCaseNumber, setMaxStep]);
-
-  // Reset step to 1 when selected test case changes
-  useEffect(() => {
-    setStep(1);
-  }, [selectedTestCaseNumber, setStep]);
 
   // Removed state fetching useEffect as it's now in useProblemState
 
