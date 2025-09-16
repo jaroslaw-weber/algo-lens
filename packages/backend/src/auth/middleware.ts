@@ -38,7 +38,8 @@ export const authMiddleware = async (c: Context<AuthEnv>, next: Next) => {
       await next();
     } catch (e) {
       pb.authStore.clear(); // Clear the invalid token
-      throw e; // Re-throw the error to be caught by the global error handler
+      await next();
+      //throw e; // Re-throw the error to be caught by the global error handler
     }
   } else {
     // No token provided, proceed to the next middleware or route handler
