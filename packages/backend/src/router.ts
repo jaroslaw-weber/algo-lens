@@ -21,7 +21,7 @@ import {
   problemSizeWithTestcaseParamsSchema,
   problemStatesParamsSchema, // Add this import
 } from "./problem/schemas";
-import {  TestCase } from "algo-lens-core/src/types";
+import { TestCase } from "algo-lens-core/src/types";
 import { problemAccessCheck } from "backend-premium/src/access";
 
 const app = new Hono<{ Variables: AuthEnv["Variables"] }>();
@@ -70,10 +70,50 @@ app.get("/problem/random", async (c: Context) => {
   }
 
   const randomProblemId = sample(all)!.id;
+  console.log("Random problem selected:", randomProblemId);
 
   const problem = await getProblemByIdService(randomProblemId);
+  console.log("Random problem data before cleaning:", {
+    id: problem.id,
+    title: problem.title,
+    testcasesCount: problem.testcases?.length,
+    testcases: problem.testcases?.map((tc) => ({
+      name: tc.name,
+      hasInput: !!tc.input,
+      hasExpected: !!tc.expected,
+      description: tc.description,
+      isDefault: tc.isDefault,
+    })),
+  });
 
-  return c.json(problem);
+  // Clean testcases to match the format returned by /problem/:id endpoint
+  const rendered = pick(problem, [
+    "id",
+    "title",
+    "difficulty",
+    "code",
+    "url",
+    "tags",
+    "metadata",
+    "description",
+    "explanation",
+    "plan",
+  ]);
+  //@ts-expect-error
+  rendered.testcases = cleanTestcases(problem.testcases);
+
+  console.log("Random problem data after cleaning:", {
+    id: rendered.id,
+    title: rendered.title,
+    testcasesCount: rendered.testcases?.length,
+    testcases: rendered.testcases?.map((tc) => ({
+      name: tc.name,
+      description: tc.description,
+      isDefault: tc.isDefault,
+    })),
+  });
+
+  return c.json(rendered);
 });
 
 app.get("/problem/:id", async (c: Context) => {
@@ -182,7 +222,6 @@ app.get(
     const end = to ?? start;
 
     if (end - start + 1 > 10) {
-      
       return c.json(
         { error: "Cannot request more than 10 states at once" },
         400

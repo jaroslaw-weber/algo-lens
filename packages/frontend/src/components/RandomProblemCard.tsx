@@ -12,12 +12,20 @@ const RandomProblemCard: React.FC = () => {
   useEffect(() => {
     const fetchRandomProblem = async () => {
       try {
+        console.log("RandomProblemCard: Starting to fetch random problem");
         setLoading(true);
         setError(null);
         const data = await getRandomProblem();
+        console.log(
+          "RandomProblemCard: Successfully fetched problem, setting to atom"
+        );
         setProblem(data);
+        console.log("RandomProblemCard: Problem set successfully");
       } catch (err) {
-        console.error("Failed to fetch random problem:", err);
+        console.error(
+          "RandomProblemCard: Failed to fetch random problem:",
+          err
+        );
         setError("Failed to load a random problem. Please try again later.");
       } finally {
         setLoading(false);

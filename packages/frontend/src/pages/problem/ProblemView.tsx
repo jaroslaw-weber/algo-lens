@@ -49,9 +49,20 @@ export default function ProblemView() {
 
   useEffect(() => {
     const state = stateCache.get(step);
+    console.log("ProblemView useEffect: checking state for step", {
+      step,
+      hasState: !!state,
+      cacheSize: stateCache.size,
+    });
     if (!state) {
+      console.log(
+        "ProblemView useEffect: no state for step, skipping setProblemState"
+      );
       return;
     }
+    console.log("ProblemView useEffect: setting problemState", {
+      breakpoint: state.breakpoint,
+    });
     setProblemState(state);
   }, [step, problem, stateCache]);
 
@@ -88,40 +99,121 @@ export default function ProblemView() {
   }, [problem?.podcastUrl, audio]); // Added audio to dependencies
 
   async function init() {
-    if (problem) {
-      return;
-    }
-    setLoading(true);
-    const url = new URL(window.location.href);
-    const id = url.searchParams.get("id");
-    const p = await getProblem(id!);
-    setProblem(p);
-    trackUmamiEvent("view-problem", { problemId: id });
-    const totalSize = await getProblemSize(p.id!, selectedTestCaseNumber);
-    setMaxStep(totalSize); // Set maxStep
-    const chunkSize = 10; // Define chunk size
-    for (let i = 1; i <= totalSize; i += chunkSize) {
-      const startStep = i;
-      const endStep = Math.min(i + chunkSize - 1, totalSize);
-      const fetchedStates = await getProblemStatesChunk(
-        p.id!,
+    if (!problem) {
+      console.log("ProblemView init: starting init", {
         selectedTestCaseNumber,
-        startStep,
-        endStep
-      );
-      setStateCache((prevCache: Map<number, ProblemState>) => {
-        const newCache = new Map(prevCache);
-        fetchedStates.forEach((s) => {
-          newCache.set(s.number!, s);
-        });
-        return newCache;
       });
+      setLoading(true);
+      const url = new URL(window.location.href);
+      const id = url.searchParams.get("id");
+      console.log("ProblemView init: fetching problem", { id });
+      const p = await getProblem(id!);
+      console.log("ProblemView init: problem fetched", {
+        problemId: p.id,
+        testcasesCount: p.testcases?.length,
+      });
+      setProblem(p);
+      trackUmamiEvent("view-problem", { problemId: id });
+      console.log("ProblemView init: fetching problem size", {
+        problemId: p.id,
+        selectedTestCaseNumber,
+      });
+      const totalSize = await getProblemSize(p.id!, selectedTestCaseNumber);
+      console.log("ProblemView init: totalSize", { totalSize });
+      setMaxStep(totalSize); // Set maxStep
+      const chunkSize = 10; // Define chunk size
+      for (let i = 1; i <= totalSize; i += chunkSize) {
+        const startStep = i;
+        const endStep = Math.min(i + chunkSize - 1, totalSize);
+        console.log("ProblemView init: fetching chunk", { startStep, endStep });
+        const fetchedStates = await getProblemStatesChunk(
+          p.id!,
+          selectedTestCaseNumber,
+          startStep,
+          endStep
+        );
+        console.log("ProblemView init: fetched states count", {
+          count: fetchedStates.length,
+        });
+        setStateCache((prevCache: Map<number, ProblemState>) => {
+          const newCache = new Map(prevCache);
+          fetchedStates.forEach((s) => {
+            newCache.set(s.number!, s);
+          });
+          console.log("ProblemView init: cache updated, current size", {
+            cacheSize: newCache.size,
+          });
+          return newCache;
+        });
+      }
+      setLoading(false);
+      console.log("ProblemView init: init complete");
+    } else if (maxStep === 0) {
+      console.log(
+        "ProblemView init: problem exists but states not loaded, loading states",
+        {
+          problemId: problem.id,
+          selectedTestCaseNumber,
+        }
+      );
+      setLoading(true);
+      const totalSize = await getProblemSize(
+        problem.id!,
+        selectedTestCaseNumber
+      );
+      console.log("ProblemView init: totalSize", { totalSize });
+      setMaxStep(totalSize);
+      const chunkSize = 10;
+      for (let i = 1; i <= totalSize; i += chunkSize) {
+        const startStep = i;
+        const endStep = Math.min(i + chunkSize - 1, totalSize);
+        console.log("ProblemView init: fetching chunk", { startStep, endStep });
+        const fetchedStates = await getProblemStatesChunk(
+          problem.id!,
+          selectedTestCaseNumber,
+          startStep,
+          endStep
+        );
+        console.log("ProblemView init: fetched states count", {
+          count: fetchedStates.length,
+        });
+        setStateCache((prevCache) => {
+          const newCache = new Map(prevCache);
+          fetchedStates.forEach((s) => {
+            newCache.set(s.number!, s);
+          });
+          console.log("ProblemView init: cache updated, current size", {
+            cacheSize: newCache.size,
+          });
+          return newCache;
+        });
+      }
+      setLoading(false);
+      console.log("ProblemView init: states loaded");
+    } else {
+      console.log(
+        "ProblemView init: problem and states already loaded, skipping",
+        {
+          problemId: problem.id,
+          maxStep,
+          cacheSize: stateCache.size,
+        }
+      );
     }
-    setLoading(false);
   }
+  // Reset maxStep when problem changes to ensure states are loaded for new problems
+  useEffect(() => {
+    if (problem) {
+      console.log("ProblemView: Problem changed, resetting maxStep to 0", {
+        problemId: problem.id,
+      });
+      setMaxStep(0);
+    }
+  }, [problem?.id, setMaxStep]);
+
   useEffect(() => {
     init();
-  }, [problem, setProblem]); // Added problem and setProblem to dependencies
+  }, [problem, selectedTestCaseNumber]);
 
   useEffect(() => {
     if (problem && step) {
@@ -129,6 +221,12 @@ export default function ProblemView() {
     }
   }, [step, problem]);
 
+  console.log("ProblemView render: rendering ProblemVisualizer", {
+    hasProblem: !!problem,
+    hasProblemState: !!problemState,
+    problemId: problem?.id,
+    step,
+  });
   //console.log("ProblemView - problem:", problem);
   //console.log("ProblemView - state:", state);
   // Temporarily remove conditional rendering and pass problem and state directly for debugging

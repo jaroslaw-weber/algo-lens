@@ -107,7 +107,21 @@ export async function getProblemSize(id: string, testcaseNumber: number) {
 
 export async function getRandomProblem() {
   // Use the 'be' instance which has the base URL configured
+  console.log("Fetching random problem from API...");
   const result = await be.get<Problem<any, any>>("problem/random");
   // ky automatically throws for non-2xx responses, so we just parse
-  return result.json();
+  const problem = await result.json();
+  console.log("Random problem received:", {
+    id: problem.id,
+    title: problem.title,
+    testcasesCount: problem.testcases?.length,
+    testcases: problem.testcases?.map((tc) => ({
+      name: tc.name,
+      description: tc.description,
+      isDefault: tc.isDefault,
+      hasInput: !!tc.input,
+      hasExpected: !!tc.expected,
+    })),
+  });
+  return problem;
 }
