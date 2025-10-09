@@ -1,11 +1,11 @@
-import { ProblemState, Variable } from "algo-lens-core/src/types";
+import { ProblemState, Variable } from "@algolens/core/src/types";
 
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2"; // Import StepLoggerV2
 import {
   asValueGroup,
   asIntervals,
   getIntervalBounds,
-} from "algo-lens-core/src/utils";
+} from "@algolens/core/src/utils";
 import { EraseOverlapIntervalsInput } from "./types"; // Import EraseOverlapIntervalsInput
 
 export function generateSteps(intervals: number[][]): ProblemState[] {

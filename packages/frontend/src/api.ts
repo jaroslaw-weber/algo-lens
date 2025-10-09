@@ -1,8 +1,9 @@
-import ky, { type KyInstance } from "ky";
-import type { Problem } from "algo-lens-core/src/types";
+import ky, { type KyInstance, HTTPError } from "ky";
+import type { Problem } from "@algolens/core/src/types";
 
 import { BACKEND_URL } from "astro:env/client";
-import type { ProblemState } from "algo-lens-core/src/types";
+import type { ProblemState } from "@algolens/core/src/types";
+import { AlgolensError } from "@algolens/core/src";
 
 import { pb } from "./auth/pocketbase";
 import _ from "lodash";
@@ -15,6 +16,7 @@ export type ProblemInfo = {
   emoji?: string; // Emoji might be optional
   bookmark?: boolean; // Added isBookmarked flag
   tags?: string[]; // Added tags
+  plan?: string; // Plan field for free/premium
 };
 
 //
@@ -64,9 +66,21 @@ export async function getProblemList(
   return result.json();
 }
 
-export async function getProblem(id: string) {
-  const result = await be.get<Problem<any, any>>(`problem/${id}`);
-  return result.json();
+export async function getProblem(
+  id: string
+): Promise<Problem<any, any> | AlgolensError> {
+  try {
+    const result = await be.get<Problem<any, any>>(`problem/${id}`);
+    return result.json();
+  } catch (e) {
+    if (e instanceof HTTPError && (e as any).code === "NEED_PREMIUM_ACCESS") {
+      return new AlgolensError({
+        message: (e as any).error,
+        code: (e as any).code,
+      });
+    }
+    throw e;
+  }
 }
 
 export async function getProblemState(
@@ -88,13 +102,23 @@ export async function getProblemStatesChunk(
   testcaseNumber: number,
   from: number,
   to: number
-): Promise<ProblemState[]> {
-  const searchParams = { from: from.toString(), to: to.toString() };
-  const result = await be.get<ProblemState[]>(
-    `problem/${id}/testcase/${testcaseNumber}/states`,
-    { searchParams }
-  );
-  return result.json();
+): Promise<ProblemState[] | AlgolensError> {
+  try {
+    const searchParams = { from: from.toString(), to: to.toString() };
+    const result = await be.get<ProblemState[]>(
+      `problem/${id}/testcase/${testcaseNumber}/states`,
+      { searchParams }
+    );
+    return result.json();
+  } catch (e) {
+    if (e instanceof HTTPError && (e as any).code === "NEED_PREMIUM_ACCESS") {
+      return new AlgolensError({
+        message: (e as any).error,
+        code: (e as any).code,
+      });
+    }
+    throw e;
+  }
 }
 
 export async function getProblemSize(id: string, testcaseNumber: number) {
@@ -107,21 +131,7 @@ export async function getProblemSize(id: string, testcaseNumber: number) {
 
 export async function getRandomProblem() {
   // Use the 'be' instance which has the base URL configured
-  console.log("Fetching random problem from API...");
   const result = await be.get<Problem<any, any>>("problem/random");
   // ky automatically throws for non-2xx responses, so we just parse
-  const problem = await result.json();
-  console.log("Random problem received:", {
-    id: problem.id,
-    title: problem.title,
-    testcasesCount: problem.testcases?.length,
-    testcases: problem.testcases?.map((tc) => ({
-      name: tc.name,
-      description: tc.description,
-      isDefault: tc.isDefault,
-      hasInput: !!tc.input,
-      hasExpected: !!tc.expected,
-    })),
-  });
-  return problem;
+  return result.json();
 }

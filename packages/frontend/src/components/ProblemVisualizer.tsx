@@ -24,7 +24,7 @@ import type {
   ProblemMetadata,
   ProblemState,
   TestCase,
-} from "algo-lens-core/src/types";
+} from "@algolens/core/src/types";
 
 interface ProblemVisualizerProps {
   state: ProblemState;
@@ -45,24 +45,10 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   // Initialize selected test case number when problem changes
   useEffect(() => {
     if (problem && problem.testcases && problem.testcases.length > 0) {
-      console.log("ProblemVisualizer: Initializing testcase selection", {
-        problemId: problem.id,
-        testcasesCount: problem.testcases.length,
-        testcases: problem.testcases.map((tc, i) => ({
-          index: i,
-          name: tc.name,
-          isDefault: tc.isDefault,
-          hasInput: !!tc.input,
-          hasExpected: !!tc.expected,
-        })),
-      });
       const defaultIndex = problem.testcases.findIndex(
         (tc: TestCase<any, any>) => tc.isDefault
       );
-      console.log("ProblemVisualizer: Default testcase index:", defaultIndex);
       setSelectedTestCaseNumber(defaultIndex !== -1 ? defaultIndex + 1 : 1);
-    } else {
-      console.log("ProblemVisualizer: No testcases found", { problem });
     }
   }, [problem, setSelectedTestCaseNumber]);
 
@@ -83,25 +69,16 @@ function ProblemVisualizer({ state }: ProblemVisualizerProps) {
   // const { title, code, id, testcases } = problem;
 
   // Add a check for problem and state here as they are now props
-  if (!problem || !state || !problem.testcases) {
-    console.log("ProblemVisualizer - problem or state or testcases is null", {
-      problem: problem
-        ? {
-            id: problem.id,
-            title: problem.title,
-            hasTestcases: !!problem.testcases,
-            testcasesCount: problem.testcases?.length,
-            hasCode: !!problem.code,
-            hasFunc: !!problem.func,
-          }
-        : null,
-      state: state
-        ? {
-            breakpoint: state.breakpoint,
-            variablesCount: state.variables?.length,
-          }
-        : null,
-    });
+  if (!problem) {
+    console.log(`ProblemVisualizer: problem is null`);
+    return null;
+  }
+  if (!state) {
+    console.log(`ProblemVisualizer: state is null`);
+    return null;
+  }
+  if (!problem.testcases) {
+    console.log(`ProblemVisualizer: testcases are null`);
     return null;
   }
 

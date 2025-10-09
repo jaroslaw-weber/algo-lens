@@ -1,6 +1,6 @@
-import { ProblemState } from "algo-lens-core/src/types";
- // Keep ProblemState for return type hint
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { ProblemState } from "@algolens/core/src/types";
+// Keep ProblemState for return type hint
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 
 export function generateSteps(nums: number[]): ProblemState[] {
   const l = new StepLoggerV2();

@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -15,7 +15,6 @@ export const problem: Problem<CoinChangeInput, ProblemState> = {
   difficulty: "medium",
   testcases,
   id: "coinChange",
-  tags: ["dynamic programming", "array"],
   metadata: {
     variables,
     groups,

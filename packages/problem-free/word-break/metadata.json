@@ -1,0 +1,11 @@
+{
+  "id": "word-break",
+  "title": "Word Break",
+  "emoji": "📖",
+  "difficulty": "medium",
+  "tags": [
+    "dynamic programming",
+    "string"
+  ],
+  "plan": "free"
+}

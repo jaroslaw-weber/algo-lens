@@ -2,7 +2,7 @@ import { Hono, Context } from "hono";
 import { pick, sample } from "lodash";
 import { cors } from "hono/cors";
 import { authMiddleware, AuthEnv } from "./auth/middleware";
-import premiumRouter from "backend-premium/src/router";
+import premiumRouter from "@algolens/backend-premium/src/router";
 import { errorMiddleware } from "./errorMiddleware";
 
 import {
@@ -21,8 +21,11 @@ import {
   problemSizeWithTestcaseParamsSchema,
   problemStatesParamsSchema, // Add this import
 } from "./problem/schemas";
-import { TestCase } from "algo-lens-core/src/types";
-import { problemAccessCheck } from "backend-premium/src/access";
+import { TestCase } from "@algolens/core/src/types";
+import {
+  problemAccessCheck,
+  checkUserPremiumStatus,
+} from "@algolens/backend-premium/src/access";
 
 const app = new Hono<{ Variables: AuthEnv["Variables"] }>();
 
@@ -31,7 +34,7 @@ app.use(authMiddleware);
 app.onError(errorMiddleware);
 
 app.get("/", (c: Context) => {
-  return c.text("Hello Hono!");
+  return c.text("algolens lets go!");
 });
 
 app.get("/health", (c: Context) => {
@@ -59,6 +62,7 @@ app.get("/problem", async (c: Context<{ Variables: AuthEnv["Variables"] }>) => {
     tags: problem.tags,
   }));
 
+  //console.log("returning problem list", list);
   return c.json(list);
 });
 
@@ -70,50 +74,10 @@ app.get("/problem/random", async (c: Context) => {
   }
 
   const randomProblemId = sample(all)!.id;
-  console.log("Random problem selected:", randomProblemId);
 
   const problem = await getProblemByIdService(randomProblemId);
-  console.log("Random problem data before cleaning:", {
-    id: problem.id,
-    title: problem.title,
-    testcasesCount: problem.testcases?.length,
-    testcases: problem.testcases?.map((tc) => ({
-      name: tc.name,
-      hasInput: !!tc.input,
-      hasExpected: !!tc.expected,
-      description: tc.description,
-      isDefault: tc.isDefault,
-    })),
-  });
 
-  // Clean testcases to match the format returned by /problem/:id endpoint
-  const rendered = pick(problem, [
-    "id",
-    "title",
-    "difficulty",
-    "code",
-    "url",
-    "tags",
-    "metadata",
-    "description",
-    "explanation",
-    "plan",
-  ]);
-  //@ts-expect-error
-  rendered.testcases = cleanTestcases(problem.testcases);
-
-  console.log("Random problem data after cleaning:", {
-    id: rendered.id,
-    title: rendered.title,
-    testcasesCount: rendered.testcases?.length,
-    testcases: rendered.testcases?.map((tc) => ({
-      name: tc.name,
-      description: tc.description,
-      isDefault: tc.isDefault,
-    })),
-  });
-
-  return c.json(rendered);
+  return c.json(problem);
 });
 
 app.get("/problem/:id", async (c: Context) => {
@@ -128,11 +92,20 @@ app.get("/problem/:id", async (c: Context) => {
       404
     );
   }
-  const user = {
-    plan: "premium",
-  };
 
-  problemAccessCheck({ user: user, problem });
+  // Check if user has premium access based on paddle events
+  const user = c.get("user");
+  let userPlan = "free";
+
+  if (user) {
+    const hasPremium = await checkUserPremiumStatus(user);
+    if (hasPremium) {
+      userPlan = "premium";
+    }
+  }
+
+  const subscription = { plan: userPlan as "premium" | "free" };
+  problemAccessCheck({ subscription, problem });
 
   const rendered = pick(problem, [
     "id",
@@ -173,7 +146,17 @@ app.get(
     const testcaseIndex = testcaseNumber - 1;
 
     console.log("getting state");
-    const subscription = c.get("user");
+    const user = c.get("user");
+    let userPlan = "free";
+
+    if (user) {
+      const hasPremium = await checkUserPremiumStatus(user);
+      if (hasPremium) {
+        userPlan = "premium";
+      }
+    }
+
+    const subscription = { plan: userPlan as "premium" | "free" };
     const state = await getProblemStateService(
       problemId,
       testcaseIndex,
@@ -215,7 +198,17 @@ app.get(
     const to = query.to ? parseInt(query.to, 10) : undefined;
 
     const testcaseIndex = testcaseNumber - 1;
-    const subscription = c.get("user");
+    const user = c.get("user");
+    let userPlan = "free";
+
+    if (user) {
+      const hasPremium = await checkUserPremiumStatus(user);
+      if (hasPremium) {
+        userPlan = "premium";
+      }
+    }
+
+    const subscription = { plan: userPlan as "premium" | "free" };
 
     // Default values for from and to
     const start = from ?? 1;

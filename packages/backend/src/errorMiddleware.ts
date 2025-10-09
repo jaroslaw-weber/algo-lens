@@ -1,5 +1,5 @@
 import { Context, Next } from "hono";
-import { AlgolensError } from "algo-lens-core/src";
+import { AlgolensError } from "@algolens/core/src";
 
 export const errorMiddleware = async (err: Error, c: Context) => {
   if (err instanceof AlgolensError) {

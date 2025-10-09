@@ -1,18 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 const themes = [
-  'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate', 'synthwave',
-  'retro', 'cyberpunk', 'valentine', 'halloween', 'garden', 'forest', 'aqua',
-  'lofi', 'pastel', 'fantasy', 'wireframe', 'black', 'luxury', 'dracula', 'cmyk',
-  'autumn', 'business', 'acid', 'lemonade', 'night', 'coffee', 'winter'
+  "light",
+  "dark",
+  "cupcake",
+  "bumblebee",
+  "emerald",
+  "corporate",
+  "synthwave",
+  "retro",
+  "cyberpunk",
+  "valentine",
+  "halloween",
+  "garden",
+  "forest",
+  "aqua",
+  "lofi",
+  "pastel",
+  "fantasy",
+  "wireframe",
+  "black",
+  "luxury",
+  "dracula",
+  "cmyk",
+  "autumn",
+  "business",
+  "acid",
+  "lemonade",
+  "night",
+  "coffee",
+  "winter",
+  "silk",
 ];
 
 const ThemeSelector = () => {
-  
-  const [theme, setTheme] = useState("test");
+  const [theme, setTheme] = useState("silk");
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
@@ -26,7 +51,9 @@ const ThemeSelector = () => {
         onChange={(e) => setTheme(e.target.value)}
       >
         {themes.map((t) => (
-          <option key={t} value={t}>{t}</option>
+          <option key={t} value={t}>
+            {t}
+          </option>
         ))}
       </select>
     </div>

@@ -1,0 +1,10 @@
+{
+  "id": "sum-of-two-integers",
+  "title": "Sum of Two Integers",
+  "emoji": "➕",
+  "difficulty": "easy",
+  "tags": [
+    "bit manipulation"
+  ],
+  "plan": "free"
+}

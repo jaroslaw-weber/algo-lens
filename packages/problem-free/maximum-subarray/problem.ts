@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variableMetadata } from "./variables"; // Renamed import
 import { generateSteps } from "./steps";
@@ -15,7 +15,6 @@ export const problem: Problem<MaximumSubarrayInput, ProblemState> = {
   testcases, // Added testcases
   difficulty: "medium", // Updated difficulty level
   id: "maximum-subarray",
-  tags: ["dynamic programming", "array", "divide and conquer"], // Updated tags
   metadata: {
     variables: variableMetadata, // Updated usage
     groups: groups,

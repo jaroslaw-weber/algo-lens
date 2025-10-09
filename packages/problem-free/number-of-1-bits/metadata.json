@@ -1,0 +1,10 @@
+{
+  "id": "number-of-1-bits",
+  "title": "Hamming Weight",
+  "emoji": "1️⃣",
+  "difficulty": "easy",
+  "tags": [
+    "bit manipulation"
+  ],
+  "plan": "free"
+}

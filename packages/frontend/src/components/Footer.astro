@@ -1,13 +1,21 @@
 ---
-// No props needed for this simple footer yet
+// No props needed for this footer
 ---
 
 <footer class="site-footer">
   <div class="footer-content">
     <span>&copy; {new Date().getFullYear()} algolens</span>
     <nav class="footer-links">
-      <a 
-                href="https://github.com/jaroslaw-weber/algo-lens"target="_blank" rel="noopener noreferrer">algolens on github</a>
+      <a href="/tos">Terms of Service</a>
+      <a href="/refund-policy">Refund Policy</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a
+        href="https://github.com/jaroslaw-weber/algo-lens"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        algolens on github
+      </a>
     </nav>
   </div>
 </footer>
@@ -51,8 +59,8 @@
       margin-left: 0;
       margin-right: 1rem; /* Add spacing between links when stacked */
     }
-     .footer-links a:last-child {
-       margin-right: 0;
-     }
+    .footer-links a:last-child {
+      margin-right: 0;
+    }
   }
 </style>

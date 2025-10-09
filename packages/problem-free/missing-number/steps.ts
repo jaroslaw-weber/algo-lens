@@ -1,7 +1,7 @@
-import { ProblemState } from "algo-lens-core/src/types";
+import { ProblemState } from "@algolens/core/src/types";
 
 import { MissingNumberInput } from "./types";
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2"; // Import StepLoggerV2
 
 /**
  * Generates the states for the missing number algorithm visualization using StepLoggerV2.

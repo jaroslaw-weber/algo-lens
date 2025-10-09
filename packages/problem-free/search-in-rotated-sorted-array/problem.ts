@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { SearchInput } from "./types";
 import { generateSteps } from "./steps";
@@ -10,11 +10,11 @@ export const problem: Problem<SearchInput, ProblemState> = {
   title: "Search in Rotated Sorted Array",
   emoji: "🔍",
   func: (i) => generateSteps(...i), // Use the step generation function
-  codegen: { // Added codegen property
+  codegen: {
+    // Added codegen property
     signature: "search(nums: number[], target: number): number", // Added signature
   },
   id: "search-in-rotated-sorted-array",
-  tags: ["array", "binary-search"],
   difficulty: "medium",
   testcases, // Use the imported test cases
   metadata: {

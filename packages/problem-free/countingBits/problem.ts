@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -14,7 +14,6 @@ export const problem: Problem<CountBitsInput, ProblemState> = {
   func: generateSteps,
   testcases,
   id: "countingBits",
-  tags: ["dynamic programming", "bit manipulation"],
   difficulty: "easy",
   metadata: {
     variables,

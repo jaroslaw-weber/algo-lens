@@ -1,5 +1,5 @@
-import { TestCase } from "algo-lens-core/src/types";
- // Corrected import path
+import { TestCase } from "@algolens/core/src/types";
+// Corrected import path
 
 export const testcases = [
   {

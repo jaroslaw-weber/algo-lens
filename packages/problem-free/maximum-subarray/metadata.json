@@ -1,0 +1,12 @@
+{
+  "id": "maximum-subarray",
+  "title": "Maximum Subarray",
+  "emoji": "📊",
+  "difficulty": "medium",
+  "tags": [
+    "dynamic programming",
+    "array",
+    "divide and conquer"
+  ],
+  "plan": "free"
+}

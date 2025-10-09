@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps";
 import { LISInput } from "./types";
@@ -15,7 +15,6 @@ export const problem: Problem<LISInput, ProblemState> = {
   testcases,
   id: "longestIncreasingSubsequence",
   difficulty: "easy",
-  tags: ["dynamic programming", "array", "binary search"],
   metadata: {
     variables,
     groups,

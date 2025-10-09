@@ -1,5 +1,4 @@
-import { ListNode } from "algo-lens-core/src/types";
-
+import { ListNode } from "@algolens/core/src/types";
 
 export interface ReverseListInput {
   head: ListNode | null;

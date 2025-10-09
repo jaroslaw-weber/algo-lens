@@ -1,0 +1,10 @@
+{
+  "id": "contains-duplicate",
+  "title": "Contains Duplicate",
+  "emoji": "👯",
+  "difficulty": "medium",
+  "tags": [
+    "hashset"
+  ],
+  "plan": "free"
+}

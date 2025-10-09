@@ -1,7 +1,7 @@
-import { ProblemState } from "algo-lens-core/src/types";
+import { ProblemState } from "@algolens/core/src/types";
 
 import { MinimumWindowSubstringInput } from "./types";
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 
 export function generateSteps(p: MinimumWindowSubstringInput): ProblemState[] {
   // HIDE_START

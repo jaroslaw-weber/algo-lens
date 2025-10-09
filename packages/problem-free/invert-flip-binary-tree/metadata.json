@@ -1,0 +1,13 @@
+{
+  "id": "invert-flip-binary-tree",
+  "title": "Invert/Flip Binary Tree",
+  "emoji": "🌳",
+  "difficulty": "easy",
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "plan": "free"
+}

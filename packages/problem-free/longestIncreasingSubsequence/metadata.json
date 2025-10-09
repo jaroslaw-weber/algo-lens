@@ -1,0 +1,12 @@
+{
+  "id": "longestIncreasingSubsequence",
+  "title": "Longest Increasing Subsequence",
+  "emoji": "📈",
+  "difficulty": "easy",
+  "tags": [
+    "dynamic programming",
+    "array",
+    "binary search"
+  ],
+  "plan": "free"
+}

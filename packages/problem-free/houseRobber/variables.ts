@@ -1,17 +1,20 @@
-import { VariableMetadata } from "algo-lens-core/src/types";
- // Corrected import
+import { VariableMetadata } from "@algolens/core/src/types";
+// Corrected import
 
-export const variables: VariableMetadata[] = [ // Changed to array
+export const variables: VariableMetadata[] = [
+  // Changed to array
   {
     name: "nums", // Key became name
     label: "nums", // Label added (same as name)
-    description: "The input array representing the amount of money in each house.", // Added description
+    description:
+      "The input array representing the amount of money in each house.", // Added description
     emoji: "🏠", // Added emoji
   },
   {
     name: "dp",
     label: "dp",
-    description: "Dynamic programming array storing the maximum profit achievable up to each house.",
+    description:
+      "Dynamic programming array storing the maximum profit achievable up to each house.",
     emoji: "💰",
   },
   {
@@ -23,13 +26,15 @@ export const variables: VariableMetadata[] = [ // Changed to array
   {
     name: "skipCurrent",
     label: "skipCurrent",
-    description: "The maximum profit if the current house (i) is skipped (equivalent to dp[i-1]).",
+    description:
+      "The maximum profit if the current house (i) is skipped (equivalent to dp[i-1]).",
     emoji: "🚶", // Emoji representing skipping/walking past
   },
   {
     name: "twoHousesBefore",
     label: "twoHousesBefore",
-    description: "The maximum profit up to two houses before the current one (dp[i-2]).",
+    description:
+      "The maximum profit up to two houses before the current one (dp[i-2]).",
     emoji: "⏮️", // Emoji representing going back two steps
   },
   {
@@ -41,7 +46,8 @@ export const variables: VariableMetadata[] = [ // Changed to array
   {
     name: "includeCurrent",
     label: "includeCurrent",
-    description: "The maximum profit if the current house (i) is robbed (nums[i] + dp[i-2]).",
+    description:
+      "The maximum profit if the current house (i) is robbed (nums[i] + dp[i-2]).",
     emoji: "➕", // Emoji representing adding/including
   },
   {

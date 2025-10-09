@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
- // Assuming ProblemState is the correct state type
+import { Problem, ProblemState } from "@algolens/core/src/types";
+// Assuming ProblemState is the correct state type
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { MinPathSumInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
@@ -17,7 +17,6 @@ export const problem: Problem<MinPathSumInput, ProblemState> = {
   difficulty: "medium",
   func: generateSteps, // Use the renamed function
   id: "minimumPathSum",
-  tags: ["2d dynamic programming"],
   metadata: {
     variables,
     groups,

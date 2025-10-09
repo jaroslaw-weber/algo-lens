@@ -6,13 +6,13 @@ import {
   HashsetVariable,
   ListNode,
   ListVariable,
-} from "algo-lens-core/src/types";
+} from "@algolens/core/src/types";
 import { cloneDeep } from "lodash";
 import { ProblemStateCache } from "../../cache/ProblemStateCache";
-import { getPocketbase } from "../../db/pocketbase";
+import { getDefaultServer } from "@algolens/database";
 import { getProblemById } from "../core/utils";
-import { LinkedListSerializer } from "algo-lens-core/src/LinkedListSerializer";
-import { problemAccessCheck } from "backend-premium/src/access";
+import { LinkedListSerializer } from "@algolens/core/src/LinkedListSerializer";
+import { problemAccessCheck } from "@algolens/backend-premium/src/access";
 
 const stateCache = new ProblemStateCache();
 
@@ -26,16 +26,17 @@ export async function getAllProblemsService(p: {
   console.log("info", { userId, filter, tag });
   let allProblems = await coreGetAllProblems();
   if (userId) {
-    const pb = await getPocketbase();
+    const dbServer = await getDefaultServer();
     const pbFilter = `user.id='${userId}'`;
     console.log("pb filter", pbFilter);
-    const bookmarks = await pb.collection("bookmarks").getList(0, 200, {
-      // Fetching up to 50 bookmarks, adjust as needed
+    const bookmarks = await dbServer.getRecords("bookmarks", {
+      // Fetching up to 200 bookmarks, adjust as needed
+      page: 1,
+      perPage: 100,
       filter: pbFilter,
-      requestKey: null,
     });
     console.log("bookmarks", bookmarks);
-    const bookmarkIds = bookmarks.items.map((x) => x.problem);
+    const bookmarkIds = bookmarks.items.map((x: any) => x.problem);
 
     let bookmarkSet = new Set<string>(bookmarkIds);
     console.log("bm set", bookmarkSet);
@@ -54,7 +55,8 @@ export async function getAllProblemsService(p: {
   console.log("all problems", allProblems.length, tag);
   if (tag) {
     console.log("tags", typeof tag);
-    allProblems = allProblems.filter((x) => x.tags?.includes(tag));
+
+    allProblems = allProblems.filter((x) => x?.metadataV2?.tags?.includes(tag));
   }
   console.log("all problems", allProblems.length, plan);
   if (plan) {
@@ -86,7 +88,7 @@ export async function getProblemStateService(
     throw new Error(`Problem not found: ${problemId}`);
   }
 
-  problemAccessCheck({ problem, user: subscription });
+  problemAccessCheck({ problem, subscription });
   // Assuming stateCache.get can handle test case index
   return stateCache.get(problem, testcaseIndex, step);
 }
@@ -105,7 +107,7 @@ export async function getAllProblemStatesService(
     throw new Error(`Problem not found: ${problemId}`);
   }
 
-  problemAccessCheck({ problem, user: subscription });
+  problemAccessCheck({ problem, subscription });
   return stateCache.getAll(problem, testcaseIndex, from, to);
 }
 

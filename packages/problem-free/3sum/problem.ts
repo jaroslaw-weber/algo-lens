@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -13,7 +13,6 @@ export const problem: Problem<ThreeSumInput, ProblemState> = {
   testcases: testcases,
   difficulty: "medium",
   id: "3sum",
-  tags: ["array", "hash set", "two pointers"],
   metadata: {
     variables,
     groups,

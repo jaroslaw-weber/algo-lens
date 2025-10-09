@@ -1,6 +1,18 @@
 export interface ProblemMetadata {
   variables: VariableMetadata[];
   groups?: GroupMetadata[];
+  solutionCode?: string;
+  visualizerCode?: string;
+}
+
+/** metadata in metadata.json file */
+export interface MetadataV2 {
+  id: string; //"maximum-subarray";
+  title: string; // "Maximum Subarray";
+  emoji: string; // "📊";
+  difficulty: Difficulty; //"medium";
+  tags: string[]; //["dynamic programming", "array", "divide and conquer", "blind75"];
+  plan: string; // "free";
 }
 
 export interface TestCase<Input, State> {
@@ -33,7 +45,11 @@ export interface Problem<Input, State> {
   /** emoji to display with the problem title. */
   emoji: string;
 
-  tags: string[];
+  /**
+   * dont specify this, it will be copied from the metadata.json.
+   * separating the basic metadata so can show list faster without loading all problems
+   */
+  metadataV2?: MetadataV2;
 
   difficulty: Difficulty;
 
@@ -132,15 +148,15 @@ export interface Pointer2D {
   dir?: string; //"left" | "right" | "up" | "bottom"
 }
 
-/** Extends the Variable interface specifically for arrays. */
+/** Variable for displaying arrays with optional pointers to highlight specific elements. */
 export interface ArrayVariable extends Variable {
   /** The type of variable, explicitly an array in this context. */
   type: "array";
 
-  /** The array containing the values. */
+  /** The array containing the values to display. */
   value: any[];
 
-  /** Optional array of pointers for highlighting specific elements. */
+  /** Optional array of pointers for highlighting specific elements, similar to how hashset highlights work. */
   pointers?: (Pointer | Pointer2D)[];
 }
 
@@ -218,19 +234,27 @@ export interface LabeledIntervalVariable extends Variable {
   labels?: string[];
 }
 
+/** Variable for displaying a hash set with optional highlighting of specific elements. */
 export interface HashsetVariable extends Variable {
   type: "hashset";
   label: string;
+  /** The set containing the values to display. */
   value: Set<any> | any[];
+  /** Optional highlighting configuration for a specific element in the set. */
   highlight: HashHighlight;
 }
 
+/** Variable for displaying a hash map with optional highlighting of key-value pairs. */
 export interface HashmapVariable extends Variable {
   type: "hashmap";
   label: string;
+  /** The map containing key-value pairs to display. */
   value: Map<any, any> | Record<string, any>;
+  /** Optional custom label for the key column. */
   keyLabel?: string;
+  /** Optional custom label for the value column. */
   valueLabel?: string;
+  /** Optional array of highlighting configurations for specific entries. */
   highlights?: HashHighlight[];
 }
 
@@ -254,10 +278,19 @@ export interface ListVariable extends Variable {
   highlight: NodeHighlight[]; // Array of nodes to be highlighted with specific colors
 }
 
+/**
+ * Configuration for highlighting elements in hash-based data structures.
+ * For HashSets: Use 'key' to specify which element to highlight (since sets only have values).
+ * For HashMaps: Use 'key' to highlight by map key, or 'value' to highlight by map value.
+ */
 export type HashHighlight = {
+  /** The key to highlight. For sets, this is the element value itself. */
   key?: string | number;
+  /** The value to highlight (only used for maps, not sets). */
   value?: string | number;
+  /** Color theme for the highlight. */
   color?: ThemeColor;
+  /** Optional text label to display with the highlighted element. */
   label?: string;
 };
 

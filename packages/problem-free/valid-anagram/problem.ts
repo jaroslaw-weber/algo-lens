@@ -1,4 +1,4 @@
-import { Problem } from "algo-lens-core/src/types";
+import { Problem } from "@algolens/core/src/types";
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
@@ -10,7 +10,6 @@ export const problem: Problem<ValidAnagramInput, ValidAnagramOutput> = {
   title: "Valid Anagram",
   emoji: "🔤",
   difficulty: "easy",
-  tags: ["String", "Hash Map", "Sorting"],
   func: generateSteps,
   testcases,
   metadata: {

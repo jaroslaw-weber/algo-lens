@@ -1,5 +1,4 @@
-import { VariableMetadata } from "algo-lens-core/src/types";
-
+import { VariableMetadata } from "@algolens/core/src/types";
 
 export const variables: VariableMetadata[] = [
   {
@@ -14,7 +13,8 @@ export const variables: VariableMetadata[] = [
   },
   {
     name: "dp",
-    description: "The 2D array storing the number of unique paths to each cell.",
+    description:
+      "The 2D array storing the number of unique paths to each cell.",
     emoji: "🔢",
   },
   {
@@ -29,7 +29,8 @@ export const variables: VariableMetadata[] = [
   },
   {
     name: "result",
-    description: "The final number of unique paths from top-left to bottom-right.",
+    description:
+      "The final number of unique paths from top-left to bottom-right.",
     emoji: "✅",
   },
 ];

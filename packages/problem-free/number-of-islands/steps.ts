@@ -1,8 +1,8 @@
 // Imports specific utility functions and type definitions from the relative paths
 import { cloneDeep } from "lodash";
-import { ProblemState, Variable } from "algo-lens-core/src/types";
- // Removed Problem
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
+import { ProblemState, Variable } from "@algolens/core/src/types";
+// Removed Problem
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2"; // Import StepLoggerV2
 import { NumIslandsInput } from "./types"; // Import NumIslandsInput
 
 // Removed duplicate NumIslandsInput interface definition

@@ -1,5 +1,5 @@
 {
-  "name": "landing-page",
+  "name": "@algolens/landing-page",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,6 +10,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.0.0" 
+    "astro": "^4.0.0"
   }
 }

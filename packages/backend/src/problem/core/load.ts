@@ -1,11 +1,16 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { Problem } from "algo-lens-core/src/types";
+import { Problem } from "@algolens/core/src/types";
 
-import { generateCodeFromSteps } from "algo-lens-core/src/codegen/generate";
+import { generateCodeFromSteps } from "@algolens/core/src/codegen/generate";
 import { problemPaths } from "./ProblemPaths";
+import { blind75Slugs } from "./blind75";
 
 const problemCache: { [id: string]: Problem<any, any> } = {};
+
+function normalizeSlug(slug: string): string {
+  return slug.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+}
 
 export async function loadProblemWithId(
   id: string
@@ -27,12 +32,37 @@ export async function loadProblemWithId(
       return null; // Problem file not found
     }
 
+    // Load metadata.json first
+    let metadataV2: any = null;
+    try {
+      const metadataPath = path.join(directory.path, "metadata.json");
+      if (await fs.exists(metadataPath)) {
+        const metadataContent = await fs.readFile(metadataPath, "utf-8");
+        const metadata = JSON.parse(metadataContent);
+        metadataV2 = metadata;
+      }
+    } catch (e) {
+      console.warn(`Failed to load metadata.json for ${id}:`, e);
+    }
+
     // Dynamically import the problem module
     const mod = await import(problemFilePath);
     const problem: Problem<any, any> = mod.problem;
 
     if (!problem) {
       return null;
+    }
+
+    // Assign metadataV2 from metadata.json
+    if (metadataV2) {
+      // Add blind75 tag if problem is in Blind75 list
+      const normalizedId = normalizeSlug(id);
+      if (blind75Slugs.has(normalizedId) || blind75Slugs.has(metadataV2.id)) {
+        if (!metadataV2.tags.includes("blind75")) {
+          metadataV2.tags.push("blind75");
+        }
+      }
+      problem.metadataV2 = metadataV2;
     }
 
     problem.code = await getProblemCode(problem, directory.path);

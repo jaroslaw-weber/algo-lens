@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps";
 import { CourseScheduleInput } from "./types";
@@ -14,12 +14,13 @@ export const problem: Problem<CourseScheduleInput, ProblemState> = {
   emoji: "📚",
   difficulty: "medium",
   func: (i) => generateSteps(...i),
-  codegen: { // Added codegen property
-    signature: "canFinish(numCourses: number, prerequisites: number[][]): boolean", // Added signature
+  codegen: {
+    // Added codegen property
+    signature:
+      "canFinish(numCourses: number, prerequisites: number[][]): boolean", // Added signature
   },
   testcases,
   id: "course-schedule",
-  tags: ["graph", "topological sort", "dfs", "bfs"],
   metadata: {
     variables,
     groups,

@@ -1,4 +1,4 @@
-import { TestCase } from "algo-lens-core/src/types";
+import { TestCase } from "@algolens/core/src/types";
 
 import { Input, Output, TreeNode } from "./types";
 

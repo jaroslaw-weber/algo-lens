@@ -1,5 +1,5 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
- // Added ProblemMetadata
+import { Problem, ProblemState } from "@algolens/core/src/types";
+// Added ProblemMetadata
 import { generateSteps } from "./steps";
 import { EraseOverlapIntervalsInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
@@ -13,7 +13,6 @@ export const problem: Problem<EraseOverlapIntervalsInput, ProblemState> = {
   emoji: "✂️",
   func: generateSteps,
   id: "non-overlapping-intervals",
-  tags: ["interval"],
   metadata: {
     variables,
     groups,

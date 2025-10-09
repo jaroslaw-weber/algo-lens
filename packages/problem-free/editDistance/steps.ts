@@ -1,6 +1,6 @@
-import { ProblemState } from "algo-lens-core/src/types";
+import { ProblemState } from "@algolens/core/src/types";
 
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2"; // Import StepLoggerV2
 
 export function generateSteps(s1: string, s2: string): ProblemState[] {
   // Return type will be inferred or set by StepLoggerV2's output type
@@ -12,7 +12,7 @@ export function generateSteps(s1: string, s2: string): ProblemState[] {
   );
 
   // Log initial state (optional, could log inputs here)
-  l.string({ s1}, []);
+  l.string({ s1 }, []);
   l.string({ s2 }, []);
   l.groupOptions.set("size", { min: 0, max: Math.max(m, n) });
   l.group("size", { m, n });
@@ -39,12 +39,8 @@ export function generateSteps(s1: string, s2: string): ProblemState[] {
   // Compute the DP values
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      l.string({ s1 }, [
-        { value: i - 1, label: "s1 char", color: "primary" },
-      ]); // Highlight characters being compared
-      l.string({ s2 }, [
-        { value: j - 1, label: "s2 char", color: "primary" },
-      ]);
+      l.string({ s1 }, [{ value: i - 1, label: "s1 char", color: "primary" }]); // Highlight characters being compared
+      l.string({ s2 }, [{ value: j - 1, label: "s2 char", color: "primary" }]);
 
       let op = 0; // Operation cost
       l.breakpoint(3); // Change breakpoint to 3

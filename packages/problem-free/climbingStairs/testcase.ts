@@ -1,5 +1,4 @@
-import { TestCase } from "algo-lens-core/src/types";
-
+import { TestCase } from "@algolens/core/src/types";
 
 // Input type is number (n stairs), output type is number (number of ways)
 export const testcases = [

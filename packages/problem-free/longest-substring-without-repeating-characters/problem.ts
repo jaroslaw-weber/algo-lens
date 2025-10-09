@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps";
 import { LongestSubstringInput } from "./types";
@@ -14,7 +14,6 @@ export const problem: Problem<LongestSubstringInput, ProblemState> = {
   func: generateSteps,
   testcases: testcases,
   emoji: "📏",
-  tags: ["Sliding Window", "Hash Set", "String"],
   difficulty: "medium",
   metadata: {
     variables: variables,

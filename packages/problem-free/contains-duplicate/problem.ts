@@ -1,5 +1,5 @@
 // Imports specific utility functions and type definitions
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { ContainsDuplicateInput } from "./types"; // New import
 import { generateSteps } from "./steps";
@@ -16,7 +16,6 @@ export const problem: Problem<ContainsDuplicateInput, ProblemState> = {
   func: generateSteps, // Use local function
   testcases,
   id: "contains-duplicate", // Keep original ID for now, might need adjustment later
-  tags: ["hashset"],
   difficulty: "medium",
   metadata: {
     groups: [], // Keep groups as empty for now, unless defined elsewhere

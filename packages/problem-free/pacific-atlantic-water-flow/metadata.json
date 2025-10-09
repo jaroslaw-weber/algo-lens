@@ -1,0 +1,11 @@
+{
+  "id": "pacific-atlantic-water-flow",
+  "title": "Pacific Atlantic Water Flow",
+  "emoji": "🌊",
+  "difficulty": "medium",
+  "tags": [
+    "grid",
+    "dfs"
+  ],
+  "plan": "free"
+}

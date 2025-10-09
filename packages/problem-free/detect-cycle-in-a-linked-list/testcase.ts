@@ -1,8 +1,7 @@
-import { ProblemState, TestCase } from "algo-lens-core/src/types";
+import { ProblemState, TestCase } from "@algolens/core/src/types";
 
 import { DetectCycleInput } from "./types";
-import { ListNode } from "algo-lens-core/src/types";
-
+import { ListNode } from "@algolens/core/src/types";
 
 // Helper function to create a linked list with a cycle
 function createLinkedList(arr: number[], pos: number): ListNode | null {

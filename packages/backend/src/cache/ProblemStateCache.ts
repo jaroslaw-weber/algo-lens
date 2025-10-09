@@ -1,4 +1,4 @@
-import { ProblemState, Problem } from "algo-lens-core/src/types";
+import { ProblemState, Problem } from "@algolens/core/src/types";
 
 import { cloneDeep } from "lodash";
 

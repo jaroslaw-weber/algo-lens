@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 import { generateSteps } from "./steps";
 import { groups } from "./groups";
 import { variables } from "./variables";
@@ -24,9 +24,9 @@ export const problem: Problem<SumOfTwoIntegersInput, ProblemState[]> = {
   // The func now calls generateSteps with the input parameters a and b.
   func: (p: SumOfTwoIntegersInput) => generateSteps(p.a, p.b),
   id: "sum-of-two-integers",
-  tags: ["bit manipulation"],
   difficulty: "easy",
-  codegen: { // Renamed from codeGenConfig
+  codegen: {
+    // Renamed from codeGenConfig
     signature: "getSum(a: number, b: number): number", // Renamed from targetFunctionSignature
   },
   metadata: {

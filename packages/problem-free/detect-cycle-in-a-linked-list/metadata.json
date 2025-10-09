@@ -1,0 +1,12 @@
+{
+  "id": "detect-cycle-in-a-linked-list",
+  "title": "Detect Cycle in a Linked List",
+  "emoji": "🔗",
+  "difficulty": "easy",
+  "tags": [
+    "Linked List",
+    "Two Pointers",
+    "Cycle Detection"
+  ],
+  "plan": "free"
+}

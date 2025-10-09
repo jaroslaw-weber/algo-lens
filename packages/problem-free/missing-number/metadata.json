@@ -1,0 +1,11 @@
+{
+  "id": "missing-number",
+  "title": "Missing Number",
+  "emoji": "❓",
+  "difficulty": "easy",
+  "tags": [
+    "math",
+    "array"
+  ],
+  "plan": "free"
+}

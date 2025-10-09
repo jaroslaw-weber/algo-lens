@@ -1,0 +1,12 @@
+{
+  "id": "3sum",
+  "title": "Three Sum",
+  "emoji": "🔢",
+  "difficulty": "medium",
+  "tags": [
+    "array",
+    "hash set",
+    "two pointers"
+  ],
+  "plan": "free"
+}

@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { NumIslandsInput } from "./types"; // Import input type from types.ts
@@ -15,7 +15,6 @@ export const problem: Problem<NumIslandsInput, ProblemState> = {
   func: generateSteps, // Use the renamed function
   id: "number-of-islands",
   difficulty: "medium",
-  tags: ["graph"],
   metadata: { variables, groups },
   codegen: {
     signature: "numIslands(grid: string[][]): number",

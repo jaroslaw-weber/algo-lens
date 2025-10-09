@@ -1,6 +1,5 @@
 import React from "react";
-import type { BooleanGroupVariable } from "algo-lens-core/src/types";
-
+import type { BooleanGroupVariable } from "@algolens/core/src/types";
 
 interface DisplayBooleanGroupProps {
   data: BooleanGroupVariable;
@@ -17,8 +16,8 @@ const DisplayBooleanGroup: React.FC<DisplayBooleanGroupProps> = ({ data }) => {
         className="checkbox checkbox-primary"
         style={{
           opacity: 1, // Ensures the checkbox looks the same as enabled
-          cursor: 'default', // Changes the cursor to default to prevent interaction
-          pointerEvents: 'none', // Prevents clicking on the checkbox
+          cursor: "default", // Changes the cursor to default to prevent interaction
+          pointerEvents: "none", // Prevents clicking on the checkbox
         }}
       />
     </div>

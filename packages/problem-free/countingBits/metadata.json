@@ -1,0 +1,11 @@
+{
+  "id": "countingBits",
+  "title": "Counting Bits",
+  "emoji": "🧮",
+  "difficulty": "easy",
+  "tags": [
+    "dynamic programming",
+    "bit manipulation"
+  ],
+  "plan": "free"
+}

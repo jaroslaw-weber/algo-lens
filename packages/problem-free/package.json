@@ -1,5 +1,5 @@
 {
-  "name": "algolens-problem-free",
+  "name": "@algolens/problem-free",
   "scripts": {
     "dev": "PORT=4005 bun run --hot src/index.ts",
     "test:watch": "bun test --watch",

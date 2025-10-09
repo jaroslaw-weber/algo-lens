@@ -1,6 +1,6 @@
-import { ProblemState } from "algo-lens-core/src/types";
+import { ProblemState } from "@algolens/core/src/types";
 
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 // import { asBinary } from "../../core/utils"; // Not needed if StepLoggerV2 handles {varName: value}
 
 /**

@@ -1,0 +1,11 @@
+{
+  "id": "container-with-most-water",
+  "title": "Container With Most Water",
+  "emoji": "🌊",
+  "difficulty": "easy",
+  "tags": [
+    "array",
+    "two pointers"
+  ],
+  "plan": "free"
+}

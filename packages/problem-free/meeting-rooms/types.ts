@@ -1,5 +1,4 @@
-import { ProblemState } from "algo-lens-core/src/types";
-
+import { ProblemState } from "@algolens/core/src/types";
 
 export type Interval = [number, number];
 
