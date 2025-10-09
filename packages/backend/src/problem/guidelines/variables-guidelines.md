@@ -24,7 +24,7 @@ The `variables.ts` file should export an array of `VariableMetadata` objects. Ea
 ## 3. Example Template
 
 ```ts
-import { VariableMetadata } from "algo-lens-core/src/types";
+import { VariableMetadata } from "@algolens/core/src/types";
 
 
 export const variables: VariableMetadata[] = [

@@ -1,0 +1,12 @@
+{
+  "id": "longest-substring-without-repeating-characters",
+  "title": "Longest Substring Without Repeating Characters",
+  "emoji": "📏",
+  "difficulty": "medium",
+  "tags": [
+    "Sliding Window",
+    "Hash Set",
+    "String"
+  ],
+  "plan": "free"
+}

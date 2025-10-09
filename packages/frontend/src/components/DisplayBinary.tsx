@@ -1,6 +1,5 @@
 import React from "react";
-import type { BinaryVariable, Pointer } from "algo-lens-core/src/types";
-
+import type { BinaryVariable, Pointer } from "@algolens/core/src/types";
 
 // Define a color scheme for pointers
 const colors = ["bg-primary", "bg-secondary", "bg-info"];
@@ -22,11 +21,11 @@ const DisplayBinary = ({ data }: { data: BinaryVariable }) => {
       );
 
       if (pointer) {
-        const color = pointer.color
-        if(color){
-          return `bg-${color}`
+        const color = pointer.color;
+        if (color) {
+          return `bg-${color}`;
         }
-        return `bg-primary`
+        return `bg-primary`;
       }
       return "";
     };

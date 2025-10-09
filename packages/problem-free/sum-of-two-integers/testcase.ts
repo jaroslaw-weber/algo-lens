@@ -1,5 +1,4 @@
-import { TestCase } from "algo-lens-core/src/types";
-
+import { TestCase } from "@algolens/core/src/types";
 
 // Define the input interface used in problem.ts
 interface SumOfTwoIntegersInput {

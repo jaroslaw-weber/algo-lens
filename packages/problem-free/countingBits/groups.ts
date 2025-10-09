@@ -1,5 +1,4 @@
-import { GroupMetadata } from "algo-lens-core/src/types";
-
+import { GroupMetadata } from "@algolens/core/src/types";
 
 export const groups: GroupMetadata[] = [
   {
@@ -15,9 +14,10 @@ export const groups: GroupMetadata[] = [
     emoji: "🧮",
   },
   {
-      name: "binaryRepresentation",
-      label: "Binary Representation",
-      description: "Shows the binary representation of the number being processed.",
-      emoji: "💻",
-  }
+    name: "binaryRepresentation",
+    label: "Binary Representation",
+    description:
+      "Shows the binary representation of the number being processed.",
+    emoji: "💻",
+  },
 ];

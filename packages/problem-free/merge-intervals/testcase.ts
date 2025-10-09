@@ -1,4 +1,4 @@
-import { ProblemState, TestCase } from "algo-lens-core/src/types";
+import { ProblemState, TestCase } from "@algolens/core/src/types";
 
 import { MergeIntervalsInput } from "./types";
 

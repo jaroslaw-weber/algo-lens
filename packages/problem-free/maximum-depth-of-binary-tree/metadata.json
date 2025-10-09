@@ -1,0 +1,13 @@
+{
+  "id": "maximum-depth-of-binary-tree",
+  "title": "Maximum Depth of Binary Tree",
+  "emoji": "🌳",
+  "difficulty": "easy",
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "plan": "free"
+}

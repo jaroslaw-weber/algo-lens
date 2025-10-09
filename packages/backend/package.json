@@ -1,20 +1,24 @@
 {
-  "name": "algo-lens-backend",
+  "name": "@algolens/backend",
   "type": "commonjs",
   "scripts": {
     "dev": "PORT=4005 bun run --hot src/index.ts",
     "test:watch": "bun test --watch",
     "test": "bun test",
-    "build:check": "tsc --noEmit",
-    "scrape:lc:testcases": "bun run src/scripts/scrapeLeetcodeTestcases.ts"
+    "build:check": "tsc --noEmit"
   },
   "dependencies": {
+    "@algolens/backend-premium": "workspace:*",
+    "@algolens/database": "workspace:*",
     "axios": "^1.10.0",
     "cheerio": "^1.1.0",
     "dotenv": "^16.5.0",
-    "hono": "^4.7.6",
+    "hono": "4.7.6",
     "lodash": "^4.17.21",
     "pocketbase": "^0.26.0",
+    "puppeteer": "^23.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "zod": "^3.24.4"
   },
   "devDependencies": {

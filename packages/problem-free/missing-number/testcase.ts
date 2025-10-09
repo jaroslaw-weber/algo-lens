@@ -1,4 +1,4 @@
-import { TestCase, ProblemState } from "algo-lens-core/src/types";
+import { TestCase, ProblemState } from "@algolens/core/src/types";
 
 import { MissingNumberInput } from "./types";
 

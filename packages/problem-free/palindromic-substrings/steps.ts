@@ -1,6 +1,6 @@
-import { ProblemState, Pointer } from "algo-lens-core/src/types";
+import { ProblemState, Pointer } from "@algolens/core/src/types";
 
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 import _ = require("lodash");
 
 export function generateSteps(s: string): ProblemState[] {

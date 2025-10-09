@@ -1,5 +1,5 @@
-import { VariableMetadata } from "algo-lens-core/src/types";
- // Updated import
+import { VariableMetadata } from "@algolens/core/src/types";
+// Updated import
 
 // Define the core variables used in the Course Schedule algorithm
 export const variables: VariableMetadata[] = [
@@ -10,28 +10,32 @@ export const variables: VariableMetadata[] = [
     description: "The total number of courses.",
     emoji: "📚",
   },
-{
+  {
     name: "prerequisitesMap",
     label: "Prerequisites Map",
-    description: "A list of prerequisite pairs. Each pair [a, b] indicates that course 'a' must be taken before course 'b'.",
+    description:
+      "A list of prerequisite pairs. Each pair [a, b] indicates that course 'a' must be taken before course 'b'.",
     emoji: "🗺️",
   },
   {
     name: "graphMap",
     label: "Graph Map",
-    description: "Hashmap representation of the courses. The keys are the courses, and the values are arrays of courses that have the key course as a prerequisite.",
+    description:
+      "Hashmap representation of the courses. The keys are the courses, and the values are arrays of courses that have the key course as a prerequisite.",
     emoji: "📊",
   },
   {
     name: "inDegree",
     label: "In-Degree",
-    description: "Array storing the in-degree of each course. The in-degree of a course is the number of prerequisites it has.",
+    description:
+      "Array storing the in-degree of each course. The in-degree of a course is the number of prerequisites it has.",
     emoji: "🔢",
   },
   {
     name: "queue",
     label: "Queue",
-    description: "A queue containing courses that have an in-degree of 0, meaning they have no prerequisites and can be taken.",
+    description:
+      "A queue containing courses that have an in-degree of 0, meaning they have no prerequisites and can be taken.",
     emoji: "➡️",
   },
   {

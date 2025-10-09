@@ -1,6 +1,6 @@
 import React from "react";
 import { useAtom } from "jotai";
-import type { TestCase } from "algo-lens-core/src/types";
+import type { TestCase } from "@algolens/core/src/types";
 
 import type { PrimitiveAtom } from "jotai";
 

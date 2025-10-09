@@ -1,5 +1,4 @@
-import { GroupMetadata } from "algo-lens-core/src/types";
-
+import { GroupMetadata } from "@algolens/core/src/types";
 
 export const groups: GroupMetadata[] = [
   {
@@ -25,5 +24,5 @@ export const groups: GroupMetadata[] = [
     label: "Comparison",
     description: "Kadane's algorithm variables.",
     emoji: "🔍",
-  }
+  },
 ];

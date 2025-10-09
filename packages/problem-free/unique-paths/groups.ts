@@ -1,4 +1,4 @@
-import { GroupMetadata } from "algo-lens-core/src/types";
+import { GroupMetadata } from "@algolens/core/src/types";
 
 export const groups: GroupMetadata[] = [
   {
@@ -10,7 +10,8 @@ export const groups: GroupMetadata[] = [
   {
     name: "dpTable",
     label: "DP Table",
-    description: "The dynamic programming table storing intermediate path counts.",
+    description:
+      "The dynamic programming table storing intermediate path counts.",
     emoji: "🔢",
   },
   {

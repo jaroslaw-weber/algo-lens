@@ -1,5 +1,4 @@
-import { VariableMetadata } from "algo-lens-core/src/types";
-
+import { VariableMetadata } from "@algolens/core/src/types";
 
 export const variables: VariableMetadata[] = [
   {
@@ -16,6 +15,6 @@ export const variables: VariableMetadata[] = [
   {
     name: "seen",
     description: "Hash set to store numbers encountered so far.",
-    emoji: "🔍"
-  }
+    emoji: "🔍",
+  },
 ];

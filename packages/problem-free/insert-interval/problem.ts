@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -12,13 +12,14 @@ export const problem: Problem<InsertIntervalInput, ProblemState> = {
   title: title,
   emoji: "➕",
   func: (i) => generateSteps(...i), // Use generateSteps from steps.ts
-  codegen: { // Added codegen property
-    signature: "insertInterval(intervals: number[][], newInterval: number[]): number[][]", // Added signature
+  codegen: {
+    // Added codegen property
+    signature:
+      "insertInterval(intervals: number[][], newInterval: number[]): number[][]", // Added signature
   },
   testcases,
   difficulty: "medium",
   id: "insert-interval",
-  tags: ["array", "intervals"], // Updated tags
   metadata: {
     variables,
     groups: groups,

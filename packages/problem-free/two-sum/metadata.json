@@ -1,0 +1,11 @@
+{
+  "id": "two-sum",
+  "title": "Two Sum",
+  "emoji": "🎯",
+  "difficulty": "easy",
+  "tags": [
+    "array",
+    "hash set"
+  ],
+  "plan": "free"
+}

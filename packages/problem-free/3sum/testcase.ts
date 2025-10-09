@@ -1,4 +1,8 @@
-import { ArrayVariable, ProblemState, TestCase } from "algo-lens-core/src/types";
+import {
+  ArrayVariable,
+  ProblemState,
+  TestCase,
+} from "@algolens/core/src/types";
 
 import { ThreeSumInput } from "./types";
 

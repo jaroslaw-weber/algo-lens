@@ -53,3 +53,9 @@ export async function removeBookmark(problemId: string): Promise<void> {
     throw error;
   }
 }
+
+export function getCurrentUserEmail(): string | null {
+  return pb.authStore.isValid && pb.authStore.model
+    ? pb.authStore.model.email
+    : null;
+}

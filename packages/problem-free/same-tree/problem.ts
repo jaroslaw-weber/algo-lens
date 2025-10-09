@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { sameTree } from "./steps"; // Assuming steps.ts will export sameTree function
 import { SameTreeInput } from "./types"; // Assuming types.ts will export SameTreeInput
@@ -15,7 +15,6 @@ export const problem: Problem<SameTreeInput, ProblemState> = {
   testcases,
   id: "same-tree",
   difficulty: "easy",
-  tags: ["tree"],
   metadata: {
     groups,
     variables,

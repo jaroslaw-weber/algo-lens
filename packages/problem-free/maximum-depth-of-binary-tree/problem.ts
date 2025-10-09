@@ -1,4 +1,4 @@
-import { Problem } from "algo-lens-core/src/types";
+import { Problem } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
@@ -11,7 +11,6 @@ export const problem: Problem<Input, Output> = {
   title: "Maximum Depth of Binary Tree",
   emoji: "🌳",
   difficulty: "easy",
-  tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"],
   func: generateSteps,
   testcases,
   metadata: {

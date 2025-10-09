@@ -1,7 +1,7 @@
-import { ProblemState } from "algo-lens-core/src/types";
+import { ProblemState } from "@algolens/core/src/types";
 
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2"; // Import StepLoggerV2
-import { from2dArrayToMap } from "algo-lens-core/src/utils"; // Keep necessary import
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2"; // Import StepLoggerV2
+import { from2dArrayToMap } from "@algolens/core/src/utils"; // Keep necessary import
 
 // The core algorithm logic
 export function generateSteps(

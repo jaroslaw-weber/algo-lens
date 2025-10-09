@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { MergeIntervalsInput } from "./types"; // Import input type from types.ts
 import { variables } from "./variables";
@@ -13,10 +13,10 @@ export const problem: Problem<MergeIntervalsInput, ProblemState> = {
   difficulty: "medium",
   func: generateSteps, // Use the imported merge function
   id: "merge-intervals",
-  codegen: { // Added codegen property
+  codegen: {
+    // Added codegen property
     signature: "mergeIntervals(intervals: number[][]): number[][]", // Added signature
   },
-  tags: ["interval"],
   metadata: {
     variables,
     groups,

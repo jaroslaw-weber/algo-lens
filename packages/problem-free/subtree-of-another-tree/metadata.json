@@ -1,0 +1,12 @@
+{
+  "id": "subtree-of-another-tree",
+  "title": "Subtree of Another Tree",
+  "emoji": "🌲",
+  "difficulty": "easy",
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ],
+  "plan": "free"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "unique-paths",
+  "title": "Unique Paths",
+  "emoji": "🤖",
+  "difficulty": "medium",
+  "tags": [
+    "2d dynamic programming"
+  ],
+  "plan": "free"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "course-schedule",
+  "title": "Course Schedule",
+  "emoji": "📚",
+  "difficulty": "medium",
+  "tags": [
+    "graph",
+    "topological sort",
+    "dfs",
+    "bfs"
+  ],
+  "plan": "free"
+}

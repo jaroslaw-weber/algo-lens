@@ -1,0 +1,13 @@
+{
+  "id": "group-anagrams",
+  "title": "Group Anagrams",
+  "emoji": "🔤",
+  "difficulty": "medium",
+  "tags": [
+    "Array",
+    "Hash Map",
+    "String",
+    "Sorting"
+  ],
+  "plan": "free"
+}

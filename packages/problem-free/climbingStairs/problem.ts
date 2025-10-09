@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -14,7 +14,6 @@ export const problem: Problem<ClimbingStairsInput, ProblemState> = {
   func: generateSteps, // Use generateSteps from steps.ts
   testcases,
   id: "climbingStairs",
-  tags: ["dynamic programming"],
   difficulty: "easy",
   metadata: {
     variables,

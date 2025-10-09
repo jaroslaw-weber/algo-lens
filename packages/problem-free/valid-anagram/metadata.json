@@ -1,0 +1,12 @@
+{
+  "id": "valid-anagram",
+  "title": "Valid Anagram",
+  "emoji": "🔤",
+  "difficulty": "easy",
+  "tags": [
+    "String",
+    "Hash Map",
+    "Sorting"
+  ],
+  "plan": "free"
+}

@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -13,7 +13,6 @@ export const problem: Problem<PalindromicSubstringsInput, ProblemState> = {
   testcases: testcases,
   difficulty: "medium",
   id: "palindromic-substrings",
-  tags: ["string", "dynamic programming"],
   metadata: {
     variables,
     groups,

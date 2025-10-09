@@ -1,5 +1,4 @@
-import { Variable, VariableMetadata } from "algo-lens-core/src/types";
-
+import { Variable, VariableMetadata } from "@algolens/core/src/types";
 
 const pTree = {
   label: "pTree",

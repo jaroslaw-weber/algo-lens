@@ -1,5 +1,4 @@
-import { VariableMetadata } from "algo-lens-core/src/types";
-
+import { VariableMetadata } from "@algolens/core/src/types";
 
 export const variables: VariableMetadata[] = [
   {
@@ -29,7 +28,8 @@ export const variables: VariableMetadata[] = [
   },
   {
     name: "result",
-    description: "Array containing the indices of the two numbers that sum to the target",
+    description:
+      "Array containing the indices of the two numbers that sum to the target",
     emoji: "✅",
   },
   // Note: complementIndex isn't explicitly logged as a separate variable in steps.ts,
@@ -37,8 +37,8 @@ export const variables: VariableMetadata[] = [
   // though it might not appear directly in the visualization based on current steps.ts.
   // Let's add it for potential future use or clarification.
   {
-      name: "complementIndex",
-      description: "Index of the complement found in the 'seen' map",
-      emoji: "🔑",
+    name: "complementIndex",
+    description: "Index of the complement found in the 'seen' map",
+    emoji: "🔑",
   },
 ];

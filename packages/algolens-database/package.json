@@ -1,0 +1,14 @@
+{
+	"name": "@algolens/database",
+	"version": "1.0.0",
+	"main": "src/index.ts",
+	"types": "dist/index.d.ts",
+	"type": "commonjs",
+	"scripts": {
+		"build": "tsc --outDir dist --declaration",
+		"watch": "tsc --watch --outDir dist --declaration"
+	},
+	"author": "Jaroslaw Weber",
+	"license": "MIT",
+	"description": "Database package for AlgoLens"
+}

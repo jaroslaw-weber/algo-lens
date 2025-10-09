@@ -32,7 +32,7 @@ A good `problem.ts` file should define a `Problem` object, typically including:
 ## 3. Example Template
 
 ```ts
-import { Problem, ProblemState } from "algo-lens-core/src/types"; // Adjusted import
+import { Problem, ProblemState } from "@algolens/core/src/types"; // Adjusted import
 import { generateSteps } from './steps';
 import { testcases } from './testcase';
 import { variables } from './variables';

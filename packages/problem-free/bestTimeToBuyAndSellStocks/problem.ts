@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { variables } from "./variables";
 import { generateSteps } from "./steps";
@@ -15,7 +15,6 @@ export const problem: Problem<MaxProfitInput, ProblemState> = {
   id: "bestTimeToBuyAndSellStocks",
   difficulty: "easy",
   testcases,
-  tags: ["array"],
   metadata: {
     variables,
     groups,

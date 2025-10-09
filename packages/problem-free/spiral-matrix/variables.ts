@@ -1,4 +1,4 @@
-import { VariableMetadata } from"algo-lens-core/src/types";
+import { VariableMetadata } from "@algolens/core/src/types";
 
 export const variables: VariableMetadata[] = [
   {

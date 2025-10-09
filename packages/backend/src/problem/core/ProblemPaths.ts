@@ -1,8 +1,8 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { FREE_PROBLEMS_FOLDER } from "algolens-problem-free/const";
-import { PREMIUM_PROBLEMS_FOLDER } from "algolens-problem-premium/const";
-import { Plan } from "algo-lens-core/src/types";
+import { FREE_PROBLEMS_FOLDER } from "@algolens/problem-free/const";
+import { PREMIUM_PROBLEMS_FOLDER } from "@algolens/problem-premium/const";
+import { Plan } from "@algolens/core/src/types";
 
 interface ProblemFolderInfo {
   problemId: string;

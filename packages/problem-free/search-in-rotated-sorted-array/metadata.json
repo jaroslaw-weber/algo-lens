@@ -1,0 +1,11 @@
+{
+  "id": "search-in-rotated-sorted-array",
+  "title": "Search in Rotated Sorted Array",
+  "emoji": "🔍",
+  "difficulty": "medium",
+  "tags": [
+    "array",
+    "binary-search"
+  ],
+  "plan": "free"
+}

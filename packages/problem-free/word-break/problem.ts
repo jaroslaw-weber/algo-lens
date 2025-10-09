@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { WordBreakInput } from "./types"; // Assuming ProblemState might be specific later
 import { generateSteps } from "./steps"; // Import generateSteps instead of wordBreak
@@ -14,10 +14,10 @@ export const problem: Problem<WordBreakInput, ProblemState> = {
   emoji: "📖",
   func: generateSteps, // Use generateSteps
   id: "word-break",
-  codegen: { // Added codegen property
+  codegen: {
+    // Added codegen property
     signature: "wordBreak(s: string, wordDict: string[]): boolean", // Added signature
   },
-  tags: ["dynamic programming", "string"],
   difficulty: "medium",
   testcases,
   metadata: {

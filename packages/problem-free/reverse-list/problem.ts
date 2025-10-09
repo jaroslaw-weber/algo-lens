@@ -1,6 +1,6 @@
 // Import necessary types and functions
-import { Problem, ProblemState } from "algo-lens-core/src/types";
- // Keep ProblemState
+import { Problem, ProblemState } from "@algolens/core/src/types";
+// Keep ProblemState
 import { ReverseListInput } from "./types"; // Keep ReverseListInput import
 // import { reverseLinkedList as code } from "./code/typescript"; // Remove original code import
 import { generateSteps } from "./steps"; // Import generateSteps
@@ -15,7 +15,6 @@ export const problem: Problem<ReverseListInput, ProblemState> = {
   emoji: "↩️",
   func: generateSteps, // Use generateSteps to get the detailed steps
   id: "reverse-list",
-  tags: ["linked-list"],
   difficulty: "medium", // Assuming medium, adjust if needed
   metadata: {
     variables,

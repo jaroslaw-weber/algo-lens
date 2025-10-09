@@ -1,0 +1,11 @@
+{
+  "id": "houseRobber",
+  "title": "House Robber",
+  "emoji": "🏠",
+  "difficulty": "medium",
+  "tags": [
+    "dynamic programming",
+    "array"
+  ],
+  "plan": "free"
+}

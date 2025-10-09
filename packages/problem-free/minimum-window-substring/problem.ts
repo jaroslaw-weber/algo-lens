@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
@@ -11,7 +11,6 @@ export const problem: Problem<MinimumWindowSubstringInput, ProblemState> = {
   title: "Minimum Window Substring",
   emoji: "🪟",
   difficulty: "hard",
-  tags: ["String", "Hash Map", "Sliding Window"],
   func: generateSteps,
   metadata: {
     variables,

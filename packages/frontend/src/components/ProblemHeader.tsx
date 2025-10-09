@@ -1,8 +1,7 @@
 import React from "react";
 import { pb } from "../auth/pocketbase";
 import BookmarkButton from "../bookmark/BookmarkButton";
-import type { Problem } from "algo-lens-core/src/types";
-
+import type { Problem } from "@algolens/core/src/types";
 
 interface ProblemHeaderProps {
   title: string;

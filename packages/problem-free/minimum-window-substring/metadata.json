@@ -1,0 +1,12 @@
+{
+  "id": "minimum-window-substring",
+  "title": "Minimum Window Substring",
+  "emoji": "🪟",
+  "difficulty": "hard",
+  "tags": [
+    "String",
+    "Hash Map",
+    "Sliding Window"
+  ],
+  "plan": "free"
+}

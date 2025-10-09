@@ -1,11 +1,11 @@
-import { GroupMetadata } from "algo-lens-core/src/types";
-
+import { GroupMetadata } from "@algolens/core/src/types";
 
 export const groups: GroupMetadata[] = [
   {
     name: "sum",
     label: "Sum Calculation",
-    description: "Variables related to calculating the expected and actual sums.",
+    description:
+      "Variables related to calculating the expected and actual sums.",
     emoji: "➕",
   },
   {

@@ -1,5 +1,5 @@
-import { ProblemState, Pointer } from "algo-lens-core/src/types";
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { ProblemState, Pointer } from "@algolens/core/src/types";
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 import { WordBreakInput } from "./types"; // Assuming types.ts defines these
 
 /**

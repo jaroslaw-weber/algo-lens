@@ -1,4 +1,8 @@
-import { ProblemState, TestCase, BinaryTreeNode } from "algo-lens-core/src/types";
+import {
+  ProblemState,
+  TestCase,
+  BinaryTreeNode,
+} from "@algolens/core/src/types";
 
 import { SameTreeInput } from "./types";
 

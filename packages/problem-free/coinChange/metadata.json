@@ -1,0 +1,11 @@
+{
+  "id": "coinChange",
+  "title": "Coin Change",
+  "emoji": "🪙",
+  "difficulty": "medium",
+  "tags": [
+    "dynamic programming",
+    "array"
+  ],
+  "plan": "free"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "palindromic-substrings",
+  "title": "Palindromic Substrings",
+  "emoji": "📝",
+  "difficulty": "medium",
+  "tags": [
+    "string",
+    "dynamic programming"
+  ],
+  "plan": "free"
+}

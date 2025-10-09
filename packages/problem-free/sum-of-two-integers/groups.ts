@@ -1,7 +1,8 @@
-import { GroupMetadata } from "algo-lens-core/src/types";
- // Corrected import
+import { GroupMetadata } from "@algolens/core/src/types";
+// Corrected import
 
-export const groups: GroupMetadata[] = [ // Corrected type annotation
+export const groups: GroupMetadata[] = [
+  // Corrected type annotation
   {
     name: "input", // Use 'name' for identifier
     label: "Input", // Keep 'label' for display text

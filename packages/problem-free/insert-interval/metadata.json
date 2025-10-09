@@ -1,0 +1,11 @@
+{
+  "id": "insert-interval",
+  "title": "Insert Interval",
+  "emoji": "➕",
+  "difficulty": "medium",
+  "tags": [
+    "array",
+    "intervals"
+  ],
+  "plan": "free"
+}

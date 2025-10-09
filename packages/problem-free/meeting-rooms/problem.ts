@@ -2,7 +2,7 @@ import { generateSteps } from "./steps";
 import { testcases } from "./testcase";
 import { variables } from "./variables";
 import { groups } from "./groups";
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { MeetingRoomsInput } from "./types";
 export const problem: Problem<MeetingRoomsInput, ProblemState> = {
@@ -10,7 +10,6 @@ export const problem: Problem<MeetingRoomsInput, ProblemState> = {
   title: "Meeting Rooms",
   emoji: "🏢",
   difficulty: "easy",
-  tags: ["Array", "Sorting", "Interval"],
 
   testcases,
 

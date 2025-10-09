@@ -1,7 +1,7 @@
 import { sum } from "lodash";
-import { ProblemState } from "algo-lens-core/src/types";
- // Removed Problem
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { ProblemState } from "@algolens/core/src/types";
+// Removed Problem
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 
 export function generateSteps(height: number[]): ProblemState[] {
   const l = new StepLoggerV2();

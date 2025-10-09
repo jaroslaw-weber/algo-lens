@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import type { Problem, ProblemState } from "algo-lens-core/src/types";
+import type { Problem, ProblemState } from "@algolens/core/src/types";
 
 export const problemsAtom = atom<Problem<any, any>[]>([]);
 

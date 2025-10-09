@@ -1,0 +1,12 @@
+{
+  "id": "meeting-rooms",
+  "title": "Meeting Rooms",
+  "emoji": "🏢",
+  "difficulty": "easy",
+  "tags": [
+    "Array",
+    "Sorting",
+    "Interval"
+  ],
+  "plan": "free"
+}

@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps"; // Import only generateSteps from steps
 import { variables } from "./variables";
@@ -14,7 +14,6 @@ export const problem: Problem<ContainerInput, ProblemState> = {
   difficulty: "easy",
   func: generateSteps, // Use the renamed function
   id: "container-with-most-water",
-  tags: ["array", "two pointers"],
   metadata: {
     variables,
     groups,

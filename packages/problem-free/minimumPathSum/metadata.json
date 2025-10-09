@@ -1,0 +1,10 @@
+{
+  "id": "minimumPathSum",
+  "title": "Minimum Path Sum",
+  "emoji": "🗺️",
+  "difficulty": "medium",
+  "tags": [
+    "2d dynamic programming"
+  ],
+  "plan": "free"
+}

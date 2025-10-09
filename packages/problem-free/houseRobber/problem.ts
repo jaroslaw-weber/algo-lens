@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { HouseRobberInput } from "./types"; // Import from types.ts
 import { generateSteps } from "./steps"; // Import generateSteps from steps.ts
@@ -12,13 +12,13 @@ export const problem: Problem<HouseRobberInput, ProblemState> = {
   title: title,
   emoji: "🏠", // Updated emoji
   func: generateSteps, // Use imported generateSteps function
-  codegen: { // Added codegen property
+  codegen: {
+    // Added codegen property
     signature: "rob(nums: number[]): number", // Added signature
   },
   difficulty: "medium",
   testcases, // Added testcases
   id: "houseRobber", // Updated id
-  tags: ["dynamic programming", "array"], // Updated tags
   metadata: {
     // Add metadata
     variables,

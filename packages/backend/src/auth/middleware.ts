@@ -32,16 +32,21 @@ export const authMiddleware = async (c: Context<AuthEnv>, next: Next) => {
       // You might want to attach the user to the context for later use in route handlers
       if (pb.authStore.model) {
         c.set("user", pb.authStore.model);
+        console.log("user set in context:", pb.authStore.model.id);
+      } else {
+        console.log("authRefresh succeeded but no model");
       }
 
       // Proceed to the next middleware or route handler
       await next();
     } catch (e) {
+      console.log("authRefresh failed:", e);
       pb.authStore.clear(); // Clear the invalid token
+      // Proceed to the next middleware or route handler even if auth failed
       await next();
-      //throw e; // Re-throw the error to be caught by the global error handler
     }
   } else {
+    console.log("no token provided");
     // No token provided, proceed to the next middleware or route handler
     // Protected routes will need to explicitly check for user in context or handle unauthorized
     await next();

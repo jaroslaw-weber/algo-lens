@@ -1,0 +1,11 @@
+{
+  "id": "spiral-matrix",
+  "title": "Spiral Matrix",
+  "emoji": "🌀",
+  "difficulty": "medium",
+  "tags": [
+    "Array",
+    "Matrix"
+  ],
+  "plan": "free"
+}

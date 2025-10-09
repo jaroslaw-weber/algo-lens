@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps";
 import { UniquePathsInput, UniquePathsState } from "./types"; // Keeping UniquePathsState for potential future use
@@ -12,7 +12,6 @@ export const problem: Problem<UniquePathsInput, ProblemState> = {
   emoji: "🤖",
   id: "unique-paths",
   difficulty: "medium",
-  tags: ["2d dynamic programming"],
   func: generateSteps,
   testcases: testcases, // Use imported testcases
   metadata: {

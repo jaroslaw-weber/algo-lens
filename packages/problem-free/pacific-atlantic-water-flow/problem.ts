@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps"; // Will import the renamed function
 import { PacificAtlanticInput } from "./types"; // Import input type from types.ts
@@ -18,10 +18,10 @@ export const problem: Problem<PacificAtlanticInput, ProblemState> = {
     variables,
     groups,
   },
-  codegen: { // Added codegen property
+  codegen: {
+    // Added codegen property
     signature: "pacificAtlantic(heights: number[][]): number[][]", // Added signature
   },
-  tags: ["grid", "dfs"],
   testcases,
   difficulty: "medium",
   func: (p: PacificAtlanticInput) => generateSteps(p), // Use p directly as it's number[][]

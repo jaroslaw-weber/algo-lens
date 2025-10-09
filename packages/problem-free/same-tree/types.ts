@@ -1,4 +1,3 @@
-import { BinaryTreeNode } from "algo-lens-core/src/types";
-
+import { BinaryTreeNode } from "@algolens/core/src/types";
 
 export type SameTreeInput = [BinaryTreeNode | null, BinaryTreeNode | null];

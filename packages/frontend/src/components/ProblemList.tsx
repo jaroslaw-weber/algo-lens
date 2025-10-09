@@ -8,13 +8,13 @@ import { trackUmamiEvent } from "../utils/umami";
 function ProblemsList() {
   //
   const url = new URL(window.location.href);
-  let tag = url.searchParams.get("tag");
-  if (tag == "blind75") {
-    tag = null;
-  }
+  const tag = url.searchParams.get("tag");
   const filter = url.searchParams.get("filter");
   const plan = url.searchParams.get("plan");
   const title = _.capitalize(tag || filter || "problems");
+
+  const isPremiumUser =
+    pb.authStore.isValid && pb.authStore.model?.plan === "premium";
 
   // Use local state instead of Jotai atom
   const [problems, setProblems] = useState<ProblemInfo[]>([]);
@@ -65,13 +65,14 @@ function ProblemsList() {
             </p>
           ) : (
             problems.map((p) => {
-              const { id, title, emoji, tags } = p;
+              const { id, title, emoji, tags, plan } = p;
 
+              const isLocked = plan === "premium" && !isPremiumUser;
               return (
                 <a
                   key={id}
                   href={`/problem/visualize?id=${id}`}
-                  className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-shadow duration-300 text-primary block" // Added subtle hover shadow
+                  className={`card ${isLocked ? "bg-base-200" : "bg-base-100"} border border-base-300 shadow-sm hover:shadow-md transition-shadow duration-300 text-primary block`} // Added subtle hover shadow
                   onClick={() =>
                     trackUmamiEvent("click-problem-list-item", {
                       problemId: id,
@@ -79,19 +80,25 @@ function ProblemsList() {
                     })
                   }
                 >
-                  <div className="card-body flex items-center">
+                  <div className="card-body flex items-center relative">
                     {" "}
                     {/* Adjusted card-body for better layout */}
-                    {emoji && <div className="text-4xl mr-4">{emoji}</div>}{" "}
-                    {/* Increased emoji size and added margin */}
+                    {isLocked && (
+                      <div className="absolute top-2 right-4 flex items-center gap-1 text-lg text-error font-semibold">
+                        <i className="fas fa-lock"></i> Premium
+                      </div>
+                    )}
+                    <div className="flex items-center mr-4">
+                      {emoji && <div className="text-4xl">{emoji}</div>}
+                    </div>
                     <div className="flex-grow">
                       {" "}
                       {/* Container for title, takes available space */}
                       <p className="">{title}</p>{" "}
                       {/* Adjusted title size and weight */}
-                      {tags && tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {tags.map((tag) => (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {tags &&
+                          tags.map((tag) => (
                             <span
                               key={tag}
                               className="badge badge-outline badge-sm"
@@ -99,8 +106,7 @@ function ProblemsList() {
                               {tag}
                             </span>
                           ))}
-                        </div>
-                      )}
+                      </div>
                     </div>
                     {/* Bookmark button */}
                     {pb.authStore.isValid && ( // Only show button if user is logged in

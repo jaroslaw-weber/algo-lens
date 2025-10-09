@@ -1,4 +1,4 @@
-import { Problem, ProblemState } from "algo-lens-core/src/types";
+import { Problem, ProblemState } from "@algolens/core/src/types";
 
 import { generateSteps } from "./steps"; // Corrected import name
 import { EditDistanceInput } from "./types";
@@ -13,9 +13,9 @@ export const problem: Problem<EditDistanceInput, ProblemState> = {
   emoji: "✍️", // Updated emoji
   id: "editDistance", // Updated id
   difficulty: "medium",
-  tags: ["dynamic programming", "string"],
   func: (input) => generateSteps(...input), // Corrected function assignment
-  codegen: { // Added codegen property
+  codegen: {
+    // Added codegen property
     signature: "minDistance(word1: string, word2: string): number", // Added signature
   },
   testcases, // Added testcases property

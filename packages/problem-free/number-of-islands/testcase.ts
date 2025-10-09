@@ -1,6 +1,6 @@
 // Placeholder for test case definitions, if needed in the future.
 
-import { ProblemState, TestCase } from "algo-lens-core/src/types";
+import { ProblemState, TestCase } from "@algolens/core/src/types";
 
 import { NumIslandsInput } from "./types";
 

@@ -1,5 +1,5 @@
 {
-  "name": "algo-lens-frontend",
+  "name": "@algolens/frontend",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,13 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@algolens/core": "workspace:*",
     "@astrojs/react": "^4.2.3",
     "@floating-ui/dom": "^1.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@monaco-editor/react": "^4.6.0",
     "@tailwindcss/vite": "^4.1.4",
-    "algo-lens-core": "*",
     "astro": "^5.6.1",
     "astro-seo": "^0.8.4",
     "autoprefixer": "^10.4.19",
@@ -30,7 +30,6 @@
     "js-cookie": "^3.0.5",
     "ky": "^1.8.0",
     "lodash": "^4.17.21",
-    "next": "^14.1.0",
     "pocketbase": "^0.26.0",
     "postcss": "^8.4.38",
     "react": "^18.3.1",
@@ -48,9 +47,8 @@
     "@types/node": "^20.11.6",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
-    "daisyui": "^5.0.35",
+    "daisyui": "^5.1.28",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
     "typescript": "^5.3.3"
   }
 }

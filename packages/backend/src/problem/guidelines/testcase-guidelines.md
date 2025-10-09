@@ -28,7 +28,7 @@ Each test case **must** be an object adhering to the `TestCase` type imported fr
 ## 3. Example Template
 
 ```ts
-import { TestCase } from "algo-lens-core/src/types";
+import { TestCase } from "@algolens/core/src/types";
 // Assuming YourProblemInputType is defined in ./types.ts
 // e.g., interface YourProblemInputType { nums: number[]; target: number; }
 // Assuming YourProblemReturnType is the expected output type, e.g., number[] or ProblemState

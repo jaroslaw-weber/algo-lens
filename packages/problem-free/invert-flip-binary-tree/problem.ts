@@ -1,4 +1,4 @@
-import { Problem } from "algo-lens-core/src/types";
+import { Problem } from "@algolens/core/src/types";
 
 import { getSteps } from "./steps";
 import { testcases } from "./testcase";
@@ -12,7 +12,6 @@ export const problem: Problem<BinaryTree, BinaryTree> = {
   title: "Invert/Flip Binary Tree",
   emoji: "🌳",
   difficulty: "easy",
-  tags: ["Tree", "Depth-First Search", "Breadth-First Search", "Binary Tree"],
   func: (x) => getSteps(x),
   testcases,
   metadata: {

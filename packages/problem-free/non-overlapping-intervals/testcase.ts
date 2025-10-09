@@ -1,5 +1,5 @@
-import { ProblemState, TestCase } from "algo-lens-core/src/types";
- // Assuming TestCase type exists and path is correct
+import { ProblemState, TestCase } from "@algolens/core/src/types";
+// Assuming TestCase type exists and path is correct
 import { EraseOverlapIntervalsInput } from "./types"; // Assuming types file exists here
 
 export const testcases: TestCase<EraseOverlapIntervalsInput, ProblemState>[] = [

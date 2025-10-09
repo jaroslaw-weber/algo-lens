@@ -1,7 +1,11 @@
-import { StepLoggerV2 } from "algo-lens-core/src/StepLoggerV2";
+import { StepLoggerV2 } from "@algolens/core/src/StepLoggerV2";
 import { ReverseListInput } from "./types"; // Import only ReverseListInput from local types
-import { ListNode, NodeHighlight, ProblemState } from "algo-lens-core/src/types";
- // Import ListNode and NodeHighlight from core
+import {
+  ListNode,
+  NodeHighlight,
+  ProblemState,
+} from "@algolens/core/src/types";
+// Import ListNode and NodeHighlight from core
 
 // Note: This function now generates the detailed steps for the visualization.
 // It doesn't call the original solution function directly.

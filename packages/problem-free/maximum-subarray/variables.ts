@@ -1,4 +1,4 @@
-import { VariableMetadata } from "algo-lens-core/src/types.js";
+import { VariableMetadata } from "@algolens/core/src/types.js";
 
 export const variableMetadata: VariableMetadata[] = [
   {
@@ -36,5 +36,5 @@ export const variableMetadata: VariableMetadata[] = [
     label: "result",
     description: "The final maximum subarray sum.",
     emoji: "🏁", // Or another suitable emoji
-  }
+  },
 ];

@@ -1,5 +1,4 @@
-import { GroupMetadata } from "algo-lens-core/src/types";
-
+import { GroupMetadata } from "@algolens/core/src/types";
 
 // Define groups for visualizing the Course Schedule problem state
 export const groups: GroupMetadata[] = [

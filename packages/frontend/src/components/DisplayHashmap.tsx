@@ -1,6 +1,5 @@
 import React from "react";
-import type { HashmapVariable, Pointer } from "algo-lens-core/src/types";
-
+import type { HashmapVariable, Pointer } from "@algolens/core/src/types";
 
 const DisplayHashmap = ({ data }: { data: HashmapVariable }) => {
   const { value, label, highlights, keyLabel, valueLabel } = data;

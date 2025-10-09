@@ -1,9 +1,12 @@
 // DisplayTree.tsx
 import React, { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
-import type { BinaryTreeNode as BinaryTreeNode, TreeVariable } from "algo-lens-core/src/types";
+import type {
+  BinaryTreeNode as BinaryTreeNode,
+  TreeVariable,
+} from "@algolens/core/src/types";
 
-import type {Config} from "daisyui"
+import type { Config } from "daisyui";
 
 interface DisplayBinaryTreeProps {
   data: TreeVariable;
@@ -13,7 +16,9 @@ const DisplayTree: React.FC<DisplayBinaryTreeProps> = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const highlight = new Map(data.highlight?.filter(x=> x.node).map((x) => [x.node.id,x]));
+  const highlight = new Map(
+    data.highlight?.filter((x) => x.node).map((x) => [x.node.id, x])
+  );
 
   // todo: load colors with theme const theme = getCurrentTheme()
 
@@ -21,7 +26,7 @@ const DisplayTree: React.FC<DisplayBinaryTreeProps> = ({ data }) => {
     const elements: cytoscape.ElementDefinition[] = [];
 
     const traverse = (currentNode: BinaryTreeNode, parentId: string | null) => {
-      const nodeClass = highlight?.get(currentNode?.id)?.color ??""
+      const nodeClass = highlight?.get(currentNode?.id)?.color ?? "";
       elements.push({
         data: { id: currentNode.id, label: currentNode.val.toString() },
         classes: nodeClass, // Add classes to nodes
@@ -72,21 +77,21 @@ const DisplayTree: React.FC<DisplayBinaryTreeProps> = ({ data }) => {
             selector: "node.neutral",
             style: {
               "background-color": "black", // Change color for highlighted nodes
-              color:"white"
+              color: "white",
             },
           },
           {
             selector: "node.good",
             style: {
               "background-color": "green", // Change color for highlighted nodes
-              color:"white"
+              color: "white",
             },
           },
           {
             selector: "node.bad",
             style: {
               "background-color": "red", // Change color for highlighted nodes
-              color:"white"
+              color: "white",
             },
           },
           {

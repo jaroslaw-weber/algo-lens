@@ -1,0 +1,11 @@
+{
+  "id": "editDistance",
+  "title": "Edit Distance",
+  "emoji": "✍️",
+  "difficulty": "medium",
+  "tags": [
+    "dynamic programming",
+    "string"
+  ],
+  "plan": "free"
+}

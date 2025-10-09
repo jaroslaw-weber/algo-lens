@@ -86,12 +86,14 @@ export class StepLoggerV2 {
   }
 
   /**
-   * Marks a specific point (breakpoint) in the algorithm's execution.
-   * This updates the internal breakpoint identifier and triggers the `save` method
-   * to capture the current state of all tracked variables at this point.
-   * An optional description can be provided, though it's not currently used in the state saving.
-   * @param breakpoint - A numerical identifier for this breakpoint.
-   * @param description - An optional description for the breakpoint (currently unused).
+   * Marks a breakpoint in the algorithm's execution for step-by-step visualization.
+   * This captures the current state of all logged variables and associates it with the given breakpoint number,
+   * which is used for line highlighting in the visualization. Breakpoints should use sequential numbers
+   * (e.g., 1, 2, 3) starting from 1, without complex calculations, to ensure clear and ordered progression.
+   * good example: l.breakpoint(1), l.breakpoint(2)
+   * bad example: l.breakpoint(base+1), l.breakpoint(step++), l.breakpoint(variable)
+   * Always set `l.comment` before calling this method to provide a description for the step.
+   * @param breakpoint - A unique, increasing numerical identifier for this breakpoint, used for line highlighting.
    */
   public breakpoint(breakpoint: number) {
     // Update the current breakpoint identifier. This value will be stored in the saved state.
