@@ -22,7 +22,7 @@ import PlayIcon from "../../components/icons/PlayIcon"; // Import a play icon
 import { HTTPError } from "ky";
 import { AlgolensError, type ProblemState } from "@algolens/core/src"; // Import ProblemState
 import { BACKEND_URL } from "astro:env/client";
-import PricingPage from "../../../../frontend-premium/src/components/PricingPage";
+import PricingPage from "@algolens/frontend-premium/src/components/PricingPage";
 
 export default function ProblemView() {
   const [problem, setProblem] = useAtom(problemAtom);

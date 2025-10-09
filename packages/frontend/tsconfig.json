@@ -7,7 +7,7 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "algolens-premium-frontend/*": ["../frontend-premium/src/*"]
+      "@algolens/frontend-premium/*": ["../frontend-premium/src/*"]
     }
   }
 }

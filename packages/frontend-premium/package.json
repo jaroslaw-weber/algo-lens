@@ -1,7 +1,7 @@
 {
-	"name": "@algolens/backend-premium",
+	"name": "@algolens/frontend-premium",
 	"version": "1.0.0",
-	"description": "Backend package for premium problems",
+	"description": "Frontend package for premium features",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
@@ -13,8 +13,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@algolens/core": "*",
-		"@algolens/backend": "*"
+		"@algolens/core": "workspace:*",
+		"@algolens/frontend": "workspace:*"
 	},
 	"devDependencies": {
 		"typescript": "^5.0.0"
