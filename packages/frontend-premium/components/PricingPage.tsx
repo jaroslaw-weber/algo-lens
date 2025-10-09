@@ -1,3 +1,3 @@
-export function PricingPage() {
+export default function PricingPage() {
   return <div></div>;
 }
