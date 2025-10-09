@@ -1,0 +1,22 @@
+{
+	"name": "@algolens/frontend-premium",
+	"version": "1.0.0",
+	"description": "Frontend package for premium features",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc -w",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@algolens/core": "workspace:*",
+		"@algolens/frontend": "workspace:*"
+	},
+	"devDependencies": {
+		"typescript": "^5.0.0"
+	}
+}

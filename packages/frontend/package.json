@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@algolens/core": "workspace:*",
+    "@algolens/frontend-premium": "workspace:*",
     "@astrojs/react": "^4.2.3",
     "@floating-ui/dom": "^1.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
