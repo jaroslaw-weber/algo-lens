@@ -1,5 +1,5 @@
 {
-	"name": "backend-premium",
+	"name": "@algolens/backend-premium",
 	"version": "1.0.0",
 	"description": "Backend package for premium problems",
 	"main": "dist/index.js",
@@ -13,8 +13,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"algo-lens-core": "*",
-		"backend": "*"
+		"@algolens/core": "*",
+		"@algolens/backend": "*"
 	},
 	"devDependencies": {
 		"typescript": "^5.0.0"

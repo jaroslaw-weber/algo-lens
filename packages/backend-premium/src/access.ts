@@ -5,5 +5,9 @@ export function problemAccessCheck(p: {
   user: { plan: string };
   problem: Problem<any, any>;
 }) {
-  return
+  return;
+}
+
+export function checkUserPremiumStatus() {
+  return true;
 }

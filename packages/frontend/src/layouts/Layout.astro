@@ -1,5 +1,4 @@
 ---
-import PostHog from "../components/posthog.astro";
 import "../styles/global.css";
 import Navbar from "../components/Navbar.tsx";
 import Footer from "../components/Footer.astro";
@@ -15,7 +14,6 @@ const { title = "Algo Lens" } = Astro.props;
 <!doctype html>
 <html lang="en" data-theme="algo-lens">
   <head>
-    <PostHog client:load />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
